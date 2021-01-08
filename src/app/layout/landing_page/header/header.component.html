@@ -1,0 +1,51 @@
+<!-- ======= Top Bar ======= -->
+<section id="topbar" class="d-none d-lg-block">
+  <div class="container clearfix">
+    <div class="contact-info float-left">
+      <i class="icofont-envelope"></i><a href="mailto:contact@example.com">contact@Prototype.com</a>
+      <i class="icofont-phone"></i> +91  9898633675
+    </div>
+    <div class="social-links float-right">
+      <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
+      <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
+      <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
+      <a href="#" class="skype"><i class="icofont-skype"></i></a>
+      <a href="#" class="linkedin"><i class="icofont-linkedin"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Header ======= -->
+<header id="header" >
+  <div class="container">
+
+    <div class="logo float-left">
+
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <a href="#"><img src="assets/img/logo/logo.png" alt="" class="img-fluid"></a>
+    </div>
+
+    <nav class="nav-menu float-right d-none d-lg-block">
+      <ul>
+
+        <li style="display: none;"><a href="#"> {{Root_Header_Masters.length}}</a>  </li>
+
+        <li *ngFor='let item  of Root_Header_Masters' [ngClass]="item.rootcat.length > 0 ? 'drop-down' : ''">
+          <a  href="#" >{{item.Root_Name}}</a>
+            <ul *ngIf="item.rootcat.length > 0">
+                <li *ngFor='let item1  of item.rootcat'>
+                    <a href="/subcategory/{{item1.RCatg_ID}}">{{item1.RCatg_Name}}</a>
+                </li>
+            </ul>
+        </li>
+        <li> <a href="login"><i class="icofont-ui-user"></i></a> </li>
+      </ul>
+    </nav><!-- .nav-menu -->
+
+
+      <!-- Mobile Menu -->
+      <!-- <div class="col-12">
+        <button type="button" class="mobile-nav-toggle d-lg-none"><i class="icofont-navigation-menu"></i></button>
+     </div> -->
+  </div>
+</header><!-- End Header -->
