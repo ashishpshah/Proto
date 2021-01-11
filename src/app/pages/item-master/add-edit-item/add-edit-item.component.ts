@@ -1,3 +1,4 @@
+import { AdminCommonHelperComponent } from './../../AdminCommonHelper/AdminCommonHelper.component';
 import { DropdownListInt } from './../../../models/DropdownListInt';
 
 import { Component,Input, OnInit } from '@angular/core';
@@ -42,24 +43,6 @@ export class AddEditItemComponent implements OnInit {
   msgType : string = '';
   message : string = '';
 
-  // StatusList = [{id : '0',name :'F'}];
-  categories  = [
-    {id: '1', name: 'Laravel'},
-    {id: '2', name: 'Codeigniter'},
-    {id: '3', name: 'React'},
-    {id: '4', name: 'PHP'},
-    {id: '5', name: 'Angular'},
-    {id: '6', name: 'Vue'},
-    {id: '7', name: 'JQuery', disabled: true},
-    {id: '8', name: 'Javascript'},
-  ];
-
-  // selected = [
-  //   {id: '5', name: 'Angular'},
-  //   {id: '6', name: 'Vue'}
-  // ];
-
-
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
     private _commonService : ProtoServicesService, private _router: Router) {
       debugger;
@@ -90,6 +73,7 @@ export class AddEditItemComponent implements OnInit {
       })
 
     }
+      commonHelper = new AdminCommonHelperComponent(this._router);
 
   public loadResult() {
     return true;
@@ -158,43 +142,14 @@ export class AddEditItemComponent implements OnInit {
     if (this.title == "Create") {
       this._commonService.saveItem(this.itemForm.value)
         .subscribe((data) => {
-          debugger;
-          if (data != null && data != "e" && data != "r" && data != "o") {
-
-            let splitData = data.toString().split("|");
-            this.msgType = splitData.length > 0 ? splitData[0] :'E';
-            this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
-
-            if (this.msgType == 'S') {
-              Swal.fire('Item Added', this.message, 'success')
-              this._router.navigate(['/master/item-master']);
-            }else {
-              Swal.fire('Error', this.message, 'error')
-            }
-
-          }else{
-            Swal.fire('Error', 'Something went wrong!', 'error')
-          }
+          this.commonHelper.commonAlert('Inserted', data, '/master/item-master')
 
         }, error => this.errorMessage = error)
     }
     else if (this.title == "Edit") {
       this._commonService.saveItem(this.itemForm.value)
         .subscribe((data) => {
-          if (data != null && data != "e" && data != "r" && data != "o") {
-            let splitData = data.toString().split("|");
-            this.msgType = splitData.length > 0 ? splitData[0] :'E';
-            this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
-
-            if (this.msgType == 'S') {
-              Swal.fire('Item Updated', this.message, 'success')
-              this._router.navigate(['/master/item-master']);
-            }else {
-              Swal.fire('Error', this.message, 'error')
-            }
-          }else{
-            Swal.fire('Error', 'Something went wrong!', 'error')
-          }
+          this.commonHelper.commonAlert('Updated', data, '/master/item-master')
         }, error => this.errorMessage = error)
     }
   }

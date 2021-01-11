@@ -1,3 +1,4 @@
+import { AdminCommonHelperComponent } from './../../AdminCommonHelper/AdminCommonHelper.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemMaster } from "../item-master-model";
@@ -29,6 +30,7 @@ export class ItemListComponent implements OnInit {
   @ViewChild('dt') table: Table;
 //, private primengConfig: PrimeNGConfig
   constructor( private _commonService : ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig) { }
+  commonHelper = new AdminCommonHelperComponent(this._router);
 
   ngOnInit(): void  {
      this.getItemList();
@@ -67,33 +69,13 @@ export class ItemListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this._commonService.deleteItem(itemId,this.userId).subscribe((data) => {
-          debugger;
-          if (data != null && data != "e" && data != "r" && data != "o") {
-
-            let splitData = data.toString().split("|");
-            this.msgType = splitData.length > 0 ? splitData[0] :'E';
-            this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
-
-            if (this.msgType == 'S') {
-              Swal.fire('Deleted!', this.message, 'success')
+          let ret = this.commonHelper.activeInactiveAlert('Deleted',data);
+            if (ret == 'S') {
               this.getItemList();
-            }else {
-              Swal.fire('Error', this.message, 'error')
             }
-
-          }else{
-            Swal.fire('Error', 'Something went wrong!', 'error')
-          }
-
       }, error => console.error(error))
       }
     })
-
-    // if (ans) {
-    //     this._commonService.deleteItem(itemId,this.userId).subscribe((data) => {
-    //         this.getItemList();
-    //     }, error => console.error(error))
-    // }
   }
   activateItem(itemId) {
         this._commonService.activeItem(itemId,this.userId).subscribe((data) => {
