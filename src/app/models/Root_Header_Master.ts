@@ -1,6 +1,7 @@
+import { BaseModel } from 'src/app/models/BaseModel';
 import { Root_Catg_Master } from './Root_Catg_Master';
 
-import { BaseModel } from "../../../models/baseModel";
+// import { BaseModel } from "../../../AdminPanel/models/baseModel";
 export class Root_Header_Master extends BaseModel {
   Root_Header_ID : number;
   Root_Name : string;

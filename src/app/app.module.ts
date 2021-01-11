@@ -7,18 +7,18 @@ import { FooterComponent } from './clientside/landing_page/footer/footer.compone
 import { HeaderComponent } from './clientside/landing_page/header/header.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgSelect2Module } from 'ng-select2';
-import { BasicLoginComponent } from './pages/auth/login/basic-login/basic-login.component';
+import { BasicLoginComponent } from './AdminPanel/pages/auth/login/basic-login/basic-login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { AdminComponent } from './layout/admin/admin.component';
-import { BreadcrumbsComponent } from './layout/admin/breadcrumbs/breadcrumbs.component';
-import { TitleComponent } from './layout/admin/title/title.component';
-import { AuthComponent } from './layout/auth/auth.component';
-import {SharedModule} from './shared/shared.module';
+import { AdminComponent } from './AdminPanel/layout/admin/admin.component';
+import { BreadcrumbsComponent } from './AdminPanel/layout/admin/breadcrumbs/breadcrumbs.component';
+import { TitleComponent } from './AdminPanel/layout/admin/title/title.component';
+import { AuthComponent } from './AdminPanel/layout/auth/auth.component';
+import {SharedModule} from './AdminPanel/shared/shared.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 

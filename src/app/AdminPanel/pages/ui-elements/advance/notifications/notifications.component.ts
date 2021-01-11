@@ -6,9 +6,9 @@ import {ToastData, ToastOptions, ToastyService} from 'ng2-toasty';
   templateUrl: './notifications.component.html',
   styleUrls: [
     './notifications.component.scss',
-    '../../../../../../node_modules/ng2-toasty/style-bootstrap.css',
-    '../../../../../../node_modules/ng2-toasty/style-default.css',
-    '../../../../../../node_modules/ng2-toasty/style-material.css'
+    '../../../../../../../node_modules/ng2-toasty/style-bootstrap.css',
+    '../../../../../../../node_modules/ng2-toasty/style-default.css',
+    '../../../../../../../node_modules/ng2-toasty/style-material.css'
   ],
   encapsulation: ViewEncapsulation.None
 })

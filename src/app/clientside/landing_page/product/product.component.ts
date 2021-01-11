@@ -1,4 +1,4 @@
-import { Item_Master } from '../../clientmodels/Category/Item_Master';
+import { Item_Master } from '../../../models/Item_Master';
 import { CategoryService } from '../../client_services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';

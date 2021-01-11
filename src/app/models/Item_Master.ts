@@ -1,5 +1,5 @@
+import { BaseModel } from './BaseModel';
 
-import { BaseModel } from "../../../models/baseModel";
 export class Item_Master extends BaseModel {
 
   Item_ID : number;

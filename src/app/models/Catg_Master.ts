@@ -1,6 +1,5 @@
 import { Sub_Catg_Master } from './Sub_Catg_Master';
-
-import { BaseModel } from "../../../models/baseModel";
+import { BaseModel } from './BaseModel';
 export class Catg_Master extends BaseModel {
 
   Catg_ID : number;

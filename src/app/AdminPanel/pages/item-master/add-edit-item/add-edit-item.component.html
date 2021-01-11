@@ -1,0 +1,113 @@
+<!-- <div class="input-group align-center" *ngIf="Sub_Catg_ID.invalid && formDir.submitted">
+  <span class="text-danger align-center" >
+    Please select Item
+  </span>
+</div> -->
+<div>
+  <div *ngIf="Item_Name.invalid && formDir.submitted" class='alert alert-danger'>Please Enter Item Name</div>
+  <div *ngIf="Item_Name_D.invalid && formDir.submitted && Item_Name.valid" class='alert alert-danger'>Please Enter Item Name Danish</div>
+
+  <div *ngIf="Cat_SubCat_Id.invalid && formDir.submitted && Item_Name.valid && Item_Name_D.invalid" class='alert alert-danger'>Please Select Category</div>
+  <div *ngIf="Type_ID.invalid && formDir.submitted && Item_Name.valid && Item_Name_D.invalid && Cat_SubCat_Id.valid" class='alert alert-danger'>Please Select Type
+  </div>
+  <div *ngIf="Brand_ID.invalid && formDir.submitted && Item_Name.valid && Item_Name_D.invalid && Cat_SubCat_Id.valid && Type_ID.valid" class='alert alert-danger'>
+    Please Select Brand</div>
+  <div *ngIf="UOM.invalid && formDir.submitted && Item_Name.valid && Item_Name_D.invalid && Cat_SubCat_Id.valid && Type_ID.valid && Brand_ID.valid"
+    class='alert alert-danger'>Please Select UOM</div>
+  <div *ngIf="Qty.invalid && formDir.submitted && Item_Name.valid && Item_Name_D.invalid && Cat_SubCat_Id.valid && Type_ID.valid && Brand_ID.valid  && UOM.valid"
+    class='alert alert-danger'>Please Enter Quantity</div>
+  <div
+    *ngIf="Price.invalid && formDir.submitted && Item_Name.valid && Item_Name_D.invalid && Cat_SubCat_Id.valid && Type_ID.valid && Brand_ID.valid  && UOM.valid && Qty.valid"
+    class='alert alert-danger'>Please Enter Price</div>
+  <div
+    *ngIf="Display_Seq_No.invalid && formDir.submitted && Item_Name.valid && Item_Name_D.invalid && Cat_SubCat_Id.valid && Type_ID.valid && Brand_ID.valid  && UOM.valid && Qty.valid && Price.valid"
+    class='alert alert-danger'>Please Enter Display Seq No</div>
+</div>
+
+<form [formGroup]="itemForm" (ngSubmit)="save()" #formDir="ngForm" novalidate>
+  <div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Item Name<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" formControlName="Item_Name" id="Item_Name">
+      </div>
+
+      <label class="col-sm-2 col-form-label">Item Name (Danish)<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" formControlName="Item_Name_D" id="Item_Name_D">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <ng-select formControlName="Cat_SubCat_Id" bindLabel="name" placeholder="Select Item" appendTo="body"
+          id="Cat_SubCat_Id">
+          <ng-option *ngFor="let scat of SubCategoryList" [value]="scat.id"> {{scat.name}}</ng-option>
+        </ng-select>
+      </div>
+
+      <label class="col-sm-2 col-form-label">Type<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <ng-select bindLabel="name" placeholder="Select Type" appendTo="body" formControlName="Type_ID" id="Type_ID">
+          <ng-option *ngFor="let item of TypeList" [value]="item.id"> {{item.name}}</ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Brand Name<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <ng-select bindLabel="name" placeholder="Select Brand" appendTo="body" formControlName="Brand_ID" id="Brand_ID">
+          <ng-option *ngFor="let item of BrandList" [value]="item.id"> {{item.name}}</ng-option>
+        </ng-select>
+      </div>
+      <label class="col-sm-2 col-form-label">UOM<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <ng-select bindLabel="name" placeholder="Select UOM" appendTo="body" formControlName="UOM" id="UOM">
+          <ng-option *ngFor="let item of UOMList" [value]="item.id"> {{item.name}}</ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Qty<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <input class="form-control" type="number" formControlName="Qty" id="Qty">
+      </div>
+      <label class="col-sm-2 col-form-label">Price<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <input class="form-control" type="number" formControlName="Price" id="Price">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <input class="form-control" type="number" formControlName="Display_Seq_No" id="Display_Seq_No">
+      </div>
+      <label class="col-sm-2 col-form-label">Status</label>
+      <div class="col-sm-4">
+        <select class="form-control" formControlName="Status" id="Status" ngModel="{{SelectedStatus}}"
+          [attr.disabled]="isInserted == 'I' ? 'disabled' : null">
+          <option *ngFor="let st of StatusList; let i = index" [value]="st.id">
+            {{st.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+  <br />
+  <hr />
+  <div class="text-center">
+    <div class="form-group align-center">
+      <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer"> <span class="font-d">
+          Save</span></button> &nbsp;
+      <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+          Cancel</span></button>
+    </div>
+  </div>
+
+</form>

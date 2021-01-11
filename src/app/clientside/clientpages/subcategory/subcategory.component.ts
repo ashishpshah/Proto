@@ -1,9 +1,9 @@
 
 
 import { CategoryService } from '../../client_services/category.service';
-import { Sub_Catg_Master } from '../../clientmodels/Category/Sub_Catg_Master';
-import { Item_Master } from '../../clientmodels/Category/Item_Master';
-import { Catg_Master } from '../../clientmodels/Category/Catg_Master';
+import { Sub_Catg_Master } from '../../../models/Sub_Catg_Master';
+import { Item_Master } from '../../../models/Item_Master';
+import { Catg_Master } from '../../../models/Catg_Master';
 import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from "rxjs";

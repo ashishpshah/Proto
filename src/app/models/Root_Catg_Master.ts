@@ -1,5 +1,5 @@
+import { BaseModel } from "src/app/models/BaseModel";
 
-import { BaseModel } from "../../../models/baseModel";
 export class Root_Catg_Master extends BaseModel {
   RCatg_ID : number;
   Root_Header_ID: number;

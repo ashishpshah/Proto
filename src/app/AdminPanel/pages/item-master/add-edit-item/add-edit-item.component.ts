@@ -1,5 +1,6 @@
+import { DropdownList } from './../../../../models/DropdownList';
 import { AdminCommonHelperComponent } from './../../AdminCommonHelper/AdminCommonHelper.component';
-import { DropdownListInt } from './../../../models/DropdownListInt';
+import { DropdownListInt } from './../../../../models/DropdownListInt';
 
 import { Component,Input, OnInit } from '@angular/core';
 // import { ItemMasterService } from "../item-master.service";
@@ -16,7 +17,6 @@ import { ProtoServicesService } from "../../../Services/proto-services.service";
 import { Select2OptionData } from 'ng-select2';
 import { Options } from 'select2';
 import { stringify } from '@angular/compiler/src/util';
-import { DropdownList } from './../../../models/DropdownList';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
@@ -34,7 +34,7 @@ export class AddEditItemComponent implements OnInit {
   errorMessage: any;
   StatusList : Observable<DropdownList[]>;
   UOMList : Observable<DropdownList[]>;
-  SubCategoryList : Observable<DropdownListInt[]>;
+  SubCategoryList : Observable<DropdownList[]>;
   BrandList : Observable<DropdownListInt[]>;
   TypeList : Observable<DropdownListInt[]>;
   SelectedStatus : string = 'A';
@@ -53,7 +53,9 @@ export class AddEditItemComponent implements OnInit {
 
       this.itemForm = this._fb.group({
         Item_ID :0,
-        Sub_Catg_ID: ['', [Validators.required]],
+        Item_Name: ['', [Validators.required]],
+        Item_Name_D: ['', [Validators.required]],
+        Cat_SubCat_Id: ['', [Validators.required]],
         SR_NO: new FormControl(''),
         Type_ID: ['', [Validators.required]],
         Brand_ID: ['', [Validators.required]],
@@ -63,7 +65,12 @@ export class AddEditItemComponent implements OnInit {
         Display_Seq_No: ['', [Validators.required]],
         Status: new FormControl(''),
         Created_By: this.userId,
-        IsInserted:this.isInserted
+        IsInserted:this.isInserted,
+        Sub_Catg_ID : new FormControl(''),
+        Catg_Id : new FormControl(''),
+        Created_Date : new FormControl(''),
+        Modified_By : new FormControl(''),
+        Modified_Date : new FormControl('')
         // empName: ['', [Validators.required]],
         // gender: ['', [Validators.required]],
         // mobileNo: ['', [Validators.required,Validators.maxLength(10),]],
@@ -158,7 +165,9 @@ export class AddEditItemComponent implements OnInit {
     this._router.navigate(['/master/item-master']);
   }
 
-  get Sub_Catg_ID() { return this.itemForm.get('Sub_Catg_ID'); }
+  get Item_Name() { return this.itemForm.get('Item_Name'); }
+  get Item_Name_D() { return this.itemForm.get('Item_Name'); }
+  get Cat_SubCat_Id() { return this.itemForm.get('Cat_SubCat_Id'); }
   get SR_NO() { return this.itemForm.get('SR_NO'); }
   get Type_ID() { return this.itemForm.get('Type_ID'); }
   get Brand_ID() { return this.itemForm.get('Brand_ID'); }

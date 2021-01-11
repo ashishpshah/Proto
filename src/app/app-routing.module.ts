@@ -2,13 +2,13 @@ import { ProductComponent } from './clientside/landing_page/product/product.comp
 import { AppComponent } from './app.component';
 import { SubcategoryModule } from './clientside/clientpages/subcategory/subcategory.modules';
 import { Landing_pageComponent } from './clientside/landing_page/landing_page/landing_page.component';
-import { BasicLoginComponent } from './pages/auth/login/basic-login/basic-login.component';
+import { BasicLoginComponent } from './AdminPanel/pages/auth/login/basic-login/basic-login.component';
 import { SubcategoryComponent } from './clientside/clientpages/subcategory/subcategory.component';
-import { BasicLoginModule } from './pages/auth/login/basic-login/basic-login.module';
+import { BasicLoginModule } from './AdminPanel/pages/auth/login/basic-login/basic-login.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AdminComponent} from './layout/admin/admin.component';
-import {AuthComponent} from './layout/auth/auth.component';
+import {AdminComponent} from './AdminPanel/layout/admin/admin.component';
+import {AuthComponent} from './AdminPanel/layout/auth/auth.component';
 import { LayoutclientComponent } from './clientside/landing_page/layoutclient/layoutclient.component';
 
 
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/auth/login/basic-login/basic-login.module').then(m => m.BasicLoginModule),
+    loadChildren: () => import('./AdminPanel/pages/auth/login/basic-login/basic-login.module').then(m => m.BasicLoginModule),
   },
   {
     path: '',
@@ -51,26 +51,26 @@ const routes: Routes = [
 
       {
         path: 'dashboard',
-        loadChildren: () => import('./pages/dashboard/dashboard-default/dashboard-default.module').then(m => m.DashboardDefaultModule)
+        loadChildren: () => import('./AdminPanel/pages/dashboard/dashboard-default/dashboard-default.module').then(m => m.DashboardDefaultModule)
       },
 
       {
         path: 'master',
-        loadChildren: () => import('./pages/item-master/item-master.module').then(m => m.ItemMasterModule)
+        loadChildren: () => import('./AdminPanel/pages/item-master/item-master.module').then(m => m.ItemMasterModule)
       },
 
       {
         path: 'basic',
-        loadChildren: () => import('./pages/ui-elements/basic/basic.module').then(m => m.BasicModule)
+        loadChildren: () => import('./AdminPanel/pages/ui-elements/basic/basic.module').then(m => m.BasicModule)
       },
 
       {
         path: 'notifications',
-        loadChildren: () => import('./pages/ui-elements/advance/notifications/notifications.module').then(m => m.NotificationsModule)
+        loadChildren: () => import('./AdminPanel/pages/ui-elements/advance/notifications/notifications.module').then(m => m.NotificationsModule)
       },
       {
         path: 'bootstrap-table',
-        loadChildren: () => import('./pages/ui-elements/tables/bootstrap-table/basic-bootstrap/basic-bootstrap.module').then(m => m.BasicBootstrapModule),
+        loadChildren: () => import('./AdminPanel/pages/ui-elements/tables/bootstrap-table/basic-bootstrap/basic-bootstrap.module').then(m => m.BasicBootstrapModule),
       },
       // {
       //   path: 'map',
@@ -79,10 +79,10 @@ const routes: Routes = [
 
       {
         path: 'user',
-        loadChildren: () => import('./pages/user/profile/profile.module').then(m => m.ProfileModule)
+        loadChildren: () => import('./AdminPanel/pages/user/profile/profile.module').then(m => m.ProfileModule)
       }, {
         path: 'simple-page',
-        loadChildren: () => import('./pages/simple-page/simple-page.module').then(m => m.SimplePageModule)
+        loadChildren: () => import('./AdminPanel/pages/simple-page/simple-page.module').then(m => m.SimplePageModule)
       }
     ]
   },
@@ -92,7 +92,7 @@ const routes: Routes = [
     children: [
       {
         path: 'authentication',
-        loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+        loadChildren: () => import('./AdminPanel/pages/auth/auth.module').then(m => m.AuthModule)
       }
     ]
   }

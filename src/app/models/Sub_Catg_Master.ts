@@ -1,6 +1,4 @@
-import { BaseModel } from '../../../models/BaseModel';
-
-
+import { BaseModel } from "./BaseModel";
 export class Sub_Catg_Master extends BaseModel {
   Sub_Catg_ID : number;
   Catg_ID:number;

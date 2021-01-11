@@ -1,8 +1,8 @@
 import { Component,VERSION,OnInit,AfterViewInit } from '@angular/core';
 import { NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Root_Header_Master } from '../../clientmodels/Category/Root_Header_Master';
-import { Root_Catg_Master } from '../../clientmodels/Category/Root_Catg_Master';
+import { Root_Header_Master } from '../../../models/Root_Header_Master';
+import { Root_Catg_Master } from '../../../models/Root_Catg_Master';
 import { CategoryService } from '../../client_services/category.service';
 import { Observable } from "rxjs";
 

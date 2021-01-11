@@ -1,5 +1,5 @@
-import { Root_Header_Master } from '../../clientmodels/Category/Root_Header_Master';
-import { Root_Catg_Master } from '../../clientmodels/Category/Root_Catg_Master';
+import { Root_Header_Master } from '../../../models/Root_Header_Master';
+import { Root_Catg_Master } from '../../../models/Root_Catg_Master';
 import { CategoryService } from '../../client_services/category.service';
 import { Component, OnInit,ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
