@@ -1,7 +1,10 @@
-import { ProductComponent } from './clientside/landing_page/product/product.component';
+import { Login_clientModule } from './clientside/clientpages/login_client/login_client.modules';
+import { Login_clientComponent } from './clientside/clientpages/login_client/login_client.component';
+import { LayoutclientComponent } from './clientside/clientpages/landing_page/layoutclient/layoutclient.component';
+import { Landing_pageComponent } from './clientside/clientpages/Main_landing_page/landing_page.component';
+import { ProductComponent } from './clientside/clientpages/landing_page/product/product.component';
 import { AppComponent } from './app.component';
 import { SubcategoryModule } from './clientside/clientpages/subcategory/subcategory.modules';
-import { Landing_pageComponent } from './clientside/landing_page/landing_page/landing_page.component';
 import { BasicLoginComponent } from './AdminPanel/pages/auth/login/basic-login/basic-login.component';
 import { SubcategoryComponent } from './clientside/clientpages/subcategory/subcategory.component';
 import { BasicLoginModule } from './AdminPanel/pages/auth/login/basic-login/basic-login.module';
@@ -9,8 +12,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './AdminPanel/layout/admin/admin.component';
 import {AuthComponent} from './AdminPanel/layout/auth/auth.component';
-import { LayoutclientComponent } from './clientside/landing_page/layoutclient/layoutclient.component';
-
 
 const routes: Routes = [
   {
@@ -29,7 +30,12 @@ const routes: Routes = [
         path: 'subcategory/:string',
         loadChildren: () => import('./clientside/clientpages/subcategory/subcategory.modules').then(m => m.SubcategoryModule),
       },
+      {
+        path: 'custlogin',
+        loadChildren: () => import('./clientside/clientpages/login_client/login_client.modules').then(m => m.Login_clientModule),
+      },
     ],
+
   },
   {
     path: 'login',

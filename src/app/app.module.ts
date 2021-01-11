@@ -1,10 +1,11 @@
-import { LayoutclientComponent } from './clientside/landing_page/layoutclient/layoutclient.component';
-import { Landing_pageComponent } from './clientside/landing_page/landing_page/landing_page.component';
+import { Login_clientComponent } from './clientside/clientpages/login_client/login_client.component';
+import { LayoutclientComponent } from './clientside/clientpages/landing_page/layoutclient/layoutclient.component';
+import { Landing_pageComponent } from './clientside/clientpages/Main_landing_page/landing_page.component';
+import { HeaderComponent } from './clientside/clientpages/landing_page/header/header.component';
+import { FooterComponent } from './clientside/clientpages/landing_page/footer/footer.component';
+import { ProductComponent } from './clientside/clientpages/landing_page/product/product.component';
 
 import { SubcategoryComponent } from './clientside/clientpages/subcategory/subcategory.component';
-import { ProductComponent } from './clientside/landing_page/product/product.component';
-import { FooterComponent } from './clientside/landing_page/footer/footer.component';
-import { HeaderComponent } from './clientside/landing_page/header/header.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgSelect2Module } from 'ng-select2';
 import { BasicLoginComponent } from './AdminPanel/pages/auth/login/basic-login/basic-login.component';
@@ -53,7 +54,7 @@ import {DropdownModule} from 'primeng/dropdown';
     FooterComponent,
     ProductComponent,
     Landing_pageComponent,
-    LayoutclientComponent
+    LayoutclientComponent,
     // ItemListComponent,
     // AddEditItemComponent
   ],
