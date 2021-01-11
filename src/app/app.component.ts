@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   showproduct = true;
   showHeader = true;
   showFooter = true;
+  showrouter: string;
 
   slideActivate(ngbSlideEvent: NgbSlideEvent) {
     console.log(ngbSlideEvent.source);
@@ -21,14 +22,18 @@ export class AppComponent implements OnInit {
     console.log(NgbSlideEventSource.ARROW_LEFT);
     console.log(NgbSlideEventSource.ARROW_RIGHT);
   }
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute)
+  {
+  }
 
   ngOnInit() {
+
+
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
-        return;
-        // this.showHeader = this.activatedRoute.firstChild.snapshot.data.showHeader !== false;
+
         // this.showproduct = this.activatedRoute.firstChild.snapshot.data.showproduct !== false;
+        // this.showHeader = this.activatedRoute.firstChild.snapshot.data.showHeader !== false;
         // this.showFooter = this.activatedRoute.firstChild.snapshot.data.showFooter !== false;
       }
       window.scrollTo(0, 0);

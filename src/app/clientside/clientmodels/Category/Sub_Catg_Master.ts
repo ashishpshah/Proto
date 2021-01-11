@@ -1,4 +1,4 @@
-import { BaseModel } from '../BaseModel';
+import { BaseModel } from '../../../models/BaseModel';
 
 
 export class Sub_Catg_Master extends BaseModel {

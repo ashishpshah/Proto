@@ -1,6 +1,6 @@
-import { Root_Catg_Master } from './../Category/Root_Catg_Master';
+import { Root_Catg_Master } from './Root_Catg_Master';
 
-import { BaseModel } from "../baseModel";
+import { BaseModel } from "../../../models/baseModel";
 export class Root_Header_Master extends BaseModel {
   Root_Header_ID : number;
   Root_Name : string;

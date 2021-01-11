@@ -1,6 +1,6 @@
-import { Root_Header_Master } from './../../../models/Category/Root_Header_Master';
-import { Root_Catg_Master } from './../../../models/Category/Root_Catg_Master';
-import { CategoryService } from './../../../Services/category.service';
+import { Root_Header_Master } from '../../clientmodels/Category/Root_Header_Master';
+import { Root_Catg_Master } from '../../clientmodels/Category/Root_Catg_Master';
+import { CategoryService } from '../../client_services/category.service';
 import { Component, OnInit,ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Observable } from "rxjs";

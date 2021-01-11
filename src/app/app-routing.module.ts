@@ -1,40 +1,40 @@
-import { SubcategoryModule } from './pages/subcategory/subcategory.modules';
-import { Landing_pageComponent } from './layout/landing_page/landing_page/landing_page.component';
+import { ProductComponent } from './clientside/landing_page/product/product.component';
+import { AppComponent } from './app.component';
+import { SubcategoryModule } from './clientside/clientpages/subcategory/subcategory.modules';
+import { Landing_pageComponent } from './clientside/landing_page/landing_page/landing_page.component';
 import { BasicLoginComponent } from './pages/auth/login/basic-login/basic-login.component';
-import { SubcategoryComponent } from './pages/subcategory/subcategory.component';
+import { SubcategoryComponent } from './clientside/clientpages/subcategory/subcategory.component';
 import { BasicLoginModule } from './pages/auth/login/basic-login/basic-login.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './layout/admin/admin.component';
 import {AuthComponent} from './layout/auth/auth.component';
+import { LayoutclientComponent } from './clientside/landing_page/layoutclient/layoutclient.component';
 
 
 const routes: Routes = [
   {
     path: '',
     component: Landing_pageComponent,
+    redirectTo: '',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
+    component: LayoutclientComponent,
     //redirectTo: '',
     //pathMatch: 'full',
     children: [
       {
         path: 'subcategory/:string',
-        loadChildren: () => import('./pages/subcategory/subcategory.modules').then(m => m.SubcategoryModule),
-        data: {showproduct: true}
+        loadChildren: () => import('./clientside/clientpages/subcategory/subcategory.modules').then(m => m.SubcategoryModule),
       },
-      {
-        path: 'subcategory/:id',
-        loadChildren: () => import('./pages/subcategory/subcategory.modules').then(m => m.SubcategoryModule),
-        data: {showproduct: true}
-      },
-    ]
+    ],
   },
-  // { path: 'Subcategory/:string', component: SubcategoryComponent, data: {category: "/Cool", name: "Cool",showproduct: false} },
-  { path: 'login', component: BasicLoginComponent, data: {showproduct: false} },
-  // {
-  //   path: 'login',
-  //   loadChildren: () => import('./pages/auth/login/basic-login/basic-login.module').then(m => m.BasicLoginModule)
-  // },
-
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/auth/login/basic-login/basic-login.module').then(m => m.BasicLoginModule),
+  },
   {
     path: '',
     component: AdminComponent,

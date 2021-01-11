@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+
   production: false,
-  server:'https://protoapi.padhyasoft.com/APi/',
+  server: window.location.origin.includes('localhost') ? 'https://localhost:44311/Api/' :'https://protoapi.padhyasoft.com/Api/',
   domain : 'http://localhost:5000/',
 };
 

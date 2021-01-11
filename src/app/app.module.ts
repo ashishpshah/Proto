@@ -1,9 +1,10 @@
+import { LayoutclientComponent } from './clientside/landing_page/layoutclient/layoutclient.component';
+import { Landing_pageComponent } from './clientside/landing_page/landing_page/landing_page.component';
 
-
-import { SubcategoryComponent } from './pages/subcategory/subcategory.component';
-import { ProductComponent } from './layout/landing_page/product/product.component';
-import { FooterComponent } from './layout/landing_page/footer/footer.component';
-import { HeaderComponent } from './layout/landing_page/header/header.component';
+import { SubcategoryComponent } from './clientside/clientpages/subcategory/subcategory.component';
+import { ProductComponent } from './clientside/landing_page/product/product.component';
+import { FooterComponent } from './clientside/landing_page/footer/footer.component';
+import { HeaderComponent } from './clientside/landing_page/header/header.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgSelect2Module } from 'ng-select2';
 import { BasicLoginComponent } from './pages/auth/login/basic-login/basic-login.component';
@@ -40,7 +41,6 @@ import {ToastModule} from 'primeng/toast';
 import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
-import { Landing_pageComponent } from './layout/landing_page/landing_page/landing_page.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,8 @@ import { Landing_pageComponent } from './layout/landing_page/landing_page/landin
     HeaderComponent,
     FooterComponent,
     ProductComponent,
-    Landing_pageComponent
+    Landing_pageComponent,
+    LayoutclientComponent
     // ItemListComponent,
     // AddEditItemComponent
   ],

@@ -1,5 +1,5 @@
-import { Item_Master } from './../../../models/Category/Item_Master';
-import { CategoryService } from './../../../services/category.service';
+import { Item_Master } from '../../clientmodels/Category/Item_Master';
+import { CategoryService } from '../../client_services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from "rxjs";
