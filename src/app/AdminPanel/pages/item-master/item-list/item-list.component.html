@@ -100,7 +100,7 @@
                   <td>
                         {{item.StatusDesc}}
                   </td>
-                  <td>
+                  <td style = "width: 200px;">
                     {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.Item_ID)">Make Active</button> </span>
                   </td>
                   <td>

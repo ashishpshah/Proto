@@ -51,14 +51,14 @@ export class AdminCommonHelperComponent implements OnInit {
       this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
 
       if (this.msgType == 'S') {
-        this.commonAlert(title, this.message, 'success')
+        this.simpleAlert(title, this.message, 'success')
 
       }else {
-        this.commonAlert('Error', this.message, 'error')
+        this.simpleAlert('Error', this.message, 'error')
       }
 
     }else{
-      this.commonAlert('Error', 'Something went wrong!', 'error')
+      this.simpleAlert('Error', 'Something went wrong!', 'error')
     }
     return this.msgType;
   }

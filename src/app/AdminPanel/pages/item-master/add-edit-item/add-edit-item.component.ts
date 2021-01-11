@@ -70,7 +70,17 @@ export class AddEditItemComponent implements OnInit {
         Catg_Id : new FormControl(''),
         Created_Date : new FormControl(''),
         Modified_By : new FormControl(''),
-        Modified_Date : new FormControl('')
+        Modified_Date : new FormControl(''),
+        IsDeleted : new FormControl(''),
+
+        StatusDesc : new FormControl(''),
+        Deleted_By : new FormControl(''),
+        Deleted_Date : new FormControl(''),
+        Deleted : new FormControl(''),
+        CategoryName : new FormControl(''),
+        SubCategoryName : new FormControl(''),
+        Brand_Name : new FormControl(''),
+        Type_Name : new FormControl(''),
         // empName: ['', [Validators.required]],
         // gender: ['', [Validators.required]],
         // mobileNo: ['', [Validators.required,Validators.maxLength(10),]],
@@ -92,7 +102,6 @@ export class AddEditItemComponent implements OnInit {
       this._commonService.getItemById(this.itemId)
         .subscribe((resp) =>
         {
-          debugger;
           this.SelectedStatus = resp.Status;
           this.itemForm.setValue(resp)
           , error => this.errorMessage = error
@@ -147,6 +156,7 @@ export class AddEditItemComponent implements OnInit {
       return;
     }
     if (this.title == "Create") {
+      this.itemForm.value.IsInserted = 'I';
       this._commonService.saveItem(this.itemForm.value)
         .subscribe((data) => {
           this.commonHelper.commonAlert('Inserted', data, '/master/item-master')
@@ -154,6 +164,8 @@ export class AddEditItemComponent implements OnInit {
         }, error => this.errorMessage = error)
     }
     else if (this.title == "Edit") {
+      debugger;
+      this.itemForm.value.IsInserted = 'U';
       this._commonService.saveItem(this.itemForm.value)
         .subscribe((data) => {
           this.commonHelper.commonAlert('Updated', data, '/master/item-master')
@@ -166,7 +178,7 @@ export class AddEditItemComponent implements OnInit {
   }
 
   get Item_Name() { return this.itemForm.get('Item_Name'); }
-  get Item_Name_D() { return this.itemForm.get('Item_Name'); }
+  get Item_Name_D() { return this.itemForm.get('Item_Name_D'); }
   get Cat_SubCat_Id() { return this.itemForm.get('Cat_SubCat_Id'); }
   get SR_NO() { return this.itemForm.get('SR_NO'); }
   get Type_ID() { return this.itemForm.get('Type_ID'); }
