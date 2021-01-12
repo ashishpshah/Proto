@@ -18,6 +18,8 @@ export class ProtoServicesService {
 /******************************************** Developed by RAJESH GAMI *************************************************/
 
 //#region  Item Master Services
+
+
   getItemList(itemId:string): Observable<any> {
 
     return this.http.get(`${this.baseUrl}/`+'Item/GetItemList?itemId='+itemId);
@@ -41,6 +43,31 @@ export class ProtoServicesService {
     return this.http.get(this.baseUrl + "/Item/ActiveItem?itemId=" + itemId+'&userId='+userId)
       .catch(this.errorHandler);
   }
+//#endregion
+
+//#region  Root Header Master Service
+getRootHeaderList(rootHeaderId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RootHeader/GetRootHeaderList?rootHeaderId='+rootHeaderId);
+}
+
+getRootHeaderById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RootHeader/GetRootHeaderById?rootHeaderId='+id);
+}
+
+saveRootHeader(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'RootHeader/InsertUpdateRootHeader', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteRootHeader(rootHeaderId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "RootHeader/DeleteRootHeaderRecord?rootHeaderId=" + rootHeaderId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeRootHeader(rootHeaderId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "RootHeader/ActiveRootHeader?rootHeaderId=" + rootHeaderId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
 //#endregion
 
 //#region Common List Services

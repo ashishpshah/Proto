@@ -64,6 +64,10 @@ const routes: Routes = [
         path: 'master',
         loadChildren: () => import('./AdminPanel/pages/item-master/item-master.module').then(m => m.ItemMasterModule)
       },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/root-header-master/root-header-master.module').then(m => m.RootHeaderMasterModule)
+      },
 
       {
         path: 'basic',
