@@ -8,6 +8,7 @@ import { AddEditRootHeaderRoutingModule } from './add-edit-root-header-routing.m
 import {SharedModule} from '../../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
+import { OnlyNumberDirective } from 'src/app/Directive/onlyNumber.directive';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { NgSelect2Module } from 'ng-select2';
     NgSelectModule,
     NgSelect2Module
   ],
-  declarations: [AddEditRootHeaderComponent]
+  declarations: [AddEditRootHeaderComponent,OnlyNumberDirective]
 })
 export class AddEditRootHeaderModule { }

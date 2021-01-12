@@ -1,7 +1,7 @@
 import { DropdownList } from './../../../../models/DropdownList';
 import { AdminCommonHelperComponent } from './../../AdminCommonHelper/AdminCommonHelper.component';
 import { DropdownListInt } from './../../../../models/DropdownListInt';
-import { Component, Input, OnInit, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators, FormControl,FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from "rxjs";
@@ -27,7 +27,7 @@ export class AddEditRootHeaderComponent implements OnInit {
     message : string = '';
 
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
-    private _commonService : ProtoServicesService, private _router: Router, private el : ElementRef) {
+    private _commonService : ProtoServicesService, private _router: Router, private el : ElementRef, private renderer: Renderer2) {
       if (this._avRoute.snapshot.params["id"]) {
         this.rootHeaderId = this._avRoute.snapshot.params["id"];
         this.isInserted = 'U';
@@ -61,23 +61,21 @@ export class AddEditRootHeaderComponent implements OnInit {
   }
 
   validate(){
-    // ('#Root_Name').focus();
     if(this.rootHeaderObj.Root_Name == ''){
       this.errorMessage = "Please Enter Root Name";
-      // const invalidControl = this.el.nativeElement.querySelector('#Root_Name');
-      // if (invalidControl) {
-      //   invalidControl.focus();
-      // }
+      this.renderer.selectRootElement('#Root_Name').focus();
       return false;
     }
     else if(this.rootHeaderObj.Root_Name_D == '')
     {
       this.errorMessage = "Please Enter Root Name (Danish)";
+      this.renderer.selectRootElement('#Root_Name_D').focus();
       return false;
     }
     else if(this.rootHeaderObj.Display_Seq_No == '' || this.rootHeaderObj.Display_Seq_No == '0' || this.rootHeaderObj.Display_Seq_No == 0 )
     {
       this.errorMessage = "Please Enter Display Seq No";
+      this.renderer.selectRootElement('#Display_Seq_No').focus();
       return false;
     }
     else{
