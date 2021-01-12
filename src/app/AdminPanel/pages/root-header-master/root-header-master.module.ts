@@ -8,7 +8,8 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     RootHeaderMasterRoutingModule,
-    SharedModule
+    SharedModule,
+
   ],
   declarations: [RootHeaderMasterComponent]
 })
