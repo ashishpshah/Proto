@@ -34,7 +34,6 @@ export class ItemListComponent implements OnInit {
 
   ngOnInit(): void  {
      this.getItemList();
-
   }
 
   getItemList(){
@@ -46,6 +45,7 @@ export class ItemListComponent implements OnInit {
       }
     );
   }
+
   openAddEdit(){
     this._router.navigate(['/master/add-edit-item']);
   }
@@ -81,22 +81,28 @@ export class ItemListComponent implements OnInit {
 
   activateItem(itemId) {
         this._commonService.activeItem(itemId,this.userId).subscribe((data) => {
-          if (data != null && data != "e" && data != "r" && data != "o") {
 
-            let splitData = data.toString().split("|");
-            this.msgType = splitData.length > 0 ? splitData[0] :'E';
-            this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
-
-            if (this.msgType == 'S') {
-              Swal.fire('Activated!', this.message, 'success')
+          let ret = this.commonHelper.activeInactiveAlert('Activated',data);
+            if (ret == 'S') {
               this.getItemList();
-            }else {
-              Swal.fire('Error', this.message, 'error')
             }
 
-          }else{
-            Swal.fire('Error', 'Something went wrong!', 'error')
-          }
+          // if (data != null && data != "e" && data != "r" && data != "o") {
+
+          //   let splitData = data.toString().split("|");
+          //   this.msgType = splitData.length > 0 ? splitData[0] :'E';
+          //   this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
+
+          //   if (this.msgType == 'S') {
+          //     Swal.fire('Activated!', this.message, 'success')
+          //     this.getItemList();
+          //   }else {
+          //     Swal.fire('Error', this.message, 'error')
+          //   }
+
+          // }else{
+          //   Swal.fire('Error', 'Something went wrong!', 'error')
+          // }
         }, error => console.error(error))
   }
 
