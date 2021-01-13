@@ -36,6 +36,8 @@ export class CheckpincodeComponent implements OnInit {
   showpicodemodel:any =true;
   showcreatemodel:any =false;
   hideModal: boolean = false;
+  isshowcvrdiv:any =false ;
+  isshoweandiv:any =false;
   LetterList : Observable<DropdownList[]>;
   FloorList : Observable<DropdownList[]>;
   PageList : Observable<DropdownList[]>;
@@ -116,12 +118,12 @@ public countries = [
 
 
 selectEvent(item) {
+  debugger;
+  this.CreateFromObj.StreetName=item.name;
   // do something with selected item
 }
 
 onChangeSearch(search: string) {
-
-debugger;
 if(search.length >2)
 {
 
@@ -302,6 +304,7 @@ validate(){
     this.renderer.selectRootElement('#MobileNo').focus();
     return false;
   }
+
   else if(this.CreateFromObj.Password == '' || this.CreateFromObj.Password == '0' || this.CreateFromObj.Password == 0 )
   {
     this.errorMessage = "Please Enter Password";
@@ -319,6 +322,45 @@ validate(){
     this.errorMessage = "Please Enter Valid Reapeat Password";
     this.renderer.selectRootElement('#ReapeatPassword').focus();
     return false;
+  }
+  else if(this.CreateFromObj.Customer_Type != '')
+  {
+    if(this.CreateFromObj.Customer_Type =='PROFESSION')
+    {
+
+     if(this.CreateFromObj.CVR == '' || this.CreateFromObj.CVR == '0' || this.CreateFromObj.CVR == 0 )
+      {
+        this.errorMessage = "Please Enter CVR";
+        this.renderer.selectRootElement('#CVR').focus();
+        return false;
+      }
+      else{
+        return true;
+      }
+
+    }
+    else if(this.CreateFromObj.Customer_Type =='PUBLIC')
+    {
+      if(this.CreateFromObj.CVR == '' || this.CreateFromObj.CVR == '0' || this.CreateFromObj.CVR == 0 )
+      {
+        this.errorMessage = "Please Enter CVR";
+        this.renderer.selectRootElement('#CVR').focus();
+        return false;
+      }
+      else if(this.CreateFromObj.CEANNoVR == '' || this.CreateFromObj.EANNo == '0' || this.CreateFromObj.EANNo == 0 )
+      {
+        this.errorMessage = "Please Enter EANNo";
+        this.renderer.selectRootElement('#EANNo').focus();
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+    else{
+      return true;
+    }
+
   }
   else{
     return true;
@@ -383,16 +425,39 @@ CheckPincodevalidet() {
           this.CreateFromObj.Town= this.Townname;
           this.CreateFromObj.ZipcodeCheck='';
 
-        }else {
+        }else
+        {
           this.closeAddExpenseModal.nativeElement.click();
-          Swal.fire('Error', this.message, 'error')
+          this.errorMessage = "Please Enter  Valid Pincode";
         }
 
-      }else{
+      }else
+      {
         this.closeAddExpenseModal.nativeElement.click();
-        Swal.fire('Error', 'Something went wrong!', 'error')
+        this.errorMessage = "Please Enter  Valid Pincode";
       }
     }, error => {this.errorMessage = error ; this.loading = false;})
+  }
+
+}
+
+changecustomertype(e) {
+  console.log(e.target.value);
+
+  if(this.CreateFromObj.Customer_Type =='PROFESSION')
+  {
+      this.isshowcvrdiv =true;
+  }
+  else if(this.CreateFromObj.Customer_Type =='PUBLIC')
+  {
+    this.isshowcvrdiv =true;
+    this.isshoweandiv =true;
+  }
+  else if(this.CreateFromObj.Customer_Type =='PRIVATE')
+  {
+    this.isshowcvrdiv =false;
+    this.isshoweandiv =false;
+
   }
 
 }

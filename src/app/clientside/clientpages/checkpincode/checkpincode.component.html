@@ -50,7 +50,7 @@
 
                 <div>
                   <label class="radio-inline" *ngFor="let st of CustTypeList; let i = index"  >
-                    <input type="radio" name="CustTypeList" [value]="st.id" [(ngModel)]="CreateFromObj.Customer_Type"   [ngModelOptions]="{standalone: true}"> {{st.name}}
+                    <input type="radio" name="CustTypeList" [value]="st.id" [(ngModel)]="CreateFromObj.Customer_Type"  (change)="changecustomertype($event)"  [ngModelOptions]="{standalone: true}"> {{st.name}}
                   </label>
                 </div>
             </div>
@@ -110,7 +110,7 @@
                   (inputFocused)='onFocused($event)'
                   historyIdentifier="countries"
                   [itemTemplate]="itemTemplate"
-                  [notFoundTemplate]="notFoundTemplate"  class="form-control" [(ngModel)]="CreateFromObj.StreetName" [ngModelOptions]="{standalone: true}" autocomplete="off">
+                  [notFoundTemplate]="notFoundTemplate"  class="form-control" autocomplete="off">
                 </ng-autocomplete>
 
                 <ng-template #itemTemplate let-item>
@@ -172,14 +172,16 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="EANNo">EAN number </label>
-              <input type="text"  class="form-control" id="EANNo" placeholder="EANNo " [(ngModel)]="CreateFromObj.EANNo" [ngModelOptions]="{standalone: true}">
-            </div>
+          <div class="form-row" *ngIf="isshowcvrdiv">
+
             <div class="form-group col-md-6">
               <label for="CVR">CVR</label>
               <input type="text"  class="form-control" id="CVR" placeholder="CVR" [(ngModel)]="CreateFromObj.CVR" [ngModelOptions]="{standalone: true}">
+            </div>
+
+            <div class="form-group col-md-6" *ngIf="isshoweandiv">
+              <label for="EANNo">EAN number </label>
+              <input type="text"  class="form-control" id="EANNo" placeholder="EANNo " [(ngModel)]="CreateFromObj.EANNo" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
 
