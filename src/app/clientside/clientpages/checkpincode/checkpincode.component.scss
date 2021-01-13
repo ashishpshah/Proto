@@ -1,5 +1,47 @@
+.ng-autocomplete {
+  width:100%;
+  max-width: 600px;
+  display: table;
+  margin: 0 auto;
+}
+
+.autocomplete-container .input-container input {
+  font-size: 14px;
+  box-sizing: border-box;
+  border: none;
+  box-shadow: none;
+  outline: 0;
+  // background-color: #fff;
+  background-color: rgba(0,0,0,0.55) !important;
+  // color: rgba(0,0,0,.87);
+  color: #ffffff!important;
+  width: 100%;
+  padding: 0 15px;
+  line-height: 40px;
+  height: 40px;
+}
+
+a:not([href]):not([tabindex]):focus, a:not([href]):not([tabindex]):hover {
+  color: darkgreen !important;
+  text-decoration: none !important;
+}
+
+.autocomplete-container .suggestions-container {
+  position: absolute;
+  width: 100%;
+  // background: #fff;
+  color: #ffffff !important;
+  background-color: rgba(0,0,0,0.55) !important;
+  height: auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  box-sizing: border-box;
+}
+
+
+
 body {
-  background-image:url('https://i.redd.it/o8dlfk93azs31.jpg');
+
+  background-image:url('../../../../assets/img/img/523447.jpg');
   background-position:center;
   background-size:cover;
 

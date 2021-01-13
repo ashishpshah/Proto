@@ -28,6 +28,7 @@
     "@nicky-lenaers/ngx-scroll-to": "^9.0.0",
     "@types/googlemaps": "^3.39.12",
     "angular-9-datatable": "^0.1.1",
+    "angular-ng-autocomplete": "^2.0.4",
     "angular2-chartjs": "^0.5.1",
     "angular2-notifications": "^9.0.0",
     "auto-import": "^0.1.4",

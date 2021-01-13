@@ -75,6 +75,11 @@ activeRootHeader(rootHeaderId :number, userId :string) {
     return this.http.get(`${this.baseUrl}/`+'Lovmaster/GetLovDetailByColumnAJ?Lov_Column='+Lov_Column);
   }
 
+  GetStreetnamebysearch(search:string,pincode:string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'Lovmaster/GetStreetnamebysearch?search='+search+'&pincode='+pincode);
+  }
+
+
   GetActiveSubCategoryList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Item/GetActiveSubCategoryListAJ?subcatId='+'0');
   }

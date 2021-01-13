@@ -1,3 +1,5 @@
+import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
+import { CheckpincodeRoutes } from './clientside/clientpages/checkpincode/checkpincode.routing';
 import { Login_clientModule } from './clientside/clientpages/login_client/login_client.modules';
 import { Login_clientComponent } from './clientside/clientpages/login_client/login_client.component';
 import { LayoutclientComponent } from './clientside/clientpages/landing_page/layoutclient/layoutclient.component';
@@ -32,7 +34,13 @@ const routes: Routes = [
       },
       {
         path: 'custlogin',
+
         loadChildren: () => import('./clientside/clientpages/login_client/login_client.modules').then(m => m.Login_clientModule),
+      },
+      {
+        path: 'create-user',
+        component: CheckpincodeComponent,
+        //loadChildren: () => import('./clientside/clientpages/checkpincode/checkpincode.module').then(m => m.CheckpincodeModule),
       },
     ],
 

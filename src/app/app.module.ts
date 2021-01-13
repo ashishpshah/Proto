@@ -4,16 +4,13 @@ import { Landing_pageComponent } from './clientside/clientpages/Main_landing_pag
 import { HeaderComponent } from './clientside/clientpages/landing_page/header/header.component';
 import { FooterComponent } from './clientside/clientpages/landing_page/footer/footer.component';
 import { ProductComponent } from './clientside/clientpages/landing_page/product/product.component';
-
 import { SubcategoryComponent } from './clientside/clientpages/subcategory/subcategory.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgSelect2Module } from 'ng-select2';
 import { BasicLoginComponent } from './AdminPanel/pages/auth/login/basic-login/basic-login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { AdminComponent } from './AdminPanel/layout/admin/admin.component';
 import { BreadcrumbsComponent } from './AdminPanel/layout/admin/breadcrumbs/breadcrumbs.component';
@@ -42,6 +39,8 @@ import {ToastModule} from 'primeng/toast';
 import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +54,7 @@ import {DropdownModule} from 'primeng/dropdown';
     ProductComponent,
     Landing_pageComponent,
     LayoutclientComponent,
+    CheckpincodeComponent
     // ItemListComponent,
     // AddEditItemComponent
   ],
@@ -82,6 +82,7 @@ import {DropdownModule} from 'primeng/dropdown';
     InputTextModule,
     ProgressBarModule,
     DropdownModule,
+    AutocompleteLibModule
 
     // ,RouterModule.forRoot([
     //   { path: '', component: BasicLoginComponent, pathMatch: 'full' }

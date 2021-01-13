@@ -1,18 +1,18 @@
-import { Login_clientRoutes } from './login_client.routing';
-import { Login_clientComponent } from './login_client.component';
+import { CheckpincodeRoutes } from './checkpincode.routing';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CheckpincodeComponent } from './checkpincode.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
-    Login_clientRoutes,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    CheckpincodeRoutes
   ],
-  declarations: [Login_clientComponent]
+  declarations: [CheckpincodeComponent]
 })
-export class Login_clientModule { }
+export class CheckpincodeModule { }

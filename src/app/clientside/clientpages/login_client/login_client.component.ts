@@ -32,14 +32,15 @@ export class Login_clientComponent implements OnInit {
   ngOnInit() {
 
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      Email: ['', Validators.required],
+      Password: ['', Validators.required]
   });
   }
 
   get f() { return this.loginForm.controls; }
 
   login() {
+    debugger;
     this.loading = true;
     if (!this.loginForm.valid) {
       this.loading = false;
@@ -53,19 +54,18 @@ export class Login_clientComponent implements OnInit {
           }else{
             debugger;
               this.loginForm = this.formBuilder.group({resp});
-              debugger;
-            localStorage.setItem('userId',  this.loginForm.value.resp.User_Id);
-            localStorage.setItem('userName',  this.loginForm.value.resp.User_Name);
-            localStorage.setItem('userType',  this.loginForm.value.resp.UserTypeDesc);
+            // localStorage.setItem('userId',  this.loginForm.value.resp.User_Id);
+            // localStorage.setItem('userName',  this.loginForm.value.resp.User_Name);
+            // localStorage.setItem('userType',  this.loginForm.value.resp.UserTypeDesc);
             this.loading = false;
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/subcategory/1']);
           }
 
         }, error => {this.errorMessage = error ; this.loading = false;})
 
   }
 
-  get UserId() { return this.loginForm.get('UserId'); }
+  get Email() { return this.loginForm.get('Email'); }
   get Password() { return this.loginForm.get('Password'); }
 
 }
