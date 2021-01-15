@@ -1,3 +1,4 @@
+
   <div class="slider-area slider-height" data-background="assets/img/hero/h1_hero.jpg">
     <!-- slider Area Start-->
     <ngb-carousel (slide)="slideActivate($event)" class="myclass">
@@ -32,45 +33,119 @@
 
     </div>
     <!-- slider Area End-->
-<div class="container-fluid mt-5 pt-5">
 
-    <div class="row">
+  <div id="all">
+      <div id="content">
+          <div class="container">
+              <!-- *** ADVANTAGES END ***-->
+              <div class="box text-center">
+                  <h3 class="text-uppercase">New summer arrivals</h3>
+                  <h4 class="text-muted"><span class="accent">Free shipping</span> on all</h4>
+              </div>
+              <div class="row products">
+                  <div class="col-md-3 col-sm-4" *ngFor='let prod of Item_Masters'>
+                      <div class="product">
+                          <div class="image">
+                              <a href="detail.html"><img src="/assets/img/imagesclient/img-product2.jpg" alt="" class="img-fluid image1"></a>
+                              <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
+                          </div>
+                          <!-- /.image-->
+                          <div class="text">
+                              <h3><a href="detail.html">{{prod.Item_Name}}</a></h3>
+                              <p class="card-text text-left  mb-0">Price: <span class="font-weight-bold float-right text-success">{{prod.Price}}</span></p>
 
-      <div class="col-12">
+                              <p class="card-text text-left">Stock left: <span class="font-weight-bold float-right text-danger">{{prod.Qty}}</span></p>
+                              <!-- <p class="price">{{prod.Price}}</p>
+                              <p class="price">{{prod.Qty}}</p> -->
+                          </div>
+                          <!-- /.text-->
 
-        <h6 class="text-left">Top Category</h6>
-
-      </div>
-
-    </div>
-
-  <div class="row">
-
-      <div class="col-sm-4 col-md-2 col-xs-12 col-12 mb-4" *ngFor='let prod of Item_Masters'>
-
-      <div class="card" >
-
-        <!-- <span class="button-icon icon_addtolist"></span>
-        <span class="button-icon icon_addedtolist"></span> -->
-        <i class="fa fa-heart-o fav"></i>
-
-          <img class="card-img-top" style="height:220px" src="/assets/img/slider/slide_2.jpg" alt="Card image cap">
-
-          <div class="card-body" style="background-color: #f9f9f9;">
-
-            <h6 class="card-title text-left">{{prod.Item_Name}}</h6>
-
-            <p class="card-text text-left  mb-0">Price: <span class="font-weight-bold float-right text-success">{{prod.Price}}</span></p>
-
-            <p class="card-text text-left">Stock left: <span class="font-weight-bold float-right text-danger">{{prod.Qty}}</span></p>
-
-
+                              <!-- /.text-->
+                              <div class="ribbon sale">
+                                <div class="theribbon">SALE</div>
+                                <div class="ribbon-background"></div>
+                            </div>
+                            <!-- /.ribbon-->
+                            <div class="ribbon new">
+                                <div class="theribbon">NEW</div>
+                                <div class="ribbon-background"></div>
+                            </div>
+                            <!-- /.ribbon-->
+                      </div>
+                      <!-- /.product-->
+                  </div>
+                  <!-- /.col-md-4-->
+                  <div id="product-quick-view-modal" tabindex="-1" role="dialog" aria-hidden="false" class="modal fade">
+                      <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-body">
+                                  <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
+                                  <div class="row quick-view product-main">
+                                      <div class="col-sm-6">
+                                          <div class="quick-view-main-image"><img src="/assets/img/imagesclient/img-detailbig1.jpg" alt="" class="img-fluid"></div>
+                                          <div class="ribbon ribbon-quick-view sale">
+                                              <div class="theribbon">SALE</div>
+                                              <div class="ribbon-background"></div>
+                                          </div>
+                                          <!-- /.ribbon-->
+                                          <div class="ribbon ribbon-quick-view new">
+                                              <div class="theribbon">NEW</div>
+                                              <div class="ribbon-background"></div>
+                                          </div>
+                                          <!-- /.ribbon-->
+                                          <div class="row thumbs">
+                                              <div class="col-4"><a href="img/detailbig1.jpg" class="thumb"><img src="/assets/img/imagesclient/img-detailsquare.jpg" alt="" class="img-fluid"></a></div>
+                                              <div class="col-4"><a href="img/detailbig2.jpg" class="thumb"><img src="/assets/img/imagesclient/img-detailsquare2.jpg" alt="" class="img-fluid"></a></div>
+                                              <div class="col-4"><a href="img/detailbig3.jpg" class="thumb"><img src="/assets/img/imagesclient/img-detailsquare3.jpg" alt="" class="img-fluid"></a></div>
+                                          </div>
+                                      </div>
+                                      <div class="col-sm-6">
+                                          <h2>White Blouse Armani</h2>
+                                          <p class="text-muted text-small text-center">White lace top, woven, has a round neck, short sleeves, has knitted lining attached</p>
+                                          <div class="box">
+                                              <form>
+                                                  <div class="sizes">
+                                                      <h3>Available sizes</h3>
+                                                      <label for="size_s">
+                                                          <a href="#">S</a>
+                                                          <input id="size_s" type="radio" name="size" value="s" class="size-input">
+                                                      </label>
+                                                      <label for="size_m">
+                                                          <a href="#">M</a>
+                                                          <input id="size_m" type="radio" name="size" value="m" class="size-input">
+                                                      </label>
+                                                      <label for="size_l">
+                                                          <a href="#">L</a>
+                                                          <input id="size_l" type="radio" name="size" value="l" class="size-input">
+                                                      </label>
+                                                  </div>
+                                                  <p class="price">$124.00</p>
+                                                  <p class="text-center">
+                                                      <button type="submit" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                                      <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-outline-secondary"><i class="fa fa-heart-o"></i></button>
+                                                  </p>
+                                              </form>
+                                          </div>
+                                          <!-- /.box-->
+                                          <div class="quick-view-social">
+                                              <h4>Show it to your friends</h4>
+                                              <p><a href="#" data-animate-hover="pulse" class="external facebook"><i class="fa fa-facebook"></i></a><a href="#" data-animate-hover="pulse" class="external gplus"><i class="fa fa-google-plus"></i></a><a href="#" data-animate-hover="pulse" class="external twitter"><i class="fa fa-twitter"></i></a><a href="#" data-animate-hover="pulse" class="email"><i class="fa fa-envelope"></i></a></p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <!-- /.modal-dialog-->
+                  </div>
+                  <!-- /.modal-->
+              </div>
+              <!-- /.products-->
           </div>
-
-        </div>
-
       </div>
-
   </div>
 
-  </div>
+
+
+
+

@@ -1,53 +1,63 @@
-<!-- ======= Top Bar ======= -->
-<section id="topbar" class="d-none d-lg-block">
-  <div class="container clearfix">
-    <div class="contact-info float-left">
-      <i class="icofont-envelope"></i><a href="mailto:contact@example.com">contact@Prototype.com</a>
-      <i class="icofont-phone"></i> +91  9898633675
-    </div>
-    <div class="social-links float-right">
-      <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
-      <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
-      <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
-      <a href="#" class="skype"><i class="icofont-skype"></i></a>
-      <a href="#" class="linkedin"><i class="icofont-linkedin"></i></a>
-      <a href="/custlogin" class="linkedin"><i class="icofont-login ml-1"></i>Login in</a>
-      <a href="/create-user" class="linkedin"><i class="icofont-user"></i>Create</a>
-    </div>
-  </div>
-</section>
+  <nav id="navbar" role="navigation" class="navbar navbar-light fixed-top navbar-expand-lg yamm justify-content-between">
+      <div class="search-area">
+          <div class="search-area-inner d-flex align-items-center justify-content-center">
+              <div class="close-btn"><i class="fa fa-close"></i></div>
+              <form action="#">
+                  <div class="form-group">
+                      <input type="search" name="search" id="search" placeholder="What are you looking for?"><button type="submit" class="submit"><i class="fa fa-search"></i></button>
+                  </div>
+              </form>
+          </div>
+      </div>
+      <div class="container">
+          <a href="index.html" class="navbar-brand home"><img src="assets/img/logo/logo.png" alt="Minimal logo" style="height: 44px;" class="d-none d-md-inline-block"><img src="assets/img/logo/logo.png" alt="Minimal logo" class="d-md-none"><span class="sr-only">Prototype - go to homepage</span></a>
+          <div class="navbar-buttons d-lg-none">
 
-<!-- ======= Header ======= -->
-<header id="header" >
-  <div class="container">
+            <a href="/custlogin" class="btn btn-outline-secondary mr-1"><i class="icofont-login ml-1"></i>Login in</a>
+            <a class="btn btn-outline-secondary mr-1" href="/create-user"><i class="icofont-ui-user"></i>Create</a>
+              <!-- <button type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-outline-secondary mr-1"><a href="login"><i class="icofont-ui-user"></i></a><i class="fa fa-users"></i></button> -->
+              <a href="/shoppingcart" class="btn btn-outline-primary mr-1"><i class="fa fa-shopping-cart"></i><span class="d-none d-sm-inline">3 items in cart                </span></a>
+              <button type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation" class="btn btn-outline-primary"><i class="fa fa-align-justify"></i><span class="sr-only">Toggle navigation</span></button>
+          </div>
+          <div id="navigation" class="navbar-collapse collapse">
+              <div class="navbar-nav mr-auto">
 
-    <div class="logo float-left">
+                  <div class="nav-item" *ngFor='let item  of Root_Header_Masters' [ngClass]="item.rootcat.length > 0 ? 'dropdown normal-dropdown' : ''">
+                      <a id="homeDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link " [ngClass]="item.rootcat.length > 0 ? 'dropdown-toggle' : ''">{{item.Root_Name}}</a>
+                      <div aria-labelledby="homeDropdown" class="dropdown-menu" *ngIf="item.rootcat.length > 0">
+                        <a href="/subcategory/{{item1.RCatg_ID}}" *ngFor='let item1  of item.rootcat' class="dropdown-item">{{item1.RCatg_Name}}<span class="badge badge-success">New</span></a>
+                      </div>
+                  </div>
+                  <div class="nav-item"><a href="contact.html" class="nav-link">Contact</a></div>
+              </div>
+              <div class="d-none d-lg-block">
+                <a href="/custlogin"  class="mr-3"><i class="icofont-lock ml-1"></i>Login in</a>
+                <a class="mr-3" href="/create-user"><i class="icofont-ui-user"></i>Create</a>
+                <a href="/shoppingcart" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">3 items <span class="hidden-md">in cart   </span></span></a>
+              </div>
+          </div>
+          <!-- /.nav-collapse-->
+      </div>
+  </nav><!-- /#navbar--><!-- *** NAVBAR END ***-->
 
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <a href="#"><img src="assets/img/logo/logo.png" alt="" class="img-fluid"></a>
-    </div>
-
-    <nav class="nav-menu float-right d-none d-lg-block">
-      <ul>
-
-        <li style="display: none;"><a href="#"> {{Root_Header_Masters.length}}</a>  </li>
-
-        <li *ngFor='let item  of Root_Header_Masters' [ngClass]="item.rootcat.length > 0 ? 'drop-down' : ''">
-          <a  href="#" >{{item.Root_Name}}</a>
-            <ul *ngIf="item.rootcat.length > 0">
-                <li *ngFor='let item1  of item.rootcat'>
-                    <a href="/subcategory/{{item1.RCatg_ID}}">{{item1.RCatg_Name}}</a>
-                </li>
-            </ul>
-        </li>
-        <li> <a href="login"><i class="icofont-ui-user"></i></a> </li>
-      </ul>
-    </nav><!-- .nav-menu -->
+  <button type="button" data-toggle="collapse" data-target="#style-switch" id="style-switch-button" class="btn btn-outline-white-primary btn d-none d-md-inline-block"><i class="fa fa-cog fa-2x"></i></button>
+<div id="style-switch" class="collapse">
+  <h5 class="mb-3">Select theme colour</h5>
+  <form class="mb-3">
+    <select name="colour" id="colour" class="form-control">
+      <option value="">select colour variant</option>
+      <option value="default">pink</option>
+      <option value="red">red</option>
+      <option value="green">green</option>
+      <option value="lightblue">light blue</option>
+      <option value="turquoise">turquoise</option>
+      <option value="blue">blue</option>
+    </select>
+  </form>
+  <p><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/template-mac.png" alt="" class="img-fluid"></p>
+  <p class="text-muted text-small">Stylesheet switching is done by JavaScript and can cause a blink while page loads. This will not happen in your production code.</p>
+</div>
 
 
-      <!-- Mobile Menu -->
-      <!-- <div class="col-12">
-        <button type="button" class="mobile-nav-toggle d-lg-none"><i class="icofont-navigation-menu"></i></button>
-     </div> -->
-  </div>
-</header><!-- End Header -->
+  <!-- #### JavaScript files ###-->
+

@@ -41,6 +41,7 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
+import { ShoppingcartComponent } from './clientside/clientpages/shoppingcart/shoppingcart.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/che
     ProductComponent,
     Landing_pageComponent,
     LayoutclientComponent,
-    CheckpincodeComponent
+    CheckpincodeComponent,
+    ShoppingcartComponent
     // ItemListComponent,
     // AddEditItemComponent
   ],

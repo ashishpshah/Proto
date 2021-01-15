@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './AdminPanel/layout/admin/admin.component';
 import {AuthComponent} from './AdminPanel/layout/auth/auth.component';
+import { ShoppingcartComponent } from './clientside/clientpages/shoppingcart/shoppingcart.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
         path: 'create-user',
         component: CheckpincodeComponent,
         //loadChildren: () => import('./clientside/clientpages/checkpincode/checkpincode.module').then(m => m.CheckpincodeModule),
+      },
+      {
+        path: 'shoppingcart',
+        component: ShoppingcartComponent,
       },
     ],
 
