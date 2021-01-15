@@ -1,3 +1,5 @@
+import { CategoryMasterModule } from './AdminPanel/pages/category-master/category-master.module';
+import { RootCategoryMasterModule } from './AdminPanel/pages/root-category-master/root-category-master.module';
 import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
 import { CheckpincodeRoutes } from './clientside/clientpages/checkpincode/checkpincode.routing';
 import { Login_clientModule } from './clientside/clientpages/login_client/login_client.modules';
@@ -81,6 +83,18 @@ const routes: Routes = [
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/root-header-master/root-header-master.module').then(m => m.RootHeaderMasterModule)
       },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/root-category-master/root-category-master.module').then(m => m.RootCategoryMasterModule)
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/category-master/category-master.module').then(m => m.CategoryMasterModule)
+      },
+      // {
+      //   path: 'master',
+      //    loadChildren: () => import('./AdminPanel/pages/category-master/category-master.module').then(m => m.CategoryMasterModule)
+      // },
 
       {
         path: 'basic',

@@ -1,7 +1,7 @@
-import { AddEditRootCategoryRoutingModule } from './add-edit-root-category-routing.module';
+import { AddEditCategoryRoutingModule } from './add-edit-category-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddEditRootCategoryComponent } from './add-edit-root-category.component';
+import { AddEditCategoryComponent } from './add-edit-category.component';
 
 import {SharedModule} from '../../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
@@ -16,8 +16,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     NgSelectModule,
     NgSelect2Module,
-    AddEditRootCategoryRoutingModule
+    AddEditCategoryRoutingModule
   ],
-  declarations: [AddEditRootCategoryComponent]
+  declarations: [AddEditCategoryComponent]
 })
-export class AddEditRootCategoryModule { }
+export class AddEditCategoryModule { }

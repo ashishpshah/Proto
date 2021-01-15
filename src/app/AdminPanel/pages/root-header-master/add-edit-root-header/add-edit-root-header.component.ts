@@ -15,7 +15,6 @@ import { ProtoServicesService } from "../../../Services/proto-services.service";
 export class AddEditRootHeaderComponent implements OnInit {
 
     rootHeaderObj :any ={};
-
     title: string = "Create";
     rootHeaderId: number;
     errorMessage: any ='';

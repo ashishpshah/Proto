@@ -53,6 +53,18 @@ const MENUITEMS = [
             name: 'Root Header Master'
           },
           {
+            state: 'root-category-master',
+            name: 'Root Category Master'
+          },
+          {
+            state: 'category-master',
+            name: 'Category Master'
+          },
+          {
+            state: 'sub-category-master',
+            name: 'Sub Category Master'
+          },
+          {
             state: 'item-master',
             name: 'Item Master'
           },

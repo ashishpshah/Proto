@@ -46,6 +46,7 @@ export class ProtoServicesService {
 //#endregion
 
 //#region  Root Header Master Service
+
 getRootHeaderList(rootHeaderId:string): Observable<any> {
   return this.http.get(`${this.baseUrl}/`+'RootHeader/GetRootHeaderList?rootHeaderId='+rootHeaderId);
 }
@@ -70,6 +71,59 @@ activeRootHeader(rootHeaderId :number, userId :string) {
 }
 //#endregion
 
+//#region  Root Category Master Service
+
+getRootCategoryList(rootCategoryId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RootCategory/GetRootCategoryList?rootCategoryId='+rootCategoryId);
+}
+
+getRootCategoryById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RootCategory/GetRootCategoryById?rootCategoryId='+id);
+}
+
+saveRootCategory(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'RootCategory/InsertUpdateRootCategory', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteRootCategory(rootCategoryId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "RootCategory/DeleteRootCategoryRecord?rootCategoryId=" + rootCategoryId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeRootCategory(rootCategoryId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "RootCategory/ActiveRootCategory?rootCategoryId=" + rootCategoryId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+//#region CategoryLevel Master Service
+
+getCategoryList(categoryId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'CategoryLevel/GetCategoryList?categoryId='+categoryId);
+}
+
+getCategoryById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'CategoryLevel/GetCategoryById?categoryId='+id);
+}
+
+saveCategory(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'CategoryLevel/InsertUpdateCategory', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteCategory(categoryId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "CategoryLevel/DeleteCategoryRecord?categoryId=" + categoryId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeCategory(categoryId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "CategoryLevel/ActiveCategory?categoryId=" + categoryId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
 //#region Common List Services
   GetLovDetailByColumn(Lov_Column:string): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Lovmaster/GetLovDetailByColumnAJ?Lov_Column='+Lov_Column);
@@ -90,6 +144,16 @@ activeRootHeader(rootHeaderId :number, userId :string) {
 
   GetActiveTypeList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Item/GetActiveTypeListAJ?typeId='+'0');
+  }
+
+  GetActiveRootList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'RootHeader/GetActiveRootList?rootId='+'0');
+  }
+  GetActiveRootCategoryList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'RootCategory/GetActiveRootCategoryList?rootCategoryId='+'0');
+  }
+  GetActiveCategoryList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'CategoryLevel/GetActiveCategoryList?categoryId='+'0');
   }
 //#endregion
 

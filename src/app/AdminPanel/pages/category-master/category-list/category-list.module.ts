@@ -1,6 +1,7 @@
+import { CategoryListRoutingModule } from './category-list-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RootCategoryListComponent } from './root-category-list.component';
+import { CategoryListComponent } from './category-list.component';
 
 import {SharedModule} from '../../../shared/shared.module';
 import {NgxDataTableModule} from "angular-9-datatable";
@@ -15,13 +16,13 @@ import {ToastModule} from 'primeng/toast';
 import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
-import { RootCategoryListRoutingModule } from './root-category-list-routing.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    RootCategoryListRoutingModule,
-    SharedModule
+    CategoryListRoutingModule
+    ,SharedModule
     ,NgxDataTableModule
     ,TableModule,
     CalendarModule,
@@ -35,6 +36,6 @@ import { RootCategoryListRoutingModule } from './root-category-list-routing.modu
     ProgressBarModule,
     DropdownModule,
   ],
-  declarations: [RootCategoryListComponent]
+  declarations: [CategoryListComponent]
 })
-export class RootCategoryListModule { }
+export class CategoryListModule { }
