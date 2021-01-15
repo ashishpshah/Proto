@@ -1,3 +1,4 @@
+import { Client_commonService } from './../../../client_services/client_common.service';
 import { CategoryService } from './../../../client_services/category.service';
 import { Root_Catg_Master } from './../../../../models/Root_Catg_Master';
 import { Root_Header_Master } from './../../../../models/Root_Header_Master';
@@ -21,7 +22,8 @@ export class HeaderComponent implements OnInit {
 
 
 
-  constructor(public location: Location, private element : ElementRef,private categoryService: CategoryService,) {
+  constructor(public location: Location, private element : ElementRef,private categoryService: CategoryService,
+    private Client_commonService_: Client_commonService) {
       this.sidebarVisible = false;
   }
 
@@ -31,6 +33,8 @@ export class HeaderComponent implements OnInit {
       this.GetRootHeaderData();
      // this.GetRoot_Catg_MasterList(this.Root_Header_ID);
   }
+
+  items$ = this.Client_commonService_.items$;
   Root_Catg_Master :[] //Observable<Root_Catg_Master[]>;
   Root_Header_Masters : []//Observable<Root_Header_Master[]>;
 

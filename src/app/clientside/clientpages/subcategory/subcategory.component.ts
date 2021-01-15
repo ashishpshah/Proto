@@ -1,8 +1,7 @@
-
-
+import { Client_commonService } from './../../client_services/client_common.service';
+import { Item_Master } from './../../../models/Item_Master';
 import { CategoryService } from '../../client_services/category.service';
 import { Sub_Catg_Master } from '../../../models/Sub_Catg_Master';
-import { Item_Master } from '../../../models/Item_Master';
 import { Catg_Master } from '../../../models/Catg_Master';
 import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,11 +29,14 @@ export class SubcategoryComponent implements OnInit {
   Sub_Catg_Master : Observable<Sub_Catg_Master[]>;
   public isCollapsed = true;
   HeaderName:string='';
+  //productInfoCart : Observable<Item_Master[]>;
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private categoryService: CategoryService,
+    private Client_commonService_: Client_commonService
   ){
 
   }
@@ -54,6 +56,10 @@ export class SubcategoryComponent implements OnInit {
 
       //console.log('category/subcategory: ' + this.category +'/'+ this.subcategoryName);
 
+  }
+
+  addToCart(Item_Mastercart) {
+    this.Client_commonService_.addToCart(Item_Mastercart);
   }
 
   PageLoaditembyRCatg_ID(RCatg_ID :number){

@@ -28,26 +28,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr *ngFor="let product of items$ | async">
                       <td><a href="#"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/detailsquare.jpg" alt="White Blouse Armani"></a></td>
-                      <td><a href="#">White Blouse Armani</a></td>
+                      <td><a href="#">{{product.Item_Name}}</a></td>
                       <td>
-                        <input type="number" value="2" class="form-control">
+                        <input type="number" [value]="4" class="form-control">
                       </td>
-                      <td>$123.00</td>
+                      <td>${{product.Price}}</td>
                       <td>$0.00</td>
-                      <td>$246.00</td>
-                      <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                    </tr>
-                    <tr>
-                      <td><a href="#"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/basketsquare.jpg" alt="Black Blouse Armani"></a></td>
-                      <td><a href="#">Black Blouse Armani</a></td>
-                      <td>
-                        <input type="number" value="1" class="form-control">
-                      </td>
-                      <td>$200.00</td>
-                      <td>$0.00</td>
-                      <td>$200.00</td>
+                      <td>${{product.Price}}</td>
                       <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                   </tbody>

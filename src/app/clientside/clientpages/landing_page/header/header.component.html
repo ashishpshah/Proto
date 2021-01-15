@@ -33,7 +33,7 @@
               <div class="d-none d-lg-block">
                 <a href="/custlogin"  class="mr-3"><i class="icofont-lock ml-1"></i>Login in</a>
                 <a class="mr-3" href="/create-user"><i class="icofont-ui-user"></i>Create</a>
-                <a href="/shoppingcart" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">3 items <span class="hidden-md">in cart   </span></span></a>
+                <a href="/shoppingcart" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">  {{(items$ | async).length}} items <span class="hidden-md">in cart   </span></span></a>
               </div>
           </div>
           <!-- /.nav-collapse-->

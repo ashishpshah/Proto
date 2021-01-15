@@ -8,10 +8,9 @@
           <div class="box text-center">
               <div class="row">
                   <div class="col-md-10 offset-md-1">
-                      <h1>Ladies</h1>
+                      <h1>GROCERIES</h1>
                       <p class="text-muted">
-                          In our Ladies department we offer wide selection of the best products we have found and carefully selected
-                          worldwide. Pellentesque habitant morbi tristique senectus et netuss.
+                        groceries  food and household supplies sold at a store. 2 : a store that sells food and household supplies.
                       </p>
                   </div>
               </div>
@@ -22,7 +21,7 @@
                   <!--  *** MENUS AND FILTERS ***-->
                   <div class="card sidebar-menu">
                       <div class="card-header">
-                          <h5 class="mb-0 text-uppercase">Categories</h5>
+                          <h5 class="mb-0 text-uppercase">Groceries</h5>
                       </div>
                       <div class="card-body">
 
@@ -46,39 +45,6 @@
                             </div>
                         </div>
                         </div>
-
-                          <ul class="nav nav-pills flex-column category-menu">
-
-
-
-                              <li class="nav-item">
-                                  <a href="category.html" class="nav-link">Men <span class="badge badge-light badge-pill pull-right">42</span></a>
-                                  <ul>
-                                      <li><a href="category.html">T-shirts</a></li>
-                                      <li><a href="category.html">Shirts</a></li>
-                                      <li><a href="category.html">Pants</a></li>
-                                      <li><a href="category.html">Accessories</a></li>
-                                  </ul>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="category.html" class="nav-link active">Ladies  <span class="badge badge-light badge-pill pull-right">123</span></a>
-                                  <ul>
-                                      <li><a href="category.html">T-shirts</a></li>
-                                      <li><a href="category.html">Skirts</a></li>
-                                      <li><a href="category.html">Pants</a></li>
-                                      <li><a href="category.html">Accessories</a></li>
-                                  </ul>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="category.html" class="nav-link">Kids  <span class="badge badge-light badge-pill pull-right">11</span></a>
-                                  <ul>
-                                      <li><a href="category.html">T-shirts</a></li>
-                                      <li><a href="category.html">Skirts</a></li>
-                                      <li><a href="category.html">Pants</a></li>
-                                      <li><a href="category.html">Accessories</a></li>
-                                  </ul>
-                              </li>
-                          </ul>
                       </div>
                   </div>
                   <div class="card sidebar-menu">
@@ -192,114 +158,81 @@
                           </div>
                       </div>
                   </div>
+                  <!-- <div class="banner">
+                    <div class="card">
+                    <div  class="card-header mb-1">
+                      Most Popular Items
+                    </div>
+                    <div id="carouselExample" class="carousel slide mb-1" data-ride="carousel" data-interval="900000">
+                      <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-2" *ngFor="let item3  of Item_Masters; let i=index"  [ngClass]="{'active': i == 0}">
+                              <div class="card">
+                                <img class="card-img-top img-fluid" src="https://images.freeimages.com/images/large-previews/85a/daisy-s-1375598.jpg"  width="100" height="100" alt="Card image cap">
+                                <div class="card-body">
+                                  <h4 class="card-title">{{item3.Item_Name}}</h4>
+
+                                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                </div>
+
+                                <div class="card-footer">
+                                  <samp class="text-muted">${{item3.Price}}</samp>
+                                  <i class="ti-shopping-cart cartalign"></i>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                      <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                          <i class="fa fa-chevron-left fa-lg text-muted"></i>
+                          <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                          <i class="fa fa-chevron-right fa-lg text-muted"></i>
+                          <span class="sr-only">Next</span>
+                      </a>
+                  </div>
+                  </div>
+                </div> -->
                   <div class="row products">
-                      <div class="col-md-4 col-sm-6">
-                          <div class="product">
-                              <div class="image">
-                                  <a href="detail.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/product1.jpg" alt="" class="img-fluid image1"></a>
-                                  <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
-                              </div>
-                              <!-- /.image-->
-                              <div class="text">
-                                  <h3><a href="detail.html">Fur coat with very but very very long name</a></h3>
-                                  <p class="price">$143.00</p>
-                              </div>
-                              <!-- /.text-->
+
+                    <div class="col-md-4 col-sm-6" *ngFor='let item4  of Item_Masters; let isFirst = firstl'>
+                      <div class="product">
+                          <div class="image">
+                              <a href="detail.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/product2.jpg" alt="" class="img-fluid image1"></a>
+                              <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
                           </div>
-                          <!-- /.product-->
-                      </div>
-                      <div class="col-md-4 col-sm-6">
-                          <div class="product">
-                              <div class="image">
-                                  <a href="detail.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/product2.jpg" alt="" class="img-fluid image1"></a>
-                                  <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
-                              </div>
-                              <!-- /.image-->
-                              <div class="text">
-                                  <h3><a href="detail.html">White Blouse Armani</a></h3>
-                                  <p class="price">
-                                      <del>$280</del> $143.00
-                                  </p>
-                              </div>
-                              <!-- /.text-->
-                              <div class="ribbon sale">
-                                  <div class="theribbon">SALE</div>
-                                  <div class="ribbon-background"></div>
-                              </div>
-                              <!-- /.ribbon-->
-                              <div class="ribbon new">
-                                  <div class="theribbon">NEW</div>
-                                  <div class="ribbon-background"></div>
-                              </div>
-                              <!-- /.ribbon-->
+                          <!-- /.image-->
+                          <div class="text">
+                              <h3><a href="detail.html">{{item4.Item_Name}}</a></h3>
+                              <p class="price">
+                                ${{item4.Price}}
+                              </p>
+
+                              <p class="text-center">
+                                <button type="submit" class="btn btn-outline-primary" (click)="addToCart(item4)" ><i class="fa fa-shopping-cart"></i></button>
+                                <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-outline-secondary"><i class="fa fa-heart-o"></i></button>
+                            </p>
+                              <!-- <p class="price">
+                                 ${{item4.Price}}
+                              </p>
+
+                              <p class="price">
+                                <i class="ti-shopping-cart"></i>
+                             </p> -->
                           </div>
-                          <!-- /.product-->
-                      </div>
-                      <div class="col-md-4 col-sm-6">
-                          <div class="product">
-                              <div class="image">
-                                  <a href="detail.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/product3.jpg" alt="" class="img-fluid image1"></a>
-                                  <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
-                              </div>
-                              <!-- /.image-->
-                              <div class="text">
-                                  <h3><a href="detail.html">Black Blouse Versace</a></h3>
-                                  <p class="price">$143.00</p>
-                              </div>
-                              <!-- /.text-->
+                          <!-- /.text-->
+                          <div class="ribbon sale">
+                              <div class="theribbon">SALE</div>
+                              <div class="ribbon-background"></div>
                           </div>
-                          <!-- /.product-->
-                      </div>
-                      <div class="col-md-4 col-sm-6">
-                          <div class="product">
-                              <div class="image">
-                                  <a href="detail.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/product3.jpg" alt="" class="img-fluid image1"></a>
-                                  <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
-                              </div>
-                              <!-- /.image-->
-                              <div class="text">
-                                  <h3><a href="detail.html">Black Blouse Versace</a></h3>
-                                  <p class="price">$143.00</p>
-                              </div>
-                              <!-- /.text-->
+                          <!-- /.ribbon-->
+                          <div class="ribbon new">
+                              <div class="theribbon">NEW</div>
+                              <div class="ribbon-background"></div>
                           </div>
-                          <!-- /.product-->
+                          <!-- /.ribbon-->
                       </div>
-                      <div class="col-md-4 col-sm-6">
-                          <div class="product">
-                              <div class="image">
-                                  <a href="detail.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/product2.jpg" alt="" class="img-fluid image1"></a>
-                                  <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
-                              </div>
-                              <!-- /.image-->
-                              <div class="text">
-                                  <h3><a href="detail.html">White Blouse Versace</a></h3>
-                                  <p class="price">$143.00</p>
-                              </div>
-                              <!-- /.text-->
-                              <div class="ribbon new">
-                                  <div class="theribbon">NEW</div>
-                                  <div class="ribbon-background"></div>
-                              </div>
-                              <!-- /.ribbon-->
-                          </div>
-                          <!-- /.product-->
-                      </div>
-                      <div class="col-md-4 col-sm-6">
-                          <div class="product">
-                              <div class="image">
-                                  <a href="detail.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/product1.jpg" alt="" class="img-fluid image1"></a>
-                                  <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
-                              </div>
-                              <!-- /.image-->
-                              <div class="text">
-                                  <h3><a href="detail.html">Fur coat</a></h3>
-                                  <p class="price">$143.00</p>
-                              </div>
-                              <!-- /.text-->
-                          </div>
-                          <!-- /.product-->
-                      </div>
+                      <!-- /.product-->
+                  </div>
                       <!-- /.col-md-4-->
                       <div id="product-quick-view-modal" tabindex="-1" role="dialog" aria-hidden="false" class="modal fade">
                           <div class="modal-dialog modal-lg">
@@ -367,7 +300,7 @@
                       <!-- /.modal-->
                   </div>
                   <!-- /.products-->
-                  <div class="banner"><a href="#"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/banner2.jpg" alt="" class="img-fluid"></a></div>
+
                   <div class="pages">
                       <p class="loadMore"><a href="#" class="btn btn-outline-primary"><i class="fa fa-chevron-down"></i> Load more</a></p>
                       <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4">
@@ -388,115 +321,7 @@
   </div>
 </div>
 
-<div class="row mt-1 pt-1">
-        <div class="col-lg-3 mt-5">
-          <div class="card">
-            <div  class="card-header mb-1">
-              Groceries
-            </div>
-            <div id="accordion" class="custom-accordion">
-              <div class="card" *ngFor="let notification of Catg_Master; let i=index;" (click)="SubCategoryList(notification.Catg_ID)">
-                  <div class="card-header sortable" id="headingOne"  data-toggle="collapse"
-                  [attr.data-target]="'#collapse'+i"
-                  aria-expanded="true"
-                  aria-controls="collapseOne">
-                          {{ notification.Catg_Name }}
-                          <i *ngIf="notification.Sub_Catg_MasterList?.length > 0" aria-hidden="true" class="fa fa-angle-down ">&nbsp;</i>
-                  </div>
-                  <div *ngIf="notification.Sub_Catg_MasterList?.length > 0" [id]="'collapse'+i" class="collapse"
-                      aria-labelledby="headingOne"
-                      data-parent="#accordion">
-                      <div class="card-body cursor-pointer sortable" >
-                          <ul class="check-list">
-                            <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="getItemListBysubcategory(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
 
-
-          <!-- <div class="list-group">
-             <a class="list-group-item pointer"  *ngFor='let item  of Catg_Master' (click)="SubCategoryList(item.Catg_ID)" (click)="isCollapsed1 = !isCollapsed" role="button" aria-expanded="false" aria-controls="collapseExample">
-              {{item .Catg_Name}}
-            </a>
-          </div>
-          <div id="collapseExample" [ngbCollapse]="isCollapsed">
-            <div class="card">
-              <div class="card-body">
-                <a class="list-group-item pointer"  *ngFor='let item7  of Sub_Catg_Master' (click)="getItemListBysubcategory(item7.Sub_Catg_ID)" role="button">
-                  {{item7.Sub_Catg_Name}}
-                </a>
-              </div>
-            </div>
-          </div> -->
-        </div>
-        <!-- /.col-lg-3 -->
-
-        <div class="col-lg-9 mt-5">
-          <div class="card">
-            <div  class="card-header mb-1">
-              Most Popular Items
-            </div>
-            <div id="carouselExample" class="carousel slide mb-1" data-ride="carousel" data-interval="900000">
-              <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-2" *ngFor="let item3  of Item_Masters; let i=index"  [ngClass]="{'active': i == 0}">
-                      <div class="card">
-                        <img class="card-img-top img-fluid" src="https://images.freeimages.com/images/large-previews/85a/daisy-s-1375598.jpg"  width="100" height="100" alt="Card image cap">
-                        <div class="card-body">
-                          <h4 class="card-title">{{item3.Item_Name}}</h4>
-
-                          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                        <div class="card-footer">
-                          <samp class="text-muted">${{item3.Price}}</samp>
-                          <i class="ti-shopping-cart cartalign"></i>
-                        </div>
-                  </div>
-                </div>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-                  <i class="fa fa-chevron-left fa-lg text-muted"></i>
-                  <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
-                  <i class="fa fa-chevron-right fa-lg text-muted"></i>
-                  <span class="sr-only">Next</span>
-              </a>
-          </div>
-            </div>
-
-            <div class="card mt-3">
-              <div  class="card-header mb-1">
-               CateGory
-              </div>
-              <div class="row">
-
-                <div class="col-lg-3 col-md-3 mb-4" *ngFor='let item4  of Item_Masters; let isFirst = firstl'>
-                  <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="assets/img/slider/subcat.jpg" alt=""></a>
-                    <div class="card-body">
-                      <h4 class="card-title">
-                        <a href="#" >{{item4.Item_Name}}</a>
-                      </h4>
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                    </div>
-                    <div class="card-footer">
-                      <samp class="text-muted">${{item4.Price}}</samp>
-                      <i class="ti-shopping-cart cartalign"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          <!-- /.row -->
-
-        </div>
-        <!-- /.col-lg-9 -->
-
-      </div>
 
 
 
