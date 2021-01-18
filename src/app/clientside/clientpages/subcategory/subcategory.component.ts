@@ -29,6 +29,7 @@ export class SubcategoryComponent implements OnInit {
   Sub_Catg_Master : Observable<Sub_Catg_Master[]>;
   public isCollapsed = true;
   HeaderName:string='';
+  shoppingcartlist : Observable<Item_Master[]>;
   //productInfoCart : Observable<Item_Master[]>;
 
 
@@ -54,8 +55,37 @@ export class SubcategoryComponent implements OnInit {
       this.PageLoaditembyRCatg_ID(this.RCatg_ID);
       this.GetCatg_MasterList(this.Root_Header_ID);
 
-      //console.log('category/subcategory: ' + this.category +'/'+ this.subcategoryName);
 
+
+  }
+
+  toggleShow(Item_Masters)
+  {
+   debugger;
+   Item_Masters.showaddbtn = false;
+   Item_Masters.showplusebtn = true;
+
+  }
+  PluseQty(item)
+  {
+    debugger;
+    this.Client_commonService_.addQty(item);
+    item.OrderQty += 1
+
+  }
+
+  minuseQty(item){
+    debugger
+    this.Client_commonService_.minuseQty(item);
+    item.OrderQty -= 1
+
+    if(item.OrderQty <= 0)
+    {
+      item.OrderQty=1
+      this.Client_commonService_.deleteItem(item);
+      item.showaddbtn = true;
+      item.showplusebtn = false;
+    }
   }
 
   addToCart(Item_Mastercart) {
@@ -68,12 +98,7 @@ export class SubcategoryComponent implements OnInit {
       (data) =>
        {
          this.Item_Masters = data;
-
-        //  data.forEach(function (value) {
-        //
-        //   this.HeaderName = value.HedaerName;
-        //   return;
-        // });
+         this.CheckshopingcartQty()
       }
     )
   }
@@ -84,9 +109,30 @@ export class SubcategoryComponent implements OnInit {
       (data) =>
        {
          this.Item_Masters = data;
+         this.CheckshopingcartQty()
 
       }
     )
+  }
+
+  CheckshopingcartQty()
+  {
+    this.shoppingcartlist = this.Client_commonService_.getItems();
+
+    for (var index in this.Item_Masters)
+    {
+         for (var index1 in this.shoppingcartlist)
+         {
+             if(this.Item_Masters[index].Item_ID == this.shoppingcartlist[index1].Item_ID)
+             {
+               this.Item_Masters[index].OrderQty=this.shoppingcartlist[index1].OrderQty
+               this.Item_Masters[index].showaddbtn=false
+               this.Item_Masters[index].showplusebtn=true
+             }
+
+         }
+    }
+
   }
 
   GetCatg_MasterList(Root_Header_ID :number){
@@ -105,6 +151,7 @@ export class SubcategoryComponent implements OnInit {
       (data) =>
        {
          this.Item_Masters = data;
+         this.CheckshopingcartQty()
 
       }
     )
@@ -115,6 +162,7 @@ export class SubcategoryComponent implements OnInit {
       (data) =>
        {
          this.Item_Masters = data;
+         this.CheckshopingcartQty()
 
       }
     )
@@ -142,44 +190,10 @@ export class SubcategoryComponent implements OnInit {
           }
       }
   });
-    //let instances = m.Carousel.init(elems, this.options);
-
-    // $("#myCarousel").on("slide.bs.carousel", function(e) {
-    //   var $e = $(e.relatedTarget);
-    //   var idx = $e.index();
-    //   var itemsPerSlide = 5;
-    //   var totalItems = $(".carousel-item").length;
-
-    //   if (idx >= totalItems - (itemsPerSlide - 1)) {
-    //     var it = (totalItems - idx*itemsPerSlide);
-    //     for (var i = 0; i < it; i++) {
-    //       // append slides to end
-    //       if (e.direction == "left") {
-    //         $(".carousel-item")
-    //           .eq(i)
-    //           .appendTo(".carousel-inner");
-    //       } else {
-    //         $(".carousel-item")
-    //           .eq(0)
-    //           .appendTo($(this).find(".carousel-inner"));
-    //       }
-    //     }
-    //   }
-    // });
-
-
-
 
   }
   SubCategoryList(cat_ids)
   {
     this.filterByCategory(cat_ids);
-    // this.categoryService.SubCategoryList(cat_ids).subscribe(
-    //   (data) =>
-    //    {
-    //      this.Sub_Catg_Master = data;
-    //
-    //   }
-    // )
   }
 }

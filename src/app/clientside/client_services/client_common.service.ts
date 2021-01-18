@@ -76,7 +76,7 @@ addToCart1(product: Item_Master) {
       var isadd= true;
       for (var i = 0; i < shopcart.length; i++) {
         if(product.Item_ID === shopcart[i].Item_ID){  //look for match with name
-         shopcart[i].Qty += 1;
+         shopcart[i].OrderQty += 1;
          shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].Qty;
          isadd= false;
             break;  //exit loop since you found the person
@@ -104,17 +104,18 @@ addToCart1(product: Item_Master) {
 
 minuseQty(product: Item_Master)
 {
-  var shopcart = JSON.parse(localStorage.getItem('shopcart'));
-  var isadd= true;
-  for (var i = 0; i < shopcart.length; i++) {
-    if(product.Item_ID === shopcart[i].Item_ID){  //look for match with name
-     shopcart[i].Qty -= 1;
-     shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].Qty;
-     isadd= false;
-        break;  //exit loop since you found the person
-    }
- }
-  localStorage.setItem("shopcart", JSON.stringify(shopcart));
+      var shopcart = JSON.parse(localStorage.getItem('shopcart'));
+      var isadd= true;
+      for (var i = 0; i < shopcart.length; i++)
+      {
+        if(product.Item_ID === shopcart[i].Item_ID){
+        shopcart[i].OrderQty -= 1;
+        shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].OrderQty;
+        isadd= false;
+            break;
+        }
+     }
+      localStorage.setItem("shopcart", JSON.stringify(shopcart));
 
 }
 
@@ -123,14 +124,15 @@ addQty(product: Item_Master)
   debugger;
   var shopcart = JSON.parse(localStorage.getItem('shopcart'));
   var isadd= true;
-  for (var i = 0; i < shopcart.length; i++) {
-    if(product.Item_ID === shopcart[i].Item_ID){  //look for match with name
-     shopcart[i].Qty += 1;
-     shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].Qty;
+  for (var i = 0; i < shopcart.length; i++)
+  {
+    if(product.Item_ID === shopcart[i].Item_ID){
+     shopcart[i].OrderQty += 1;
+     shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].OrderQty;
      isadd= false;
-        break;  //exit loop since you found the person
+        break;
     }
- }
+  }
   localStorage.setItem("shopcart", JSON.stringify(shopcart));
 
 }
@@ -159,6 +161,12 @@ deleteItem(item)
   shopping_cart.splice(index, 1);
   console.log("shopping_cart ", shopping_cart);
   localStorage.setItem('shopcart', JSON.stringify(shopping_cart));
+
+  let existingCartItems = JSON.parse(localStorage.getItem('shopcart'));
+  if (!existingCartItems) {
+    existingCartItems = [];
+  }
+  this.itemsSubject.next(existingCartItems);
 
 }
 
@@ -197,5 +205,19 @@ GetRootHeaderDataList(): Observable<any> {
    GetProductItem(): Observable<any> {
     return this.http.get(environment.server +'SubCategory/GetProductItemList');
   }
+
+  groupBy<T, K>(list: T[], getKey: (item: T) => K) {
+    const map = new Map<K, T[]>();
+    list.forEach((item) => {
+        const key = getKey(item);
+        const collection = map.get(key);
+        if (!collection) {
+            map.set(key, [item]);
+        } else {
+            collection.push(item);
+        }
+    });
+    return Array.from(map.values());
+}
 
 }

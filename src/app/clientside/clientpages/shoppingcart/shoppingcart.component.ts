@@ -1,4 +1,4 @@
-import { shopingcart } from './../../../models/productlist';
+import { shopingcart } from './../../../models/shopingcart';
 import { CategoryService } from './../../client_services/category.service';
 import { HeaderComponent } from './../landing_page/header/header.component';
 import { Item_Master } from './../../../models/Item_Master';
@@ -15,12 +15,13 @@ import { Observable } from "rxjs";
 export class ShoppingcartComponent implements OnInit {
 
 
-  shopingcart_ : Observable<shopingcart[]>;
+  shopingcart_ : any [];
   Item_Master_ : any;
   shippingcharge:number =15;
   Subtotal:number =0;
   Grandtotal:number =0;
   Itemcount:number =0;
+  itemname:string ='Fruit';
   constructor
   (
     private route: ActivatedRoute,
@@ -44,24 +45,15 @@ export class ShoppingcartComponent implements OnInit {
     this.Client_commonService_.deleteItem(item);
     this.Item_Master_ = this.Client_commonService_.getItems();
     this.calculatecartvalue();
-    // let domItem = document.getElementById(item.Item_ID);
-    // setTimeout(() =>{
-    // domItem.classList.add('delete-style');
-    // domItem.parentNode.removeChild(domItem);
-    // },1000);
 
   }
 
-  minuseQty(item){
+  minuseQty(item)
+  {
     debugger
     this.Client_commonService_.minuseQty(item);
     this.Item_Master_ = this.Client_commonService_.getItems();
     this.calculatecartvalue();
-    // let domItem = document.getElementById(item.Item_ID);
-    // setTimeout(() =>{
-    // domItem.classList.add('delete-style');
-    // domItem.parentNode.removeChild(domItem);
-    // },1000);
 
   }
 
@@ -71,11 +63,6 @@ export class ShoppingcartComponent implements OnInit {
     this.Item_Master_ = this.Client_commonService_.getItems();
 
     this.calculatecartvalue();
-    // let domItem = document.getElementById(item.Item_ID);
-    // setTimeout(() =>{
-    // domItem.classList.add('delete-style');
-    // domItem.parentNode.removeChild(domItem);
-    // },1000);
 
   }
 
@@ -95,6 +82,32 @@ export class ShoppingcartComponent implements OnInit {
     }
 
    this.Grandtotal= this.Subtotal+ this.shippingcharge
+   debugger;
+
+
+   var groups = new Set(this.Item_Master_.map(item => item.CategoryName))
+   this.shopingcart_ = [];
+   groups.forEach(g =>
+     this.shopingcart_.push({
+       name: g,
+       values: this.Item_Master_.filter(i => i.group === g)
+     }
+   ))
+
   }
 
+}
+
+function groupBy(list, keyGetter) {
+  const map = new Map();
+  list.forEach((item) => {
+       const key = keyGetter(item);
+       const collection = map.get(key);
+       if (!collection) {
+           map.set(key, [item]);
+       } else {
+           collection.push(item);
+       }
+  });
+  return map;
 }

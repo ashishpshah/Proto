@@ -203,14 +203,27 @@
                           <!-- /.image-->
                           <div class="text">
                               <h3><a href="detail.html">{{item4.Item_Name}}</a></h3>
-                              <p class="price">
-                                ${{item4.Price}}
-                              </p>
+                              <p class="card-text text-left  mb-0">Price: <span class="font-weight-bold float-right text-success">${{item4.Price}}</span></p>
 
-                              <p class="text-center">
+                              <p class="card-text text-left">Stock left: <span class="font-weight-bold float-right text-danger">{{item4.Qty}}</span></p>
+
+                              <div class="F8dpS _3L1X9" *ngIf="item4.showaddbtn" (click)="toggleShow(item4)">
+                                <div  class="_1RPOp _1uN_a" (click)="addToCart(item4)" >ADD</div>
+                                <div class="_1ds9T _2WdfZ _4aKW6">+</div>
+                                <div class="_29Y5Z _20vNm _4aKW6"></div>
+                                <div class="_2zAXs _2quy- _4aKW6">0</div>
+                              </div>
+                              <div class="F8dpS _3L1X9" *ngIf="item4.showplusebtn">
+                                <div class="_1RPOp _36fT9 _4aKW6">ADD</div>
+                                <div class="_1ds9T _2Thnf" (click)="PluseQty(item4)" >+</div>
+                                <div class="_29Y5Z _2od4M" (click)="minuseQty(item4)">-</div>
+                                <div class="_2zAXs _18lJJ">{{item4.OrderQty}}</div>
+                              </div>
+
+                              <!-- <p class="text-center">
                                 <button type="submit" class="btn btn-outline-primary" (click)="addToCart(item4)" ><i class="fa fa-shopping-cart"></i></button>
                                 <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-outline-secondary"><i class="fa fa-heart-o"></i></button>
-                            </p>
+                              </p> -->
                               <!-- <p class="price">
                                  ${{item4.Price}}
                               </p>

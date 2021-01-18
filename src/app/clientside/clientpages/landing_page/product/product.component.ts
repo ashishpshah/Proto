@@ -1,4 +1,4 @@
-import { CategoryService } from './../../../client_services/category.service';
+import { Client_commonService } from './../../../client_services/client_common.service';
 import { Item_Master } from './../../../../models/Item_Master';
 import { Component, OnInit } from '@angular/core';
 import { NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
@@ -14,11 +14,14 @@ export class ProductComponent implements OnInit {
 
   public data;
   Item_Masters : Observable<Item_Master[]>;
+  shoppingcartlist : Observable<Item_Master[]>;
+  isShown: boolean = false ;
+  isShown1: boolean = true ;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private categoryService: CategoryService,
+    private Client_commonService_: Client_commonService,
   ){
 
   }
@@ -32,13 +35,59 @@ export class ProductComponent implements OnInit {
   }
   GetProductItem(){
 
-    this.categoryService.GetProductItem().subscribe(
+    this.Client_commonService_.GetProductItem().subscribe(
       (data) =>
        {
          this.Item_Masters = data;
+
+         this.shoppingcartlist = this.Client_commonService_.getItems();
+
+         for (var index in this.Item_Masters)
+         {
+              for (var index1 in this.shoppingcartlist)
+              {
+                  if(this.Item_Masters[index].Item_ID == this.shoppingcartlist[index1].Item_ID)
+                  {
+                    this.Item_Masters[index].OrderQty=this.shoppingcartlist[index1].OrderQty
+                    this.Item_Masters[index].showaddbtn=false
+                    this.Item_Masters[index].showplusebtn=true
+                  }
+
+              }
+         }
       }
     )
   }
+
+  toggleShow(Item_Masters)
+  {
+   debugger;
+   Item_Masters.showaddbtn = false;
+   Item_Masters.showplusebtn = true;
+
+  }
+  PluseQty(item)
+  {
+    debugger;
+    this.Client_commonService_.addQty(item);
+    item.OrderQty += 1
+
+  }
+
+  minuseQty(item){
+    debugger
+    this.Client_commonService_.minuseQty(item);
+    item.OrderQty -= 1
+
+    if(item.OrderQty <= 0)
+    {
+      item.OrderQty=1
+      this.Client_commonService_.deleteItem(item);
+      item.showaddbtn = true;
+      item.showplusebtn = false;
+    }
+  }
+
 
   ngOnInit(): void {
     this.GetProductItem();
@@ -163,6 +212,13 @@ export class ProductComponent implements OnInit {
     }
 
   }
+
+
+  addToCart(Item_Mastercart) {
+    debugger;
+    this.Client_commonService_.addToCart1(Item_Mastercart);
+  }
+
 
 
 

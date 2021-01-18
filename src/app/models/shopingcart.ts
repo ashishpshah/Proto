@@ -1,3 +1,4 @@
+import { Item_Master } from './Item_Master';
 export class shopingcart {
 
   Item_ID : number;
@@ -19,4 +20,6 @@ export class shopingcart {
   shippingcharge:number;
   Subtotal:number;
   Grandtotal:number;
+  Item_MasterList:Item_Master[];
+  CategoryName:string ='';
 }

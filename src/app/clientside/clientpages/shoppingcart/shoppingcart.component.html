@@ -27,8 +27,13 @@
                       <th colspan="2">Total</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr *ngFor="let product of Item_Master_ "  [id]="product.Item_ID" >
+                  <tbody *ngFor="let shppingcart1 of this.shopingcart_">
+            <tr style="background: #e7e7e7;">
+              <th colspan="7">{{shppingcart1.name}}</th>
+
+            </tr>
+            <ng-container *ngFor="let product of Item_Master_;" >
+              <tr *ngIf="shppingcart1.name == product.CategoryName" [id]="product.Item_ID">
                       <td><a href="#"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/detailsquare.jpg" alt="White Blouse Armani"></a></td>
                       <td><a href="#">{{product.Item_Name}}</a></td>
                       <td>
@@ -39,20 +44,27 @@
                                 <i class="icofont-minus-circle"></i>
                               </button>
                           </span>
-                          <input type="number" name="quant[2]" class="form-control input-number" [value]="product.Qty" min="1" max="100"  style="width: 10px;">
+                          <input type="number" name="quant[2]" class="form-control input-number" [value]="product.OrderQty" min="1" max="100"  style="width: 10px;">
                           <span class="input-group-btn">
                               <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]" (click)="PluseQty(product)">
                                 <i class="icofont-plus-circle"></i>
                               </button>
                           </span>
                       </div>
-                         <!-- <input type="number" [value]="product.Qty" class="form-control" style="width: 63px;"> -->
+                        <!-- <input type="number" [value]="product.Qty" class="form-control" style="width: 63px;"> -->
                       </td>
                       <td>${{product.Price}}</td>
                       <td>$0.00</td>
                       <td>  ${{product.TotalPrice}}</td>
                       <td><a (click)="deleteItem(product)"><i class="fa fa-trash-o"></i></a></td>
-                    </tr>
+
+              </tr>
+
+            </ng-container>
+
+
+
+
                   </tbody>
                   <tfoot>
                     <tr>

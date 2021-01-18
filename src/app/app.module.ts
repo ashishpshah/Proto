@@ -1,3 +1,4 @@
+import { ProductDirective } from './clientside/clientpages/landing_page/product/product.directive';
 import { Login_clientComponent } from './clientside/clientpages/login_client/login_client.component';
 import { LayoutclientComponent } from './clientside/clientpages/landing_page/layoutclient/layoutclient.component';
 import { Landing_pageComponent } from './clientside/clientpages/Main_landing_page/landing_page.component';
@@ -56,7 +57,8 @@ import { ShoppingcartComponent } from './clientside/clientpages/shoppingcart/sho
     Landing_pageComponent,
     LayoutclientComponent,
     CheckpincodeComponent,
-    ShoppingcartComponent
+    ShoppingcartComponent,
+    ProductDirective
     // ItemListComponent,
     // AddEditItemComponent
   ],

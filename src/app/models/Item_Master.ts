@@ -21,4 +21,8 @@ export class Item_Master extends BaseModel {
   shippingcharge:number =0;
   Subtotal:number =0;
   Grandtotal:number =0;
+  CategoryName:string ='';
+  showaddbtn:boolean =true;
+  showplusebtn:boolean =false;
+  OrderQty: number= 1;
 }

@@ -1,3 +1,125 @@
+
+
+
+
+.F8dpS {
+  position: absolute;
+  bottom: 8px;
+  width: 96px;
+  min-height: 36px;
+  line-height: 36px;
+  left: 50%;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+._3L1X9 {
+  display: inline-block;
+  height: 30px;
+  width: 83px;
+  border: 1px solid #d4d5d9;
+  color: #60b246;
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 30px;
+  position: relative;
+  text-align: center;
+  background-color: #fff;
+}
+._1RPOp {
+  color: #60b246;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+._4aKW6 {
+  display: none!important;
+}
+._2Thnf {
+  animation: _1gckB .2s ease;
+}
+._1ds9T {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 33.33333%;
+  display: inline-block;
+  opacity: 1;
+  transform: translateZ(0);
+  cursor: pointer;
+  font-size: 150%;
+  font-weight: 600;
+}
+._2od4M {
+  animation: _1vozQ .2s ease;
+}
+
+._29Y5Z {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 33.33333%;
+  display: inline-block;
+  opacity: 1;
+  transform: translateZ(0);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+._18lJJ {
+  animation: akcss .2s ease;
+}
+
+._2zAXs {
+  position: absolute;
+  left: 33.33333%;
+  top: 0;
+  width: 33.33333%;
+  display: inline-block;
+  opacity: 1;
+  transform: translateZ(0);
+  cursor: pointer;
+}
+
+._1RPOp:hover {
+  position: relative;
+  box-shadow: 0 2px 8px #d4d5d9;
+}
+
+._1RPOp {
+  color: #60b246;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+._2WdfZ {
+  animation: _1sXH- .2s ease;
+  opacity: 0;
+  transform: translateZ(0);
+}
+._4aKW6 {
+  display: none!important;
+}
+._20vNm {
+  animation: _3TzA_ .2s ease;
+  opacity: 0;
+  transform: translateZ(0);
+}
+._4aKW6 {
+  display: none!important;
+}
+._4aKW6 {
+  display: none!important;
+}
+._2quy- {
+  animation: _1TAw_ .2s ease;
+  opacity: 0;
+  transform: translate3d(0,-7.5px,0);
+}
+
+
+
 .card{
 
     cursor: pointer;
