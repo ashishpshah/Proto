@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-10 offset-md-1">
             <h1>Shopping cart</h1>
-            <p class="text-muted">You currently have 3 item(s) in your cart.</p>
+            <p class="text-muted">You currently have {{Itemcount}} item(s) in your cart.</p>
           </div>
         </div>
       </div>
@@ -28,22 +28,36 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let product of items$ | async">
+                    <tr *ngFor="let product of Item_Master_ "  [id]="product.Item_ID" >
                       <td><a href="#"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/detailsquare.jpg" alt="White Blouse Armani"></a></td>
                       <td><a href="#">{{product.Item_Name}}</a></td>
                       <td>
-                        <input type="number" [value]="4" class="form-control">
+                        <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons-->
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]" (click)="minuseQty(product)" >
+                                <i class="icofont-minus-circle"></i>
+                              </button>
+                          </span>
+                          <input type="number" name="quant[2]" class="form-control input-number" [value]="product.Qty" min="1" max="100"  style="width: 10px;">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]" (click)="PluseQty(product)">
+                                <i class="icofont-plus-circle"></i>
+                              </button>
+                          </span>
+                      </div>
+                         <!-- <input type="number" [value]="product.Qty" class="form-control" style="width: 63px;"> -->
                       </td>
                       <td>${{product.Price}}</td>
                       <td>$0.00</td>
-                      <td>${{product.Price}}</td>
-                      <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                      <td>  ${{product.TotalPrice}}</td>
+                      <td><a (click)="deleteItem(product)"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                   </tbody>
                   <tfoot>
                     <tr>
                       <th colspan="5">Total</th>
-                      <th colspan="2">$446.00</th>
+                      <th colspan="2">${{Subtotal}}</th>
                     </tr>
                   </tfoot>
                 </table>
@@ -108,11 +122,11 @@
                 <tbody>
                   <tr>
                     <td>Order subtotal</td>
-                    <th>$446.00</th>
+                    <th>${{Subtotal}}</th>
                   </tr>
                   <tr>
                     <td>Shipping and handling</td>
-                    <th>$10.00</th>
+                    <th>${{shippingcharge}}</th>
                   </tr>
                   <tr>
                     <td>Tax</td>
@@ -120,7 +134,7 @@
                   </tr>
                   <tr class="total">
                     <td>Total</td>
-                    <th>$456.00</th>
+                    <th>${{Grandtotal}}</th>
                   </tr>
                 </tbody>
               </table>

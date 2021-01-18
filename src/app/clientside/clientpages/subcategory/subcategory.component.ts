@@ -59,7 +59,7 @@ export class SubcategoryComponent implements OnInit {
   }
 
   addToCart(Item_Mastercart) {
-    this.Client_commonService_.addToCart(Item_Mastercart);
+    this.Client_commonService_.addToCart1(Item_Mastercart);
   }
 
   PageLoaditembyRCatg_ID(RCatg_ID :number){

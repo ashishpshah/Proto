@@ -1,10 +1,5 @@
 import { Client_commonService } from './../../../client_services/client_common.service';
-import { CategoryService } from './../../../client_services/category.service';
-import { Root_Catg_Master } from './../../../../models/Root_Catg_Master';
-import { Root_Header_Master } from './../../../../models/Root_Header_Master';
 import { Component, OnInit,ElementRef } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -18,19 +13,24 @@ export class HeaderComponent implements OnInit {
 
   Root_Header_ID:number=1;
   hideshowcrat: boolean=true;
+  Itemcount:number =0;
+  Item_Master_ : any;
 
 
 
 
-  constructor(public location: Location, private element : ElementRef,private categoryService: CategoryService,
+  constructor(
     private Client_commonService_: Client_commonService) {
       this.sidebarVisible = false;
   }
 
   ngOnInit() {
-      const navbar: HTMLElement = this.element.nativeElement;
-      this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+
+
+      //const navbar: HTMLElement = this.element.nativeElement;
+      //this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.GetRootHeaderData();
+      this.updatecartcount();
      // this.GetRoot_Catg_MasterList(this.Root_Header_ID);
   }
 
@@ -43,6 +43,11 @@ export class HeaderComponent implements OnInit {
     // this.stars = this.categoryService.GetRoot_Catg_MasterList(Root_Header_ID);
     // this.stars=this.Root_Catg_Masters;
     return stars;
+}
+updatecartcount()
+{
+  this.Item_Master_ = this.Client_commonService_.getItems();
+  this.Itemcount =  this.Item_Master_.length
 }
 
 showcartevent()
@@ -62,7 +67,7 @@ showcartevent()
 
     //this.Root_Header_Masters = this.categoryService.GetRootHeaderDataList();
 
-    this.categoryService.GetRootHeaderDataList().subscribe(
+    this.Client_commonService_.GetRootHeaderDataList().subscribe(
       (data) =>
        {
          this.Root_Header_Masters = data;
@@ -105,28 +110,28 @@ showcartevent()
           this.sidebarClose();
       }
   };
-  isHome() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if(titlee.charAt(0) === '#'){
-        titlee = titlee.slice( 1 );
-    }
-      if( titlee === '/home' ) {
-          return true;
-      }
-      else {
-          return false;
-      }
-  }
-  isDocumentation() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if(titlee.charAt(0) === '#'){
-        titlee = titlee.slice( 1 );
-    }
-      if( titlee === '/documentation' ) {
-          return true;
-      }
-      else {
-          return false;
-      }
-  }
+  // isHome() {
+  //   var titlee = this.location.prepareExternalUrl(this.location.path());
+  //   if(titlee.charAt(0) === '#'){
+  //       titlee = titlee.slice( 1 );
+  //   }
+  //     if( titlee === '/home' ) {
+  //         return true;
+  //     }
+  //     else {
+  //         return false;
+  //     }
+  // }
+  // isDocumentation() {
+  //   var titlee = this.location.prepareExternalUrl(this.location.path());
+  //   if(titlee.charAt(0) === '#'){
+  //       titlee = titlee.slice( 1 );
+  //   }
+  //     if( titlee === '/documentation' ) {
+  //         return true;
+  //     }
+  //     else {
+  //         return false;
+  //     }
+  // }
 }

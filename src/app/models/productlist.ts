@@ -1,6 +1,4 @@
-import { BaseModel } from './BaseModel';
-
-export class Item_Master extends BaseModel {
+export class shopingcart {
 
   Item_ID : number;
   Sub_Catg_ID : number;
@@ -11,14 +9,14 @@ export class Item_Master extends BaseModel {
   Type_ID : number;
   Brand_ID : number;
   UOM: string;
-  Qty: number= 0;
-  Price:number =0;
+  Qty: number;
+  Price:number;
   Display_Seq_No : number;
   Status : string;
   HedaerName:string;
-  TotalPrice:number =0;
-  discount:number =0;
-  shippingcharge:number =0;
-  Subtotal:number =0;
-  Grandtotal:number =0;
+  TotalPrice:number;
+  discount:number;
+  shippingcharge:number;
+  Subtotal:number;
+  Grandtotal:number;
 }
