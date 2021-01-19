@@ -84,7 +84,7 @@ export class AddEditCategoryComponent implements OnInit {
       }
       else if(this.categoryObj.Catg_Name_D == '')
       {
-        this.errorMessage = "Please Enter Category Name (Danish)";
+        this.errorMessage = "Please Enter ategory Name (Danish)";
         this.renderer.selectRootElement('#Catg_Name_D').focus();
         return false;
       }

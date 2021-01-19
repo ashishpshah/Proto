@@ -49,6 +49,14 @@ const MENUITEMS = [
         icon: 'ti-crown',
         children: [
           {
+            state: 'state-master',
+            name: 'State Master'
+          },
+          // {
+          //   state: 'city-master',
+          //   name: 'City  Master'
+          // },
+          {
             state: 'root-header-master',
             name: 'Root Header Master'
           },

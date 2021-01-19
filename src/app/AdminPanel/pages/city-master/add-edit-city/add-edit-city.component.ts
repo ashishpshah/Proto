@@ -8,19 +8,20 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'app-add-edit-category',
-  templateUrl: './add-edit-category.component.html',
-  styleUrls: ['./add-edit-category.component.scss']
+  selector: 'app-add-edit-city',
+  templateUrl: './add-edit-city.component.html',
+  styleUrls: ['./add-edit-city.component.scss']
 })
 /************************************* Developed By RAJESH *******************************/
-export class AddEditCategoryComponent implements OnInit {
-  categoryObj :any ={};
+export class AddEditCityComponent implements OnInit {
+  cityObj :any ={};
 
   title: string = "Create";
-  categoryId: number;
+  cityId: number;
+  stateId:string;
   errorMessage: any ='';
-  StatusList : Observable<DropdownList[]>;
-  CategoryList : Observable<DropdownList[]>;
+  StateList : Observable<DropdownList[]>;
+  CityList : Observable<DropdownList[]>;
   SelectedStatus : string = 'A';
   userId : string = localStorage.getItem('userId');
   isInserted : string = 'I';
@@ -30,7 +31,8 @@ export class AddEditCategoryComponent implements OnInit {
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
     private _commonService : ProtoServicesService, private _router: Router, private el : ElementRef, private renderer: Renderer2) {
       if (this._avRoute.snapshot.params["id"]) {
-        this.categoryId = this._avRoute.snapshot.params["id"];
+        this.cityId = this._avRoute.snapshot.params["id"];
+        this.stateId = this._avRoute.snapshot.params["stateId"];
         this.isInserted = 'U';
       }
     }
@@ -40,55 +42,48 @@ export class AddEditCategoryComponent implements OnInit {
 
       this.getCommonList();
       debugger;
-      if (this.categoryId > 0) {
+      if (this.cityId > 0) {
         this.title = "Edit";
-        this._commonService.getCategoryById(this.categoryId)
+        this._commonService.getCityById(this.cityId,this.stateId)
           .subscribe((resp) =>
           {
-            this.categoryObj = resp
+            this.cityObj = resp
             , error => this.errorMessage = error
           });
       }else {
-        this.categoryObj = CategoryFun(this.isInserted);
+        this.cityObj = CityFun(this.isInserted);
       }
     }
 
     getCommonList(){
-       this._commonService.GetLovDetailByColumn("ACTIVEINACTIVE").subscribe(
+
+      this._commonService.GetStateList().subscribe(
         (data) =>
          {
-            this.StatusList = data;
+            this.StateList = data;
         }
       )
-
-      this._commonService.GetActiveRootCategoryList().subscribe(
-        (data) =>
-         {
-            this.CategoryList = data;
-        }
-      )
-
     }
 
     validate(){
-      if(this.categoryObj.RCatg_ID == null || this.categoryObj.RCatg_ID == '' || this.categoryObj.RCatg_ID == '0' || this.categoryObj.RCatg_ID == 0 )
+      if(this.cityObj.RCatg_ID == null || this.cityObj.RCatg_ID == '' || this.cityObj.RCatg_ID == '0' || this.cityObj.RCatg_ID == 0 )
       {
-        this.errorMessage = "Please Select Root Category";
+        this.errorMessage = "Please Select Root City";
         // this.renderer.selectRootElement('#RCatg_ID').focus();
         return false;
       }
-      else if(this.categoryObj.Catg_Name == ''){
-        this.errorMessage = "Please Enter Category Name";
+      else if(this.cityObj.Catg_Name == ''){
+        this.errorMessage = "Please Enter City Name";
         this.renderer.selectRootElement('#Catg_Name').focus();
         return false;
       }
-      else if(this.categoryObj.Catg_Name_D == '')
+      else if(this.cityObj.Catg_Name_D == '')
       {
-        this.errorMessage = "Please Enter Category Name (Danish)";
+        this.errorMessage = "Please Enter ategory Name (Danish)";
         this.renderer.selectRootElement('#Catg_Name_D').focus();
         return false;
       }
-      else if(this.categoryObj.Display_Seq_No == '' || this.categoryObj.Display_Seq_No == '0' || this.categoryObj.Display_Seq_No == 0 )
+      else if(this.cityObj.Display_Seq_No == '' || this.cityObj.Display_Seq_No == '0' || this.cityObj.Display_Seq_No == 0 )
       {
         this.errorMessage = "Please Enter Display Seq No";
         this.renderer.selectRootElement('#Display_Seq_No').focus();
@@ -99,22 +94,22 @@ export class AddEditCategoryComponent implements OnInit {
       }
     }
 
-    saveCategory() {
+    saveCity() {
       if(this.validate()){
-        this.categoryObj.Created_By = this.userId;
+        this.cityObj.Created_By = this.userId;
         if (this.title == "Create") {
-          this.categoryObj.IsInserted = 'I';
-          this._commonService.saveCategory(this.categoryObj)
+          this.cityObj.IsInserted = 'I';
+          this._commonService.saveCity(this.cityObj)
             .subscribe((data) => {
-              this.commonHelper.commonAlert('Inserted', data, '/master/category-master')
+              this.commonHelper.commonAlert('Inserted', data, '/master/city-master')
 
             }, error => this.errorMessage = error)
         }
         else if (this.title == "Edit") {
-          this.categoryObj.IsInserted = 'U';
-          this._commonService.saveCategory(this.categoryObj)
+          this.cityObj.IsInserted = 'U';
+          this._commonService.saveCity(this.cityObj)
             .subscribe((data) => {
-              this.commonHelper.commonAlert('Updated', data, '/master/category-master')
+              this.commonHelper.commonAlert('Updated', data, '/master/city-master')
             }, error => this.errorMessage = error)
         }
       }
@@ -122,13 +117,13 @@ export class AddEditCategoryComponent implements OnInit {
     }
 
     cancel() {
-      this._router.navigate(['/master/category-master']);
+      this._router.navigate(['/master/city-master']);
     }
 
 }
 
 
-function CategoryFun(isInserted) {
+function CityFun(isInserted) {
 
   let obj ={
   Catg_ID :'',

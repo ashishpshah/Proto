@@ -124,7 +124,7 @@ activeCategory(categoryId :number, userId :string) {
 //#endregion
 
 
-//#region Sub-CategoryLevel Master Service
+//#region SubCategoryLevel Master Service
 
 getSubCategoryList(subCategoryId:string): Observable<any> {
   return this.http.get(`${this.baseUrl}/`+'SubCategoryLevel/GetSubCategoryList?subCategoryId='+subCategoryId);
@@ -154,6 +154,66 @@ activeSubCategory(subCategoryId :number, userId :string) {
     .catch(this.errorHandler);
 }
 //#endregion
+
+//#region State Master Service
+
+getStateList(State_Id:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'State/GetStateinfo?State_Id='+State_Id);
+}
+
+getStateById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'State/GetStateById?State_Id='+id);
+}
+
+saveState(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'State/InsertupdateState', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteState(State_Id :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "State/DeleteStateRecord?State_Id=" + State_Id+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeState(State_Id :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "State/ActiveState?State_Id=" + State_Id+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
+//#region City Master Service
+
+getCityList(State_Id:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'City/GetCityinfo?State_Id='+State_Id);
+}
+
+getCityById(id: number,State_Id : string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'City/GetCityById?State_Id='+State_Id+'&City_Id='+id);
+}
+
+saveCity(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'City/InsertUpdateCity', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+saveCityList(userId :string,stateId:string,dtl:any[]) {
+  return this.http.post(`${this.baseUrl}/`+ 'City/InsertUpdateCityList?userId='+userId+'&stateId=' +stateId, dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+
+deleteCity(State_Id :number, City_Id :string) {
+  return this.http.get(`${this.baseUrl}/`+ 'City/DeleteCityRecord?State_Id='+State_Id+'&City_Id='+City_Id)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
+
+
 
 //#region Common List Services
   GetLovDetailByColumn(Lov_Column:string): Observable<any> {
@@ -186,6 +246,14 @@ activeSubCategory(subCategoryId :number, userId :string) {
   GetActiveCategoryList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'CategoryLevel/GetActiveCategoryList?categoryId='+'0');
   }
+
+  GetCountryList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'Common/GetCountryListAJ');
+  }
+  GetStateList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'Common/GetStateListAJ');
+  }
+
 //#endregion
 
 //#region Login Services

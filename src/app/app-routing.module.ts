@@ -1,3 +1,5 @@
+import { CityMasterModule } from './AdminPanel/pages/city-master/city-master.module';
+import { StateMasterModule } from './AdminPanel/pages/state-master/state-master.module';
 import { CategoryMasterModule } from './AdminPanel/pages/category-master/category-master.module';
 import { RootCategoryMasterModule } from './AdminPanel/pages/root-category-master/root-category-master.module';
 import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
@@ -94,6 +96,16 @@ const routes: Routes = [
       {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/sub-category-master/sub-category-master.module').then(m => m.SubCategoryMasterModule)
+      },
+
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/state-master/state-master.module').then(m => m.StateMasterModule)
+      },
+
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/city-master/city-master.module').then(m => m.CityMasterModule)
       },
 
       {

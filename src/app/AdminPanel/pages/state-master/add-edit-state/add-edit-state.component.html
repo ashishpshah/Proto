@@ -1,0 +1,40 @@
+<!-- <div class="input-group align-center" *ngIf="Sub_Catg_ID.invalid && formDir.submitted">
+  <span class="text-danger align-center" >
+    Please select Item
+  </span>
+</div> -->
+<div><div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div></div>
+<form >
+  <div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Country<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <ng-select [(ngModel)]="stateObj.Country_ID"  placeholder="Select Country"  id="Country_ID"  [ngModelOptions]="{standalone: true}">
+          <ng-option *ngFor="let scat of CountryList" [value]="scat.id"> {{scat.name}}</ng-option>
+        </ng-select>
+      </div>
+      <label class="col-sm-2 col-form-label">State Code<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" [(ngModel)]="stateObj.State_Code" id="State_Code" [ngModelOptions]="{standalone: true}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">State Name<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" [(ngModel)]="stateObj.State_Name" id="State_Name" [ngModelOptions]="{standalone: true}" >
+      </div>
+    </div>
+  </div>
+  <br />
+  <hr />
+  <div class="text-center">
+    <div class="form-group align-center">
+      <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveState()"> <span class="font-d">
+          Save</span></button> &nbsp;
+      <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+          Cancel</span></button>
+    </div>
+  </div>
+
+</form>

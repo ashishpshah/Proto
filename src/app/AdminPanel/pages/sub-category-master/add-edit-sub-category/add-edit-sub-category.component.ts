@@ -32,6 +32,7 @@ export class AddEditSubCategoryComponent implements OnInit {
   loading: boolean = false;
   isListDivShow : boolean = false;
   isFromEdit : boolean = false;
+  msgArray : any[] = [];
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
     private _commonService : ProtoServicesService, private _router: Router, private el : ElementRef, private renderer: Renderer2) {
       if (this._avRoute.snapshot.params["id"]) {
@@ -84,6 +85,7 @@ export class AddEditSubCategoryComponent implements OnInit {
             localStorage.setItem('isSelectCategory',  categoryId);
             this.isListDivShow = true;
             this.CategoryListById = data;
+            this.errorMessage = '';
             this.loading = false;
         }
       )
@@ -126,25 +128,34 @@ export class AddEditSubCategoryComponent implements OnInit {
     validateList() : any{
       debugger;
       let invalidCount = 0;
-      this.CategoryListById.forEach(function (element) {
+      let message = "";
+      this.CategoryListById.filter(function (element,index) {
         if(element.Sub_Catg_Name == null || element.Sub_Catg_Name == '')
         {
+          message = message == "" ? "Please Enter Sub Category#"+index+"#Sub_Catg_Name_" :message;
+          // this.renderer.selectRootElement('#Sub_Catg_Name_'+index).focus();
           invalidCount = invalidCount + 1;
         }else if(element.Sub_Catg_Name_D == null || element.Sub_Catg_Name_D == '')
         {
+          message = message == "" ? "Please Enter Sub Category (Danish)#"+index+"#Sub_Catg_Name_D_" :message;
+          // this.renderer.selectRootElement('#Sub_Catg_Name_D_'+index).focus();
           invalidCount = invalidCount + 1;
         }
         else if(element.Display_Seq_No == null || element.Display_Seq_No == '' || element.Display_Seq_No == 0 )
         {
+          message = message == "" ? "Please Enter Display Seq No#"+index+"#Display_Seq_No_":message;
+          // this.renderer.selectRootElement('#Display_Seq_No_'+index).focus();
           invalidCount = invalidCount + 1;
         }
-
       });
-     return invalidCount;
+      message = message == "" ? "true" : message;
+     return message;
     }
 
     saveCategory() {
-      if(this.validateList() == 0){
+      var returnMsg = this.validateList();
+      debugger;
+      if(returnMsg == "true"){
         this._commonService.saveSubCategory( this.userId,localStorage.getItem('isSelectCategory'),this.CategoryListById)
         .subscribe((data) => {
           this.commonHelper.commonAlert('Saved', data, '/master/sub-category-master')
@@ -152,10 +163,12 @@ export class AddEditSubCategoryComponent implements OnInit {
         }, error => this.errorMessage = error)
       }
       else{
-        this.errorMessage = "All fields are required";
+        this.msgArray = returnMsg.split("#");
+
+        this.errorMessage = this.msgArray[0];
+        this.renderer.selectRootElement('#'+this.msgArray[2]+this.msgArray[1]).focus();
+
       }
-
-
     }
     updateSubCategory(){
       if(this.validate()){
