@@ -1,0 +1,230 @@
+<!-- <div class="input-group align-center" *ngIf="Sub_Catg_ID.invalid && formDir.submitted">
+  <span class="text-danger align-center" >
+    Please select Item
+  </span>
+</div> -->
+
+
+<div *ngIf="isFromEdit">
+  <div>
+    <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
+  </div>
+  <form>
+    <div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <ng-select [(ngModel)]="subCategoryObj.Catg_ID" placeholder="Select Root Category" id="Catg_ID"
+          [ngModelOptions]="{standalone: true}">
+          <ng-option *ngFor="let scat of CategoryList" [value]="scat.id"> {{scat.name}}</ng-option>
+        </ng-select>
+        </div>
+        <label class="col-sm-2 col-form-label">Sub Category Name<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name" id="Sub_Catg_Name"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Sub Category Name (Danish)<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name_D" id="Sub_Catg_Name_D"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="number" [(ngModel)]="subCategoryObj.Display_Seq_No" id="Display_Seq_No"
+            [ngModelOptions]="{standalone: true}" min="0">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="subCategoryObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id">
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="updateSubCategory()">
+          <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+
+<div *ngIf="!isFromEdit">
+  <div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
+      <div class="col-sm-4">
+        <ng-select [(ngModel)]="subCategoryObj.Catg_ID" placeholder="Select Root Category" id="Catg_ID"
+          [ngModelOptions]="{standalone: true}" (change)="getCategoryListbyId(subCategoryObj.Catg_ID)">
+          <ng-option *ngFor="let scat of CategoryList" [value]="scat.id"> {{scat.name}}</ng-option>
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <br />
+  <hr />
+
+  <div *ngIf="isListDivShow">
+    <div>
+      <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
+    </div>
+
+    <form>
+      <div class="row">
+        <div class="col-sm-12">
+          <app-card [title]="'Sub Category Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+            <div class="table-responsive">
+              <p>
+                <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
+                <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
+                  (click)="addNewRow()"><span class="font-d"> Add New</span></a>
+              </p>
+              <br />
+              <br />
+
+              <p-table class="" #dt [value]="CategoryListById" [(selection)]="selectedSubCategoryList" dataKey="id"
+                [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+                [globalFilterFields]="['Sub_Catg_Name','Sub_Catg_Name_D']">
+                <ng-template pTemplate="caption">
+                  <div class="table-header-p ">
+                    <span class="p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input class="p-l-30 form-control" pInputText type="text"
+                        (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                    </span>
+                  </div>
+                </ng-template>
+                <br />
+                <br />
+                <ng-template pTemplate="header">
+                  <tr>
+                    <!-- <th pSortableColumn="Catg_Name">Category Name <p-sortIcon field="Catg_Name"></p-sortIcon>
+                    </th> -->
+                    <th pSortableColumn="Sub_Catg_Name">Sub Category Name <p-sortIcon field="Sub_Catg_Name">
+                      </p-sortIcon>
+                    </th>
+                    <th pSortableColumn="Sub_Catg_Name_D">Sub Category Name (Danish) <p-sortIcon
+                        field="Sub_Catg_Name_D">
+                      </p-sortIcon>
+                    </th>
+                    <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="Display_Seq_No">Display Seq No <p-sortIcon field="Display_Seq_No"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
+                    </th>
+                    <th>Action </th>
+                  </tr>
+                  <tr>
+                    <!-- <th>
+                      <input pInputText type="text" (input)="dt.filter($event.target.value, 'Catg_Name', 'contains')"
+                        placeholder="Search by Category" class="form-control">
+                    </th> -->
+
+
+
+                    <th>
+                      <input pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'Sub_Catg_Name', 'contains')"
+                        placeholder="Search by SubCategory" class="form-control">
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                  <tr class="">
+                    <!-- p-selectable-row  -->
+
+                    <!-- <td>
+                      <ng-select [(ngModel)]="item.Catg_Name" placeholder="Select Root Category"
+                        id="Catg_ID_{{item.Sub_Catg_ID}}" [ngModelOptions]="{standalone: true}">
+                        <ng-option *ngFor="let scat of CategoryList" [value]="scat.id"> {{scat.name}}</ng-option>
+                      </ng-select>
+                    </td> -->
+                    <td>
+                      <input class="form-control" type="text" [(ngModel)]="item.Sub_Catg_Name"
+                        id="Sub_Catg_Name_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <input class="form-control" type="text" [(ngModel)]="item.Sub_Catg_Name_D"
+                        id="Sub_Catg_Name_D_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <select class="form-control" [(ngModel)]="item.Status" id="Status_{{rowIndex}}"
+                        [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let st of StatusList; let i = index" [value]="st.id">
+                          {{st.name}}
+                        </option>
+                      </select>
+                      <!-- {{item.StatusDesc}} -->
+                    </td>
+                    <td>
+                      <input class="form-control" type="text" [(ngModel)]="item.Display_Seq_No"
+                        id="Display_Seq_No_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td style="width: 220px;">
+                      {{item.Deleted}}
+                      <span *ngIf="item.Deleted =='Yes'"><button type="button"
+                          class="float-right btn btn-success text-white " (click)="activateItem(item.Sub_Catg_ID)">Make
+                          Active</button> </span>
+                    </td>
+                    <td>
+                      <!-- <a class="ti-pencil-alt edit" (click)="openEditPage(item.Sub_Catg_ID)"></a> -->
+                      &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Sub_Catg_ID,rowIndex)"></a>
+                      <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="6">No items found</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </app-card>
+        </div>
+      </div>
+
+      <div class="text-center" *ngIf="CategoryListById.length > 0">
+        <div class="form-group align-center">
+          <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveCategory()">
+            <span class="font-d">
+              Save</span></button> &nbsp;
+          <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+              Cancel</span></button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

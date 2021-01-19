@@ -124,6 +124,37 @@ activeCategory(categoryId :number, userId :string) {
 //#endregion
 
 
+//#region Sub-CategoryLevel Master Service
+
+getSubCategoryList(subCategoryId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'SubCategoryLevel/GetSubCategoryList?subCategoryId='+subCategoryId);
+}
+
+getSubCategoryByCategoryId(categoryId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'SubCategoryLevel/GetSubCategoryByCategoryId?categoryId='+categoryId);
+}
+
+getSubCategoryById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'SubCategoryLevel/GetSubCategoryById?subCategoryId='+id);
+}
+
+saveSubCategory(userId :string,categoryId:string,dtl:any[]) {
+  debugger;
+  return this.http.post(`${this.baseUrl}/`+ 'SubCategoryLevel/InsertUpdateSubCategory?userId='+userId+'&categoryId=' +categoryId, dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteSubCategory(subCategoryId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "SubCategoryLevel/DeleteSubCategoryRecord?subCategoryId=" + subCategoryId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeSubCategory(subCategoryId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "SubCategoryLevel/ActiveSubCategory?subCategoryId=" + subCategoryId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
 //#region Common List Services
   GetLovDetailByColumn(Lov_Column:string): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Lovmaster/GetLovDetailByColumnAJ?Lov_Column='+Lov_Column);

@@ -91,10 +91,10 @@ const routes: Routes = [
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/category-master/category-master.module').then(m => m.CategoryMasterModule)
       },
-      // {
-      //   path: 'master',
-      //    loadChildren: () => import('./AdminPanel/pages/category-master/category-master.module').then(m => m.CategoryMasterModule)
-      // },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/sub-category-master/sub-category-master.module').then(m => m.SubCategoryMasterModule)
+      },
 
       {
         path: 'basic',

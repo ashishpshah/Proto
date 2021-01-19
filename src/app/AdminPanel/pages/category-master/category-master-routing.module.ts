@@ -1,5 +1,3 @@
-import { CategoryListModule } from './category-list/category-list.module';
-import { AddEditCategoryModule } from './add-edit-category/add-edit-category.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
