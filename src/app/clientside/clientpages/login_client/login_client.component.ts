@@ -1,3 +1,4 @@
+import { User_Customer_Master } from './../../../models/User_Customer_Master';
 import { AuthenticationServiceService } from './../../client_services/authenticationService.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,11 +14,13 @@ export class Login_clientComponent implements OnInit {
 
 
   loginForm: FormGroup;
+  //custmerdata: User_Customer_Master;
   submitted = false;
   returnUrl: string;
   error = '';
   title: string = "Login";
   errorMessage: any;
+  custmerdataObj :any ={};
   loading = false;
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +33,12 @@ export class Login_clientComponent implements OnInit {
 }
 
   ngOnInit() {
+    debugger;
+
+
+    this.returnUrl = window.location.pathname;
+
+    //this.returnUrl = this.route.snapshot.paramMap.get('string');
 
     this.loginForm = this.formBuilder.group({
       Email: ['', Validators.required],
@@ -53,12 +62,21 @@ export class Login_clientComponent implements OnInit {
             this.errorMessage = "User Invalid";
           }else{
             debugger;
-              this.loginForm = this.formBuilder.group({resp});
-            // localStorage.setItem('userId',  this.loginForm.value.resp.User_Id);
-            // localStorage.setItem('userName',  this.loginForm.value.resp.User_Name);
+            this.custmerdataObj =resp;
+
+            //this.loginForm = this.formBuilder.group({resp});
+             localStorage.setItem('CustId',  this.custmerdataObj.Cust_Id);
+             localStorage.setItem('Cust_userName',  this.custmerdataObj.FirstName);
             // localStorage.setItem('userType',  this.loginForm.value.resp.UserTypeDesc);
             this.loading = false;
-            this.router.navigate(['/subcategory/1']);
+            if(this.returnUrl == '/checkoutlogin')
+            {
+              this.router.navigate(['/shoppingcart']);
+            }else
+            {
+              this.router.navigate(['/subcategory/1']);
+            }
+
           }
 
         }, error => {this.errorMessage = error ; this.loading = false;})

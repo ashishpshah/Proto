@@ -17,6 +17,7 @@ export class ProductComponent implements OnInit {
   shoppingcartlist : Observable<Item_Master[]>;
   isShown: boolean = false ;
   isShown1: boolean = true ;
+  public isActive:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +33,20 @@ export class ProductComponent implements OnInit {
     console.log(NgbSlideEventSource.INDICATOR);
     console.log(NgbSlideEventSource.ARROW_LEFT);
     console.log(NgbSlideEventSource.ARROW_RIGHT);
+  }
+  onClickwhishlist(Item_Masters)
+  {
+    debugger;
+
+    Item_Masters.Activewishlist = !Item_Masters.Activewishlist;
+
+    if(Item_Masters.Activewishlist)
+    {
+      this.Client_commonService_.addwishlist(Item_Masters);
+    }else{
+      this.Client_commonService_.removewhishlist(Item_Masters);
+    }
+
   }
   GetProductItem(){
 

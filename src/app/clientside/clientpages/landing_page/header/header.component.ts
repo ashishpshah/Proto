@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   hideshowcrat: boolean=true;
   Itemcount:number =0;
   Item_Master_ : any;
+  username : string='Login In';
 
 
 
@@ -26,7 +27,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
 
-
+      this.username = localStorage.getItem('Cust_userName');
+      if( this.username== null)
+      {
+        this.username ="Login In";
+      }
       //const navbar: HTMLElement = this.element.nativeElement;
       //this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.GetRootHeaderData();

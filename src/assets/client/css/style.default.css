@@ -1,4 +1,45 @@
-﻿.navbar {
+﻿
+.ffa-heart-o {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.fa-heart-o.active {
+  color:aqua
+}
+
+
+
+
+
+.wishlists.sale {
+  top: -30px;
+}
+.wishlists {
+  position: absolute;
+  /* top: 41px; */
+  padding-left: 51px;
+}
+.wishlists .theribbon {
+  position: relative;
+  width: 80px;
+  padding: 6px 20px 6px 20px;
+  margin: 30px 10px 10px -71px;
+  color: #fff;
+  background-color: #c27baa;
+  font-family: "Montserrat",Helvetica,Arial,sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: .8rem;
+}
+
+.wishlists .wishlists-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.navbar {
     background: #fff;
     border-bottom: solid 1px #e9ecef;
     font-family: "Montserrat",Helvetica,Arial,sans-serif

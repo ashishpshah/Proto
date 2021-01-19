@@ -15,17 +15,31 @@ let cart = [];
 export class Client_commonService {
 
   Item_MasterList  = new BehaviorSubject<Item_Master[]>([]);
+  whislistItem_Master  = new BehaviorSubject<Item_Master[]>([]);
+  username:any ={};
 constructor(private http: HttpClient)
 {
+  //localStorage.clear();
   let existingCartItems = JSON.parse(localStorage.getItem('shopcart'));
   if (!existingCartItems) {
     existingCartItems = [];
   }
   this.itemsSubject.next(existingCartItems);
+
+  let existingwhishlistItems = JSON.parse(localStorage.getItem('whishlist'));
+  if (!existingwhishlistItems) {
+    existingwhishlistItems = [];
+  }
+  this.itemsWhishlist.next(existingwhishlistItems);
+
+  this.username = localStorage.getItem('Cust_userName');
+
  }
 
  private itemsSubject = new BehaviorSubject<Item_Master[]>([]);
+ private itemsWhishlist = new BehaviorSubject<Item_Master[]>([]);
  items$ = this.itemsSubject.asObservable();
+ itemswhish$ = this.itemsWhishlist.asObservable();
 
  addToCart(product: Item_Master) {
   this.items$.pipe(
@@ -102,6 +116,8 @@ addToCart1(product: Item_Master) {
   }
 }
 
+
+
 minuseQty(product: Item_Master)
 {
       var shopcart = JSON.parse(localStorage.getItem('shopcart'));
@@ -167,6 +183,94 @@ deleteItem(item)
     existingCartItems = [];
   }
   this.itemsSubject.next(existingCartItems);
+
+}
+getwhislistItems(){
+ // console.log("Cart: ", JSON.parse(localStorage.getItem('shopcart')));
+  return this.whislistItem_Master = JSON.parse(localStorage.getItem('whishlist'));
+
+  //return this.items =
+ }
+
+addwishlist(whislistitem: Item_Master) {
+
+  debugger;
+  //localStorage.removeItem('whishlist');
+
+  if(localStorage.getItem('whishlist')  == null)
+  {
+    this.itemswhish$.pipe(
+      take(1),
+      map((whislist) => {
+        whislist.push(whislistitem);
+        localStorage.setItem('whishlist', JSON.stringify(whislist));
+      }),
+    ).subscribe();
+  }
+  else
+  {
+
+    var whishlistcount = JSON.parse(localStorage.getItem('whishlist'));
+
+    if(whishlistcount.length  == null || whishlistcount.length  == undefined || whishlistcount.length == 0)
+    {
+      this.itemswhish$.pipe(
+        take(1),
+        map((whislist) => {
+          whislist.push(whislistitem);
+          localStorage.setItem('whishlist', JSON.stringify(whislist));
+        }),
+      ).subscribe();
+    }else
+    {
+      var isadd= true;
+      for (var i = 0; i < whishlistcount.length; i++) {
+        if(whislistitem.Item_ID === whishlistcount[i].Item_ID){
+         isadd= false;
+            break;
+        }
+     }
+
+     if(isadd)
+     {
+      this.itemswhish$.pipe(
+        take(1),
+        map((whislist) => {
+          whislist.push(whislistitem);
+          localStorage.setItem('whishlist', JSON.stringify(whislist));
+        }),
+      ).subscribe();
+     }
+
+    }
+  }
+}
+
+removewhishlist(item)
+{
+  console.log("Deleting : ",item);
+  let whislist_cart;
+  let index;
+  whislist_cart = JSON.parse(localStorage.getItem('whishlist'));
+  for(let i in whislist_cart)
+  {
+    if (item.Item_ID == whislist_cart[i].Item_ID)
+    {
+      index = i;
+      whislist_cart.splice(index, 1);
+    }
+  }
+
+  console.log("whislist_cart ", whislist_cart);
+  localStorage.setItem('whishlist', JSON.stringify(whislist_cart));
+
+  let existingwhishlistItems = JSON.parse(localStorage.getItem('whishlist'));
+  if (!existingwhishlistItems) {
+    existingwhishlistItems = [];
+  }
+  this.itemsWhishlist.next(existingwhishlistItems);
+
+
 
 }
 

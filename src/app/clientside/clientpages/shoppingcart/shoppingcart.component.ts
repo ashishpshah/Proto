@@ -22,6 +22,7 @@ export class ShoppingcartComponent implements OnInit {
   Grandtotal:number =0;
   Itemcount:number =0;
   itemname:string ='Fruit';
+  username: string='';
   constructor
   (
     private route: ActivatedRoute,
@@ -38,6 +39,20 @@ export class ShoppingcartComponent implements OnInit {
   {
 
     this.calculatecartvalue();
+
+  }
+  checkoutItem()
+  {
+    debugger;
+    //localStorage.removeItem('Cust_userName');
+    this.username = localStorage.getItem('Cust_userName');
+    if( this.username== null || this.username== '' || this.username== undefined)
+    {
+      this.router.navigate(['/checkoutlogin']);
+    }else{
+      this.router.navigate(['/checkout']);
+    }
+
 
   }
 

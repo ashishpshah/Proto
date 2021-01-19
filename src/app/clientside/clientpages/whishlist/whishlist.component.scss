@@ -1,0 +1,19 @@
+.card-header {
+  padding: .75rem 1.25rem;
+  background-color: rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0,0,0,0.125);
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #c27baa;
+}
+a {
+  color: #c27baa;
+  text-decoration: none;
+}
+.nav-pills .nav-link.active {
+  /* background: transparent; */
+  /* color: #0275d8; */
+  text-align: inherit;
+  /* border-bottom: 1px solid #0275d8; */
+}

@@ -25,4 +25,5 @@ export class Item_Master extends BaseModel {
   showaddbtn:boolean =true;
   showplusebtn:boolean =false;
   OrderQty: number= 1;
+  Activewishlist:boolean =false;
 }

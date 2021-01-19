@@ -1,3 +1,4 @@
+import { CheckoutComponent } from './clientside/clientpages/checkout/checkout.component';
 import { ProductDirective } from './clientside/clientpages/landing_page/product/product.directive';
 import { Login_clientComponent } from './clientside/clientpages/login_client/login_client.component';
 import { LayoutclientComponent } from './clientside/clientpages/landing_page/layoutclient/layoutclient.component';
@@ -43,6 +44,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
 import { ShoppingcartComponent } from './clientside/clientpages/shoppingcart/shoppingcart.component';
+import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { ShoppingcartComponent } from './clientside/clientpages/shoppingcart/sho
     LayoutclientComponent,
     CheckpincodeComponent,
     ShoppingcartComponent,
-    ProductDirective
+    ProductDirective,
+    WhishlistComponent,
+    CheckoutComponent
     // ItemListComponent,
     // AddEditItemComponent
   ],
