@@ -48,10 +48,7 @@ const MENUITEMS = [
         type: 'sub',
         icon: 'ti-crown',
         children: [
-          {
-            state: 'state-master',
-            name: 'State Master'
-          },
+
           // {
           //   state: 'city-master',
           //   name: 'City  Master'
@@ -76,6 +73,14 @@ const MENUITEMS = [
             state: 'item-master',
             name: 'Item Master'
           },
+          {
+            state: 'country-master',
+            name: 'Country Master'
+          },
+          {
+            state: 'state-master',
+            name: 'State Master'
+          }
 
         ]
       },

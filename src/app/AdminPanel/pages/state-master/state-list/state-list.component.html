@@ -14,7 +14,7 @@
           styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
           [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-          [globalFilterFields]="['Countryname','State_Name']">
+          [globalFilterFields]="['Countryname','State_Name','State_Code']">
           <ng-template pTemplate="caption">
             <div class="table-header-p ">
               <span class="p-input-icon-left">
@@ -32,6 +32,9 @@
               </th>
               <th pSortableColumn="State_Name">State Name <p-sortIcon field="State_Name"></p-sortIcon>
               </th>
+              <th pSortableColumn="State_Code">State Code <p-sortIcon field="State_Code"></p-sortIcon>
+              </th>
+
               <th>View | Add City</th>
               <th>Action </th>
             </tr>
@@ -44,6 +47,7 @@
                 <input pInputText type="text" (input)="dt.filter($event.target.value, 'State_Name', 'contains')"
                   placeholder="Search by State" class="form-control">
               </th>
+              <th></th>
               <th></th>
               <th></th>
 
@@ -60,6 +64,10 @@
               <td>
                 {{item.State_Name}}
               </td>
+              <td>
+                {{item.State_Code}}
+              </td>
+
               <td><a class="btn btn-primary text-white" (click)="openCityModal(item.State_ID)">View | Add City</a></td>
               <td>
                 <a class="ti-pencil-alt edit" (click)="openEditPage(item.State_ID)"></a>

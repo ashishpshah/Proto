@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddEditCategoryComponent } from './add-edit-category.component';
+import { CountryListComponent } from './country-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AddEditCategoryComponent,
+    component: CountryListComponent,
     data: {
-      breadcrumb: 'Add-Edit Category',
+      breadcrumb: 'Country List',
       icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Add-Edit Category',
+      breadcrumb_caption: 'Country List',
       status: true
     }
   }
@@ -19,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AddEditCategoryRoutingModule { }
+export class CountryListRoutingModule { }

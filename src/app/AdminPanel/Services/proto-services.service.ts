@@ -126,6 +126,7 @@ activeCategory(categoryId :number, userId :string) {
 
 //#region SubCategoryLevel Master Service
 
+
 getSubCategoryList(subCategoryId:string): Observable<any> {
   return this.http.get(`${this.baseUrl}/`+'SubCategoryLevel/GetSubCategoryList?subCategoryId='+subCategoryId);
 }
@@ -154,6 +155,30 @@ activeSubCategory(subCategoryId :number, userId :string) {
     .catch(this.errorHandler);
 }
 //#endregion
+
+//#region Country Master Service
+
+getCountryList(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Country/GetCountryinfo?');
+}
+
+getCountryById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Country/GetCountryById?countryId='+id);
+}
+
+saveCountry(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Country/InsertupdateCountry', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteCountry(countryId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Country/DeleteCountryRecord?countryId=" + countryId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
 
 //#region State Master Service
 

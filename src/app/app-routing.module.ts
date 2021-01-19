@@ -111,7 +111,16 @@ const routes: Routes = [
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/sub-category-master/sub-category-master.module').then(m => m.SubCategoryMasterModule)
       },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/country-master/country-master.module').then(m => m.CountryMasterModule)
 
+
+      },
+      // {
+      //   path: 'master/country-master',
+      //   loadChildren: () => import('./AdminPanel/pages/country-master/country-master.module').then(m => m.CountryMasterModule)
+      //  },
       {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/state-master/state-master.module').then(m => m.StateMasterModule)

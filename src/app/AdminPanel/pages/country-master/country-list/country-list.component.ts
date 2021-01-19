@@ -22,17 +22,17 @@ import {
 } from 'primeng/table';
 
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.scss']
+  selector: 'app-country-list',
+  templateUrl: './country-list.component.html',
+  styleUrls: ['./country-list.component.scss']
 })
 /************************************* Developed By RAJESH *******************************/
-export class CategoryListComponent implements OnInit {
+export class CountryListComponent implements OnInit {
 
   loading: boolean = true;
   IsAddEdit = false;
-  categoryMaster: [];
-  selectedCategoryMaster: [];
+  countryMaster: [];
+  selectedCountryMaster: [];
   userId: string = localStorage.getItem('userId');
   msgType: string = '';
   message: string = '';
@@ -42,27 +42,27 @@ export class CategoryListComponent implements OnInit {
   commonHelper = new AdminCommonHelperComponent(this._router);
 
   ngOnInit(): void {
-    this.getCategoryList();
+    this.getCountryList();
   }
 
-  getCategoryList() {
-    this._commonService.getCategoryList('0').subscribe(
+  getCountryList() {
+    this._commonService.getCountryList().subscribe(
       (data) => {
-        this.categoryMaster = data;
+        this.countryMaster = data;
         this.loading = false;
       }
     );
   }
 
   openInsertPage() {
-    this._router.navigate(['/master/add-edit-category']);
+    this._router.navigate(['/master/add-edit-country']);
   }
 
   openEditPage(id) {
-    this._router.navigate(['/master/add-edit-category', id]);
+    this._router.navigate(['/master/add-edit-country', id]);
   }
 
-  deleteItem(categoryId) {
+  deleteItem(countryId) {
     Swal.fire({
       icon: 'warning',
       title: 'Do you want to delete?',
@@ -74,23 +74,13 @@ export class CategoryListComponent implements OnInit {
     }).then((result) => {
       debugger;
       if (result.isConfirmed) {
-        this._commonService.deleteCategory(categoryId, this.userId).subscribe((data) => {
+        this._commonService.deleteCountry(countryId, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
           if (ret == 'S') {
-            this.getCategoryList();
+            this.getCountryList();
           }
         }, error => console.error(error))
       }
     })
   }
-
-  activateItem(categoryId) {
-    this._commonService.activeCategory(categoryId, this.userId).subscribe((data) => {
-      let ret = this.commonHelper.activeInactiveAlert('Activated', data);
-      if (ret == 'S') {
-        this.getCategoryList();
-      }
-    }, error => console.error(error))
-  }
-
 }

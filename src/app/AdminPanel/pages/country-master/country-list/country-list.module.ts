@@ -1,7 +1,7 @@
-import { CategoryListRoutingModule } from './category-list-routing.module';
+import { CountryListRoutingModule } from './country-list-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryListComponent } from './category-list.component';
+import { CountryListComponent } from './country-list.component';
 
 import {SharedModule} from '../../../shared/shared.module';
 import {NgxDataTableModule} from "angular-9-datatable";
@@ -21,7 +21,7 @@ import {DropdownModule} from 'primeng/dropdown';
 @NgModule({
   imports: [
     CommonModule,
-    CategoryListRoutingModule
+    CountryListRoutingModule
     ,SharedModule
     ,NgxDataTableModule
     ,TableModule,
@@ -36,6 +36,6 @@ import {DropdownModule} from 'primeng/dropdown';
     ProgressBarModule,
     DropdownModule,
   ],
-  declarations: [CategoryListComponent]
+  declarations: [CountryListComponent]
 })
-export class CategoryListModule { }
+export class CountryListModule { }

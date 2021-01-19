@@ -40,10 +40,9 @@ export class BasicLoginComponent implements OnInit {
 
           if (resp == null) {
             this.errorMessage = "User Invalid";
+            this.loading = false;
           }else{
-            debugger;
               this.loginForm = this._fb.group({resp});
-              debugger;
             localStorage.setItem('userId',  this.loginForm.value.resp.User_Id);
             localStorage.setItem('userName',  this.loginForm.value.resp.User_Name);
             localStorage.setItem('userType',  this.loginForm.value.resp.UserTypeDesc);
