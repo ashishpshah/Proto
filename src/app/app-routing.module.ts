@@ -1,9 +1,5 @@
 import { CheckoutComponent } from './clientside/clientpages/checkout/checkout.component';
 import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist.component';
-import { CityMasterModule } from './AdminPanel/pages/city-master/city-master.module';
-import { StateMasterModule } from './AdminPanel/pages/state-master/state-master.module';
-import { CategoryMasterModule } from './AdminPanel/pages/category-master/category-master.module';
-import { RootCategoryMasterModule } from './AdminPanel/pages/root-category-master/root-category-master.module';
 import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
 import { CheckpincodeRoutes } from './clientside/clientpages/checkpincode/checkpincode.routing';
 import { Login_clientModule } from './clientside/clientpages/login_client/login_client.modules';
@@ -129,6 +125,10 @@ const routes: Routes = [
       {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/city-master/city-master.module').then(m => m.CityMasterModule)
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/street-master/street-master.module').then(m => m.StreetMasterModule)
       },
 
       {

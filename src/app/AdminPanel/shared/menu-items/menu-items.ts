@@ -80,6 +80,10 @@ const MENUITEMS = [
           {
             state: 'state-master',
             name: 'State Master'
+          },
+          {
+            state: 'street-master',
+            name: 'Street Master'
           }
 
         ]

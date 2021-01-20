@@ -179,7 +179,6 @@ deleteCountry(countryId :number, userId :string) {
 //#endregion
 
 
-
 //#region State Master Service
 
 getStateList(State_Id:string): Observable<any> {
@@ -237,6 +236,34 @@ deleteCity(State_Id :number, City_Id :string) {
 //#endregion
 
 
+//#region Street Master Service
+
+getStreetList(streetId:string,isActive : string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Street/GetStreetList?streetId='+streetId+'&isActive='+isActive);
+}
+
+getStreetById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Street/GetStreetById?streetId='+id);
+}
+
+saveStreet(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Street/InsertUpdateStreet', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteStreet(streetId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Street/DeleteStreetRecord?streetId=" + streetId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeStreet(streetId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "Street/ActiveStreet?streetId=" + streetId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
+
 
 
 
@@ -277,6 +304,9 @@ deleteCity(State_Id :number, City_Id :string) {
   }
   GetStateList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Common/GetStateListAJ');
+  }
+  GetAllCityList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'Common/GetAllCityList');
   }
 
 //#endregion

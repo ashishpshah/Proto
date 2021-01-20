@@ -1,13 +1,11 @@
-// import { AdminModuleModule } from './../../../admin-module/admin-module.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgSelect2Module } from 'ng-select2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StateListRoutingModule } from './state-list-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StateListComponent } from './state-list.component';
+import { AdminModuleComponent } from './admin-module.component';
 
-import {SharedModule} from '../../../shared/shared.module';
+import {SharedModule} from '../shared/shared.module';
 import {NgxDataTableModule} from "angular-9-datatable";
 import {TableModule} from 'primeng/table';
 import {CalendarModule} from 'primeng/calendar';
@@ -21,11 +19,9 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 
-
 @NgModule({
   imports: [
     CommonModule,
-    StateListRoutingModule
     ,SharedModule
     ,NgxDataTableModule
     ,TableModule,
@@ -43,8 +39,7 @@ import {DropdownModule} from 'primeng/dropdown';
     ReactiveFormsModule,
     NgSelect2Module,
     NgSelectModule,
-    // AdminModuleModule,
   ],
-  declarations: [StateListComponent]
+  declarations: [AdminModuleComponent]
 })
-export class StateListModule { }
+export class AdminModuleModule { }
