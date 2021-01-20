@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
 import { take, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 
 let itemsInCart = [];
@@ -273,6 +276,40 @@ removewhishlist(item)
 
 
 
+}
+
+getWithExpiryLocalStorage(key) {
+  const itemStr = localStorage.getItem(key)
+
+  if (!itemStr) {
+    return null
+  }
+
+  const item = JSON.parse(itemStr)
+  const now = new Date()
+  if (now.getTime() > item.expiry) {
+    localStorage.removeItem(key)
+    return null
+  }
+  return item.value
+}
+
+setWithExpiryLocalStorage(key, value, ttl) {
+  const now = new Date()
+  const item = {
+    value: value,
+    expiry: now.getTime() + ttl,
+  }
+  localStorage.setItem(key, JSON.stringify(item))
+}
+errorHandler(error: Response) {
+  console.log(error);
+  return 'error';
+}
+
+SaveCustmerdata(dtl) {
+  return this.http.post(this.baseUrl + 'Customer/InsertUpdateUserCustomerAddress', dtl)
+    .catch(this.errorHandler)
 }
 
 GetAddressList(CustId:string): Observable<any> {

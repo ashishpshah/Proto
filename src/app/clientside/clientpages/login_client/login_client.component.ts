@@ -1,3 +1,4 @@
+import { Client_commonService } from './../../client_services/client_common.service';
 import { User_Customer_Master } from './../../../models/User_Customer_Master';
 import { AuthenticationServiceService } from './../../client_services/authenticationService.service';
 import { Component, OnInit } from '@angular/core';
@@ -26,7 +27,8 @@ export class Login_clientComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private _AuthenticationServiceService : AuthenticationServiceService
+    private _AuthenticationServiceService : AuthenticationServiceService,
+    public Client_commonService_: Client_commonService,
 ) {
     // redirect to home if already logged in
 
@@ -64,10 +66,11 @@ export class Login_clientComponent implements OnInit {
             debugger;
             this.custmerdataObj =resp;
 
-            //this.loginForm = this.formBuilder.group({resp});
-             localStorage.setItem('CustId',  this.custmerdataObj.Cust_Id);
-             localStorage.setItem('Cust_userName',  this.custmerdataObj.FirstName);
-            // localStorage.setItem('userType',  this.loginForm.value.resp.UserTypeDesc);
+              localStorage.removeItem('CustId');
+              localStorage.removeItem('Cust_userName');
+
+            this.Client_commonService_.setWithExpiryLocalStorage("Cust_Id", this.custmerdataObj.Cust_Id, 5000)
+            this.Client_commonService_.setWithExpiryLocalStorage("Cust_userName", this.custmerdataObj.FirstName, 5000)
             this.loading = false;
             if(this.returnUrl == '/checkoutlogin')
             {

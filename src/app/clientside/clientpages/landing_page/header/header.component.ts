@@ -27,7 +27,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
 
-      this.username = localStorage.getItem('Cust_userName');
+    debugger;
+   const value = this.Client_commonService_.getWithExpiryLocalStorage("Cust_userName")
+   this.username=value;
+
       if( this.username== null)
       {
         this.username ="Login In";
