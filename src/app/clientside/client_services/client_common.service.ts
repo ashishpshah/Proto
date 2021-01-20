@@ -2,7 +2,6 @@ import { Item_Master } from './../../models/Item_Master';
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { take, map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,6 +13,8 @@ let cart = [];
 })
 export class Client_commonService {
 
+  private url = window.location.origin;
+  private baseUrl : string = this.url.includes('localhost') ? 'https://localhost:44311/Api/' :'https://protoapi.padhyasoft.com/Api/' ;
   Item_MasterList  = new BehaviorSubject<Item_Master[]>([]);
   whislistItem_Master  = new BehaviorSubject<Item_Master[]>([]);
   username:any ={};
@@ -274,40 +275,44 @@ removewhishlist(item)
 
 }
 
+GetAddressList(CustId:string): Observable<any> {
+  return this.http.get(this.baseUrl +'Customer/GetAddressListByCustomer?Cust_Id='+CustId);
+  debugger;
+}
 
 getItemList(Catg_ID:number): Observable<any> {
-  return this.http.get(environment.server +'SubCategory/GetItem_MasterList?Catg_ID='+Catg_ID);
+  return this.http.get(this.baseUrl +'SubCategory/GetItem_MasterList?Catg_ID='+Catg_ID);
   debugger;
 }
 
 PageLoaditembyRCatg_ID(RCatg_ID:number): Observable<any> {
   debugger;
-     return this.http.get(environment.server +'SubCategory/PageLoaditembyRCatg_ID?RCatg_ID='+RCatg_ID);
+     return this.http.get(this.baseUrl +'SubCategory/PageLoaditembyRCatg_ID?RCatg_ID='+RCatg_ID);
      debugger;
    }
 
 getItemListBysubcategory(Sub_Catg_ID:number): Observable<any> {
-     return this.http.get(environment.server +'SubCategory/GetItemListBysubcategory?Sub_Catg_ID='+Sub_Catg_ID);
+     return this.http.get(this.baseUrl +'SubCategory/GetItemListBysubcategory?Sub_Catg_ID='+Sub_Catg_ID);
    }
 
 SubCategoryList(Catg_ID:number): Observable<any> {
-     return this.http.get(environment.server +'SubCategory/GetSub_Catg_MasterList?Catg_ID='+Catg_ID);
+     return this.http.get(this.baseUrl +'SubCategory/GetSub_Catg_MasterList?Catg_ID='+Catg_ID);
    }
 
 GetCatg_MasterList(Root_Header_ID:number): Observable<any> {
-     return this.http.get(environment.server+'SubCategory/GetCatg_MasterList?Root_Header_ID='+Root_Header_ID);
+     return this.http.get(this.baseUrl+'SubCategory/GetCatg_MasterList?Root_Header_ID='+Root_Header_ID);
    }
 
 GetRoot_Catg_MasterList(Root_Header_ID:number): Observable<any> {
-     return this.http.get(environment.server +'SubCategory/GetRoot_Catg_MasterList?Root_Header_ID='+Root_Header_ID);
+     return this.http.get(this.baseUrl +'SubCategory/GetRoot_Catg_MasterList?Root_Header_ID='+Root_Header_ID);
    }
 
 GetRootHeaderDataList(): Observable<any> {
-     return this.http.get(environment.server +'SubCategory/GetRoot_Header_MasterList');
+     return this.http.get(this.baseUrl +'SubCategory/GetRoot_Header_MasterList');
    }
 
    GetProductItem(): Observable<any> {
-    return this.http.get(environment.server +'SubCategory/GetProductItemList');
+    return this.http.get(this.baseUrl +'SubCategory/GetProductItemList');
   }
 
   groupBy<T, K>(list: T[], getKey: (item: T) => K) {
