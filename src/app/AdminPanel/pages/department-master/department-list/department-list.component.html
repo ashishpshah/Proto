@@ -1,0 +1,138 @@
+<!-- *********************************************** Insert-Update **********************************************  -->
+<div *ngIf="IsAddEdit">
+  <div><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+  <form >
+    <div>
+      <div class="form-group row">
+
+        <label class="col-sm-2 col-form-label">Department Code<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control text-uppercase" maxlength="5" [attr.readOnly]="isInserted != 'I' ? 'readOnly' : null" [ngClass] ="departmentObj.DEPT_Code == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="departmentObj.DEPT_Code" id="DEPT_Code" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <label class="col-sm-2 col-form-label">Department Name<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control"  [ngClass] ="departmentObj.DEPT_Name == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="departmentObj.DEPT_Name" id="Catg_Name" [ngModelOptions]="{standalone: true}">
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Department Name (Danish)<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [ngClass] ="departmentObj.DEPT_Name_D == '' && errorMessage != '' ? 'alert-danger':''" [(ngModel)]="departmentObj.DEPT_Name_D" id="DEPT_Name_D" [ngModelOptions]="{standalone: true}" >
+        </div>
+
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="departmentObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" [(ngModel)]="departmentObj.Description" id="Description" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveDepartment()"> <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<!-- *********************************************** Data List **********************************************  -->
+<div class="row">
+  <div class="col-sm-12">
+      <app-card [title]="'Department Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+        <div class="table-responsive">
+            <p>
+              <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
+              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen('')"><span class="font-d"> Add New</span></a>
+            </p>
+              <br/>
+              <br/>
+            <p-table class="" #dt [value]="departmentMaster" [(selection)]="selectedDepartmentMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['DEPT_Name','DEPT_Name_D','DEPT_Code']">
+              <ng-template pTemplate="caption">
+                <div class="table-header-p ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                    </span>
+                </div>
+              </ng-template>
+              <br/>
+              <br/>
+              <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="DEPT_Name">Department Name <p-sortIcon field="DEPT_Name"></p-sortIcon></th>
+                  <th pSortableColumn="DEPT_Name_D">Department Name (Danish) <p-sortIcon field="DEPT_Name_D"></p-sortIcon></th>
+                  <th pSortableColumn="DEPT_Code">Department Code <p-sortIcon field="DEPT_Code"></p-sortIcon></th>
+                  <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
+                  <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th>
+                  <th >Action </th>
+              </tr>
+              <tr>
+                  <th>
+                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'DEPT_Name', 'contains')" placeholder="Search by Department" class="form-control">
+                  </th>
+                  <th></th>
+                  <th>
+                      <input pInputText type="text" (input)="dt.filter($event.target.value, 'DEPT_Code', 'contains')" placeholder="Search by Code" class="form-control">
+                  </th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+              </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-item>
+              <tr class="">  <!-- p-selyectable-row  -->
+
+                  <td>
+                        {{item.DEPT_Name}}
+                  </td>
+                  <td>
+                    {{item.DEPT_Name_D}}
+                  </td>
+                  <td>
+                    {{item.DEPT_Code}}
+                  </td>
+                  <td>
+                        {{item.StatusDesc}}
+                  </td>
+                  <td style = "width: 220px;">
+                    {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.DEPT_Code)">Make Active</button> </span>
+                  </td>
+                  <td>
+                          <a class="ti-pencil-alt edit" (click)="addEditOpen(item.DEPT_Code)"></a>
+                          &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.DEPT_Code)"></a>
+                  </td>
+              </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+              <tr>
+              <td colspan="6">No items found</td>
+              </tr>
+              </ng-template>
+          </p-table>
+        </div>
+     </app-card>
+  </div>
+</div>
+

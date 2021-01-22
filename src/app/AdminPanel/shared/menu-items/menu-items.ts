@@ -62,6 +62,10 @@ const MENUITEMS = [
             name: 'Root Category Master'
           },
           {
+            state: 'department-master',
+            name: 'Department Master'
+          },
+          {
             state: 'category-master',
             name: 'Category Master'
           },

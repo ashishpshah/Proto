@@ -136,6 +136,11 @@ const routes: Routes = [
 
       },
       {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/department-master/department-master.module').then(m => m.DepartmentMasterModule)
+
+      },
+      {
         path: 'basic',
         loadChildren: () => import('./AdminPanel/pages/ui-elements/basic/basic.module').then(m => m.BasicModule)
       },

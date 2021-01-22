@@ -285,6 +285,33 @@ activeRoute(routeId :number, userId :string) {
 }
 //#endregion
 
+//#region Department Master Service
+
+getDepartmentList(deptCode:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Department/GetDepartmentList?deptCode='+deptCode);
+}
+
+getDepartmentById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Department/GetDepartmentById?deptCode='+id);
+}
+
+saveDepartment(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Department/InsertUpdateDepartment', dtl)
+    .catch(this.errorHandler)
+}
+
+deleteDepartment(deptCode :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Department/DeleteDepartmentRecord?deptCode=" + deptCode+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+
+activeDepartment(deptCode :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "Department/ActiveDepartment?deptCode=" + deptCode+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
 
 //#region Common List Services
   GetLovDetailByColumn(Lov_Column:string): Observable<any> {
@@ -333,7 +360,7 @@ activeRoute(routeId :number, userId :string) {
   }
 
   GetActiveDepartmentList(deptCode:string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/`+'CategoryLevel/GetActiveDepartmentList?deptCode='+deptCode);
+    return this.http.get(`${this.baseUrl}/`+'Department/GetActiveDepartmentList?deptCode='+deptCode);
   }
 
 //#endregion

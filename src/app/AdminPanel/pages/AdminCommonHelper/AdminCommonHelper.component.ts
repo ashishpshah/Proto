@@ -19,7 +19,7 @@ export class AdminCommonHelperComponent implements OnInit {
   }
 
   simpleAlert(title : string, message : string , type : string){
-    Swal.fire(title, message, type)
+    this.autoCloseAlert(title, message, type)
   }
 
   commonAlert(title : string ,data: any, url : string): any{
@@ -29,17 +29,17 @@ export class AdminCommonHelperComponent implements OnInit {
       this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
 
       if (this.msgType == 'S') {
-        Swal.fire(title, this.message, 'success')
+        this.autoCloseAlert(title, this.message, 'success')
         if (url != null && url != '' && url != "") {
           this._router.navigate([url]);
         }
 
       }else {
-        Swal.fire('Error', this.message, 'error')
+        this.autoCloseAlert('Error', this.message, 'error')
       }
 
     }else{
-      Swal.fire('Error', 'Something went wrong!', 'error')
+      this.autoCloseAlert('Error', 'Something went wrong!', 'error')
     }
   }
 
@@ -75,11 +75,11 @@ export class AdminCommonHelperComponent implements OnInit {
         }
 
       }else {
-        Swal.fire('Error', this.message, 'error')
+        this.autoCloseAlert('Error', this.message, 'error')
       }
 
     }else{
-      Swal.fire('Error', 'Something went wrong!', 'error')
+      this.autoCloseAlert('Error', 'Something went wrong!', 'error')
     }
   }
 
@@ -99,7 +99,7 @@ export class AdminCommonHelperComponent implements OnInit {
       }
 
     }else{
-      this.simpleAlert('Error', 'Something went wrong!', 'error')
+      this.autoCloseAlert('Error', 'Something went wrong!', 'error')
     }
     return this.msgType;
   }
