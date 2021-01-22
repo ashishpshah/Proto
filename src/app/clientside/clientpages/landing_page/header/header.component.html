@@ -13,10 +13,8 @@
           <a href="index.html" class="navbar-brand home"><img src="assets/img/logo/logo.png" alt="Minimal logo" style="height: 44px;" class="d-none d-md-inline-block"><img src="assets/img/logo/logo.png" alt="Minimal logo" class="d-md-none"><span class="sr-only">Prototype - go to homepage</span></a>
           <div class="navbar-buttons d-lg-none">
 
-            <a href="/custlogin" class="btn btn-outline-secondary mr-1"><i class="icofont-login ml-1"></i>Login in</a>
-            <a class="btn btn-outline-secondary mr-1" href="/create-user"><i class="icofont-ui-user"></i>Create</a>
               <!-- <button type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-outline-secondary mr-1"><a href="login"><i class="icofont-ui-user"></i></a><i class="fa fa-users"></i></button> -->
-              <a href="/shoppingcart" class="btn btn-outline-primary mr-1"><i class="fa fa-shopping-cart"></i><span class="d-none d-sm-inline">3 items in cart                </span></a>
+              <a href="/shoppingcart" class="btn btn-outline-primary mr-1"><i class="fa fa-shopping-cart"></i><span class="d-none d-sm-inline">{{(items$ | async).length}} items in cart                </span></a>
               <button type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation" class="btn btn-outline-primary"><i class="fa fa-align-justify"></i><span class="sr-only">Toggle navigation</span></button>
           </div>
           <div id="navigation" class="navbar-collapse collapse">
@@ -29,10 +27,18 @@
                       </div>
                   </div>
                   <div class="nav-item"><a href="contact.html" class="nav-link">Contact</a></div>
+                  <div class="nav-item dropdown normal-dropdown">
+                    <a href="/custlogin" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true"><i class="icofont-lock ml-1"></i>{{username}}</a>
+                    <div aria-labelledby="homeDropdown" class="dropdown-menu">
+                        <a *ngIf="Showlogin" href="/custlogin" class="dropdown-item">Login In</a>
+                        <a *ngIf="Showlogout" (click)="Logout()" class="dropdown-item">Log Out</a>
+                        <a *ngIf="Showcreate" href="/create-user" class="dropdown-item">Create</a>
+                    </div>
+                  </div>
               </div>
               <div class="d-none d-lg-block">
-                <a href="/custlogin"  class="mr-3"><i class="icofont-lock ml-1"></i>{{username}}</a>
-                <a class="mr-3" href="/create-user"><i class="icofont-ui-user"></i>Create</a>
+                <!-- <a href="/custlogin"  class="mr-3"><i class="icofont-lock ml-1"></i>{{username}}</a>
+                <a class="mr-3" href="/create-user"><i class="icofont-ui-user"></i>Create</a> -->
                 <a href="/shoppingcart" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">  {{(items$ | async).length}} items <span class="hidden-md">in cart   </span></span></a>
               </div>
           </div>

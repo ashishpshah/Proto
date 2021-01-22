@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { Subject } from 'rxjs/Subject';
 
 
 let itemsInCart = [];
@@ -21,8 +22,15 @@ export class Client_commonService {
   Item_MasterList  = new BehaviorSubject<Item_Master[]>([]);
   whislistItem_Master  = new BehaviorSubject<Item_Master[]>([]);
   username:any ={};
+  private currentUserNameStore = new BehaviorSubject<string>("");
+  public currentUserName$ = this.currentUserNameStore.asObservable();
+
+  setCurrentUserName(userName: string) {
+    this.currentUserNameStore.next(userName);
+  }
 constructor(private http: HttpClient)
 {
+  debugger;
   //localStorage.clear();
   let existingCartItems = JSON.parse(localStorage.getItem('shopcart'));
   if (!existingCartItems) {
@@ -36,7 +44,9 @@ constructor(private http: HttpClient)
   }
   this.itemsWhishlist.next(existingwhishlistItems);
 
-  this.username = localStorage.getItem('Cust_userName');
+  //this.username = localStorage.getItem('Cust_userName');
+  this.username = this.getWithExpiryLocalStorage('Cust_userName')
+  this.currentUserNameStore.next(this.username);
 
  }
 

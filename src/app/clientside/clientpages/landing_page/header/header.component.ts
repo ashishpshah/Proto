@@ -1,5 +1,6 @@
 import { Client_commonService } from './../../../client_services/client_common.service';
-import { Component, OnInit,ElementRef } from '@angular/core';
+import { Component, OnInit,ElementRef,ViewChild,Input } from '@angular/core';
+import { Login_clientComponent } from '../../login_client/login_client.component';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,11 @@ import { Component, OnInit,ElementRef } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  // @Input()  username : string='Login In';
+  // @Input()  Logintext : string='Login In';
+ // @Input()  Showcreate:boolean=true;
+
 
   private toggleButton: any;
   private sidebarVisible: boolean;
@@ -16,6 +22,11 @@ export class HeaderComponent implements OnInit {
   Itemcount:number =0;
   Item_Master_ : any;
   username : string='Login In';
+  Logintext : string='Login In';
+  Showcreate:boolean=true;
+  Showlogin:boolean=true;
+  Showlogout:boolean=false;
+
 
 
 
@@ -23,18 +34,39 @@ export class HeaderComponent implements OnInit {
   constructor(
     private Client_commonService_: Client_commonService) {
       this.sidebarVisible = false;
+
+
+  }
+  updateloginvalue()
+  {
+    this.Client_commonService_.currentUserName$
+    .subscribe(
+    userName =>
+    {
+      if(userName== null)
+      {
+        this.username ="Login In";
+        this.Logintext="Login In"
+        this.Showcreate= true
+        this.Showlogin= true
+        this.Showlogout= false
+      }else
+      {
+        this.username ="Welcome "+ userName+"";
+        this.Logintext="Logout"
+        this.Showcreate= false
+        this.Showlogin= false
+        this.Showlogout= true
+      }
+    });
   }
 
   ngOnInit() {
 
-    debugger;
-   const value = this.Client_commonService_.getWithExpiryLocalStorage("Cust_userName")
-   this.username=value;
+   
+    this.updateloginvalue();
 
-      if( this.username== null)
-      {
-        this.username ="Login In";
-      }
+
       //const navbar: HTMLElement = this.element.nativeElement;
       //this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.GetRootHeaderData();
@@ -51,6 +83,19 @@ export class HeaderComponent implements OnInit {
     // this.stars = this.categoryService.GetRoot_Catg_MasterList(Root_Header_ID);
     // this.stars=this.Root_Catg_Masters;
     return stars;
+}
+
+Logout()
+{
+ 
+         localStorage.removeItem('CustId');
+         localStorage.removeItem('Cust_userName');
+         this.username ="Login In";
+         this.Logintext="Login In"
+         this.Showcreate= true
+         this.Showlogin= true
+         this.Showlogout= false
+            // localStorage.removeItem('userId');
 }
 updatecartcount()
 {

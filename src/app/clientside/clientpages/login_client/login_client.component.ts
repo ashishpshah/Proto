@@ -1,7 +1,8 @@
+import { HeaderComponent } from './../landing_page/header/header.component';
 import { Client_commonService } from './../../client_services/client_common.service';
 import { User_Customer_Master } from './../../../models/User_Customer_Master';
 import { AuthenticationServiceService } from './../../client_services/authenticationService.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -13,7 +14,7 @@ import { first } from 'rxjs/operators';
 })
 export class Login_clientComponent implements OnInit {
 
-
+  @ViewChild(HeaderComponent, { static: false }) childC: HeaderComponent;
   loginForm: FormGroup;
   //custmerdata: User_Customer_Master;
   submitted = false;
@@ -66,12 +67,16 @@ export class Login_clientComponent implements OnInit {
             debugger;
             this.custmerdataObj =resp;
 
-              localStorage.removeItem('CustId');
-              localStorage.removeItem('Cust_userName');
+            // localStorage.removeItem('CustId');
+            // localStorage.removeItem('Cust_userName');
+            // localStorage.removeItem('userId');
 
-            this.Client_commonService_.setWithExpiryLocalStorage("Cust_Id", this.custmerdataObj.Cust_Id, 5000)
-            this.Client_commonService_.setWithExpiryLocalStorage("Cust_userName", this.custmerdataObj.FirstName, 5000)
+
+            this.Client_commonService_.setWithExpiryLocalStorage("Cust_Id", this.custmerdataObj.Cust_Id, 300000)
+            this.Client_commonService_.setWithExpiryLocalStorage("Cust_userName", this.custmerdataObj.FirstName, 300000)
             this.loading = false;
+            this.Client_commonService_.setCurrentUserName(this.custmerdataObj.FirstName);
+            //this.childC.updateloginvalue();
             if(this.returnUrl == '/checkoutlogin')
             {
               this.router.navigate(['/shoppingcart']);
