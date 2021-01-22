@@ -16,6 +16,9 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 import { RootCategoryListRoutingModule } from './root-category-list-routing.module';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { NgSelect2Module } from 'ng-select2';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -34,6 +37,11 @@ import { RootCategoryListRoutingModule } from './root-category-list-routing.modu
     InputTextModule,
     ProgressBarModule,
     DropdownModule,
+
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    NgSelect2Module,
   ],
   declarations: [RootCategoryListComponent]
 })

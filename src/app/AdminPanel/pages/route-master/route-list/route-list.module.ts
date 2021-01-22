@@ -1,7 +1,7 @@
-import { CategoryListRoutingModule } from './category-list-routing.module';
+import { RouteListRoutingModule } from './route-list-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CategoryListComponent } from './category-list.component';
+import { RouteListComponent } from './route-list.component';
 
 import {SharedModule} from '../../../shared/shared.module';
 import {NgxDataTableModule} from "angular-9-datatable";
@@ -16,14 +16,12 @@ import {ToastModule} from 'primeng/toast';
 import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { NgSelect2Module } from 'ng-select2';
-import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    CategoryListRoutingModule
+    RouteListRoutingModule
     ,SharedModule
     ,NgxDataTableModule
     ,TableModule,
@@ -37,12 +35,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     InputTextModule,
     ProgressBarModule,
     DropdownModule,
-
-    FormsModule,
-    ReactiveFormsModule,
-    NgSelectModule,
-    NgSelect2Module,
   ],
-  declarations: [CategoryListComponent]
+  declarations: [RouteListComponent]
 })
-export class CategoryListModule { }
+export class RouteListModule { }

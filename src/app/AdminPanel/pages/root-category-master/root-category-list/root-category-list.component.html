@@ -1,85 +1,170 @@
+<!-- *********************************************** Insert-Update **********************************************  -->
+<div *ngIf="IsAddEdit">
+  <div><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+  <form>
+    <div>
 
-<div class="row">
-  <div class="col-sm-12">
-      <app-card [title]="'Root Category Master'" [classHeader]="true" [blockClass]="'table-border-style'">
-        <div class="table-responsive">
-            <p>
-              <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="openInsertPage()"><span class="font-d"> Add New</span></a>
-            </p>
-              <br/>
-              <br/>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Root Name<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <ng-select [ngClass] ="(rootCategoryObj.Root_Header_ID == 0 || rootCategoryObj.Root_Header_ID == null)  && errorMessage != '' ? 'border border-danger':''" [(ngModel)]="rootCategoryObj.Root_Header_ID" placeholder="Select Root" id="Root_Header_ID"
+            [ngModelOptions]="{standalone: true}">
+            <ng-option *ngFor="let scat of RootList" [value]="scat.id"> {{scat.name}}</ng-option>
+          </ng-select>
 
-            <p-table class="" #dt [value]="rootCategoryMaster" [(selection)]="selectedRootCategoryMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['RCatg_Name','Root_Name','RCatg_Name_D']">
-
-              <ng-template pTemplate="caption">
-                <div class="table-header-p ">
-                    <span class="p-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
-                    </span>
-                </div>
-              </ng-template>
-              <br/>
-              <br/>
-              <ng-template pTemplate="header">
-              <tr>
-                  <th pSortableColumn="RCatg_Name">Root Category Name <p-sortIcon field="RCatg_Name"></p-sortIcon></th>
-                  <th pSortableColumn="RCatg_Name_D">Root Category Name (Danish) <p-sortIcon field="RCatg_Name_D"></p-sortIcon></th>
-                  <th pSortableColumn="Root_Name">Root Name <p-sortIcon field="Root_Name"></p-sortIcon></th>
-                  <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
-                  <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th>
-                  <th >Action </th>
-              </tr>
-              <tr>
-                  <th>
-                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'RCatg_Name', 'startsWith')" placeholder="Search by Category" class="form-control">
-                  </th>
-                <th></th>
-                  <th>
-                      <input pInputText type="text" (input)="dt.filter($event.target.value, 'Root_Name', 'contains')" placeholder="Search by Root" class="form-control">
-                  </th>
-
-                  <th></th>
-                  <th></th>
-                  <th></th>
-
-              </tr>
-              </ng-template>
-
-              <ng-template pTemplate="body" let-item>
-              <tr class="">  <!-- p-selectable-row  -->
-
-                  <td>
-                        {{item.RCatg_Name}}
-                  </td>
-                  <td>
-                    {{item.RCatg_Name_D}}
-                  </td>
-                  <td>
-                    {{item.Root_Name}}
-              </td>
-                  <td>
-                        {{item.StatusDesc}}
-                  </td>
-                  <td style = "width: 220px;">
-                    {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.RCatg_ID)">Make Active</button> </span>
-                  </td>
-                  <td>
-                          <a class="ti-pencil-alt edit" (click)="openEditPage(item.RCatg_ID)"></a>
-                          &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.RCatg_ID)"></a>
-                             <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
-                  </td>
-              </tr>
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-              <tr>
-              <td colspan="6">No items found</td>
-              </tr>
-              </ng-template>
-          </p-table>
+          <!-- <select class="form-control" [(ngModel)]="rootCategoryObj.Root_Header_ID" id="Root_Header_ID"
+            [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of RootList; let i = index" [value]="st.id" >
+              {{st.name}}
+            </option>
+          </select> -->
         </div>
-     </app-card>
-  </div>
+        <label class="col-sm-2 col-form-label">Root Category Name<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" [ngClass] ="rootCategoryObj.RCatg_Name == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="rootCategoryObj.RCatg_Name" id="RCatg_Name"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Root Category Name (Danish)<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" [ngClass] ="rootCategoryObj.RCatg_Name_D == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="rootCategoryObj.RCatg_Name_D" id="RCatg_Name_D"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" [ngClass] ="(rootCategoryObj.Display_Seq_No == 0 || rootCategoryObj.Display_Seq_No == null) && errorMessage != '' ? 'alert-danger':''" type="number" [(ngModel)]="rootCategoryObj.Display_Seq_No" id="Display_Seq_No"
+            [ngModelOptions]="{standalone: true}" min="0">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="rootCategoryObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id">
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveRootCategory()">
+          <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
 </div>
 
+<!-- *********************************************** Data List **********************************************  -->
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'Root Category Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+      <div class="table-responsive">
+        <p>
+          <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
+          <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
+            (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
+        </p>
+        <br />
+        <br />
+
+        <p-table class="" #dt [value]="rootCategoryMaster" [(selection)]="selectedRootCategoryMaster" dataKey="id"
+          [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+          [globalFilterFields]="['RCatg_Name','Root_Name','RCatg_Name_D']">
+
+          <ng-template pTemplate="caption">
+            <div class="table-header-p ">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input class="p-l-30 form-control" pInputText type="text"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+              </span>
+            </div>
+          </ng-template>
+          <br />
+          <br />
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="RCatg_Name">Root Category Name <p-sortIcon field="RCatg_Name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="RCatg_Name_D">Root Category Name (Danish) <p-sortIcon field="RCatg_Name_D">
+                </p-sortIcon>
+              </th>
+              <th pSortableColumn="Root_Name">Root Name <p-sortIcon field="Root_Name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon>
+              </th>
+              <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
+              </th>
+              <th>Action </th>
+            </tr>
+            <tr>
+              <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'RCatg_Name', 'startsWith')"
+                  placeholder="Search by Category" class="form-control">
+              </th>
+              <th></th>
+              <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'Root_Name', 'contains')"
+                  placeholder="Search by Root" class="form-control">
+              </th>
+
+              <th></th>
+              <th></th>
+              <th></th>
+
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-item>
+            <tr class="">
+              <!-- p-selectable-row  -->
+
+              <td>
+                {{item.RCatg_Name}}
+              </td>
+              <td>
+                {{item.RCatg_Name_D}}
+              </td>
+              <td>
+                {{item.Root_Name}}
+              </td>
+              <td>
+                {{item.StatusDesc}}
+              </td>
+              <td style="width: 220px;">
+                {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button"
+                    class="float-right btn btn-success text-white " (click)="activateItem(item.RCatg_ID)">Make
+                    Active</button> </span>
+              </td>
+              <td>
+                <a class="ti-pencil-alt edit" (click)="addEditOpen(item.RCatg_ID)"></a>
+                &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.RCatg_ID)"></a>
+                <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6">No items found</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </app-card>
+  </div>
+</div>

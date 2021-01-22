@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CountryListRoutingModule } from './country-list-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -35,6 +36,8 @@ import {DropdownModule} from 'primeng/dropdown';
     InputTextModule,
     ProgressBarModule,
     DropdownModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [CountryListComponent]
 })

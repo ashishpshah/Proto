@@ -1,3 +1,50 @@
+<div *ngIf="IsAddEdit">
+  <div><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+  <form>
+    <div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Root Name<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" [ngClass] ="rootHeaderObj.Root_Name == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="rootHeaderObj.Root_Name" id="Root_Name" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <label class="col-sm-2 col-form-label">Root Name (Danish)<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" [ngClass] ="rootHeaderObj.Root_Name_D == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="rootHeaderObj.Root_Name_D" id="Root_Name_D" [ngModelOptions]="{standalone: true}" >
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" [ngClass] ="(rootHeaderObj.Display_Seq_No == 0 || rootHeaderObj.Display_Seq_No == null) && errorMessage != '' ? 'alert-danger':''" type="number" [(ngModel)]="rootHeaderObj.Display_Seq_No" id="Display_Seq_No" [ngModelOptions]="{standalone: true}" min="0">
+        </div>
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="rootHeaderObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveRootHeader()"> <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- ________________________List Data__________________________________ -->
 
 <div class="row">
   <div class="col-sm-12">
@@ -5,7 +52,7 @@
         <div class="table-responsive">
             <p>
               <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="openInsertPage()"><span class="font-d"> Add New</span></a>
+              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
             </p>
               <br/>
               <br/>
@@ -59,7 +106,7 @@
                     {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.Root_Header_ID)">Make Active</button> </span>
                   </td>
                   <td>
-                          <a class="ti-pencil-alt edit" (click)="openEditPage(item.Root_Header_ID)"></a>
+                          <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Root_Header_ID)"></a>
                           &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Root_Header_ID)"></a>
                              <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
                   </td>

@@ -100,9 +100,21 @@ import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist
     //   // { path: 'add-edit-item', component: AddEditItemComponent },
     //   // { path: 'add-edit-item/edit/:id', component: AddEditItemComponent },
     // ])
+
+    ,RouterModule.forRoot(
+			[],
+			{
+				useHash: false,
+				anchorScrolling: "enabled",
+				onSameUrlNavigation: "reload",
+				enableTracing: true,
+				scrollPositionRestoration: "enabled"
+			}
+		)
   ],
   schemas: [ NO_ERRORS_SCHEMA ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

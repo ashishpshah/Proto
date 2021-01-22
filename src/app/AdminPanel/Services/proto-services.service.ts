@@ -56,6 +56,7 @@ getRootHeaderById(id: number): Observable<any> {
 }
 
 saveRootHeader(dtl) {
+  debugger;
   return this.http.post(`${this.baseUrl}/`+ 'RootHeader/InsertUpdateRootHeader', dtl)
     // .map((response: Response) => response.json())
     .catch(this.errorHandler)
@@ -123,7 +124,6 @@ activeCategory(categoryId :number, userId :string) {
 }
 //#endregion
 
-
 //#region SubCategoryLevel Master Service
 
 
@@ -178,7 +178,6 @@ deleteCountry(countryId :number, userId :string) {
 }
 //#endregion
 
-
 //#region State Master Service
 
 getStateList(State_Id:string): Observable<any> {
@@ -204,7 +203,6 @@ activeState(State_Id :number, userId :string) {
     .catch(this.errorHandler);
 }
 //#endregion
-
 
 //#region City Master Service
 
@@ -235,7 +233,6 @@ deleteCity(State_Id :number, City_Id :string) {
 }
 //#endregion
 
-
 //#region Street Master Service
 
 getStreetList(streetId:string,isActive : string): Observable<any> {
@@ -262,9 +259,31 @@ activeStreet(streetId :number, userId :string) {
 }
 //#endregion
 
+//#region Country Master Service
 
+getRouteList(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Route/GetRouteList?routeId='+'0');
+}
 
+getRouteById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Route/GetRouteById?routeId='+id);
+}
 
+saveRoute(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Route/InsertUpdateRoute', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteRoute(routeId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Route/DeleteRouteRecord?routeId=" + routeId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeRoute(routeId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "Route/ActiveRoute?routeId=" + routeId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
 
 
 //#region Common List Services
@@ -307,6 +326,14 @@ activeStreet(streetId :number, userId :string) {
   }
   GetAllCityList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Common/GetAllCityList');
+  }
+
+  getActiveRouteList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'Route/GetActiveRouteList?routeId='+'0');
+  }
+
+  GetActiveDepartmentList(deptCode:string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'CategoryLevel/GetActiveDepartmentList?deptCode='+deptCode);
   }
 
 //#endregion

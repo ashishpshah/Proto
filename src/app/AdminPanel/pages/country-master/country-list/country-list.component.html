@@ -5,7 +5,7 @@
         <div class="table-responsive">
             <p>
               <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="openInsertPage()"><span class="font-d"> Add New</span></a>
+              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="openAddEditModal(0)"><span class="font-d"> Add New</span></a>
             </p>
               <br/>
               <br/>
@@ -53,7 +53,7 @@
                     {{item.Country_Name}}
                   </td>
                   <td>
-                          <a class="ti-pencil-alt edit" (click)="openEditPage(item.Country_Id)"></a>
+                          <a class="ti-pencil-alt edit" (click)="openAddEditModal(item.Country_Id)"></a>
                           &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Country_Id)"></a>
                              <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
                   </td>
@@ -67,6 +67,57 @@
           </p-table>
         </div>
      </app-card>
+  </div>
+</div>
+
+<!-- --------------------Modal----------------------- -->
+<div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
+    <div class="modal-dialog uk-modal-dialog-large modal-lg" role="document" style="min-width:55%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalTitle"><span *ngIf="isEditMode">Update Country</span> <span *ngIf="!isEditMode">Add Country</span> </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+          <form >
+            <div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Country Code<span class="warningclass">*</span></label>
+                  <div class="col-sm-4">
+                    <input class="form-control" [ngClass] ="countryObj.Country_Code == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="countryObj.Country_Code" id="Country_Code" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <label class="col-sm-2 col-form-label">Country Name<span class="warningclass">*</span></label>
+                  <div class="col-sm-4">
+                    <input class="form-control" [ngClass] ="countryObj.Country_Name == '' && errorMessage != '' ? 'alert-danger':''" type="text"  [(ngModel)]="countryObj.Country_Name" id="Country_Name" [ngModelOptions]="{standalone: true}">
+                  </div>
+                </div>
+            </div>
+            <br />
+            <hr />
+            <!-- <div class="text-center">
+              <div class="form-group align-center">
+                <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveCountry()"> <span class="font-d">
+                    Save</span></button> &nbsp;
+                <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+                    Cancel</span></button>
+              </div>
+            </div> -->
+
+          </form>
+
+        </div>
+        <div class="modal-footer align-center">
+        <button type="button" class="btn btn-primary" (click)="saveCountry()">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

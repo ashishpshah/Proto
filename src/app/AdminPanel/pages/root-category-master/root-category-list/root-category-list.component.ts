@@ -1,11 +1,13 @@
+import { DropdownList } from 'src/app/models/DropdownList';
 import { AdminCommonHelperComponent } from './../../AdminCommonHelper/AdminCommonHelper.component';
 import { PrimeNGConfig } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ProtoServicesService } from './../../../Services/proto-services.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Table } from 'primeng/table';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root-category-list',
@@ -16,7 +18,7 @@ import { Table } from 'primeng/table';
 export class RootCategoryListComponent implements OnInit {
 
   loading: boolean = true;
-  IsAddEdit = false;
+  IsAddEdit :boolean = false;
   rootCategoryMaster : [];
   selectedRootCategoryMaster : [];
   userId : string = localStorage.getItem('userId');
@@ -24,10 +26,23 @@ export class RootCategoryListComponent implements OnInit {
   message : string = '';
   @ViewChild('dt') table: Table;
 
-  constructor( private _commonService : ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig) { }
+  //------------ Add Edit----------------
+  rootCategoryObj :any ={};
+
+    title: string = "Create";
+    rootCategoryId: number;
+    errorMessage: any ='';
+    StatusList : Observable<DropdownList[]>;
+    RootList : Observable<DropdownList[]>;
+    SelectedStatus : string = 'A';
+    isInserted : string = 'I';
+  //-------------------------------------
+
+  constructor( private _commonService : ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) { }
   commonHelper = new AdminCommonHelperComponent(this._router);
 
   ngOnInit(): void  {
+    this.IsAddEdit = false;
     this.getRootCategoryList();
 }
 
@@ -83,4 +98,120 @@ activateItem(rootCategoryId) {
       }, error => console.error(error))
 }
 
+
+//------------------------- Insert Update Functionality
+
+addEditOpen(id : any):void {
+  this.errorMessage = '';
+  this.IsAddEdit = true;
+  this.getCommonList();
+  debugger;
+  this.rootCategoryId = id;
+  if (this.rootCategoryId > 0) {
+    this.title = "Edit";
+    this._commonService.getRootCategoryById(this.rootCategoryId)
+      .subscribe((resp) =>
+      {
+        this.rootCategoryObj = resp
+        , error => this.errorMessage = error
+      });
+  }else {
+    this.title = "Create";
+    this.rootCategoryObj = RootCategoryFun(this.isInserted);
+  }
+}
+
+getCommonList(){
+   this._commonService.GetLovDetailByColumn("ACTIVEINACTIVE").subscribe(
+    (data) =>
+     {
+        this.StatusList = data;
+    }
+  )
+
+  this._commonService.GetActiveRootList().subscribe(
+    (data) =>
+     {
+        this.RootList = data;
+    }
+  )
+
+}
+
+validate(){
+  if(this.rootCategoryObj.Root_Header_ID == null || this.rootCategoryObj.Root_Header_ID == '' || this.rootCategoryObj.Root_Header_ID == '0' || this.rootCategoryObj.Root_Header_ID == 0 )
+  {
+    this.errorMessage = "Please Select Root";
+    // this.renderer.selectRootElement('#Root_Header_ID').focus();
+    return false;
+  }
+  else if(this.rootCategoryObj.RCatg_Name == ''){
+    this.errorMessage = "Please Enter Root Category Name";
+    this.renderer.selectRootElement('#RCatg_Name').focus();
+    return false;
+  }
+  else if(this.rootCategoryObj.RCatg_Name_D == '')
+  {
+    this.errorMessage = "Please Enter Root Category Name (Danish)";
+    this.renderer.selectRootElement('#RCatg_Name_D').focus();
+    return false;
+  }
+  else if(this.rootCategoryObj.Display_Seq_No == '' || this.rootCategoryObj.Display_Seq_No == '0' || this.rootCategoryObj.Display_Seq_No == 0 )
+  {
+    this.errorMessage = "Please Enter Display Seq No";
+    this.renderer.selectRootElement('#Display_Seq_No').focus();
+    return false;
+  }
+  else{
+    return true;
+  }
+}
+
+saveRootCategory() {
+  if(this.validate()){
+    this.rootCategoryObj.Created_By = this.userId;
+    if (this.title == "Create") {
+      this.rootCategoryObj.IsInserted = 'I';
+      this._commonService.saveRootCategory(this.rootCategoryObj)
+        .subscribe((data) => {
+          this.commonHelper.commonAlerts('Inserted', data, '/master/root-category-master','/master/add-edit-root-category')
+
+        }, error => this.errorMessage = error)
+    }
+    else if (this.title == "Edit") {
+      this.rootCategoryObj.IsInserted = 'U';
+      this._commonService.saveRootCategory(this.rootCategoryObj)
+        .subscribe((data) => {
+          this.commonHelper.commonAlerts('Updated', data, '/master/root-category-master','/master/add-edit-root-category')
+        }, error => this.errorMessage = error)
+    }
+  }
+
+}
+
+cancel() {
+  this.errorMessage = '';
+  this.IsAddEdit = false;
+  // this._router.navigate(['/master/root-category-master']);
+}
+
+}
+
+function RootCategoryFun(isInserted) {
+
+  let obj ={
+  RCatg_ID :'',
+  Root_Header_ID : '',
+  RCatg_Name : '',
+  RCatg_Name_D : '',
+  Display_Seq_No :'',
+  Status : 'A',
+  Created_By :'',
+  Created_Date :'',
+  Modified_By :'',
+  Modified_Date :'',
+  IsDeleted :'',
+  IsInserted : isInserted
+};
+  return obj;
 }

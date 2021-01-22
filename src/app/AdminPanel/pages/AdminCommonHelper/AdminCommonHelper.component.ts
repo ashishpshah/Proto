@@ -43,6 +43,46 @@ export class AdminCommonHelperComponent implements OnInit {
     }
   }
 
+  commonAlerts(title : string ,data: any, url : string,currentUrl : string): any{
+    if (data != null && data != "e" && data != "r" && data != "o") {
+      let splitData = data.toString().split("|");
+      this.msgType = splitData.length > 0 ? splitData[0] :'E';
+      this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
+
+      if (this.msgType == 'S') {
+        // Swal.fire(title, this.message, 'success')
+        this.autoCloseAlert(title, this.message, 'success')
+        // Swal.fire({
+        //   title: title,
+        //   text: this.message,
+        //   icon: 'success',
+        //   timer: 2000,
+        //   buttons: false,
+        //   showCancelButton: false,
+        //   showConfirmButton: false
+        //   });
+        //   // function () {
+        //   //    location.reload(true);
+        //   //    tr.hide();
+        //   // };
+
+
+        if (url != null && url != '' && url != "") {
+          this._router.navigateByUrl(currentUrl, { skipLocationChange: true }).then(() => {
+            this._router.navigate([url]);
+        });
+          // this._router.navigate([url]);
+        }
+
+      }else {
+        Swal.fire('Error', this.message, 'error')
+      }
+
+    }else{
+      Swal.fire('Error', 'Something went wrong!', 'error')
+    }
+  }
+
   activeInactiveAlert(title : string ,data: any) {
     if (data != null && data != "e" && data != "r" && data != "o") {
       debugger;
@@ -51,16 +91,30 @@ export class AdminCommonHelperComponent implements OnInit {
       this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
 
       if (this.msgType == 'S') {
-        this.simpleAlert(title, this.message, 'success')
+        this.autoCloseAlert(title, this.message, 'success')
+
 
       }else {
-        this.simpleAlert('Error', this.message, 'error')
+        this.autoCloseAlert(title, this.message, 'error')
       }
 
     }else{
       this.simpleAlert('Error', 'Something went wrong!', 'error')
     }
     return this.msgType;
+  }
+
+  autoCloseAlert(title, message, type){
+    Swal.fire({
+      position: 'top',
+      title: title,
+      text: message,
+      icon: type,
+      timer: 1500,
+      buttons: false,
+      showCancelButton: false,
+      showConfirmButton: false
+      });
   }
 
 }

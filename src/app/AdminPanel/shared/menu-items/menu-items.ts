@@ -85,6 +85,10 @@ const MENUITEMS = [
             state: 'street-master',
             name: 'Street Master'
           }
+          ,{
+            state: 'route-master',
+            name: 'Route Master'
+          }
 
         ]
       },

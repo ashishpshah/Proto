@@ -130,7 +130,11 @@ const routes: Routes = [
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/street-master/street-master.module').then(m => m.StreetMasterModule)
       },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/route-master/route-master.module').then(m => m.RouteMasterModule)
 
+      },
       {
         path: 'basic',
         loadChildren: () => import('./AdminPanel/pages/ui-elements/basic/basic.module').then(m => m.BasicModule)
