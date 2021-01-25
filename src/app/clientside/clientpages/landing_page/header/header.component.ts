@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
 
-   
+
     this.updateloginvalue();
 
 
@@ -87,7 +87,7 @@ export class HeaderComponent implements OnInit {
 
 Logout()
 {
- 
+
          localStorage.removeItem('CustId');
          localStorage.removeItem('Cust_userName');
          this.username ="Login In";
@@ -117,7 +117,7 @@ showcartevent()
 }
   GetRootHeaderData(){
 
-
+debugger;
     //this.Root_Header_Masters = this.categoryService.GetRootHeaderDataList();
 
     this.Client_commonService_.GetRootHeaderDataList().subscribe(

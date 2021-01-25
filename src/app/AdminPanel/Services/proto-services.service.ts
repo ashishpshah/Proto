@@ -312,6 +312,33 @@ activeDepartment(deptCode :number, userId :string) {
 //#endregion
 
 
+//#region Brand Master Service
+
+getBrandById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Route/GetBrand_MasterById?Brand_ID='+id);
+}
+
+getbrandList(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'BrandMaster/GetBrand_Masternfo?Brand_ID='+id);
+}
+
+savebrand(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'BrandMaster/InsertUpdateBrand_Master', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deletebrand(brandId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "BrandMaster/DeleteBrand_MasterRecord?Brand_ID=" + brandId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activebrand(brandId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "BrandMaster/ActiveRoute?Brand_ID=" + brandId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
 
 //#region Common List Services
   GetLovDetailByColumn(Lov_Column:string): Observable<any> {

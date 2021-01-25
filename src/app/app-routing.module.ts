@@ -164,7 +164,13 @@ const routes: Routes = [
       }, {
         path: 'simple-page',
         loadChildren: () => import('./AdminPanel/pages/simple-page/simple-page.module').then(m => m.SimplePageModule)
-      }
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/brand-master/brand-master.module').then(m => m.brandMasterModule)
+
+
+      },
     ]
   },
   {
