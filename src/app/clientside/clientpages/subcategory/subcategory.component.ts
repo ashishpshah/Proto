@@ -5,7 +5,6 @@ import { Client_commonService } from './../../client_services/client_common.serv
 import { Item_Master } from './../../../models/Item_Master';
 import { CategoryService } from '../../client_services/category.service';
 import { Sub_Catg_Master } from '../../../models/Sub_Catg_Master';
-import { Catg_Master } from '../../../models/Catg_Master';
 import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from "rxjs";
@@ -61,7 +60,7 @@ export class SubcategoryComponent implements OnInit {
       // this.category = this.route.snapshot.data['category'];
       this.Root_Header_ID=parseInt(this.subcategoryName);
       this.RCatg_ID=parseInt(this.subcategoryName);
-     // this.PageLoaditembyRCatg_ID(this.RCatg_ID);
+      this.PageLoaditembyRCatg_ID(this.RCatg_ID);
       this.GetCatg_MasterList(this.Root_Header_ID);
       this.GetBrandByType(this.RCatg_ID,'RootHeader');
       this.GetTypeByType(this.RCatg_ID,'RootHeader');
