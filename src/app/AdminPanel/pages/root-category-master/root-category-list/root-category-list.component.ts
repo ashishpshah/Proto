@@ -25,7 +25,7 @@ export class RootCategoryListComponent implements OnInit {
   msgType : string = '';
   message : string = '';
   @ViewChild('dt') table: Table;
-  IsRowEdit : boolean =false;
+  IsRowEdit : boolean =false; // Inline edit
   //------------ Add Edit----------------
   rootCategoryObj :any ={};
 
@@ -40,7 +40,7 @@ export class RootCategoryListComponent implements OnInit {
 
   constructor( private _commonService : ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) { }
   commonHelper = new AdminCommonHelperComponent(this._router);
-
+  warningMessage : string  = this.commonHelper.commonWarningMessage;
   ngOnInit(): void  {
     this.IsAddEdit = false;
     this.getRootCategoryList();

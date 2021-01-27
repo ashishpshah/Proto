@@ -1,0 +1,141 @@
+<!-- *********************************************** Insert-Update **********************************************  -->
+<div *ngIf="IsAddEdit">
+  <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+  <form >
+    <div>
+      <div class="form-group row">
+
+        <label class="col-sm-2 col-form-label">Vehicle<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <ng-select [ngClass] ="(vehicleRouteObj.Vehicle_Id == 0 || vehicleRouteObj.Vehicle_Id == null)  && errorMessage != '' ? 'border border-danger':''"  [(ngModel)]="vehicleRouteObj.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id"  [ngModelOptions]="{standalone: true}">
+            <ng-option *ngFor="let scat of VehicleList" [value]="scat.id"> {{scat.name}}</ng-option>
+          </ng-select>
+        </div>
+
+        <label class="col-sm-2 col-form-label">Route<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <ng-select [ngClass] ="(vehicleRouteObj.SelectedRoute == 0 || vehicleRouteObj.SelectedRoute == null)  && errorMessage != '' ? 'border border-danger':''"
+                [multiple]="true"
+                [items]="RouteList"
+                [(ngModel)]="vehicleRouteObj.SelectedRoute"
+                name="licenseAuthorityId"
+                bindValue="id"
+                bindLabel="name"
+                placeholder="Select Routes">
+                </ng-select>
+        </div>
+      </div>
+
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveVehicleRoute()"> <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<!-- *********************************************** Data List **********************************************  -->
+<div *ngIf="IsRowEdit"><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+<div class="row">
+  <div class="col-sm-12">
+      <app-card [title]="'Vehicle Route Mapping List'" [classHeader]="true" [blockClass]="'table-border-style'">
+        <div class="table-responsive">
+            <p>
+              <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
+              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
+            </p>
+              <br/>
+              <br/>
+
+            <p-table class="" #dt [value]="vehicleRouteMaster" [(selection)]="selectedVehicleRouteMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['Vehicle_No','Route_Name']">
+              <ng-template pTemplate="caption">
+                <div class="table-header-p ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                    </span>
+                </div>
+              </ng-template>
+              <br/>
+              <br/>
+              <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="Vehicle_No">Vehicle<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="Vehicle_No"></p-sortIcon></th>
+                  <th pSortableColumn="Route_Name">Route<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="Route_Name"></p-sortIcon></th>
+                  <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th>
+                  <th >Action </th>
+              </tr>
+              <tr>
+                  <th>
+                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'Vehicle_No', 'contains')" placeholder="Search by Vehicle" class="form-control">
+                  </th>
+                  <th>
+                      <input pInputText type="text" (input)="dt.filter($event.target.value, 'Route_Name', 'contains')" placeholder="Search by Route" class="form-control">
+                  </th>
+                  <th></th>
+                  <th></th>
+              </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-item let-rowIndex = "rowIndex">
+              <tr class="">  <!-- p-selyectable-row  -->
+                  <td>
+                    <span *ngIf="!item.isEditable">{{item.Vehicle_No}}</span>
+                    <div *ngIf="item.isEditable">
+                      <ng-select [ngClass] ="(item.Vehicle_Id == 0 || item.Vehicle_Id == null)  && errorMessage != '' ? 'border border-danger':''"
+                      [items]="VehicleList"
+                      [(ngModel)]="item.Vehicle_Id"
+                      name="Vehicle_Id"
+                      bindValue="id"
+                      bindLabel="name"
+                      placeholder="Select Vehicle" id="Vehicle_Id_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                      </ng-select>
+                    </div>
+                  </td>
+                  <td>
+                    <span *ngIf="!item.isEditable">{{item.Route_Name}}</span>
+                    <div *ngIf="item.isEditable">
+                      <ng-select [ngClass] ="(item.SelectedRoute == 0 || item.SelectedRoute == null)  && errorMessage != '' ? 'border border-danger':''"
+                      [multiple]="true"
+                      [items]="RouteList"
+                      [(ngModel)]="item.SelectedRoute"
+                      name="Route_Name"
+                      bindValue="id"
+                      bindLabel="name"
+                      placeholder="Select Routes" id="SelectedRoute_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                      </ng-select>
+                    </div>
+                  </td>
+                  <td style = "width: 220px;">
+                    {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.Map_Id)">Make Active</button> </span>
+                  </td>
+                  <td>
+                    <div *ngIf="!item.isEditable">
+                      <a class="ti-pencil-alt edit" (click)="openEditPage(item)"></a>
+                      &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Map_Id)"></a>
+                    </div>
+                    <div *ngIf="item.isEditable">
+                      <button class="btn btn-sm btn-success" (click)="updateVehicleRoute(item)">Update</button>
+                      &nbsp;<button class="btn btn-sm btn-danger" (click)="cancelUpdate(item)">Cancel</button>
+                    </div>
+                  </td>
+              </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+              <tr>
+              <td colspan="4">No items found</td>
+              </tr>
+              </ng-template>
+          </p-table>
+        </div>
+     </app-card>
+  </div>
+</div>
+

@@ -1,6 +1,6 @@
 <!-- *********************************************** Insert-Update **********************************************  -->
 <div *ngIf="IsAddEdit">
-  <div><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+  <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
   <form>
     <div>
 
@@ -68,7 +68,7 @@
 </div>
 
 <!-- *********************************************** Data List **********************************************  -->
-<div *ngIf="IsRowEdit"><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+<div *ngIf="IsRowEdit"><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
 <div class="row">
   <div class="col-sm-12">
     <app-card [title]="'Root Category Master'" [classHeader]="true" [blockClass]="'table-border-style'">

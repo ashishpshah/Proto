@@ -55,7 +55,7 @@ export class brandListComponent implements OnInit {
 
   constructor(private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) {}
   commonHelper = new AdminCommonHelperComponent(this._router);
-
+  warningMessage : string  = this.commonHelper.commonWarningMessage;
   ngOnInit(): void {
     this.getbrandList();
     this.getCommonList();

@@ -40,7 +40,7 @@ export class RouteListComponent implements OnInit {
 
   constructor(private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig) {}
   commonHelper = new AdminCommonHelperComponent(this._router);
-
+  warningMessage : string  = this.commonHelper.commonWarningMessage;
   ngOnInit(): void {
     this.getRouteList();
   }

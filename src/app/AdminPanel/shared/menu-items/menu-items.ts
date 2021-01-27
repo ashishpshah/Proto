@@ -98,6 +98,10 @@ const MENUITEMS = [
             name: 'Vehicle Master'
           }
           ,{
+            state: 'vehicle-route-master',
+            name: 'Vehicle Route Mapping'
+          }
+          ,{
             state: 'brand-master',
             name: 'Brand Master'
           }

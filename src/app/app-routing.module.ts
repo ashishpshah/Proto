@@ -188,6 +188,11 @@ const routes: Routes = [
          loadChildren: () => import('./AdminPanel/pages/pincode-master/pincode-master.module').then(m => m.PincodeMasterModule)
 
       },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/vehicle-route-master/vehicle-route-master.module').then(m => m.VehicleRouteMasterModule)
+
+      },
     ]
   },
   {

@@ -408,6 +408,31 @@ activePincode(pincodeId :number, userId :string) {
 }
 //#endregion
 
+//#region CategoryLevel Master Service
+
+getVehicleRouteList(mapId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteMapping/GetVehicleRouteList?mapId='+mapId);
+}
+
+getVehicleRouteById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteMapping/GetVehicleRouteById?mapId='+id);
+}
+
+saveVehicleRoute(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'VehicleRouteMapping/InsertUpdateVehicleRoute', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteVehicleRoute(mapId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "VehicleRouteMapping/DeleteVehicleRouteRecord?mapId=" + mapId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeVehicleRoute(mapId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "VehicleRouteMapping/ActiveVehicleRoute?mapId=" + mapId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
 
 
 //#region Common List Services
@@ -472,6 +497,15 @@ activePincode(pincodeId :number, userId :string) {
   GetPincodesFromCity(): Observable<any>  {
     return this.http.get(`${this.baseUrl}/` + "Pincode/GetPincodesFromCity")
       .catch(this.errorHandler);
+  }
+
+  GetActiveVehicleList(vehicleId :string): Observable<any>  {
+    return this.http.get(`${this.baseUrl}/` + "Vehicle/GetActiveVehicleListAJ?vehicleId=" + vehicleId)
+      .catch(this.errorHandler);
+  }
+
+  GetActiveRouteDropDownList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/`+'Route/GetActiveRouteListAJ?routeId='+'0');
   }
 //#endregion
 

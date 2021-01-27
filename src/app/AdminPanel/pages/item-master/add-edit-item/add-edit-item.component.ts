@@ -91,7 +91,7 @@ export class AddEditItemComponent implements OnInit {
 
     }
       commonHelper = new AdminCommonHelperComponent(this._router);
-
+      warningMessage : string  = this.commonHelper.commonWarningMessage;
   public loadResult() {
     return true;
   }

@@ -35,7 +35,7 @@ export class AddEditStreetComponent implements OnInit {
       }
     }
     commonHelper = new AdminCommonHelperComponent(this._router);
-
+    warningMessage : string  = this.commonHelper.commonWarningMessage;
     ngOnInit():void {
 
       this.getCommonList();

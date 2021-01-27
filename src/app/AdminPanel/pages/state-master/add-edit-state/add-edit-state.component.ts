@@ -37,6 +37,7 @@ export class AddEditStateComponent implements OnInit {
       }
     }
     commonHelper = new AdminCommonHelperComponent(this._router);
+    warningMessage : string  = this.commonHelper.commonWarningMessage;
     cityComponent = new CityListComponent(this._commonService,this._router,this.primengConfig);
     ngOnInit():void {
 

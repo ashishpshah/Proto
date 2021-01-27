@@ -35,7 +35,7 @@ export class AddEditVehicleComponent implements OnInit {
       }
     }
     commonHelper = new AdminCommonHelperComponent(this._router);
-
+    warningMessage : string  = this.commonHelper.commonWarningMessage;
     ngOnInit():void {
 
       this.getCommonList();
@@ -61,7 +61,7 @@ export class AddEditVehicleComponent implements OnInit {
         }
       )
 
-      this._commonService.GetActiveRootVehicleList().subscribe(
+      this._commonService.GetVehicleCategoryList("0").subscribe(
         (data) =>
          {
             this.VehicleList = data;

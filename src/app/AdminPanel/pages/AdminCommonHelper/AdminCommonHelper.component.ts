@@ -12,6 +12,7 @@ export class AdminCommonHelperComponent implements OnInit {
   msgType : string = '';
   message : string = '';
   value : any;
+  commonWarningMessage : string = "All * fields are mandatory";
   constructor(private _router: Router) { }
 
   ngOnInit() {

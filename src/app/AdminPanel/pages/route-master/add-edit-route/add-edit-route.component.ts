@@ -35,7 +35,7 @@ export class AddEditRouteComponent implements OnInit {
       }
     }
     commonHelper = new AdminCommonHelperComponent(this._router);
-
+    warningMessage : string  = this.commonHelper.commonWarningMessage;
 
 // longitude = 20.728218;
 // latitude = 52.128973;

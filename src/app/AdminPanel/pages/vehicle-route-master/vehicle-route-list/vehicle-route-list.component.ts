@@ -24,29 +24,32 @@ import {
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-pincode-list',
-  templateUrl: './pincode-list.component.html',
-  styleUrls: ['./pincode-list.component.scss']
+  selector: 'app-vehicle-route-list',
+  templateUrl: './vehicle-route-list.component.html',
+  styleUrls: ['./vehicle-route-list.component.scss']
 })
 /************************************* Developed By RAJESH *******************************/
-export class PincodeListComponent implements OnInit {
+export class VehicleRouteListComponent implements OnInit {
 
   loading: boolean = true;
   IsAddEdit = false;
-  pincodeMaster: any[]=[];
-  selectedPincodeMaster: [];
+  vehicleRouteMaster: any[] = [];
+  selectedVehicleRouteMaster: [];
   userId: string = localStorage.getItem('userId');
   msgType: string = '';
   message: string = '';
   @ViewChild('dt') table: Table;
   IsRowEdit : boolean =false;
+
   //----------- Add Edit
-  pincodeObj :any ={};
+  vehicleRouteObj :any ={};
+
   title: string = "Create";
-  pincodeId: number;
+  mapId: number;
   errorMessage: any ='';
   StatusList : Observable<DropdownList[]>;
-  PincodeList : Observable<DropdownList[]>;
+  VehicleList : Observable<DropdownList[]>;
+  RouteList : Observable<DropdownList[]>;
   SelectedStatus : string = 'A';
   isInserted : string = 'I';
   //-----------------
@@ -55,14 +58,14 @@ export class PincodeListComponent implements OnInit {
   commonHelper = new AdminCommonHelperComponent(this._router);
   warningMessage : string  = this.commonHelper.commonWarningMessage;
   ngOnInit(): void {
-    this.getPincodeList();
+    this.getVehicleRouteList();
   }
 
-  getPincodeList() {
-    this._commonService.getPincodeList('0').subscribe(
+  getVehicleRouteList() {
+    this._commonService.getVehicleRouteList('0').subscribe(
       (data) => {
-        this.pincodeMaster = data;
-        this.pincodeMaster.map(row => {
+        this.vehicleRouteMaster = data;
+        this.vehicleRouteMaster.map(row => {
           row.isEditable = false;
         });
         this.loading = false;
@@ -70,7 +73,7 @@ export class PincodeListComponent implements OnInit {
     );
   }
 
-  deleteItem(pincodeId) {
+  deleteItem(mapId) {
     Swal.fire({
       icon: 'warning',
       title: 'Do you want to delete?',
@@ -80,23 +83,23 @@ export class PincodeListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
-        this._commonService.deletePincode(pincodeId, this.userId).subscribe((data) => {
+        this._commonService.deleteVehicleRoute(mapId, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
           if (ret == 'S') {
-            this.getPincodeList();
+            this.getVehicleRouteList();
           }
         }, error => console.error(error))
       }
     })
   }
 
-  activateItem(pincodeId) {
-    this._commonService.activePincode(pincodeId, this.userId).subscribe((data) => {
+  activateItem(mapId) {
+    this._commonService.activeVehicleRoute(mapId, this.userId).subscribe((data) => {
       let ret = this.commonHelper.activeInactiveAlert('Activated', data);
       if (ret == 'S') {
-        this.getPincodeList();
+        this.getVehicleRouteList();
       }
     }, error => console.error(error))
   }
@@ -105,24 +108,27 @@ export class PincodeListComponent implements OnInit {
 
     openEditPage(row){
       this.getCommonList();
+      this.IsAddEdit = false;
       this.IsRowEdit = true;
-      this.pincodeMaster.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
+      this.vehicleRouteMaster.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
+
+      row.SelectedRoute = row.Route_Ids.split(',').map(item => parseInt(item) ? parseInt(item) : item);
       row.isEditable = true;
      }
      cancelUpdate(row) {
       this.IsRowEdit = false;
       row.isEditable = false;
-      this.getPincodeList();
+      this.getVehicleRouteList();
     }
-    updatePincode(item : any) {
+    updateVehicleRoute(item : any) {
       if(this.validateInline(item)){
         item.Created_By = this.userId;
         item.IsInserted = 'U';
-        // let pinSplit = item.Pincode.split('(');
-        // item.Pincode = pinSplit[0];
-          this._commonService.savePincode(item)
+
+        item.Route_Ids = item.SelectedRoute.join(',');
+          this._commonService.saveVehicleRoute(item)
             .subscribe((data) => {
-              this.commonHelper.commonAlerts('Updated', data, '/master/pincode-master', '/master/add-edit-brand')
+              this.commonHelper.commonAlerts('Updated', data, '/master/vehicle-route-master', '/master/add-edit-brand')
               if (data != null && data != "e" && data != "r" && data != "o") {
                 let splitData = data.toString().split("|");
                 this.msgType = splitData.length > 0 ? splitData[0] :'E';
@@ -130,42 +136,49 @@ export class PincodeListComponent implements OnInit {
                   item.isEditable = false;
                 }
               }
-
             }, error => this.errorMessage = error)
       }
     }
     validateInline(item) : any{
-      if(item.Pincode == null || item.Pincode == '' || item.Pincode == '0' || item.Pincode == 0 )
+      if(item.Vehicle_No == null || item.Vehicle_No == '' || item.Vehicle_No == '0' || item.Vehicle_No == 0 )
       {
-        this.errorMessage = "Please Select Pincode";
+        this.errorMessage = "Please Select Vehicle";
+        // this.renderer.selectRootElement('#Root_Header_ID').focus();
+        return false;
+      }else if(item.SelectedRoute == null || item.SelectedRoute == '' || item.SelectedRoute == '0' || item.SelectedRoute == 0 )
+      {
+        this.errorMessage = "Please Select atleast one Route";
         // this.renderer.selectRootElement('#Root_Header_ID').focus();
         return false;
       }
+
       else{
         return true;
       }
-
       }
 
     addEditOpen(id : any):void {
       this.errorMessage = '';
       this.IsAddEdit = true;
-      this.pincodeId = id;
       this.IsRowEdit = false;
+      this.mapId = id;
+
       this.getCommonList();
 
-      if (this.pincodeId > 0) {
+      if (this.mapId > 0) {
         this.title = "Edit";
-        this._commonService.getPincodeById(this.pincodeId)
+        this._commonService.getVehicleRouteById(this.mapId)
           .subscribe((resp) =>
           {
 
-            this.pincodeObj = resp
+            this.vehicleRouteObj = resp
+
+            this.vehicleRouteObj.SelectedRoute = resp.Route_Ids.split(',')
             , error => this.errorMessage = error
           });
       }else {
         this.title = "Create";
-        this.pincodeObj = PincodeFun(this.isInserted);
+        this.vehicleRouteObj = VehicleRouteFun(this.isInserted);
       }
     }
 
@@ -176,19 +189,30 @@ export class PincodeListComponent implements OnInit {
             this.StatusList = data;
         }
       )
-
-      this._commonService.GetPincodesFromCity().subscribe(
+      this._commonService.GetActiveVehicleList('0').subscribe(
         (data) =>
          {
-            this.PincodeList = data;
+            this.VehicleList = data;
+        }
+      )
+      this._commonService.GetActiveRouteDropDownList().subscribe(
+        (data) =>
+         {
+            this.RouteList = data;
         }
       )
     }
 
     validate(){
-      if(this.pincodeObj.Pincode == null || this.pincodeObj.Pincode == '' || this.pincodeObj.Pincode == '0' || this.pincodeObj.Pincode == 0 )
+      if(this.vehicleRouteObj.Vehicle_Id == null || this.vehicleRouteObj.Vehicle_Id == '' || this.vehicleRouteObj.Vehicle_Id == '0' || this.vehicleRouteObj.Vehicle_Id == 0 )
       {
-        this.errorMessage = "Please Select Pincode";
+        this.errorMessage = "Please Select Vehicle";
+        return false;
+      }
+      else if(this.vehicleRouteObj.SelectedRoute == null || this.vehicleRouteObj.SelectedRoute == '' || this.vehicleRouteObj.SelectedRoute == '0' || this.vehicleRouteObj.SelectedRoute == 0 )
+      {
+        this.errorMessage = "Please Select Route";
+        // this.renderer.selectRootElement('#RCatg_ID').focus();
         return false;
       }
       else{
@@ -196,23 +220,24 @@ export class PincodeListComponent implements OnInit {
       }
     }
 
-    savePincode() {
-      debugger;
+    saveVehicleRoute() {
+
       if(this.validate()){
-        this.pincodeObj.Created_By = this.userId;
+        this.vehicleRouteObj.Created_By = this.userId;
+        this.vehicleRouteObj.Route_Ids = this.vehicleRouteObj.SelectedRoute.join(',');
         if (this.title == "Create") {
-          this.pincodeObj.IsInserted = 'I';
-          this._commonService.savePincode(this.pincodeObj)
+          this.vehicleRouteObj.IsInserted = 'I';
+          this._commonService.saveVehicleRoute(this.vehicleRouteObj)
             .subscribe((data) => {
-              this.commonHelper.commonAlerts('Inserted', data,'/master/pincode-master', '/master/add-edit-category')
+              this.commonHelper.commonAlerts('Inserted', data,'/master/vehicle-route-master', '/master/add-edit-category')
 
             }, error => this.errorMessage = error)
         }
         else if (this.title == "Edit") {
-          this.pincodeObj.IsInserted = 'U';
-          this._commonService.savePincode(this.pincodeObj)
+          this.vehicleRouteObj.IsInserted = 'U';
+          this._commonService.saveVehicleRoute(this.vehicleRouteObj)
             .subscribe((data) => {
-              this.commonHelper.commonAlerts('Updated', data,'/master/pincode-master', '/master/add-edit-category')
+              this.commonHelper.commonAlerts('Updated', data,'/master/vehicle-route-master', '/master/add-edit-category')
             }, error => this.errorMessage = error)
         }
       }
@@ -224,19 +249,24 @@ export class PincodeListComponent implements OnInit {
     }
 }
 
-function PincodeFun(isInserted) {
+function VehicleRouteFun(isInserted) {
 
   let obj ={
-    Pin_Id :'',
-    Pincode : '',
-    Town_Name : '',
-  Status : 'A',
-  Created_By :'',
-  Created_Date :'',
-  Modified_By :'',
-  Modified_Date :'',
-  IsDeleted :'',
-  IsInserted : isInserted,
+    Map_Id :'',
+    Vehicle_Id : '',
+    Route_ID : '',
+    Route_Ids : '',
+    Vehicle_No :'',
+    Route_Name :'',
+    Status : 'A',
+    Created_By :'',
+    Created_Date :'',
+    Modified_By :'',
+    Modified_Date :'',
+    IsDeleted :'',
+    IsInserted : isInserted,
+    Route :'',
+    SelectedRoute:''
 };
   return obj;
 }
