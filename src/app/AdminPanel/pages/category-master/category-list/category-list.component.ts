@@ -124,6 +124,7 @@ export class CategoryListComponent implements OnInit {
           {
 
             this.categoryObj = resp
+            debugger;
             this.categoryObj.SelectedDepartment = resp.Department.split(',')
             , error => this.errorMessage = error
           });

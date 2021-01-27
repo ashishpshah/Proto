@@ -178,6 +178,11 @@ const routes: Routes = [
 
 
       },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/vehicle-master/vehicle-master.module').then(m => m.VehicleMasterModule)
+
+      },
     ]
   },
   {

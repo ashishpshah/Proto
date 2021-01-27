@@ -27,8 +27,9 @@ export class AddEditSubCategoryComponent implements OnInit {
   isInserted : string = 'I';
   msgType : string = '';
   message : string = '';
-  CategoryListById: any[] = [];
+  CategoryListById: any = [];
   selectedSubCategoryList: [];
+  DepartmentList :any = [];
   loading: boolean = false;
   isListDivShow : boolean = false;
   isFromEdit : boolean = false;
@@ -46,12 +47,21 @@ export class AddEditSubCategoryComponent implements OnInit {
     ngOnInit():void {
 
       this.getCommonList();
+
       if (this.categoryId > 0) {
         this.title = "Edit";
         this._commonService.getSubCategoryById(this.categoryId)
           .subscribe((resp) =>
           {
             this.subCategoryObj = resp
+            debugger;
+            // this.subCategoryObj.SelectedDepartment = resp.Department.split(',')
+            this._commonService.GetDepartmentByCatId((resp.Catg_ID).toString()).subscribe(
+              (datas) =>
+               {
+                this.DepartmentList = datas;
+               })
+
             , error => this.errorMessage = error
           });
       }else {
@@ -78,13 +88,22 @@ export class AddEditSubCategoryComponent implements OnInit {
     }
     getCategoryListbyId(categoryId){
       this.loading = true;
-
+      this._commonService.GetDepartmentByCatId(categoryId).subscribe(
+        (datas) =>
+         {
+          this.DepartmentList = datas;
+         })
       this._commonService.getSubCategoryByCategoryId(categoryId).subscribe(
         (data) =>
          {
             localStorage.setItem('isSelectCategory',  categoryId);
             this.isListDivShow = true;
             this.CategoryListById = data;
+            debugger;
+            // data.forEach(function (value) {
+            //  value.SelectedDepartment = value.Department.split(',')
+            // });
+
             this.errorMessage = '';
             this.loading = false;
         }
@@ -246,7 +265,10 @@ function CategoryFun(isInserted) {
   Modified_Date :'',
   IsDeleted :'',
   IsInserted : isInserted,
-  IsUpdate : ''
+  IsUpdate : '',
+  Department :'',
+  DepartmentCodes :'',
+  SelectedDepartment:''
 };
   return obj;
 }

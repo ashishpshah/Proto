@@ -19,13 +19,13 @@ export class RootCategoryListComponent implements OnInit {
 
   loading: boolean = true;
   IsAddEdit :boolean = false;
-  rootCategoryMaster : [];
+  rootCategoryMaster : any[] = [];
   selectedRootCategoryMaster : [];
   userId : string = localStorage.getItem('userId');
   msgType : string = '';
   message : string = '';
   @ViewChild('dt') table: Table;
-
+  IsRowEdit : boolean =false;
   //------------ Add Edit----------------
   rootCategoryObj :any ={};
 
@@ -51,6 +51,9 @@ getRootCategoryList(){
     (data) =>
       {
       this.rootCategoryMaster =  data;
+      this.rootCategoryMaster.map(row => {
+        row.isEditable = false;
+      });
       this.loading = false;
     }
   );
@@ -60,9 +63,9 @@ openInsertPage(){
   this._router.navigate(['/master/add-edit-root-category']);
 }
 
-openEditPage(id){
-  this._router.navigate(['/master/add-edit-root-category',id]);
-}
+// openEditPage(id){
+//   this._router.navigate(['/master/add-edit-root-category',id]);
+// }
 
 deleteItem(rootCategoryId) {
   // var ans = confirm("Are you sure ? You want to delete it?");
@@ -100,6 +103,58 @@ activateItem(rootCategoryId) {
 
 
 //------------------------- Insert Update Functionality
+openEditPage(row){
+  this.getCommonList();
+  this.IsRowEdit = true;
+  this.rootCategoryMaster.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
+  row.isEditable = true;
+ }
+ cancelUpdate(row) {
+  this.IsRowEdit = false;
+  row.isEditable = false;
+  this.getRootCategoryList();
+}
+updateRootCategory(item : any) {
+  if(this.validateInline(item)){
+    item.Created_By = this.userId;
+    item.IsInserted = 'U';
+      this._commonService.saveRootCategory(item)
+        .subscribe((data) => {
+          this.commonHelper.commonAlerts('Updated', data, '/master/root-category-master', '/master/add-edit-brand')
+          item.isEditable = false;
+        }, error => this.errorMessage = error)
+  }
+}
+validateInline(item) : any{
+  if(item.Root_Header_ID == null || item.Root_Header_ID == '' || item.Root_Header_ID == '0' || item.Root_Header_ID == 0 )
+  {
+    this.errorMessage = "Please Select Root";
+    // this.renderer.selectRootElement('#Root_Header_ID').focus();
+    return false;
+  }
+  else if(item.RCatg_Name == ''){
+    this.errorMessage = "Please Enter Root Category Name";
+    // this.renderer.selectRootElement('#Root_Name_'+item.Root_Header_ID).focus();
+    return false;
+  }
+  else if(item.RCatg_Name_D == '')
+  {
+    this.errorMessage = "Please Enter Root Category Name (Danish)";
+    this.renderer.selectRootElement('#RCatg_Name_D').focus();
+    return false;
+  }
+  else if(item.Display_Seq_No == '' || item.Display_Seq_No == '0' || item.Display_Seq_No == 0 )
+  {
+    this.errorMessage = "Please Enter Display Seq No";
+    this.renderer.selectRootElement('#Display_Seq_No').focus();
+    return false;
+  }
+  else{
+    return true;
+  }
+
+
+  }
 
 addEditOpen(id : any):void {
   this.errorMessage = '';

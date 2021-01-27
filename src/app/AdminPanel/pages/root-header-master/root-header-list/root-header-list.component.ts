@@ -16,13 +16,13 @@ import { PrimeNGConfig } from 'primeng/api';
 export class RootHeaderListComponent implements OnInit {
   loading: boolean = true;
   IsAddEdit = false;
-  rootHeaderMaster : [];
+  rootHeaderMaster : any[] = [];
   selectedRootHeaderMaster : [];
   userId : string = localStorage.getItem('userId');
   msgType : string = '';
   message : string = '';
   @ViewChild('dt') table: Table;
-
+  IsRowEdit : boolean =false;
   //--------------------- Add Edit
     rootHeaderObj :any ={};
     title: string = "Create";
@@ -45,6 +45,10 @@ export class RootHeaderListComponent implements OnInit {
         (data) =>
           {
           this.rootHeaderMaster =  data;
+                this.rootHeaderMaster.map(row => {
+            row.isEditable = false;
+          });
+
           this.loading = false;
         }
       );
@@ -54,9 +58,6 @@ export class RootHeaderListComponent implements OnInit {
       this._router.navigate(['/master/add-edit-root-header']);
     }
 
-    openEditPage(id){
-      this._router.navigate(['/master/add-edit-root-header',id]);
-    }
 
     deleteItem(rootHeaderId) {
       // var ans = confirm("Are you sure ? You want to delete it?");
@@ -112,6 +113,49 @@ export class RootHeaderListComponent implements OnInit {
         this.title = "Create";
         this.rootHeaderObj = RootHeaderFun(this.isInserted);
       }
+    }
+
+  openEditPage(row){
+     this.getCommonList();
+     this.IsRowEdit = true;
+     this.rootHeaderMaster.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
+     row.isEditable = true;
+    }
+  cancelUpdate(row) {
+    debugger;
+    this.IsRowEdit = false;
+    row.isEditable = false;
+    this.getRootHeaderList();
+  }
+
+  updateRootHeader(item : any) {
+    if(this.validateInline(item)){
+      debugger;
+      item.Created_By = this.userId;
+      item.IsInserted = 'U';
+        this._commonService.saveRootHeader(item)
+          .subscribe((data) => {
+            this.commonHelper.commonAlerts('Updated', data, '/master/root-header-master', '/master/add-edit-brand')
+            item.isEditable = false;
+          }, error => this.errorMessage = error)
+    }
+  }
+
+validateInline(item) : any{
+    if(item.Root_Name == ''){
+      this.errorMessage = "Please Enter Root Name";
+      this.renderer.selectRootElement('#Root_Name_'+item.Root_Header_ID).focus();
+      return false;
+    }
+    else if(item.Root_Name_D == '')
+    {
+      this.errorMessage = "Please Enter Root Name (Danish)";
+      this.renderer.selectRootElement('#Root_Name_D_'+item._Root_Header_ID).focus();
+      return false;
+    }
+    else{
+      return true;
+    }
     }
 
     getCommonList(){

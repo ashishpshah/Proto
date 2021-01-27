@@ -360,6 +360,27 @@ activebrand(brandId :number, userId :string) {
 }
 //#endregion
 
+//#region Vehicle Master Service
+
+getVehicleList(vehicleId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Vehicle/GetVehicleList?vehicleId='+vehicleId);
+}
+getVehicleById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Vehicle/GetVehicleById?vehicleId='+id);
+}
+saveVehicle(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Vehicle/InsertUpdateVehicle', dtl)
+    .catch(this.errorHandler)
+}
+deleteVehicle(vehicleId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Vehicle/DeleteVehicleRecord?vehicleId=" + vehicleId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeVehicle(vehicleId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "Vehicle/ActiveVehicle?vehicleId=" + vehicleId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
 
 
 //#region Common List Services

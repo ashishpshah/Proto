@@ -68,6 +68,7 @@
 </div>
 
 <!-- *********************************************** Data List **********************************************  -->
+<div *ngIf="IsRowEdit"><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
 <div class="row">
   <div class="col-sm-12">
     <app-card [title]="'Root Category Master'" [classHeader]="true" [blockClass]="'table-border-style'">
@@ -99,14 +100,16 @@
           <br />
           <ng-template pTemplate="header">
             <tr>
-              <th pSortableColumn="RCatg_Name">Root Category Name <p-sortIcon field="RCatg_Name"></p-sortIcon>
+              <th pSortableColumn="RCatg_Name">Root Category Name<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="RCatg_Name"></p-sortIcon>
               </th>
-              <th pSortableColumn="RCatg_Name_D">Root Category Name (Danish) <p-sortIcon field="RCatg_Name_D">
+              <th pSortableColumn="RCatg_Name_D">Root Category Name (Danish)<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="RCatg_Name_D">
                 </p-sortIcon>
               </th>
-              <th pSortableColumn="Root_Name">Root Name <p-sortIcon field="Root_Name"></p-sortIcon>
+              <th pSortableColumn="Root_Name">Root Name<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="Root_Name"></p-sortIcon>
               </th>
               <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon>
+              </th>
+              <th pSortableColumn="Display_Seq_No">Display Seq No<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="Display_Seq_No"></p-sortIcon>
               </th>
               <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
               </th>
@@ -126,6 +129,7 @@
               <th></th>
               <th></th>
               <th></th>
+              <th></th>
 
             </tr>
           </ng-template>
@@ -135,16 +139,37 @@
               <!-- p-selectable-row  -->
 
               <td>
-                {{item.RCatg_Name}}
+                <span *ngIf="!item.isEditable">{{item.RCatg_Name}}</span>
+                <input type="text" [ngClass] ="item.RCatg_Name == '' && errorMessage != '' ? 'alert-danger':''" id="RCatg_Name"  class="form-control" [(ngModel)]="item.RCatg_Name" *ngIf="item.isEditable"/>
               </td>
               <td>
-                {{item.RCatg_Name_D}}
+                <span *ngIf="!item.isEditable">{{item.RCatg_Name_D}}</span>
+                <input type="text" [ngClass] ="item.RCatg_Name_D == '' && errorMessage != '' ? 'alert-danger':''" id="RCatg_Name_D"  class="form-control" [(ngModel)]="item.RCatg_Name_D" *ngIf="item.isEditable"/>
               </td>
               <td>
-                {{item.Root_Name}}
+                <span *ngIf="!item.isEditable">{{item.Root_Name}}</span>
+
+                <ng-select [ngClass] ="(item.Root_Header_ID  == 0 || item.Root_Header_ID == null)  && errorMessage != '' ? 'border border-danger':''" *ngIf="item.isEditable" [(ngModel)]="item.Root_Header_ID" placeholder="Select Root" id="Root_Header_ID"
+                [ngModelOptions]="{standalone: true}">
+                <ng-option *ngFor="let scat of RootList" [value]="scat.id"> {{scat.name}}</ng-option>
+                </ng-select>
+
+                <!-- <input type="text" [ngClass] ="item.Root_Name == '' && errorMessage != '' ? 'alert-danger':''" id="Root_Name"  class="form-control" [(ngModel)]="item.Root_Name" *ngIf="item.isEditable"/> -->
               </td>
               <td>
-                {{item.StatusDesc}}
+                <span *ngIf="!item.isEditable">{{item.StatusDesc}}</span>
+                <div *ngIf="item.isEditable">
+                  <select class="form-control" [(ngModel)]="item.Status" id="Status"
+                    [ngModelOptions]="{standalone: true}">
+                    <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+                      {{st.name}}
+                    </option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <span *ngIf="!item.isEditable">{{item.Display_Seq_No}}</span>
+                <input type="text" [ngClass] ="(item.Display_Seq_No == '' || item.Display_Seq_No == '0') && errorMessage != '' ? 'alert-danger':''" id="Display_Seq_No"  class="form-control" [(ngModel)]="item.Display_Seq_No" *ngIf="item.isEditable"/>
               </td>
               <td style="width: 220px;">
                 {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button"
@@ -152,9 +177,17 @@
                     Active</button> </span>
               </td>
               <td>
-                <a class="ti-pencil-alt edit" (click)="addEditOpen(item.RCatg_ID)"></a>
-                &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.RCatg_ID)"></a>
-                <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
+                <div *ngIf="!item.isEditable">
+                  <a class="ti-pencil-alt edit" (click)="openEditPage(item)"></a>
+                  &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.RCatg_ID)"></a>
+                </div>
+                <div *ngIf="item.isEditable">
+                  <button class="btn btn-sm btn-success" (click)="updateRootCategory(item)">Update</button>
+                  &nbsp;<button class="btn btn-sm btn-danger" (click)="cancelUpdate(item)">Cancel</button>
+                </div>
+
+                <!-- <a class="ti-pencil-alt edit" (click)="addEditOpen(item.RCatg_ID)"></a>
+                &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.RCatg_ID)"></a> -->
               </td>
             </tr>
           </ng-template>

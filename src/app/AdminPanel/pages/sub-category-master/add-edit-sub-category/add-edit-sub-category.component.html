@@ -5,68 +5,6 @@
 </div> -->
 
 
-<div *ngIf="isFromEdit">
-  <div>
-    <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
-  </div>
-  <form>
-    <div>
-
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
-        <div class="col-sm-4">
-          <ng-select [(ngModel)]="subCategoryObj.Catg_ID" placeholder="Select Root Category" id="Catg_ID"
-          [ngModelOptions]="{standalone: true}">
-          <ng-option *ngFor="let scat of CategoryList" [value]="scat.id"> {{scat.name}}</ng-option>
-        </ng-select>
-        </div>
-        <label class="col-sm-2 col-form-label">Sub Category Name<span class="warningclass">*</span></label>
-        <div class="col-sm-4">
-          <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name" id="Sub_Catg_Name"
-            [ngModelOptions]="{standalone: true}">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Sub Category Name (Danish)<span class="warningclass">*</span></label>
-        <div class="col-sm-4">
-          <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name_D" id="Sub_Catg_Name_D"
-            [ngModelOptions]="{standalone: true}">
-        </div>
-
-        <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
-        <div class="col-sm-4">
-          <input class="form-control" type="number" [(ngModel)]="subCategoryObj.Display_Seq_No" id="Display_Seq_No"
-            [ngModelOptions]="{standalone: true}" min="0">
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Status</label>
-        <div class="col-sm-4">
-          <select class="form-control" [(ngModel)]="subCategoryObj.Status" id="Status"
-            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
-            <option *ngFor="let st of StatusList; let i = index" [value]="st.id">
-              {{st.name}}
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <br />
-    <hr />
-    <div class="text-center">
-      <div class="form-group align-center">
-        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="updateSubCategory()">
-          <span class="font-d">
-            Save</span></button> &nbsp;
-        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
-            Cancel</span></button>
-      </div>
-    </div>
-
-  </form>
-</div>
 
 
 
@@ -130,6 +68,7 @@
                         field="Sub_Catg_Name_D">
                       </p-sortIcon>
                     </th>
+                    <th >Department</th>
                     <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon>
                     </th>
                     <th pSortableColumn="Display_Seq_No">Display Seq No <p-sortIcon field="Display_Seq_No"></p-sortIcon>
@@ -156,6 +95,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
 
                   </tr>
                 </ng-template>
@@ -177,6 +117,28 @@
                     <td>
                       <input class="form-control" type="text" [(ngModel)]="item.Sub_Catg_Name_D"
                         id="Sub_Catg_Name_D_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      {{item.SelectedDepartment}}
+                      <ng-select [ngClass] ="(item.Department == 0 || item.Department == null)  && errorMessage != '' ? 'border border-danger':''"
+                      [multiple]="true"
+                      [items]="DepartmentList"
+                      [(ngModel)]="item.SelectedDepartment"
+                      name="Deparment"
+                      bindValue="id"
+                      bindLabel="name"
+                      placeholder="Select Department" id="Dept_{{rowIndex}}">
+                      </ng-select>
+
+                      <!-- <select class="form-control" [(ngModel)]="item.Department" id="Status_{{rowIndex}}"
+                        [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let st of DepartmentList; let i = index" [value]="st.id">
+                          {{st.name}}
+                        </option>
+                      </select> -->
+
+                      <!-- <input class="form-control" type="text" [(ngModel)]="item.DepartmentCodes"
+                        id="DepartmentCodes_{{rowIndex}}" [ngModelOptions]="{standalone: true}"> -->
                     </td>
                     <td>
                       <select class="form-control" [(ngModel)]="item.Status" id="Status_{{rowIndex}}"
@@ -206,7 +168,7 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                   <tr>
-                    <td colspan="6">No items found</td>
+                    <td colspan="7">No items found</td>
                   </tr>
                 </ng-template>
               </p-table>
@@ -227,4 +189,87 @@
 
     </form>
   </div>
+</div>
+
+
+
+<div *ngIf="isFromEdit">
+  <div>
+    <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
+  </div>
+  <form>
+    <div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <ng-select [(ngModel)]="subCategoryObj.Catg_ID" placeholder="Select Root Category" id="Catg_ID"
+          [ngModelOptions]="{standalone: true}">
+          <ng-option *ngFor="let scat of CategoryList" [value]="scat.id"> {{scat.name}}</ng-option>
+        </ng-select>
+        </div>
+
+
+        <label class="col-sm-2 col-form-label">Department</label>
+        <div class="col-sm-4">
+          <ng-select [ngClass] ="(subCategoryObj.Department == 0 || subCategoryObj.Department == null)  && errorMessage != '' ? 'border border-danger':''"
+                      [multiple]="true"
+                      [items]="DepartmentList"
+                      [(ngModel)]="subCategoryObj.SelectedDepartment"
+                      name="licenseAuthorityId"
+                      bindValue="id"
+                      bindLabel="name"
+                      placeholder="Select Department" id="Department">
+                      </ng-select>
+
+          <!-- <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name" id="Sub_Catg_Name"
+            [ngModelOptions]="{standalone: true}"> -->
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Sub Category Name<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name" id="Sub_Catg_Name"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Sub Category Name (Danish)<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name_D" id="Sub_Catg_Name_D"
+            [ngModelOptions]="{standalone: true}">
+        </div>
+
+
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="number" [(ngModel)]="subCategoryObj.Display_Seq_No" id="Display_Seq_No"
+            [ngModelOptions]="{standalone: true}" min="0">
+        </div>
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="subCategoryObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id">
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="updateSubCategory()">
+          <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
 </div>

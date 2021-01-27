@@ -45,7 +45,7 @@
 </div>
 
 <!-- ________________________List Data__________________________________ -->
-
+<div *ngIf="IsRowEdit"><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
 <div class="row">
   <div class="col-sm-12">
       <app-card [title]="'Root Header Master'" [classHeader]="true" [blockClass]="'table-border-style'">
@@ -71,8 +71,9 @@
               <br/>
               <ng-template pTemplate="header">
               <tr>
-                  <th pSortableColumn="Root_Name">Root Name <p-sortIcon field="Root_Name"></p-sortIcon></th>
-                  <th pSortableColumn="Root_Name_D">Root Name (Danish) <p-sortIcon field="Root_Name_D"></p-sortIcon></th>
+                  <th pSortableColumn="Root_Name">Root Name<span class="warningclass" *ngIf="IsRowEdit">*</span><p-sortIcon field="Root_Name"></p-sortIcon></th>
+                  <th pSortableColumn="Root_Name_D">Root Name (Danish)<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="Root_Name_D"></p-sortIcon></th>
+                  <th pSortableColumn="Display_Seq_No">StatDisplay Seq No<span class="warningclass" *ngIf="IsRowEdit">*</span> <p-sortIcon field="Display_Seq_No"></p-sortIcon></th>
                   <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
                   <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th>
                   <th >Action </th>
@@ -86,6 +87,7 @@
                   <th></th>
                   <th></th>
                   <th></th>
+                   <th></th>
 
               </tr>
               </ng-template>
@@ -94,20 +96,50 @@
               <tr class="">  <!-- p-selectable-row  -->
 
                   <td>
-                        {{item.Root_Name}}
+                   <span *ngIf="!item.isEditable">{{item.Root_Name}}</span>
+                    <input type="text" [ngClass] ="item.Root_Name == '' && errorMessage != '' ? 'alert-danger':''"  class="form-control" [(ngModel)]="item.Root_Name" *ngIf="item.isEditable"/>
+                        <!-- {{item.Root_Name}} -->
                   </td>
                   <td>
-                    {{item.Root_Name_D}}
+                         <span *ngIf="!item.isEditable">{{item.Root_Name_D}}</span>
+                    <input type="text" [ngClass] ="item.Root_Name_D == '' && errorMessage != '' ? 'alert-danger':''"  class="form-control" [(ngModel)]="item.Root_Name_D" *ngIf="item.isEditable"/>
+                    <!-- {{item.Root_Name_D}} -->
                   </td>
                   <td>
-                        {{item.StatusDesc}}
+                  <span *ngIf="!item.isEditable">{{item.StatusDesc}}</span>
+                    <div *ngIf="item.isEditable">
+                      <select class="form-control" [(ngModel)]="item.Status" id="Status"
+                        [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+                          {{st.name}}
+                        </option>
+                      </select>
+
+                      <!-- <input class="form-control" type="text" [(ngModel)]="item.Status" value="{{item.StatusDesc}}"> -->
+                    </div>
+
+                        <!-- {{item.StatusDesc}} -->
+                  </td>
+                   <td>
+                          <span *ngIf="!item.isEditable">{{item.Display_Seq_No}}</span>
+                    <input type="text" class="form-control" [ngClass] ="(item.Display_Seq_No == '' ||item.Display_Seq_No == '0')  && errorMessage != '' ? 'alert-danger':''"  [(ngModel)]="item.Display_Seq_No" *ngIf="item.isEditable"/>
+                        <!-- {{item.Display_Seq_No}} -->
                   </td>
                   <td style = "width: 230px;">
                     {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.Root_Header_ID)">Make Active</button> </span>
                   </td>
                   <td>
-                          <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Root_Header_ID)"></a>
-                          &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Root_Header_ID)"></a>
+                      <div *ngIf="!item.isEditable">
+                        <a class="ti-pencil-alt edit" (click)="openEditPage(item)"></a>
+                        &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Root_Header_ID)"></a>
+                      </div>
+                      <div *ngIf="item.isEditable">
+                        <button class="btn btn-sm btn-success" (click)="updateRootHeader(item)">Update</button>
+                        &nbsp;<button class="btn btn-sm btn-danger" (click)="cancelUpdate(item)">Cancel</button>
+                      </div>
+
+                          <!-- <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Root_Header_ID)"></a>
+                          &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Root_Header_ID)"></a> -->
                              <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
                   </td>
               </tr>

@@ -94,6 +94,10 @@ const MENUITEMS = [
             name: 'Route Master'
           }
           ,{
+            state: 'vehicle-master',
+            name: 'Vehicle Master'
+          }
+          ,{
             state: 'brand-master',
             name: 'Brand Master'
           }
