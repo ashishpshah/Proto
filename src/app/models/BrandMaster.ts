@@ -9,4 +9,5 @@ export class BrandMaster{
          Modified_Date : Date;
          StatusDesc : string;
          IsInserted : string;
+         BrandQty : number;
 }

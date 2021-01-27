@@ -1,11 +1,15 @@
+import { Catg_Master } from './../../../models/Catg_Master';
+import { StreetListComponent } from './../../../AdminPanel/pages/street-master/street-list/street-list.component';
+import { brandMasterModule } from './../../../AdminPanel/pages/brand-master/brand-master.module';
 import { Client_commonService } from './../../client_services/client_common.service';
 import { Item_Master } from './../../../models/Item_Master';
 import { CategoryService } from '../../client_services/category.service';
 import { Sub_Catg_Master } from '../../../models/Sub_Catg_Master';
-import { Catg_Master } from '../../../models/Catg_Master';
 import { Component, OnInit,AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from "rxjs";
+import { BrandMaster } from 'src/app/models/BrandMaster';
+import { TypeMaster } from 'src/app/models/TypeMaster';
 
 declare var $: any;
 declare var require: any;
@@ -30,6 +34,8 @@ export class SubcategoryComponent implements OnInit {
   public isCollapsed = true;
   HeaderName:string='';
   shoppingcartlist : Observable<Item_Master[]>;
+  BrandMaster_ : Observable<BrandMaster[]>;
+  TypeMaster_ : Observable<TypeMaster[]>;
   //productInfoCart : Observable<Item_Master[]>;
 
 
@@ -42,8 +48,10 @@ export class SubcategoryComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit()
+  {
 
+    debugger;
 
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
@@ -54,6 +62,8 @@ export class SubcategoryComponent implements OnInit {
       this.RCatg_ID=parseInt(this.subcategoryName);
       this.PageLoaditembyRCatg_ID(this.RCatg_ID);
       this.GetCatg_MasterList(this.Root_Header_ID);
+      this.GetBrandByType(this.RCatg_ID,'RootHeader');
+      this.GetTypeByType(this.RCatg_ID,'RootHeader');
 
 
 
@@ -94,7 +104,7 @@ export class SubcategoryComponent implements OnInit {
 
   PageLoaditembyRCatg_ID(RCatg_ID :number){
 
-    this.categoryService.PageLoaditembyRCatg_ID(RCatg_ID).subscribe(
+    this.Client_commonService_.PageLoaditembyRCatg_ID(RCatg_ID).subscribe(
       (data) =>
        {
          this.Item_Masters = data;
@@ -103,9 +113,29 @@ export class SubcategoryComponent implements OnInit {
     )
   }
 
+  GetBrandByType(ID :number,Type: string){
+
+    this.Client_commonService_.GetBrandByType(ID,Type).subscribe(
+      (data) =>
+       {
+         this.BrandMaster_ = data;
+      }
+    )
+  }
+
+  GetTypeByType(ID :number,Type: string){
+
+    this.Client_commonService_.GetTypeByType(ID,Type).subscribe(
+      (data) =>
+       {
+         this.TypeMaster_ = data;
+      }
+    )
+  }
+
   getItemList(cat_ids :number){
 
-    this.categoryService.getItemList(cat_ids).subscribe(
+    this.Client_commonService_.getItemList(cat_ids).subscribe(
       (data) =>
        {
          this.Item_Masters = data;
@@ -113,6 +143,9 @@ export class SubcategoryComponent implements OnInit {
 
       }
     )
+
+    this.GetBrandByType(cat_ids,'Category');
+    this.GetTypeByType(cat_ids,'Category');
   }
 
   CheckshopingcartQty()
@@ -137,7 +170,7 @@ export class SubcategoryComponent implements OnInit {
 
   GetCatg_MasterList(Root_Header_ID :number){
 
-    this.categoryService.GetCatg_MasterList(Root_Header_ID).subscribe(
+    this.Client_commonService_.GetCatg_MasterList(Root_Header_ID).subscribe(
       (data) =>
        {
          this.Catg_Master = data;
@@ -147,7 +180,7 @@ export class SubcategoryComponent implements OnInit {
   }
   filterByCategory(cat_ids)
   {
-    this.categoryService.getItemList(cat_ids).subscribe(
+    this.Client_commonService_.getItemList(cat_ids).subscribe(
       (data) =>
        {
          this.Item_Masters = data;
@@ -155,17 +188,24 @@ export class SubcategoryComponent implements OnInit {
 
       }
     )
+    this.GetBrandByType(cat_ids,'Category');
+    this.GetTypeByType(cat_ids,'Category');
   }
   getItemListBysubcategory(Sub_Catg_ID)
   {
-    this.categoryService.getItemListBysubcategory(Sub_Catg_ID).subscribe(
+    debugger;
+    this.Client_commonService_.getItemListBysubcategory(Sub_Catg_ID).subscribe(
       (data) =>
        {
+        // this.Item_Masters = any [];
          this.Item_Masters = data;
-         this.CheckshopingcartQty()
+         //this.CheckshopingcartQty()
 
       }
     )
+
+    this.GetBrandByType(Sub_Catg_ID,'SubCategory');
+    this.GetTypeByType(Sub_Catg_ID,'SubCategory');
   }
 
   ngAfterViewInit() {
@@ -195,5 +235,10 @@ export class SubcategoryComponent implements OnInit {
   SubCategoryList(cat_ids)
   {
     this.filterByCategory(cat_ids);
+  }
+
+  GetItemListBysubcategory_List(Sub_Catg_ID)
+  {
+    this.getItemListBysubcategory(Sub_Catg_ID)
   }
 }

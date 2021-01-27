@@ -362,6 +362,16 @@ GetRootHeaderDataList(): Observable<any> {
     return this.http.get(this.baseUrl +'SubCategory/GetProductItemList');
   }
 
+GetBrandByType(ID:number,Type: string): Observable<any>
+{
+      return this.http.get(this.baseUrl +'BrandMaster/GetBrandByType?ID='+ID+'&Type='+Type);
+}
+
+GetTypeByType(ID:number,Type: string): Observable<any>
+{
+      return this.http.get(this.baseUrl +'Type_Master/GetTypeByType?ID='+ID+'&Type='+Type);
+}
+
   groupBy<T, K>(list: T[], getKey: (item: T) => K) {
     const map = new Map<K, T[]>();
     list.forEach((item) => {
