@@ -181,7 +181,7 @@ export class VehicleListComponent implements OnInit {
           this.vehicleObj.IsInserted = 'I';
           this._commonService.saveVehicle(this.vehicleObj)
             .subscribe((data) => {
-              this.commonHelper.commonAlerts('Inserted', data,'/master/vehicle-master', '/master/add-edit-vehicle')
+              this.commonHelper.commonAlerts('Inserted', data,'/master/vehicle-master', '/master/add-edit-category')
 
             }, error => this.errorMessage = error)
         }
@@ -189,7 +189,7 @@ export class VehicleListComponent implements OnInit {
           this.vehicleObj.IsInserted = 'U';
           this._commonService.saveVehicle(this.vehicleObj)
             .subscribe((data) => {
-              this.commonHelper.commonAlerts('Updated', data,'/master/vehicle-master', '/master/add-edit-vehicle')
+              this.commonHelper.commonAlerts('Updated', data,'/master/vehicle-master', '/master/add-edit-category')
             }, error => this.errorMessage = error)
         }
       }
