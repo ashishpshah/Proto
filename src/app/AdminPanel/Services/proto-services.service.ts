@@ -433,6 +433,15 @@ activeVehicle(vehicleId :number, userId :string) {
     return this.http.get(`${this.baseUrl}/`+'Department/GetActiveDepartmentList?deptCode='+deptCode);
   }
 
+  GetVehicleCategoryList(vehicleId :string): Observable<any>  {
+    return this.http.get(`${this.baseUrl}/` + "Vehicle/GetVehicleCategoryListAJ?vehicleId=" + vehicleId)
+      .catch(this.errorHandler);
+  }
+  GetDepartmentByCatId(categoryId :string) {
+    return this.http.get(`${this.baseUrl}/` + "SubCategoryLevel/GetDepartmentByCatId?categoryId=" + categoryId)
+      .catch(this.errorHandler);
+  }
+
 //#endregion
 
 //#region Login Services
