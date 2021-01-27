@@ -41,7 +41,10 @@
                                 data-parent="#accordion" class="collapse">
                                 <div class="card-body" >
                                     <ul class="check-list">
-                                      <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="getItemListBysubcategory(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
+                                      <a>
+                                        <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="GetItemListBysubcategory_List(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
+                                      </a>
+
                                     </ul>
                                 </div>
                             </div>
@@ -55,40 +58,33 @@
                       </div>
                       <div class="card-body">
                           <form>
-                              <div class="form-group mb-1">
+                              <div class="form-group mb-1" *ngFor="let Brand of BrandMaster_;">
                                   <div class="custom-control custom-checkbox">
-                                      <input id="brand0" type="checkbox" name="clothes-brand" checked class="custom-control-input">
-                                      <label for="brand0" class="custom-control-label">Calvin Klein <small>(18)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="brand1" type="checkbox" name="clothes-brand" checked class="custom-control-input">
-                                      <label for="brand1" class="custom-control-label">Levi Strauss <small>(30)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="brand2" type="checkbox" name="clothes-brand" class="custom-control-input">
-                                      <label for="brand2" class="custom-control-label">Hugo Boss <small>(120)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="brand3" type="checkbox" name="clothes-brand" class="custom-control-input">
-                                      <label for="brand3" class="custom-control-label">Tomi Hilfiger <small>(70)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="brand4" type="checkbox" name="clothes-brand" class="custom-control-input">
-                                      <label for="brand4" class="custom-control-label">Tom Ford  <small>(110)</small></label>
+                                      <input [id]="'brand'+Brand.Brand_ID" type="checkbox" name="clothes-brand"  class="custom-control-input">
+                                      <label [for]="'brand'+Brand.Brand_ID" class="custom-control-label">{{Brand.Brand_Name}} <small>({{Brand.BrandQty}})</small></label>
                                   </div>
                               </div>
                               <button class="btn btn-outline-secondary btn-sm mt-3"><i class="fa fa-pencil"></i> Apply</button>
                           </form>
                       </div>
                   </div>
+
+                  <div class="card sidebar-menu">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0 text-uppercase">Type </h5><a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block">Clear</span></a>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group mb-1" *ngFor="let Type_ of TypeMaster_;">
+                                <div class="custom-control custom-checkbox">
+                                    <input [id]="'Type'+Type_.Type_ID" type="checkbox" name="clothes-brand"  class="custom-control-input">
+                                    <label [for]="'Type'+Type_.Type_ID" class="custom-control-label">{{Type_.Type_Name}} <small>({{Type_.TypeQty}})</small></label>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-secondary btn-sm mt-3"><i class="fa fa-pencil"></i> Apply</button>
+                        </form>
+                    </div>
+                </div>
                   <div class="card sidebar-menu">
                       <div class="card-header d-flex align-items-center justify-content-between">
                           <h5 class="mb-0 text-uppercase">Colours</h5><a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block">Clear</span></a>
@@ -130,7 +126,7 @@
                       </div>
                   </div>
                   <!-- *** MENUS AND FILTERS END ***-->
-                  <div class="banner"><a href="category.html"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
+                  <div class="banner"><a><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
                   <!-- /.banner-->
               </div>
               <!-- /.col-md-3-->
@@ -196,7 +192,7 @@
                 </div> -->
                   <div class="row products">
 
-                    <div class="col-md-4 col-sm-6" *ngFor='let item4  of Item_Masters; let isFirst = firstl'>
+                    <div class="col-md-4 col-sm-6" *ngFor='let item4  of Item_Masters | async; let isFirst = firstl'>
                       <div class="product">
                           <div class="image">
                               <a><img src="/assets/img/img/No-Image.jpg" alt="" class="img-fluid image1"></a>
@@ -204,7 +200,7 @@
                           </div>
                           <!-- /.image-->
                           <div class="text">
-                              <h3><a href="detail.html">{{item4.Item_Name}}</a></h3>
+                              <h3><a>{{item4.Item_Name}}</a></h3>
                               <p class="card-text text-left  mb-0">Price: <span class="font-weight-bold float-right text-success">${{item4.Price}}</span></p>
 
                               <p class="card-text text-left">Stock left: <span class="font-weight-bold float-right text-danger">{{item4.Qty}}</span></p>
@@ -274,11 +270,11 @@
                                               </div>
                                           </div>
                                           <div class="col-sm-6">
-                                              <h2>White Blouse Armani</h2>
-                                              <p class="text-muted text-small text-center">White lace top, woven, has a round neck, short sleeves, has knitted lining attached</p>
+                                              <h2>Item Name</h2>
+                                              <p class="text-muted text-small text-center">Item Description</p>
                                               <div class="box">
                                                   <form>
-                                                      <div class="sizes">
+                                                      <!-- <div class="sizes">
                                                           <h3>Available sizes</h3>
                                                           <label for="size_s">
                                                               <a href="#">S</a>
@@ -292,7 +288,7 @@
                                                               <a href="#">L</a>
                                                               <input id="size_l" type="radio" name="size" value="l" class="size-input">
                                                           </label>
-                                                      </div>
+                                                      </div> -->
                                                       <p class="price">$124.00</p>
                                                       <p class="text-center">
                                                           <button type="submit" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i> Add to cart</button>

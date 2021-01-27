@@ -65,57 +65,6 @@ export class CheckpincodeComponent implements OnInit {
   })
 }
 
-public countries = [
-  {
-    id: 1,
-    name: 'Albania',
-  },
-  {
-    id: 2,
-    name: 'Belgium',
-  },
-  {
-    id: 3,
-    name: 'Denmark',
-  },
-  {
-    id: 4,
-    name: 'Montenegro',
-  },
-  {
-    id: 5,
-    name: 'Turkey',
-  },
-  {
-    id: 6,
-    name: 'Ukraine',
-  },
-  {
-    id: 7,
-    name: 'Macedonia',
-  },
-  {
-    id: 8,
-    name: 'Slovenia',
-  },
-  {
-    id: 9,
-    name: 'Georgia',
-  },
-  {
-    id: 10,
-    name: 'India',
-  },
-  {
-    id: 11,
-    name: 'Russia',
-  },
-  {
-    id: 12,
-    name: 'Switzerland',
-  }
-];
-
 
 selectEvent(item) {
   debugger;
@@ -217,13 +166,15 @@ CheckPincodevalid() {
           this.Townname = splitData.length > 1 ? splitData[2] :'';
           this.CreateFromObj.Zipcode= this.pincode;
           this.CreateFromObj.Town= this.Townname;
+          this.errorMessage='';
          // Swal.fire('Your Pincode is valid!', this.message, 'success')
         }else {
-          Swal.fire('Error', this.message, 'error')
+          this.errorMessage = this.message;
         }
 
-      }else{
-        Swal.fire('Error', 'Something went wrong!', 'error')
+      }else
+      {
+        this.errorMessage = 'Something went wrong!';
       }
     }, error => {this.errorMessage = error ; this.loading = false;})
 
@@ -258,7 +209,7 @@ validate(){
   }
   else if(this.CreateFromObj.Compuny_Name == '')
   {
-    this.errorMessage = "Please Enter Compuny Name";
+    this.errorMessage = "Please Enter Company Name";
     this.renderer.selectRootElement('#Compuny_Name').focus();
     return false;
   }

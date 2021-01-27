@@ -21,8 +21,8 @@ export class HeaderComponent implements OnInit {
   hideshowcrat: boolean=true;
   Itemcount:number =0;
   Item_Master_ : any;
-  username : string='Login In';
-  Logintext : string='Login In';
+  username : string='LOG IN';
+  Logintext : string='LOG IN';
   Showcreate:boolean=true;
   Showlogin:boolean=true;
   Showlogout:boolean=false;
@@ -45,15 +45,15 @@ export class HeaderComponent implements OnInit {
     {
       if(userName== null)
       {
-        this.username ="Login In";
-        this.Logintext="Login In"
+        this.username ="LOG IN";
+        this.Logintext="LOG IN"
         this.Showcreate= true
         this.Showlogin= true
         this.Showlogout= false
       }else
       {
         this.username ="Welcome "+ userName+"";
-        this.Logintext="Logout"
+        this.Logintext="LOG OUT"
         this.Showcreate= false
         this.Showlogin= false
         this.Showlogout= true
@@ -90,8 +90,8 @@ Logout()
 
          localStorage.removeItem('CustId');
          localStorage.removeItem('Cust_userName');
-         this.username ="Login In";
-         this.Logintext="Login In"
+         this.username ="LOG IN";
+         this.Logintext="LOG IN"
          this.Showcreate= true
          this.Showlogin= true
          this.Showlogout= false

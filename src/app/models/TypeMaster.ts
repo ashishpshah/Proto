@@ -9,4 +9,5 @@ export class TypeMaster{
          Modified_Date : string;
          StatusDesc : string;
          IsInserted : string;
+         TypeQty : number;
 }

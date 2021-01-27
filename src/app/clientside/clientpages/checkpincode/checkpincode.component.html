@@ -24,7 +24,7 @@
              <div class="wrapper">
               <span class="group-btn">
                 <button  class="btn btn-primary">
-                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  <span class="spinner-border spinner-border-sm mr-1"></span>
                   Check Pincode <i class="fa fa-sign-in"></i>
               </button>
               </span>
@@ -66,8 +66,8 @@
 
           <div class="form-row">
             <div class="form-group col-md-4">
-              <label for="inputEmail4">First name</label>
-              <input type="text" [(ngModel)]="CreateFromObj.FirstName"  class="form-control" id="inputEmail4" placeholder="First name" [ngModelOptions]="{standalone: true}">
+              <label for="FirstName">First name</label>
+              <input type="text" [(ngModel)]="CreateFromObj.FirstName"  class="form-control" id="FirstName" placeholder="First name" [ngModelOptions]="{standalone: true}">
             </div>
             <div class="form-group col-md-4">
               <label for="MiddleName">Middle name</label>
