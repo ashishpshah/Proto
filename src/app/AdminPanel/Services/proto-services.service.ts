@@ -312,6 +312,28 @@ activeDepartment(deptCode :number, userId :string) {
 //#endregion
 
 
+//#region Type Master Service
+
+gettypeById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Type_Master/GetType_MasterById?Type_ID='+id);
+}
+
+gettypeList(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Type_Master/GetType_Masternfo');
+}
+
+savetype(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Type_Master/InsertUpdateType_Master', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deletetype(Type_ID :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Type_Master/DeleteType_MasterRecord?Type_ID=" + Type_ID+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
 //#region Brand Master Service
 
 getBrandById(id: number): Observable<any> {

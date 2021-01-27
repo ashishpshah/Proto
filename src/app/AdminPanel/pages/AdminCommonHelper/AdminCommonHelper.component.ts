@@ -74,6 +74,32 @@ export class AdminCommonHelperComponent implements OnInit {
           // this._router.navigate([url]);
         }
 
+      }
+      else if (this.msgType == 'A') {
+        // Swal.fire(title, this.message, 'success')
+        this.autoCloseAlert(title, this.message, 'error')
+        // Swal.fire({
+        //   title: title,
+        //   text: this.message,
+        //   icon: 'success',
+        //   timer: 2000,
+        //   buttons: false,
+        //   showCancelButton: false,
+        //   showConfirmButton: false
+        //   });
+        //   // function () {
+        //   //    location.reload(true);
+        //   //    tr.hide();
+        //   // };
+
+
+        if (url != null && url != '' && url != "") {
+          this._router.navigateByUrl(currentUrl, { skipLocationChange: true }).then(() => {
+            this._router.navigate([url]);
+        });
+          // this._router.navigate([url]);
+        }
+
       }else {
         this.autoCloseAlert('Error', this.message, 'error')
       }

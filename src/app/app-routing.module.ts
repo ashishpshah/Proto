@@ -1,3 +1,4 @@
+import { typeMasterModule } from './AdminPanel/pages/type-master/type-master.module';
 import { CheckoutComponent } from './clientside/clientpages/checkout/checkout.component';
 import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist.component';
 import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
@@ -168,6 +169,12 @@ const routes: Routes = [
       {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/brand-master/brand-master.module').then(m => m.brandMasterModule)
+
+
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/type-master/type-master.module').then(m => m.typeMasterModule)
 
 
       },
