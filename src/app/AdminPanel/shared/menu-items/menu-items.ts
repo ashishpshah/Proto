@@ -105,6 +105,10 @@ const MENUITEMS = [
             state: 'type-master',
             name: 'Type Master'
           }
+          ,{
+            state: 'pincode-master',
+            name: 'Pincode Master'
+          }
 
         ]
       },

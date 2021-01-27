@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CategoryListComponent } from './category-list.component';
+import { PincodeListComponent } from './pincode-list.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CategoryListComponent,
+    component: PincodeListComponent,
     data: {
-      breadcrumb: 'Category Master',
+      breadcrumb: 'Allowed Pincode Master',
       icon: 'icofont-layout bg-c-blue',
       breadcrumb_caption: '',
       status: true
@@ -19,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CategoryListRoutingModule { }
+export class PincodeListRoutingModule { }

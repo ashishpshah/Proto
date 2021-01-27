@@ -382,6 +382,33 @@ activeVehicle(vehicleId :number, userId :string) {
 }
 //#endregion
 
+//#region Pincode Master Service
+
+getPincodeList(pincodeId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Pincode/GetPincodeList?pincodeId='+pincodeId);
+}
+
+getPincodeById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Pincode/GetPincodeById?pincodeId='+id);
+}
+
+savePincode(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Pincode/InsertUpdatePincode', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deletePincode(pincodeId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Pincode/DeletePincodeRecord?pincodeId=" + pincodeId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activePincode(pincodeId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "Pincode/ActivePincode?pincodeId=" + pincodeId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
 
 //#region Common List Services
   GetLovDetailByColumn(Lov_Column:string): Observable<any> {
@@ -442,6 +469,10 @@ activeVehicle(vehicleId :number, userId :string) {
       .catch(this.errorHandler);
   }
 
+  GetPincodesFromCity(): Observable<any>  {
+    return this.http.get(`${this.baseUrl}/` + "Pincode/GetPincodesFromCity")
+      .catch(this.errorHandler);
+  }
 //#endregion
 
 //#region Login Services

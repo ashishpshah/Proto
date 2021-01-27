@@ -159,6 +159,7 @@ validateInline(item) : any{
 addEditOpen(id : any):void {
   this.errorMessage = '';
   this.IsAddEdit = true;
+  this.IsRowEdit = false;
   this.getCommonList();
   debugger;
   this.rootCategoryId = id;

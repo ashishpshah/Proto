@@ -103,7 +103,6 @@
                 <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                   <tr class="">
                     <!-- p-selectable-row  -->
-
                     <!-- <td>
                       <ng-select [(ngModel)]="item.Catg_Name" placeholder="Select Root Category"
                         id="Catg_ID_{{item.Sub_Catg_ID}}" [ngModelOptions]="{standalone: true}">
@@ -119,7 +118,6 @@
                         id="Sub_Catg_Name_D_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
                     </td>
                     <td>
-                      {{item.SelectedDepartment}}
                       <ng-select [ngClass] ="(item.Department == 0 || item.Department == null)  && errorMessage != '' ? 'border border-danger':''"
                       [multiple]="true"
                       [items]="DepartmentList"
@@ -127,8 +125,14 @@
                       name="Deparment"
                       bindValue="id"
                       bindLabel="name"
-                      placeholder="Select Department" id="Dept_{{rowIndex}}">
+                      placeholder="Select Department" id="Dept_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
                       </ng-select>
+                      <!-- <ng-select [ngClass] ="(item.Department == 0 || item.Department == null)  && errorMessage != '' ? 'border border-danger':''"
+                      [multiple]="true"
+                      [(ngModel)]="item.SelectedDepartment"
+                      name="Deparment"
+                      placeholder="Select Department" id="Dept_{{rowIndex}}">
+                      </ng-select> -->
 
                       <!-- <select class="form-control" [(ngModel)]="item.Department" id="Status_{{rowIndex}}"
                         [ngModelOptions]="{standalone: true}">

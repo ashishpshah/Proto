@@ -183,6 +183,11 @@ const routes: Routes = [
          loadChildren: () => import('./AdminPanel/pages/vehicle-master/vehicle-master.module').then(m => m.VehicleMasterModule)
 
       },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/pincode-master/pincode-master.module').then(m => m.PincodeMasterModule)
+
+      },
     ]
   },
   {

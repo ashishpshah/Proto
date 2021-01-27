@@ -1,0 +1,136 @@
+<!-- *********************************************** Insert-Update **********************************************  -->
+<div *ngIf="IsAddEdit">
+  <div><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+  <form >
+    <div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Pincode<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <ng-select [ngClass] ="(pincodeObj.Pincode == 0 || pincodeObj.Pincode == null)  && errorMessage != '' ? 'border border-danger':''"
+                [items]="PincodeList"
+                [(ngModel)]="pincodeObj.Pincode"
+                name="licenseAuthorityId"
+                bindValue="id"
+                bindLabel="name"
+                placeholder="Select Pincode"
+                id="Pincode">
+                </ng-select>
+        </div>
+
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="pincodeObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="savePincode()"> <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<!-- *********************************************** Data List **********************************************  -->
+<div *ngIf="IsRowEdit"><div class='alert alert-danger'><span>All * fields are mandatory</span></div></div>
+<div class="row">
+  <div class="col-sm-12">
+      <app-card [title]="'Allowed Pincode List'" [classHeader]="true" [blockClass]="'table-border-style'">
+        <div class="table-responsive">
+            <p>
+              <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
+              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
+            </p>
+              <br/>
+              <br/>
+
+            <p-table class="" #dt [value]="pincodeMaster" [(selection)]="selectedPincodeMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['Pincode']">
+              <!-- <ng-template pTemplate="caption">
+                <div class="table-header-p ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                    </span>
+                </div>
+              </ng-template> -->
+              <br/>
+              <br/>
+              <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="Pincode">Pincode<p-sortIcon field="Pincode"></p-sortIcon></th>
+                  <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
+                  <th >Action </th>
+              </tr>
+              <tr>
+                  <th>
+                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'Pincode', 'contains')" placeholder="Search by Pincode" class="form-control">
+                  </th>
+                  <th></th>
+                  <th></th>
+
+              </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-item >
+              <tr class="" *ngIf="item.PincodeDesc != ''">
+
+                  <td>
+                    <span *ngIf="!item.isEditable">{{item.PincodeDesc}}</span>
+                    <span *ngIf="item.isEditable">
+                      <ng-select [ngClass] ="(item.Pincode == 0 || item.Pincode == null)  && errorMessage != '' ? 'border border-danger':''"
+                      [items]="PincodeList"
+                      [(ngModel)]="item.Pincode"
+                      name="licenseAuthorityId"
+                      bindValue="id"
+                      bindLabel="name"
+                      placeholder="Select Pincode"
+                      id="Pincode">
+                      </ng-select>
+                    </span>
+                  </td>
+
+                  <td>
+                    <span *ngIf="!item.isEditable">{{item.StatusDesc}}</span>
+                    <span *ngIf="item.isEditable">
+                      <select class="form-control" [(ngModel)]="item.Status" id="Status"
+                        [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+                          {{st.name}}
+                        </option>
+                      </select>
+                    </span>
+                  </td>
+                  <td>
+                    <div *ngIf="!item.isEditable">
+                      <a class="ti-pencil-alt edit" (click)="openEditPage(item)"></a>
+                      &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Pin_Id)"></a>
+                    </div>
+                    <div *ngIf="item.isEditable">
+                      <button class="btn btn-sm btn-success" (click)="updatePincode(item)">Update</button>
+                      &nbsp;<button class="btn btn-sm btn-danger" (click)="cancelUpdate(item)">Cancel</button>
+                    </div>
+                  </td>
+              </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+              <tr>
+              <td colspan="3">No items found</td>
+              </tr>
+              </ng-template>
+          </p-table>
+        </div>
+     </app-card>
+  </div>
+</div>
+

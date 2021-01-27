@@ -38,7 +38,7 @@ export class BasicLoginComponent implements OnInit {
       this._commonService.Login(this.loginForm.value)
         .subscribe(resp => {
 
-          if (resp == null) {
+          if (resp == null || resp == 'e' || resp == 'r' || resp == 'o'  ) {
             this.errorMessage = "User Invalid";
             this.loading = false;
           }else{

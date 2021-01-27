@@ -99,6 +99,7 @@ export class RootHeaderListComponent implements OnInit {
     addEditOpen(id : any):void {
       this.errorMessage = '';
       this.IsAddEdit = true;
+      this.IsRowEdit = false;
       this.getCommonList();
       this.rootHeaderId = id;
       if (this.rootHeaderId > 0) {
