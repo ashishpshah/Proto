@@ -20,7 +20,7 @@ export class WhishlistComponent implements OnInit {
   }
   itemswhish$ = this.Client_commonService_.itemswhish$;
   ngOnInit() {
-    debugger;
+
 
     this.Item_Master_ = this.Client_commonService_.getwhislistItems();
   }

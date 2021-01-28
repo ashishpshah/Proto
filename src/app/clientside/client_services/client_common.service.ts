@@ -1,3 +1,4 @@
+import { stringify } from '@angular/compiler/src/util';
 import { Item_Master } from './../../models/Item_Master';
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -30,7 +31,7 @@ export class Client_commonService {
   }
 constructor(private http: HttpClient)
 {
-  debugger;
+
   //localStorage.clear();
   let existingCartItems = JSON.parse(localStorage.getItem('shopcart'));
   if (!existingCartItems) {
@@ -71,7 +72,7 @@ clearCart()
 }
 
 addToCart1(product: Item_Master) {
-  debugger;
+
   let local_storage;
 
   product.TotalPrice=product.Price;
@@ -151,7 +152,7 @@ minuseQty(product: Item_Master)
 
 addQty(product: Item_Master)
 {
-  debugger;
+
   var shopcart = JSON.parse(localStorage.getItem('shopcart'));
   var isadd= true;
   for (var i = 0; i < shopcart.length; i++)
@@ -208,7 +209,7 @@ getwhislistItems(){
 
 addwishlist(whislistitem: Item_Master) {
 
-  debugger;
+
   //localStorage.removeItem('whishlist');
 
   if(localStorage.getItem('whishlist')  == null)
@@ -324,18 +325,18 @@ SaveCustmerdata(dtl) {
 
 GetAddressList(CustId:string): Observable<any> {
   return this.http.get(this.baseUrl +'Customer/GetAddressListByCustomer?Cust_Id='+CustId);
-  debugger;
+
 }
 
 getItemList(Catg_ID:number): Observable<any> {
   return this.http.get(this.baseUrl +'SubCategory/GetItem_MasterList?Catg_ID='+Catg_ID);
-  debugger;
+
 }
 
 PageLoaditembyRCatg_ID(RCatg_ID:number): Observable<any> {
-  debugger;
+
      return this.http.get(this.baseUrl +'SubCategory/PageLoaditembyRCatg_ID?RCatg_ID='+RCatg_ID);
-     debugger;
+
    }
 
 getItemListBysubcategory(Sub_Catg_ID:number): Observable<any> {
@@ -370,6 +371,11 @@ GetBrandByType(ID:number,Type: string): Observable<any>
 GetTypeByType(ID:number,Type: string): Observable<any>
 {
       return this.http.get(this.baseUrl +'Type_Master/GetTypeByType?ID='+ID+'&Type='+Type);
+}
+
+GetGetitemByFilterType(ID:number,Type: string,FilterType :string,FilterID :string ): Observable<any>
+{
+      return this.http.get(this.baseUrl +'SubCategory/GetGetitemByFilter?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
 }
 
   groupBy<T, K>(list: T[], getKey: (item: T) => K) {

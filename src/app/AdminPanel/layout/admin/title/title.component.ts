@@ -23,7 +23,7 @@ export class TitleComponent implements OnInit {
             }
           });
         } while (currentRoute);
-        // debugger;
+        //
         this.titleService.setTitle( title + ' | ProtoType');
       });
   }

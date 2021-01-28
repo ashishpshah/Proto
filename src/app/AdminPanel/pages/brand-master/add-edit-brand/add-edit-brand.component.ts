@@ -39,7 +39,7 @@ export class AddEditbrandComponent implements OnInit {
     ngOnInit():void {
 
       this.getCommonList();
-      debugger;
+
       if (this.brandId > 0) {
         this.title = "Edit";
         this._commonService.getbrandList(this.brandId)

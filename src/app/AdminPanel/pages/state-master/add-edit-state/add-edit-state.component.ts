@@ -42,7 +42,7 @@ export class AddEditStateComponent implements OnInit {
     ngOnInit():void {
 
       this.getCommonList();
-      debugger;
+
       if (this.stateId > 0) {
         this.title = "Edit";
         this._commonService.getStateById(this.stateId)

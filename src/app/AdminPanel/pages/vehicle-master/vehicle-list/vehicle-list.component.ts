@@ -87,7 +87,7 @@ export class VehicleListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deleteVehicle(vehicleId, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
@@ -173,7 +173,7 @@ export class VehicleListComponent implements OnInit {
     }
 
     saveVehicle() {
-      debugger;
+
       if(this.validate()){
         this.vehicleObj.Created_By = this.userId;
         // this.vehicleObj.Department = this.vehicleObj.SelectedDepartment.join(',');

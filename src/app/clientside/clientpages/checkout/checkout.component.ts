@@ -40,7 +40,7 @@ export class CheckoutComponent implements OnInit {
 
   calculatecartvalue()
   {
-    debugger;
+
     this.Item_Master_ = this.Client_commonService_.getItems();
     this.Subtotal=0;
     this.Grandtotal=0;
@@ -52,7 +52,7 @@ export class CheckoutComponent implements OnInit {
     }
 
    this.Grandtotal= this.Subtotal+ this.shippingcharge
-   debugger;
+
 
 
    var groups = new Set(this.Item_Master_.map(item => item.CategoryName))
@@ -97,7 +97,7 @@ export class CheckoutComponent implements OnInit {
 
   GetAddressList()
   {
-    debugger;
+
 
     this.Cust_id = this.Client_commonService_.getWithExpiryLocalStorage("Cust_Id")
      //localStorage.removeItem('Cust_Id');
@@ -113,7 +113,7 @@ export class CheckoutComponent implements OnInit {
 
   validate(){
 
-    debugger;
+
 
 
   if(this.CreateAddressObj.FirstName == '')
@@ -167,7 +167,7 @@ export class CheckoutComponent implements OnInit {
   createAddress()
   {
     if(this.validate()){
-      debugger;
+
       this.CreateAddressObj.Created_By = 0;
       this.CreateAddressObj.Cust_Id = this.Cust_id;
         //this.itemForm.value.IsInserted = 'I';

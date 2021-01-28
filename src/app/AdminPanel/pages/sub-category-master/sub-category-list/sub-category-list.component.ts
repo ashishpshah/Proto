@@ -73,7 +73,7 @@ export class SubCategoryListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deleteSubCategory(subCategoryId, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);

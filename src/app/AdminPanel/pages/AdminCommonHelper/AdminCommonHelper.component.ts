@@ -112,7 +112,7 @@ export class AdminCommonHelperComponent implements OnInit {
 
   activeInactiveAlert(title : string ,data: any) {
     if (data != null && data != "e" && data != "r" && data != "o") {
-      debugger;
+
       let splitData = data.toString().split("|");
       this.msgType = splitData.length > 0 ? splitData[0] :'E';
       this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';

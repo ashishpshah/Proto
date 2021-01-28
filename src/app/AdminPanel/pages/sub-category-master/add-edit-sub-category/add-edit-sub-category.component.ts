@@ -54,7 +54,7 @@ export class AddEditSubCategoryComponent implements OnInit {
           .subscribe((resp) =>
           {
             this.subCategoryObj = resp
-            debugger;
+
             // this.subCategoryObj.SelectedDepartment = resp.Department.split(',')
             this._commonService.GetDepartmentByCatId((resp.Catg_ID).toString()).subscribe(
               (datas) =>
@@ -99,7 +99,7 @@ export class AddEditSubCategoryComponent implements OnInit {
             localStorage.setItem('isSelectCategory',  categoryId);
             this.isListDivShow = true;
             this.CategoryListById = data;
-            debugger;
+
             // data.forEach(function (value) {
             //  value.SelectedDepartment = value.Department.split(',')
             // });
@@ -145,7 +145,7 @@ export class AddEditSubCategoryComponent implements OnInit {
     }
 
     validateList() : any{
-      debugger;
+
       let invalidCount = 0;
       let message = "";
       this.CategoryListById.filter(function (element,index) {
@@ -173,7 +173,7 @@ export class AddEditSubCategoryComponent implements OnInit {
 
     saveCategory() {
       var returnMsg = this.validateList();
-      debugger;
+
       if(returnMsg == "true"){
         this._commonService.saveSubCategory( this.userId,localStorage.getItem('isSelectCategory'),this.CategoryListById)
         .subscribe((data) => {
@@ -191,7 +191,7 @@ export class AddEditSubCategoryComponent implements OnInit {
     }
     updateSubCategory(){
       if(this.validate()){
-        debugger;
+
         let subCatList : any[];
         this.subCategoryObj.IsInserted = 'U';
         this.subCategoryObj.IsUpdate = 'Y';

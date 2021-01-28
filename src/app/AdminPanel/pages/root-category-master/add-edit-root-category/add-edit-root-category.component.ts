@@ -39,7 +39,7 @@ export class AddEditRootCategoryComponent implements OnInit {
     ngOnInit():void {
 
       this.getCommonList();
-      debugger;
+
       if (this.rootCategoryId > 0) {
         this.title = "Edit";
         this._commonService.getRootCategoryById(this.rootCategoryId)

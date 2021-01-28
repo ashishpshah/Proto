@@ -89,7 +89,7 @@ export class brandListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deletebrand(Brand_ID, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
@@ -177,7 +177,7 @@ export class brandListComponent implements OnInit {
     }
 
     savebrand() {
-      debugger;
+
       if(this.validate()){
         this.brandObj.Created_By = this.userId;
         if (this.title == "Create") {
@@ -209,7 +209,7 @@ export class brandListComponent implements OnInit {
       item.editable = !item.editable;
 
       if (!item.editable) {
-        debugger;
+
         item.IsInserted = 'U';
         item.Created_By=this.userId;
         this._commonService.savebrand(item)
@@ -227,7 +227,7 @@ export class brandListComponent implements OnInit {
       }
     }
     cancleBrandmaster(row) {
-      debugger;
+
       row.editable = false
     }
 }

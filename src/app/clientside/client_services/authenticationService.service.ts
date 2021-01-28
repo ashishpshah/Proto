@@ -21,7 +21,7 @@ export class AuthenticationServiceService {
   }
 
   CheckPincodeValidation(Pincode :string) {
-    debugger;
+
     return this.http.get(this.baseUrl + 'Login/CheckPincodeValidation?Pincode=' + Pincode)
       .catch(this.errorHandler);
   }

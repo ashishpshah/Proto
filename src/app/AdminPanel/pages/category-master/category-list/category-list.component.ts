@@ -87,7 +87,7 @@ export class CategoryListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deleteCategory(categoryId, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
@@ -124,7 +124,7 @@ export class CategoryListComponent implements OnInit {
           {
 
             this.categoryObj = resp
-            debugger;
+
             this.categoryObj.SelectedDepartment = resp.Department.split(',')
             , error => this.errorMessage = error
           });
@@ -192,7 +192,7 @@ export class CategoryListComponent implements OnInit {
     }
 
     saveCategory() {
-      debugger;
+
       if(this.validate()){
         this.categoryObj.Created_By = this.userId;
         this.categoryObj.Department = this.categoryObj.SelectedDepartment.join(',');

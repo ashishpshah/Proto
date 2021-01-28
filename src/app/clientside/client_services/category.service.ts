@@ -16,13 +16,13 @@ export class CategoryService {
 
   getItemList(Catg_ID:number): Observable<any> {
     return this.http.get(this.baseUrl +'SubCategory/GetItem_MasterList?Catg_ID='+Catg_ID);
-    debugger;
+
   }
 
   PageLoaditembyRCatg_ID(RCatg_ID:number): Observable<any> {
-    debugger;
+
        return this.http.get(this.baseUrl +'SubCategory/PageLoaditembyRCatg_ID?RCatg_ID='+RCatg_ID);
-       debugger;
+
      }
 
   getItemListBysubcategory(Sub_Catg_ID:number): Observable<any> {

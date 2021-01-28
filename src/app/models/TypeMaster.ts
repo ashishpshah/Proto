@@ -10,4 +10,7 @@ export class TypeMaster{
          StatusDesc : string;
          IsInserted : string;
          TypeQty : number;
+         ID : number;
+         Type : string;
+         checked:boolean;
 }

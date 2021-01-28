@@ -56,7 +56,7 @@ getRootHeaderById(id: number): Observable<any> {
 }
 
 saveRootHeader(dtl) {
-  debugger;
+
   return this.http.post(`${this.baseUrl}/`+ 'RootHeader/InsertUpdateRootHeader', dtl)
     // .map((response: Response) => response.json())
     .catch(this.errorHandler)
@@ -140,7 +140,7 @@ getSubCategoryById(id: number): Observable<any> {
 }
 
 saveSubCategory(userId :string,categoryId:string,dtl:any[]) {
-  debugger;
+
   return this.http.post(`${this.baseUrl}/`+ 'SubCategoryLevel/InsertUpdateSubCategory?userId='+userId+'&categoryId=' +categoryId, dtl)
     // .map((response: Response) => response.json())
     .catch(this.errorHandler)

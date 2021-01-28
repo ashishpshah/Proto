@@ -54,80 +54,37 @@
                   </div>
                   <div class="card sidebar-menu">
                       <div class="card-header d-flex align-items-center justify-content-between">
-                          <h5 class="mb-0 text-uppercase">Brands </h5><a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block">Clear</span></a>
+                          <h5 class="mb-0 text-uppercase">Brands </h5><a  (click)="ClearbrandFilter()" class="btn btn-sm btn-danger pull-right" style="color: white;"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block" style="color: white;" >Clear</span></a>
                       </div>
                       <div class="card-body">
                           <form>
                               <div class="form-group mb-1" *ngFor="let Brand of BrandMaster_;">
                                   <div class="custom-control custom-checkbox">
-                                      <input [id]="'brand'+Brand.Brand_ID" type="checkbox" name="clothes-brand"  class="custom-control-input">
+                                      <input [id]="'brand'+Brand.Brand_ID"  [(ngModel)]="Brand.checked" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeBrandCategory($event.target.checked, Brand)">
                                       <label [for]="'brand'+Brand.Brand_ID" class="custom-control-label">{{Brand.Brand_Name}} <small>({{Brand.BrandQty}})</small></label>
                                   </div>
                               </div>
-                              <button class="btn btn-outline-secondary btn-sm mt-3"><i class="fa fa-pencil"></i> Apply</button>
+                              <button class="btn btn-outline-secondary btn-sm mt-3" (click)="GetGetitemByFilterType('Brand')" ><i class="fa fa-pencil"></i> Apply</button>
                           </form>
                       </div>
                   </div>
 
                   <div class="card sidebar-menu">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0 text-uppercase">Type </h5><a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block">Clear</span></a>
+                        <h5 class="mb-0 text-uppercase">Type </h5><a (click)="ClearTypeFilter()" class="btn btn-sm btn-danger pull-right" style="color: white;"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block" style="color: white;">Clear</span></a>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="form-group mb-1" *ngFor="let Type_ of TypeMaster_;">
                                 <div class="custom-control custom-checkbox">
-                                    <input [id]="'Type'+Type_.Type_ID" type="checkbox" name="clothes-brand"  class="custom-control-input">
+                                    <input [id]="'Type'+Type_.Type_ID" [(ngModel)]="Type_.checked" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeTypeCategory($event.target.checked, Type_)">
                                     <label [for]="'Type'+Type_.Type_ID" class="custom-control-label">{{Type_.Type_Name}} <small>({{Type_.TypeQty}})</small></label>
                                 </div>
                             </div>
-                            <button class="btn btn-outline-secondary btn-sm mt-3"><i class="fa fa-pencil"></i> Apply</button>
+                            <button class="btn btn-outline-secondary btn-sm mt-3"(click)="GetGetitemByFilterType('Type')" ><i class="fa fa-pencil"></i> Apply</button>
                         </form>
                     </div>
                 </div>
-                  <div class="card sidebar-menu">
-                      <div class="card-header d-flex align-items-center justify-content-between">
-                          <h5 class="mb-0 text-uppercase">Colours</h5><a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block">Clear</span></a>
-                      </div>
-                      <div class="card-body">
-                          <form>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="colour0" type="checkbox" name="clothes-brand" checked class="custom-control-input">
-                                      <label for="colour0" class="custom-control-label"> <span class="colour white"></span>White <small>(18)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="colour1" type="checkbox" name="clothes-brand" checked class="custom-control-input">
-                                      <label for="colour1" class="custom-control-label"> <span class="colour blue"></span>Blue <small>(30)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="colour2" type="checkbox" name="clothes-brand" class="custom-control-input">
-                                      <label for="colour2" class="custom-control-label"> <span class="colour green"></span>Green <small>(120)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="colour3" type="checkbox" name="clothes-brand" class="custom-control-input">
-                                      <label for="colour3" class="custom-control-label"> <span class="colour yellow"></span>Yellow <small>(70)</small></label>
-                                  </div>
-                              </div>
-                              <div class="form-group mb-1">
-                                  <div class="custom-control custom-checkbox">
-                                      <input id="colour4" type="checkbox" name="clothes-brand" class="custom-control-input">
-                                      <label for="colour4" class="custom-control-label"> <span class="colour red "></span>Red  <small>(110)</small></label>
-                                  </div>
-                              </div>
-                              <button class="btn btn-outline-secondary btn-sm mt-3"><i class="fa fa-pencil"></i> Apply</button>
-                          </form>
-                      </div>
-                  </div>
-                  <!-- *** MENUS AND FILTERS END ***-->
-                  <div class="banner"><a><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
-                  <!-- /.banner-->
               </div>
               <!-- /.col-md-3-->
               <!-- *** LEFT COLUMN END ***-->

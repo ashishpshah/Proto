@@ -45,7 +45,7 @@ export class AddEditItemComponent implements OnInit {
 
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
     private _commonService : ProtoServicesService, private _router: Router) {
-      debugger;
+
       if (this._avRoute.snapshot.params["id"]) {
         this.itemId = this._avRoute.snapshot.params["id"];
         this.isInserted = 'U';
@@ -164,7 +164,7 @@ export class AddEditItemComponent implements OnInit {
         }, error => this.errorMessage = error)
     }
     else if (this.title == "Edit") {
-      debugger;
+
       this.itemForm.value.IsInserted = 'U';
       this._commonService.saveItem(this.itemForm.value)
         .subscribe((data) => {

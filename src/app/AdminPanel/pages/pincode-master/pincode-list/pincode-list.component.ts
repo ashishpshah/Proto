@@ -80,7 +80,7 @@ export class PincodeListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deletePincode(pincodeId, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
@@ -197,7 +197,7 @@ export class PincodeListComponent implements OnInit {
     }
 
     savePincode() {
-      debugger;
+
       if(this.validate()){
         this.pincodeObj.Created_By = this.userId;
         if (this.title == "Create") {

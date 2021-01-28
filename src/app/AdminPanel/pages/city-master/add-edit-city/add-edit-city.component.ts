@@ -41,7 +41,7 @@ export class AddEditCityComponent implements OnInit {
     ngOnInit():void {
 
       this.getCommonList();
-      debugger;
+
       if (this.cityId > 0) {
         this.title = "Edit";
         this._commonService.getCityById(this.cityId,this.stateId)

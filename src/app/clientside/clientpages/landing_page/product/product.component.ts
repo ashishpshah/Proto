@@ -36,7 +36,7 @@ export class ProductComponent implements OnInit {
   }
   onClickwhishlist(Item_Masters)
   {
-    debugger;
+
 
     Item_Masters.Activewishlist = !Item_Masters.Activewishlist;
 
@@ -76,21 +76,21 @@ export class ProductComponent implements OnInit {
 
   toggleShow(Item_Masters)
   {
-   debugger;
+
    Item_Masters.showaddbtn = false;
    Item_Masters.showplusebtn = true;
 
   }
   PluseQty(item)
   {
-    debugger;
+
     this.Client_commonService_.addQty(item);
     item.OrderQty += 1
 
   }
 
   minuseQty(item){
-    debugger
+
     this.Client_commonService_.minuseQty(item);
     item.OrderQty -= 1
 
@@ -230,7 +230,7 @@ export class ProductComponent implements OnInit {
 
 
   addToCart(Item_Mastercart) {
-    debugger;
+
     this.Client_commonService_.addToCart1(Item_Mastercart);
   }
 

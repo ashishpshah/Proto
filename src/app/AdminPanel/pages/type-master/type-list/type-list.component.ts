@@ -89,7 +89,7 @@ export class typeListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deletetype(Type_ID, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
@@ -155,7 +155,7 @@ export class typeListComponent implements OnInit {
     }
 
     savetype() {
-      debugger;
+
       if(this.validate()){
         this.typeObj.Created_By = this.userId;
         if (this.title == "Create") {
@@ -180,7 +180,7 @@ export class typeListComponent implements OnInit {
       item.editable = !item.editable;
 
       if (!item.editable) {
-        debugger;
+
         item.IsInserted = 'U';
         item.Created_By=this.userId;
         this._commonService.savetype(item)
@@ -198,7 +198,7 @@ export class typeListComponent implements OnInit {
       }
     }
     cancletypemaster(row) {
-      debugger;
+
       row.editable = false
     }
 }

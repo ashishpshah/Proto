@@ -67,7 +67,7 @@ export class ItemListComponent implements OnInit {
       confirmButtonText: 'Delete',
       // denyButtonText: 'Cancel',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deleteItem(itemId,this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted',data);

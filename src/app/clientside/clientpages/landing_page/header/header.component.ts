@@ -127,7 +127,7 @@ debugger;
 
         //  data.forEach(function (value) {
         //   //console.log(value);
-        //   debugger
+        //
         //   value.rootcat= this.categoryService.GetRoot_Catg_MasterList(value.Root_Header_ID);
         // });
       }

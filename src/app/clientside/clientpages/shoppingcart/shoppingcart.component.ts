@@ -43,7 +43,7 @@ export class ShoppingcartComponent implements OnInit {
   }
   checkoutItem()
   {
-    debugger;
+
     //localStorage.removeItem('Cust_userName');
     this.username = localStorage.getItem('Cust_userName');
     if( this.username== null || this.username== '' || this.username== undefined)
@@ -65,7 +65,7 @@ export class ShoppingcartComponent implements OnInit {
 
   minuseQty(item)
   {
-    debugger
+
     this.Client_commonService_.minuseQty(item);
     this.Item_Master_ = this.Client_commonService_.getItems();
     this.calculatecartvalue();
@@ -73,7 +73,7 @@ export class ShoppingcartComponent implements OnInit {
   }
 
   PluseQty(item){
-    debugger;
+
     this.Client_commonService_.addQty(item);
     this.Item_Master_ = this.Client_commonService_.getItems();
 
@@ -85,7 +85,7 @@ export class ShoppingcartComponent implements OnInit {
 
   calculatecartvalue()
   {
-    debugger;
+
     this.Item_Master_ = this.Client_commonService_.getItems();
     this.Subtotal=0;
     this.Grandtotal=0;
@@ -97,7 +97,7 @@ export class ShoppingcartComponent implements OnInit {
     }
 
    this.Grandtotal= this.Subtotal+ this.shippingcharge
-   debugger;
+
 
 
    var groups = new Set(this.Item_Master_.map(item => item.CategoryName))

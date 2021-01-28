@@ -36,7 +36,7 @@ export class Login_clientComponent implements OnInit {
 }
 
   ngOnInit() {
-    debugger;
+
 
 
     this.returnUrl = window.location.pathname;
@@ -52,7 +52,7 @@ export class Login_clientComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   login() {
-    debugger;
+
     this.loading = true;
     if (!this.loginForm.valid) {
       this.loading = false;
@@ -64,7 +64,7 @@ export class Login_clientComponent implements OnInit {
           if (resp == null) {
             this.errorMessage = "User Invalid";
           }else{
-            debugger;
+
             this.custmerdataObj =resp;
 
             // localStorage.removeItem('CustId');

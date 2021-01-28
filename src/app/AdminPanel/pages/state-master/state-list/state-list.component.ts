@@ -80,7 +80,7 @@ export class StateListComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
     }).then((result) => {
-      debugger;
+
       if (result.isConfirmed) {
         this._commonService.deleteState(stateId, this.userId).subscribe((data) => {
           let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
@@ -156,7 +156,7 @@ export class StateListComponent implements OnInit {
       if(returnMsg == "true"){
         this._commonService.saveCityList( this.userId,localStorage.getItem('stateId'),this.cityMaster)
         .subscribe((data) => {
-          debugger;
+
           this.commonHelper.commonAlert('Saved', data, '/master/state-master')
           $("#myModal").modal('hide');
         }, error => this.errorMessage = error)
@@ -181,7 +181,7 @@ export class StateListComponent implements OnInit {
           cancelButtonColor: '#d33',
           confirmButtonText: 'Delete',
         }).then((result) => {
-          debugger;
+
           if (result.isConfirmed) {
             this._commonService.deleteCity(stateId,cityId).subscribe((data) => {
               let ret = this.commonHelper.activeInactiveAlert('Deleted', data);

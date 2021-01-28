@@ -80,7 +80,7 @@ deleteItem(rootCategoryId) {
     confirmButtonText: 'Delete',
     // denyButtonText: 'Cancel',
   }).then((result) => {
-    debugger;
+
     if (result.isConfirmed) {
       this._commonService.deleteRootCategory(rootCategoryId,this.userId).subscribe((data) => {
         let ret = this.commonHelper.activeInactiveAlert('Deleted',data);
@@ -161,7 +161,7 @@ addEditOpen(id : any):void {
   this.IsAddEdit = true;
   this.IsRowEdit = false;
   this.getCommonList();
-  debugger;
+
   this.rootCategoryId = id;
   if (this.rootCategoryId > 0) {
     this.title = "Edit";

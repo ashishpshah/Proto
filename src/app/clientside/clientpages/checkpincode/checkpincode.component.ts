@@ -67,7 +67,7 @@ export class CheckpincodeComponent implements OnInit {
 
 
 selectEvent(item) {
-  debugger;
+
   this.CreateFromObj.StreetName=item.name;
   // do something with selected item
 }
@@ -143,7 +143,7 @@ getCommonList(){
 }
 
 CheckPincodevalid() {
-  debugger;
+
   this.loading = true;
   if (!this.CheckPincode.valid) {
     this.loading = false;
@@ -153,7 +153,7 @@ CheckPincodevalid() {
     this.pincode=this.CheckPincode.value.Pincode;
     this._AuthenticationServiceService.CheckPincodeValidation(this.pincode)
     .subscribe((data) => {
-      debugger;
+
       if (data != null && data != "e" && data != "r" && data != "o") {
 
         let splitData = data.toString().split("|");
@@ -185,7 +185,7 @@ validateEmail(email) {
  }
 validate(){
 
-  debugger;
+
 
 
   if(this.CreateFromObj.Customer_Type == ''){
@@ -320,11 +320,11 @@ validate(){
 
 
 createCustomer() {
-  debugger;
+
 
 
   if(this.validate()){
-    debugger;
+
     this.CreateFromObj.Created_By = 0;
     if (this.title == "Create Customer") {
       //this.itemForm.value.IsInserted = 'I';
@@ -353,14 +353,14 @@ validateipcode() {
   }
 
 CheckPincodevalidet() {
-  debugger;
+
   if(this.validateipcode()){
-    debugger;
+
 
     this.pincode =this.CreateFromObj.ZipcodeCheck;
     this._AuthenticationServiceService.CheckPincodeValidation(this.pincode)
     .subscribe((data) => {
-      debugger;
+
       if (data != null && data != "e" && data != "r" && data != "o") {
 
         let splitData = data.toString().split("|");

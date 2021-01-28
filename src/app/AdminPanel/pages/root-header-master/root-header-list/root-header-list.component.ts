@@ -72,7 +72,7 @@ export class RootHeaderListComponent implements OnInit {
         confirmButtonText: 'Delete',
         // denyButtonText: 'Cancel',
       }).then((result) => {
-        debugger;
+
         if (result.isConfirmed) {
           this._commonService.deleteRootHeader(rootHeaderId,this.userId).subscribe((data) => {
             let ret = this.commonHelper.activeInactiveAlert('Deleted',data);
@@ -123,7 +123,7 @@ export class RootHeaderListComponent implements OnInit {
      row.isEditable = true;
     }
   cancelUpdate(row) {
-    debugger;
+
     this.IsRowEdit = false;
     row.isEditable = false;
     this.getRootHeaderList();
@@ -131,7 +131,7 @@ export class RootHeaderListComponent implements OnInit {
 
   updateRootHeader(item : any) {
     if(this.validateInline(item)){
-      debugger;
+
       item.Created_By = this.userId;
       item.IsInserted = 'U';
         this._commonService.saveRootHeader(item)

@@ -10,4 +10,7 @@ export class BrandMaster{
          StatusDesc : string;
          IsInserted : string;
          BrandQty : number;
+         ID : number;
+         Type : string;
+         checked:boolean;
 }

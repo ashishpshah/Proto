@@ -34,8 +34,15 @@ export class SubcategoryComponent implements OnInit {
   public isCollapsed = true;
   HeaderName:string='';
   shoppingcartlist : Observable<Item_Master[]>;
-  BrandMaster_ : Observable<BrandMaster[]>;
-  TypeMaster_ : Observable<TypeMaster[]>;
+  BrandMaster_   : any[] = [];
+  TypeMaster_  : any[] = [];
+  typeObj :any ={};
+  tempArrType: any = { "FilterType": [] };
+  tempArrBrand: any = { "FilterBrand": [] };
+  Type:string='';
+  FilterType:string='';
+  ID : number;
+  FilterID: string='';
   //productInfoCart : Observable<Item_Master[]>;
 
 
@@ -51,11 +58,12 @@ export class SubcategoryComponent implements OnInit {
   ngOnInit()
   {
 
-    debugger;
+
 
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
       this.subcategoryName = this.route.snapshot.paramMap.get('string');
+      this.typeObj = typeFun();
       // this.categoryName = this.route.snapshot.data['name'];
       // this.category = this.route.snapshot.data['category'];
       this.Root_Header_ID=parseInt(this.subcategoryName);
@@ -67,25 +75,106 @@ export class SubcategoryComponent implements OnInit {
 
 
 
+
+
+  }
+  onChangeTypeCategory(isChecked: boolean, type_: any){
+
+
+
+    if(isChecked) {
+      this.tempArrType.FilterType.push(type_.Type_ID);
+    } else {
+      let index = this.tempArrType.FilterType.indexOf(type_.Type_ID);
+      this.tempArrType.FilterType.splice(index,1);
+    }
+
+  }
+
+  onChangeBrandCategory(isChecked: boolean, Brand_: any){
+
+
+
+    if(isChecked) {
+      this.tempArrBrand.FilterBrand.push(Brand_.Brand_ID);
+    } else {
+      let index = this.tempArrBrand.FilterBrand.indexOf(Brand_.Brand_ID);
+      this.tempArrBrand.FilterBrand.splice(index,1);
+    }
+
+  }
+
+  ClearbrandFilter(){
+
+
+    this.tempArrBrand.FilterBrand = [];
+
+    this.BrandMaster_.map(row => {
+      row.checked = false;
+    });
+
+    this.GetGetitemByFilterType('Brand');
+
+  }
+
+
+  ClearTypeFilter()
+  {
+
+
+    this.tempArrType.FilterType = [];
+
+    this.TypeMaster_.map(row => {
+      row.checked = false;
+    });
+
+    this.GetGetitemByFilterType('Type');
+
+  }
+  GetGetitemByFilterType(FilterType)
+  {
+
+
+    this.Type = this.TypeMaster_[0].Type;
+    this.ID = this.TypeMaster_[0].ID;
+    var FilterID ='';
+    if(FilterType =='Type')
+    {
+      FilterID = this.tempArrType.FilterType.join(", ");
+    }
+    else  if(FilterType =='Brand')
+    {
+      FilterID = this.tempArrBrand.FilterBrand.join(", ");
+    }
+
+
+    this.Client_commonService_.GetGetitemByFilterType(this.ID,this.Type,FilterType,FilterID).subscribe(
+      (data) =>
+       {
+         this.Item_Masters = data;
+         this.CheckshopingcartQty()
+      }
+    )
+
   }
 
   toggleShow(Item_Masters)
   {
-   debugger;
+
    Item_Masters.showaddbtn = false;
    Item_Masters.showplusebtn = true;
 
   }
   PluseQty(item)
   {
-    debugger;
+
     this.Client_commonService_.addQty(item);
     item.OrderQty += 1
 
   }
 
   minuseQty(item){
-    debugger
+
     this.Client_commonService_.minuseQty(item);
     item.OrderQty -= 1
 
@@ -119,6 +208,9 @@ export class SubcategoryComponent implements OnInit {
       (data) =>
        {
          this.BrandMaster_ = data;
+         this.BrandMaster_.map(row => {
+          row.checked = false;
+        });
       }
     )
   }
@@ -129,6 +221,9 @@ export class SubcategoryComponent implements OnInit {
       (data) =>
        {
          this.TypeMaster_ = data;
+         this.TypeMaster_.map(row => {
+          row.checked = false;
+        });
       }
     )
   }
@@ -193,7 +288,7 @@ export class SubcategoryComponent implements OnInit {
   }
   getItemListBysubcategory(Sub_Catg_ID)
   {
-    debugger;
+
     this.Client_commonService_.getItemListBysubcategory(Sub_Catg_ID).subscribe(
       (data) =>
        {
@@ -241,4 +336,23 @@ export class SubcategoryComponent implements OnInit {
   {
     this.getItemListBysubcategory(Sub_Catg_ID)
   }
+}
+
+function typeFun() {
+
+  let obj ={
+    Type_ID :'',
+    Type_Name : '',
+    Type_NameD : '',
+  Status : 'A',
+  Created_By :'',
+  Created_Date :'',
+  Modified_By :'',
+  Modified_Date :'',
+  IsDeleted :'',
+  IsInserted : '',
+  StatusDesc:'',
+  editable: false
+};
+  return obj;
 }

@@ -9,7 +9,7 @@ export class ProductDirective {
 
 
   @HostListener('click') onClick() {
-    debugger;
+
     this._ren.addClass(this._el.nativeElement, '_36fT9');
     setTimeout(() => {
       this._ren.removeClass(this._el.nativeElement, '_1uN_a');
