@@ -333,9 +333,9 @@ getItemList(Catg_ID:number): Observable<any> {
 
 }
 
-PageLoaditembyRCatg_ID(RCatg_ID:number): Observable<any> {
+GetitemByCategoryType(ID:number,Type:string): Observable<any> {
 
-     return this.http.get(this.baseUrl +'SubCategory/PageLoaditembyRCatg_ID?RCatg_ID='+RCatg_ID);
+     return this.http.get(this.baseUrl +'SubCategory/GetitemByCategoryType?ID='+ID+'&Type='+Type);
 
    }
 
@@ -363,14 +363,14 @@ GetRootHeaderDataList(): Observable<any> {
     return this.http.get(this.baseUrl +'SubCategory/GetProductItemList');
   }
 
-GetBrandByType(ID:number,Type: string): Observable<any>
+GetBrandByType(ID:number,Type: string ,FilterType :string,FilterID :string): Observable<any>
 {
-      return this.http.get(this.baseUrl +'BrandMaster/GetBrandByType?ID='+ID+'&Type='+Type);
+      return this.http.get(this.baseUrl +'BrandMaster/GetBrandByType?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
 }
 
-GetTypeByType(ID:number,Type: string): Observable<any>
+GetTypeByType(ID:number,Type: string,FilterType :string,FilterID :string): Observable<any>
 {
-      return this.http.get(this.baseUrl +'Type_Master/GetTypeByType?ID='+ID+'&Type='+Type);
+      return this.http.get(this.baseUrl +'Type_Master/GetTypeByType?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
 }
 
 GetGetitemByFilterType(ID:number,Type: string,FilterType :string,FilterID :string ): Observable<any>

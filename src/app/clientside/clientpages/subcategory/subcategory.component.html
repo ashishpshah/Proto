@@ -28,8 +28,8 @@
                       <div class="card-body">
 
                         <div id="accordion" role="tablist" class="mb-5">
-                          <div class="card" *ngFor="let notification of Catg_Master; let i=index;" (click)="SubCategoryList(notification.Catg_ID)">
-                            <div class="card-header sortable" id="headingOne"  data-toggle="collapse"
+                          <div class="card" *ngFor="let notification of Catg_Master; let i=index;" >
+                            <div class="card-header sortable" id="headingOne" (click)="SubCategoryList(notification.Catg_ID)"  data-toggle="collapse"
                             [attr.data-target]="'#collapse'+i"
                             aria-expanded="true"
                             aria-controls="collapseOne">
@@ -41,9 +41,9 @@
                                 data-parent="#accordion" class="collapse">
                                 <div class="card-body" >
                                     <ul class="check-list">
-                                      <a>
-                                        <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="GetItemListBysubcategory_List(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
-                                      </a>
+                                      <div>
+                                        <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="getItemListBysubcategory(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
+                                      </div>
 
                                     </ul>
                                 </div>
@@ -60,11 +60,11 @@
                           <form>
                               <div class="form-group mb-1" *ngFor="let Brand of BrandMaster_;">
                                   <div class="custom-control custom-checkbox">
-                                      <input [id]="'brand'+Brand.Brand_ID"  [(ngModel)]="Brand.checked" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeBrandCategory($event.target.checked, Brand)">
+                                      <input [id]="'brand'+Brand.Brand_ID"  [(ngModel)]="Brand.checked" style="cursor:pointer" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeBrandCategory($event.target.checked, Brand)">
                                       <label [for]="'brand'+Brand.Brand_ID" class="custom-control-label">{{Brand.Brand_Name}} <small>({{Brand.BrandQty}})</small></label>
                                   </div>
                               </div>
-                              <button class="btn btn-outline-secondary btn-sm mt-3" (click)="GetGetitemByFilterType('Brand')" ><i class="fa fa-pencil"></i> Apply</button>
+                              <!-- <button class="btn btn-outline-secondary btn-sm mt-3" (click)="GetGetitemByFilterType('Brand')" ><i class="fa fa-pencil"></i> Apply</button> -->
                           </form>
                       </div>
                   </div>
@@ -81,7 +81,7 @@
                                     <label [for]="'Type'+Type_.Type_ID" class="custom-control-label">{{Type_.Type_Name}} <small>({{Type_.TypeQty}})</small></label>
                                 </div>
                             </div>
-                            <button class="btn btn-outline-secondary btn-sm mt-3"(click)="GetGetitemByFilterType('Type')" ><i class="fa fa-pencil"></i> Apply</button>
+                            <!-- <button class="btn btn-outline-secondary btn-sm mt-3"(click)="GetGetitemByFilterType('Type')" ><i class="fa fa-pencil"></i> Apply</button> -->
                         </form>
                     </div>
                 </div>
@@ -152,7 +152,7 @@
                     <div class="col-md-4 col-sm-6" *ngFor='let item4  of Item_Masters; let isFirst = firstl'>
                       <div class="product">
                           <div class="image">
-                              <a><img src="/assets/img/img/No-Image.jpg" alt="" class="img-fluid image1"></a>
+                              <a href="#" data-toggle="modal" data-target="#product-quick-view-modal"><img src="/assets/img/img/No-Image.jpg" alt="" class="img-fluid image1"></a>
                               <div class="quick-view-button"><a href="#" data-toggle="modal" data-target="#product-quick-view-modal" class="btn btn-outline-white-secondary btn-sm">Quick view</a></div>
                           </div>
                           <!-- /.image-->
@@ -188,10 +188,15 @@
                              </p> -->
                           </div>
                           <!-- /.text-->
-                          <div class="ribbon sale">
+
+                            <div class="ribbon sale" style="top: -30px;">
+                            <div class="theribbon" (click)="onClickwhishlist(item4)"  ><i class="fa fa-heart-o" [ngClass]="{'active': item4.Activewishlist}"></i></div>
+                            <div class="ribbon-background"></div>
+                            </div>
+                          <!-- <div class="ribbon sale">
                               <div class="theribbon">SALE</div>
                               <div class="ribbon-background"></div>
-                          </div>
+                          </div> -->
                           <!-- /.ribbon-->
                           <div class="ribbon new">
                               <div class="theribbon">NEW</div>

@@ -68,26 +68,22 @@ export class SubcategoryComponent implements OnInit {
       // this.category = this.route.snapshot.data['category'];
       this.Root_Header_ID=parseInt(this.subcategoryName);
       this.RCatg_ID=parseInt(this.subcategoryName);
-      this.PageLoaditembyRCatg_ID(this.RCatg_ID);
+      this.GetitemByCategoryType(this.RCatg_ID,'RootHeader');
       this.GetCatg_MasterList(this.Root_Header_ID);
-      this.GetBrandByType(this.RCatg_ID,'RootHeader');
-      this.GetTypeByType(this.RCatg_ID,'RootHeader');
-
-
-
-
+      this.GetBrandByType(this.RCatg_ID,'RootHeader','','');
+      this.GetTypeByType(this.RCatg_ID,'RootHeader','','');
 
   }
-  onChangeTypeCategory(isChecked: boolean, type_: any){
-
-
-
+  onChangeTypeCategory(isChecked: boolean, type_: any)
+  {
     if(isChecked) {
       this.tempArrType.FilterType.push(type_.Type_ID);
     } else {
       let index = this.tempArrType.FilterType.indexOf(type_.Type_ID);
       this.tempArrType.FilterType.splice(index,1);
     }
+
+    this.GetGetitemByFilterType('Type');
 
   }
 
@@ -102,13 +98,12 @@ export class SubcategoryComponent implements OnInit {
       this.tempArrBrand.FilterBrand.splice(index,1);
     }
 
+    this.GetGetitemByFilterType('Brand');
+
   }
 
   ClearbrandFilter(){
-
-
     this.tempArrBrand.FilterBrand = [];
-
     this.BrandMaster_.map(row => {
       row.checked = false;
     });
@@ -116,14 +111,9 @@ export class SubcategoryComponent implements OnInit {
     this.GetGetitemByFilterType('Brand');
 
   }
-
-
   ClearTypeFilter()
   {
-
-
     this.tempArrType.FilterType = [];
-
     this.TypeMaster_.map(row => {
       row.checked = false;
     });
@@ -141,10 +131,12 @@ export class SubcategoryComponent implements OnInit {
     if(FilterType =='Type')
     {
       FilterID = this.tempArrType.FilterType.join(", ");
+      this.GetBrandByType(this.ID,this.Type,FilterType,FilterID);
     }
     else  if(FilterType =='Brand')
     {
       FilterID = this.tempArrBrand.FilterBrand.join(", ");
+      this.GetTypeByType(this.ID,this.Type,FilterType,FilterID);
     }
 
 
@@ -191,9 +183,9 @@ export class SubcategoryComponent implements OnInit {
     this.Client_commonService_.addToCart1(Item_Mastercart);
   }
 
-  PageLoaditembyRCatg_ID(RCatg_ID :number){
+  GetitemByCategoryType(ID :number,Type: string){
 
-    this.Client_commonService_.PageLoaditembyRCatg_ID(RCatg_ID).subscribe(
+    this.Client_commonService_.GetitemByCategoryType(ID,Type).subscribe(
       (data) =>
        {
          this.Item_Masters = data;
@@ -202,9 +194,9 @@ export class SubcategoryComponent implements OnInit {
     )
   }
 
-  GetBrandByType(ID :number,Type: string){
+  GetBrandByType(ID :number,Type: string,FilterType :string,FilterID :string){
 
-    this.Client_commonService_.GetBrandByType(ID,Type).subscribe(
+    this.Client_commonService_.GetBrandByType(ID,Type,FilterType,FilterID).subscribe(
       (data) =>
        {
          this.BrandMaster_ = data;
@@ -215,9 +207,9 @@ export class SubcategoryComponent implements OnInit {
     )
   }
 
-  GetTypeByType(ID :number,Type: string){
+  GetTypeByType(ID :number,Type: string,FilterType :string,FilterID :string){
 
-    this.Client_commonService_.GetTypeByType(ID,Type).subscribe(
+    this.Client_commonService_.GetTypeByType(ID,Type,FilterType,FilterID).subscribe(
       (data) =>
        {
          this.TypeMaster_ = data;
@@ -230,17 +222,9 @@ export class SubcategoryComponent implements OnInit {
 
   getItemList(cat_ids :number){
 
-    this.Client_commonService_.getItemList(cat_ids).subscribe(
-      (data) =>
-       {
-         this.Item_Masters = data;
-         this.CheckshopingcartQty()
-
-      }
-    )
-
-    this.GetBrandByType(cat_ids,'Category');
-    this.GetTypeByType(cat_ids,'Category');
+    this.GetitemByCategoryType(cat_ids,'Category')
+    this.GetBrandByType(cat_ids,'Category','','');
+    this.GetTypeByType(cat_ids,'Category','','');
   }
 
   CheckshopingcartQty()
@@ -273,34 +257,34 @@ export class SubcategoryComponent implements OnInit {
       }
     )
   }
+
   filterByCategory(cat_ids)
   {
-    this.Client_commonService_.getItemList(cat_ids).subscribe(
-      (data) =>
-       {
-         this.Item_Masters = data;
-         this.CheckshopingcartQty()
-
-      }
-    )
-    this.GetBrandByType(cat_ids,'Category');
-    this.GetTypeByType(cat_ids,'Category');
+    this.GetitemByCategoryType(cat_ids,'Category')
+    this.GetBrandByType(cat_ids,'Category','','');
+    this.GetTypeByType(cat_ids,'Category','','');
   }
   getItemListBysubcategory(Sub_Catg_ID)
   {
+    debugger;
+    this.GetitemByCategoryType(Sub_Catg_ID,'SubCategory')
+    this.GetBrandByType(Sub_Catg_ID,'SubCategory','','');
+    this.GetTypeByType(Sub_Catg_ID,'SubCategory','','');
+  }
 
-    this.Client_commonService_.getItemListBysubcategory(Sub_Catg_ID).subscribe(
-      (data) =>
-       {
-        // this.Item_Masters = any [];
-         this.Item_Masters = data;
-         //this.CheckshopingcartQty()
+  onClickwhishlist(Item_Masters)
+  {
 
-      }
-    )
 
-    this.GetBrandByType(Sub_Catg_ID,'SubCategory');
-    this.GetTypeByType(Sub_Catg_ID,'SubCategory');
+    Item_Masters.Activewishlist = !Item_Masters.Activewishlist;
+
+    if(Item_Masters.Activewishlist)
+    {
+      this.Client_commonService_.addwishlist(Item_Masters);
+    }else{
+      this.Client_commonService_.removewhishlist(Item_Masters);
+    }
+
   }
 
   ngAfterViewInit() {
