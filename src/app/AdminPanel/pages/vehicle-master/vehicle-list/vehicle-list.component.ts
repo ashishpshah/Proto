@@ -90,6 +90,7 @@ export class VehicleListComponent implements OnInit {
   title: string = "Create";
   vehicleId: number;
   errorMessage: any ='';
+  errorMessageDate: any ='';
   StatusList : Observable<DropdownList[]>;
   VehicleTypeList : Observable<DropdownList[]>;
   VehicleCategoryList : Observable<DropdownList[]>;
@@ -155,9 +156,10 @@ export class VehicleListComponent implements OnInit {
     }, error => console.error(error))
   }
 
-    //============== CRUD functionality
+    // ============== CRUD functionality ============= //
 
     addEditOpen(id : any):void {
+      this.errorMessageDate = '';
       this.errorMessage = '';
       this.IsAddEdit = true;
       this.vehicleId = id;
@@ -238,8 +240,43 @@ export class VehicleListComponent implements OnInit {
         this.errorMessage = "Please Select Vehicle Type";
         return false;
       }
+      else if(this.vehicleObj.Vehicle_Category == null || this.vehicleObj.Vehicle_Category == '' || this.vehicleObj.Vehicle_Category == '0' || this.vehicleObj.Vehicle_Category == 0 )
+      {
+        this.errorMessage = "Please Select Vehicle Category";
+        return false;
+      }else if(this.vehicleObj.Reg_No == ''){
+        this.errorMessage = "Please Enter Reg No";
+        this.renderer.selectRootElement('#Reg_No').focus();
+        return false;
+      }
+      else if(this.vehicleObj.Reg_Type == null || this.vehicleObj.Reg_Type == '' || this.vehicleObj.Reg_Type == '0' || this.vehicleObj.Reg_Type == 0 )
+      {
+        this.errorMessage = "Please Select Reg Type";
+        return false;
+      }else if(this.vehicleObj.Measurement_Method == null || this.vehicleObj.Measurement_Method == '' || this.vehicleObj.Measurement_Method == '0' || this.vehicleObj.Measurement_Method == 0 )
+      {
+        this.errorMessage = "Please Select Measurement Method";
+        return false;
+      }
+      else if(this.vehicleObj.Reg_Effectivefrom_date == null || this.vehicleObj.Reg_Effectivefrom_date == '' || this.vehicleObj.Reg_Effectivefrom_date == '0' || this.vehicleObj.Reg_Effectivefrom_date == 0 )
+      {
+        this.errorMessage = "Please Select Reg Effectivefrom Date";
+        return false;
+      }
+      else if(this.vehicleObj.Reg_Effectiveto_date == null || this.vehicleObj.Reg_Effectiveto_date == '' || this.vehicleObj.Reg_Effectiveto_date == '0' || this.vehicleObj.Reg_Effectiveto_date == 0 )
+      {
+        this.errorMessage = "Please Select Reg Effectiveto Date";
+        return false;
+      }
       else{
-        return true;
+        let frdate = _moment(this.vehicleObj.Reg_Effectivefrom_date, 'DD-MM-YYYY')
+        let toDate = _moment(this.vehicleObj.Reg_Effectiveto_date, 'DD-MM-YYYY')
+        if(((new Date(this.vehicleObj.Reg_Effectiveto_date).toLocaleString()) < (new Date(this.vehicleObj.Reg_Effectivefrom_date).toLocaleString())) || (toDate < frdate)  ){
+          this.errorMessageDate = "Reg Effectiveto Date must be greater then Reg Effectivefrom Date";
+        }else{
+          this.errorMessageDate = '';
+          return true;
+        }
       }
     }
 

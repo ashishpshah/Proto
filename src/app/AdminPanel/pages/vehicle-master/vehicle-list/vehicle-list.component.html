@@ -1,6 +1,7 @@
 <!-- *********************************************** Insert-Update **********************************************  -->
 <div *ngIf="IsAddEdit">
   <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+  <div><div class='alert alert-danger' *ngIf="errorMessageDate != ''"><span>{{errorMessageDate}}</span></div></div>
   <form >
     <div>
       <div class="form-group row">
@@ -19,9 +20,9 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Vehicle Category</label>
+        <label class="col-sm-2 col-form-label">Vehicle Category<span class="warningclass">*</span></label>
         <div class="col-sm-4">
-          <ng-select [items]="VehicleCategoryList" [(ngModel)]="vehicleObj.Vehicle_Category" name="licenseAuthorityId" bindValue="id" bindLabel="name" placeholder="Select Category"> </ng-select>
+          <ng-select [items]="VehicleCategoryList" [(ngModel)]="vehicleObj.Vehicle_Category" id="Vehicle_Category" name="licenseAuthorityId" bindValue="id" bindLabel="name" placeholder="Select Category"> </ng-select>
         </div>
         <label class="col-sm-2 col-form-label">Manufacture By</label>
         <div class="col-sm-4">
@@ -39,19 +40,19 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Reg No</label>
+        <label class="col-sm-2 col-form-label">Reg No<span class="warningclass">*</span></label>
         <div class="col-sm-4">
           <input class="form-control"  type="text" [(ngModel)]="vehicleObj.Reg_No" id="Reg_No" [ngModelOptions]="{standalone: true}">
         </div>
-        <label class="col-sm-2 col-form-label">Reg Type</label>
+        <label class="col-sm-2 col-form-label">Reg Type<span class="warningclass">*</span></label>
         <div class="col-sm-4">
-          <ng-select [items]="RegTypeList" [(ngModel)]="vehicleObj.Reg_Type" name="Reg_Type" bindValue="id" bindLabel="name" placeholder="Select Reg Type"> </ng-select>
+          <ng-select [items]="RegTypeList" [(ngModel)]="vehicleObj.Reg_Type" id="Reg_Type" name="Reg_Type" bindValue="id" bindLabel="name" placeholder="Select Reg Type"> </ng-select>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Measurement Method</label>
+        <label class="col-sm-2 col-form-label">Measurement Method<span class="warningclass">*</span></label>
         <div class="col-sm-4">
-          <ng-select [items]="MeasurementList" [(ngModel)]="vehicleObj.Measurement_Method" name="Measurement_Method" bindValue="id" bindLabel="name" placeholder="Select Measurement Method"> </ng-select>
+          <ng-select [items]="MeasurementList" [(ngModel)]="vehicleObj.Measurement_Method" id="Measurement_Method" name="Measurement_Method" bindValue="id" bindLabel="name" placeholder="Select Measurement Method"> </ng-select>
         </div>
         <label class="col-sm-2 col-form-label">Remark</label>
         <div class="col-sm-4">
@@ -61,25 +62,23 @@
 
       </div>
       <div class="form-group row">
-         <label class="col-sm-2 col-form-label">Reg Effective From</label>
+         <label class="col-sm-2 col-form-label">Reg Effective From<span class="warningclass">*</span></label>
         <div class="col-sm-4">
           <mat-form-field appearance="fill" >
             <mat-label>Choose a date</mat-label>
-            <input class="" matInput [matDatepicker]="fromDate" [(ngModel)]="vehicleObj.Reg_Effectivefrom_date" id="Reg_Effectivefrom_date" [ngModelOptions]="{standalone: true}">
+            <input class=""  matInput [matDatepicker]="fromDate" id="Reg_Effectivefrom_date" [max]="vehicleObj.Reg_Effectiveto_date" (focus)="fromDate.open()" [(ngModel)]="vehicleObj.Reg_Effectivefrom_date" id="Reg_Effectivefrom_date" [ngModelOptions]="{standalone: true}">
+            <!-- <mat-icon matDatepickerToggleIcon (click)="clearDate($event)">clear</mat-icon> -->
             <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
-            <mat-datepicker #fromDate></mat-datepicker>
+            <mat-datepicker #fromDate ></mat-datepicker>
+            <!-- (closed)="input.blur()" -->
           </mat-form-field>
-          <!-- <input class="form-control"  type="text" [(ngModel)]="vehicleObj.Reg_Effectivefrom_date" id="Reg_Effectivefrom_date" [ngModelOptions]="{standalone: true}"> -->
-            <!-- <input [owlDateTime]="dt2" placeholder="Date Time">
-            <span [owlDateTimeTrigger]="dt2"><i class="fa fa-calendar"></i></span> -->
-            <!-- <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time> -->
         </div>
 
-        <label class="col-sm-2 col-form-label">Reg Effective To</label>
+        <label class="col-sm-2 col-form-label">Reg Effective To<span class="warningclass">*</span></label>
         <div class="col-sm-4">
           <mat-form-field appearance="fill" >
             <mat-label>Choose a date</mat-label>
-            <input class="" matInput [matDatepicker]="toDate" [(ngModel)]="vehicleObj.Reg_Effectiveto_date" id="Reg_Effectiveto_date" [ngModelOptions]="{standalone: true}">
+            <input class="" matInput [matDatepicker]="toDate" id="Reg_Effectiveto_date" [min]="vehicleObj.Reg_Effectivefrom_date" (focus)="toDate.open()" [(ngModel)]="vehicleObj.Reg_Effectiveto_date" id="Reg_Effectiveto_date" [ngModelOptions]="{standalone: true}">
             <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
             <mat-datepicker #toDate></mat-datepicker>
           </mat-form-field>
@@ -87,6 +86,7 @@
         </div>
 
       </div>
+
     </div>
     <br />
     <hr />
