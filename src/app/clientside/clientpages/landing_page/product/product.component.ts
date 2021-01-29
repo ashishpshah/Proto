@@ -13,11 +13,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProductComponent implements OnInit {
 
   public data;
-  Item_Masters : Observable<Item_Master[]>;
+  Item_Masters : any[] = [];
   shoppingcartlist : Observable<Item_Master[]>;
   isShown: boolean = false ;
   isShown1: boolean = true ;
   public isActive:boolean = false;
+  ItemObj :any ={};
 
   constructor(
     private route: ActivatedRoute,
@@ -26,6 +27,30 @@ export class ProductComponent implements OnInit {
   ){
 
   }
+
+  imageObject = [{
+    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
+    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
+    title: 'Hummingbirds are amazing creatures'
+}, {
+    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg',
+    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg'
+}, {
+    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
+    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
+    title: 'Example with title.'
+},{
+    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/7.jpg',
+    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/7.jpg',
+    title: 'Hummingbirds are amazing creatures'
+}, {
+    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/1.jpg',
+    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/1.jpg'
+}, {
+    image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/2.jpg',
+    thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/2.jpg',
+    title: 'Example two with title.'
+}];
 
   slideActivate(ngbSlideEvent: NgbSlideEvent) {
     console.log(ngbSlideEvent.source);
@@ -48,12 +73,29 @@ export class ProductComponent implements OnInit {
     }
 
   }
+  imageClickHandler(e,Item_Masters) {
+    debugger;
+    console.log('image click', e);
+  }
   GetProductItem(){
 
     this.Client_commonService_.GetProductItem().subscribe(
       (data) =>
        {
          this.Item_Masters = data;
+
+         this.Item_Masters.map(row => {
+          row.image = '/assets/img/img/No-Image.jpg';
+        });
+
+        this.Item_Masters.map(row => {
+          row.thumbImage = '/assets/img/img/No-Image.jpg';
+        });
+
+        this.Item_Masters.map(row =>
+          {
+          row.title = 'Item Description.';
+        });
 
          this.shoppingcartlist = this.Client_commonService_.getItems();
 
@@ -105,127 +147,8 @@ export class ProductComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.ItemObj =ItemFun();
     this.GetProductItem();
-
-// array of json for product list
-
-    this.data ={
-
-      result:status,
-
-      productList:[
-
-        {
-
-          '_id': '5e804e29a915bb6a2297cfed',
-
-          'index': 0,
-
-          'price': '$31.79',
-
-          'picture': '/assets/img/slider/slide_2.jpg',
-
-          'name': 'Duffy Houston',
-
-          'company': 'EQUITAX',
-
-          'stock': 88
-
-        },
-
-        {
-
-          '_id': '5e804e29c0165da9c25fdf9c',
-
-          'index': 1,
-
-          'price': '$32.92',
-
-          'picture': '/assets/img/slider/slide_3.jpg',
-
-          'name': 'Sanford Stanley',
-
-          'company': 'ZILLA',
-
-          'stock': 42
-
-        },
-
-        {
-
-          '_id': '5e804e29421be457e0764462',
-
-          'index': 2,
-
-          'price': '$26.05',
-
-          'picture': '/assets/img/slider/slide_2.jpg',
-
-          'name': 'Tracey Fleming',
-
-          'company': 'RODEMCO',
-
-          'stock': 85
-
-        },
-
-        {
-
-          '_id': '5e804e296cd363835b6b1904',
-
-          'index': 3,
-
-          'price': '$34.00',
-
-          'picture': '/assets/img/slider/slide_3.jpg',
-
-          'name': 'Howe Ruiz',
-
-          'company': 'ARCTIQ',
-
-          'stock': 27
-
-        },
-
-        {
-
-          '_id': '5e804e29f434203d0037bf41',
-
-          'index': 4,
-
-          'price': '$14',
-
-          'picture': '/assets/img/slider/slide_2.jpg',
-
-          'name': 'Powers Kaufman',
-
-          'company': 'EXOSPACE',
-
-          'stock': 44
-
-        },
-
-        {
-
-          '_id': '5e804e295884556517418658',
-
-          'index': 5,
-
-          'price': '$48.41',
-
-          'picture': '/assets/img/slider/slide_3.jpg',
-
-          'name': 'Pugh Pierce',
-
-          'company': 'ZILPHUR',
-
-          'stock': 64
-
-        }
-      ]
-
-    }
-
   }
 
 
@@ -237,4 +160,36 @@ export class ProductComponent implements OnInit {
 
 
 
+}
+
+function ItemFun() {
+
+  let obj ={
+    Item_ID :'',
+    Sub_Catg_ID : '',
+    SR_NO : '',
+    Catg_Id : 'A',
+    Item_Name :'',
+    Item_Name_D :'',
+    Type_ID :'',
+    Brand_ID :'',
+    UOM :'',
+    Qty : '',
+    Price:'',
+    Display_Seq_No: '',
+
+    Status :'',
+    HedaerName : '',
+    TotalPrice : '',
+    discount : 'A',
+    shippingcharge :'',
+    Subtotal :'',
+    Grandtotal :'',
+    CategoryName :'',
+    showaddbtn :'',
+    showplusebtn : '',
+    OrderQty:'',
+    Activewishlist: false,
+};
+  return obj;
 }

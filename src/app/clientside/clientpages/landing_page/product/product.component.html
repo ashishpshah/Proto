@@ -163,6 +163,35 @@
           </div>
       </div>
   </div>
+  <div class="container">
+
+    <div class="box text-center">
+      <h3 class="text-uppercase">Top Category</h3>
+      <!-- <h4 class="text-muted"><span class="accent">Free shipping</span> on all</h4> -->
+  </div>
+  <div style="width: 100%;  text-align:center;margin:0; padding:0;">
+    <ng-image-slider #nav
+      [images]="Item_Masters"
+      [infinite]="true"
+      [autoSlide]="1"
+      [imageSize]="{width: '25%', height: 250}"
+      slideImage="1"
+      [imagePopup]="false"
+      (imageClick)="imageClickHandler($event.valueOf(),Item_Masters.values())"></ng-image-slider>
+  </div>
+</div>
+
+<div class="container mt-2">
+
+  <div class="box text-center">
+    <h3 class="text-uppercase">See our new items
+    </h3>
+    <!-- <h4 class="text-muted"><span class="accent">Free shipping</span> on all</h4> -->
+</div>
+<div style="text-align:center">
+  <ng-image-slider #nav [images]="Item_Masters" [infinite]="true" [autoSlide]="5" [imageSize]="{width: '50%', height: 400}" slideImage="1"></ng-image-slider>
+</div>
+</div>
 
 
 

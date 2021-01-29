@@ -25,6 +25,10 @@ export class CheckoutComponent implements OnInit {
   NextBtnLabel:string='Continue to Delivery Method';
   PrevBtnLabel:string='Back To Basket';
   MethosTypes:string
+  Isaddress: boolean=true;
+  Ispayment: boolean=false;
+  Isdelivery: boolean=false;
+  Isorderview: boolean=false;
 
   constructor(  private route: ActivatedRoute,
     private router: Router,
@@ -36,6 +40,73 @@ export class CheckoutComponent implements OnInit {
     this.GetAddressList()
     this.CreateAddressObj= CreateAdresssFun()
     this.calculatecartvalue();
+  }
+
+  GotoNextmethod(Type: string)
+  {
+
+    if(Type =="address")
+    {
+      this.Isaddress = false
+      this.Ispayment = false
+      this.Isorderview = false
+      this.Isdelivery = true
+      this.HeaderLabel='Checkout - Delivery Method';
+    }
+    else  if(Type =="delivery")
+    {
+      this.Isaddress = false
+      this.Isdelivery = false
+      this.Ispayment = true
+      this.Isorderview = false
+      this.HeaderLabel='Checkout - Payment Method';
+
+
+    }
+    else  if(Type =="payment")
+    {
+      this.Isaddress = false
+      this.Ispayment = false
+      this.Isorderview = true
+      this.Isdelivery = false
+      this.HeaderLabel='Checkout - Order review';
+
+    }
+
+  }
+
+  GotoPremethod(Type: string)
+  {
+
+   if(Type =="delivery")
+    {
+      this.Isaddress = true
+      this.Isdelivery = false
+      this.Ispayment = false
+      this.Isorderview = false
+      this.HeaderLabel='Checkout - Address';
+
+
+    }
+    else  if(Type =="payment")
+    {
+      this.Isaddress = false
+      this.Ispayment = false
+      this.Isorderview = false
+      this.Isdelivery = true
+      this.HeaderLabel='Checkout - Delivery Method';
+
+    }
+    else  if(Type =="orderview")
+    {
+      this.Isaddress = false
+      this.Ispayment = true
+      this.Isorderview = false
+      this.Isdelivery = false
+      this.HeaderLabel='Checkout - Payment Method';
+
+    }
+
   }
 
   calculatecartvalue()

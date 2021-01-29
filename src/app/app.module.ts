@@ -45,6 +45,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/checkpincode.component';
 import { ShoppingcartComponent } from './clientside/clientpages/shoppingcart/shoppingcart.component';
 import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist.component';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist
     ShoppingcartComponent,
     ProductDirective,
     WhishlistComponent,
-    CheckoutComponent
+    CheckoutComponent,
     // ItemListComponent,
     // AddEditItemComponent
   ],
@@ -90,7 +91,8 @@ import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist
     InputTextModule,
     ProgressBarModule,
     DropdownModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    NgImageSliderModule
 
     // ,RouterModule.forRoot([
     //   { path: '', component: BasicLoginComponent, pathMatch: 'full' }

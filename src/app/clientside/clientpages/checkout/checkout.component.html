@@ -19,7 +19,14 @@
               <div id="checkout" class="col-lg-9">
                   <div class="box">
                       <form method="get" action="checkout2.html">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                        <ul class="nav nav-pills nav-fill">
+                          <li class="nav-item"><a  class="nav-link" [ngClass]="{'active': Isaddress}"><i class="fa fa-map-marker"></i><br>Address</a></li>
+                          <li class="nav-item"><a  class="nav-link disabled" [ngClass]="{'active': Isdelivery}"><i class="fa fa-truck"></i><br>Delivery Method</a></li>
+                          <li class="nav-item"><a  class="nav-link disabled" [ngClass]="{'active': Ispayment}"><i class="fa fa-money"></i><br>Payment Method</a></li>
+                          <li class="nav-item"><a  class="nav-link disabled" [ngClass]="{'active': Isorderview}"><i class="fa fa-eye"></i><br>Order Review</a></li>
+                        </ul>
+                        <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
                           <li class="nav-item">
                             <a class="nav-link active" id="Address-tab" data-toggle="tab" href="#Address" role="tab" aria-controls="Address" aria-selected="true" (click)="OnclickCheckOutMethod('Address')">
                               <i class="fa fa-map-marker"></i>Address
@@ -40,117 +47,247 @@
                               <i class="fa fa-eye"></i>Order Review
                             </a>
                           </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                          <div class="tab-pane fade show active" id="Address" role="tabpanel" aria-labelledby="Address-tab"   >
-                            <div class="content">
-                              <div>
-                                <div class="rvsx1l">
-                                  <div class="_3E8aIl gGqMBW">
-                                      <h3 class="_1hUz_t _2-K-ro">
-                                          <span class="_3ENQxz">{{AddresList.length}}</span>
-                                          <span class="_1aULyb">Delivery Address</span>
-                                      </h3>
-                                      <div class="cQZ0Lf">
-                                              <div>
-                                                  <label for="CNTCT956F3535169547F49C146463C" class="_2Fn-Ln _1TW9af _18Z3T6 _3L7Pww"  *ngFor="let addres of AddresList;" >
-                                                      <input type="radio" class="_3DAmyP" name="address" readonly="" id="CNTCT956F3535169547F49C146463C" [checked]="addres.IsDefault">
-                                                      <div class="_1XFPmK"></div>
-                                                      <div class="_2jIO64">
-                                                          <div class="_2SkKgB">
-                                                              <div id="CNTCT956F3535169547F49C146463C" class="tDHRfA">
-                                                                  <p class="rPNEXT">
-                                                                      <span class="_2dQV-8">{{addres.FirstName}} {{addres.LastName}}</span>
-                                                                      <span class="_2XilLp">Home</span><span class="_3mmRDy _2dQV-8">{{addres.MobileNo}}</span>
-                                                                  </p><span class="rPNEXT Br27Zz">{{addres.AddressLine1}} , {{addres.AddressLine2}} - <span class="_2dQV-8">{{addres.Zipcode}}</span></span>
-                                                              </div>
+                        </ul> -->
+
+                        <div *ngIf="Isaddress == true" class="content">
+                          <div>
+                            <div class="rvsx1l">
+                              <div class="_3E8aIl gGqMBW">
+                                  <h3 class="_1hUz_t _2-K-ro">
+                                      <span class="_3ENQxz">{{AddresList.length}}</span>
+                                      <span class="_1aULyb">Delivery Address</span>
+                                  </h3>
+                                  <div class="cQZ0Lf">
+                                          <div>
+                                              <label for="CNTCT956F3535169547F49C146463C" class="_2Fn-Ln _1TW9af _18Z3T6 _3L7Pww"  *ngFor="let addres of AddresList;" >
+                                                  <input type="radio" class="_3DAmyP" name="address" readonly="" id="CNTCT956F3535169547F49C146463C" [checked]="addres.IsDefault">
+                                                  <div class="_1XFPmK"></div>
+                                                  <div class="_2jIO64">
+                                                      <div class="_2SkKgB">
+                                                          <div id="CNTCT956F3535169547F49C146463C" class="tDHRfA">
+                                                              <p class="rPNEXT">
+                                                                  <span class="_2dQV-8">{{addres.FirstName}} {{addres.LastName}}</span>
+                                                                  <span class="_2XilLp">Home</span><span class="_3mmRDy _2dQV-8">{{addres.MobileNo}}</span>
+                                                              </p><span class="rPNEXT Br27Zz">{{addres.AddressLine1}} , {{addres.AddressLine2}} - <span class="_2dQV-8">{{addres.Zipcode}}</span></span>
                                                           </div>
                                                       </div>
-                                                  </label>
-                                              </div>
-                                              <div>
-                                              </div>
-                                      </div>
-                                  </div>
-                              </div>
-                              </div>
-
-                              <div id="accordion" role="tablist" class="mb-5">
-                                <div class="card">
-                                  <div class="card-header sortable _1P2-0f" id="headingOne"  data-toggle="collapse"
-                                  [attr.data-target]="'#collapse'"
-                                  aria-expanded="true"
-                                  aria-controls="collapseOne">
-                                  <img height="14" width="14" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyMTc1RkYiIGQ9Ik0xMS4yNSA2Ljc1aC00LjV2NC41aC0xLjV2LTQuNUguNzV2LTEuNWg0LjVWLjc1aDEuNXY0LjVoNC41Ii8+PHBhdGggZD0iTS0zLTNoMTh2MThILTMiLz48L2c+PC9zdmc+" class="_2oAAg8">Add a new address
-                                  </div>
-                                  <div [id]="'collapse'" class="collapse"
-                                      aria-labelledby="headingOne"
-                                      data-parent="#accordion" class="collapse">
-                                      <div class="card-body" >
-                                        <div class="row">
-                                          <div class="col-md-6">
-                                              <div class="form-group">
-                                                  <label for="firstname">Firstname</label>
-                                                  <input id="firstname" type="text" class="form-control" [(ngModel)]="CreateAddressObj.FirstName" [ngModelOptions]="{standalone: true}" >
-                                              </div>
+                                                  </div>
+                                              </label>
                                           </div>
-                                          <div class="col-md-6">
-                                              <div class="form-group">
-                                                  <label for="lastname">Lastname</label>
-                                                  <input id="lastname" type="text" class="form-control" [(ngModel)]="CreateAddressObj.LastName"  [ngModelOptions]="{standalone: true}">
-                                              </div>
+                                          <div>
                                           </div>
-                                      </div>
-                                      <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="company">Address Line 1</label>
-                                                <input id="company" type="text" class="form-control" [(ngModel)]="CreateAddressObj.AddressLine1" [ngModelOptions]="{standalone: true}" >
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="street">Address Line 2</label>
-                                                <input id="street" type="text" class="form-control" [(ngModel)]="CreateAddressObj.AddressLine2" [ngModelOptions]="{standalone: true}">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                              <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="company">Zipcode</label>
-                                        <input id="company" type="text" class="form-control" [(ngModel)]="CreateAddressObj.Zipcode" [ngModelOptions]="{standalone: true}" >
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="street">Mobile No</label>
-                                        <input id="street" type="text" class="form-control" [(ngModel)]="CreateAddressObj.MobileNo"  [ngModelOptions]="{standalone: true}">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-md-12">
-                                <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
-                              </div>
-                            </div>
-                            <div>
-                              <div class="l5QiYB _1hGj33">
-                                <button class="btn btn-success mr-2" type="button" tabindex="10" (click)="createAddress()">Save and Deliver Here</button>
-                                <!-- <button class="btn btn-warning" type="button" tabindex="11">Cancel</button> -->
-                              </div>
-                            </div>
-                                      </div>
                                   </div>
                               </div>
-                              </div>
-
-                              <!-- /.row-->
-
-
                           </div>
+                          </div>
+                          <div id="accordion" role="tablist" class="mb-5">
+                            <div class="card">
+                              <div class="card-header sortable _1P2-0f" id="headingOne"  data-toggle="collapse"
+                              [attr.data-target]="'#collapse'"
+                              aria-expanded="true"
+                              aria-controls="collapseOne">
+                              <img height="14" width="14" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMyMTc1RkYiIGQ9Ik0xMS4yNSA2Ljc1aC00LjV2NC41aC0xLjV2LTQuNUguNzV2LTEuNWg0LjVWLjc1aDEuNXY0LjVoNC41Ii8+PHBhdGggZD0iTS0zLTNoMTh2MThILTMiLz48L2c+PC9zdmc+" class="_2oAAg8">Add a new address
+                              </div>
+                              <div [id]="'collapse'" class="collapse"
+                                  aria-labelledby="headingOne"
+                                  data-parent="#accordion" class="collapse">
+                                  <div class="card-body" >
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label for="firstname">Firstname</label>
+                                              <input id="firstname" type="text" class="form-control" [(ngModel)]="CreateAddressObj.FirstName" [ngModelOptions]="{standalone: true}" >
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label for="lastname">Lastname</label>
+                                              <input id="lastname" type="text" class="form-control" [(ngModel)]="CreateAddressObj.LastName"  [ngModelOptions]="{standalone: true}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company">Address Line 1</label>
+                                            <input id="company" type="text" class="form-control" [(ngModel)]="CreateAddressObj.AddressLine1" [ngModelOptions]="{standalone: true}" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="street">Address Line 2</label>
+                                            <input id="street" type="text" class="form-control" [(ngModel)]="CreateAddressObj.AddressLine2" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="company">Zipcode</label>
+                                    <input id="company" type="text" class="form-control" [(ngModel)]="CreateAddressObj.Zipcode" [ngModelOptions]="{standalone: true}" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="street">Mobile No</label>
+                                    <input id="street" type="text" class="form-control" [(ngModel)]="CreateAddressObj.MobileNo"  [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div class="l5QiYB _1hGj33">
+                            <button class="btn btn-success mr-2" type="button" tabindex="10" (click)="createAddress()">Save and Deliver Here</button>
+                            <!-- <button class="btn btn-warning" type="button" tabindex="11">Cancel</button> -->
+                          </div>
+                        </div>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="box-footer">
+                            <div class="pull-left"><a href="/shoppingcart" class="btn btn-outline-white-secondary"><i class="fa fa-chevron-left"></i>Back to basket</a></div>
+                            <div class="pull-right">
+                              <button type="submit" class="btn btn-outline-white-primary" (click)="GotoNextmethod('address')">Continue to Delivery Method<i class="fa fa-chevron-right"></i></button>
+                            </div>
+                          </div>
+
+                         </div>
+
+                         <div *ngIf="Isdelivery == true" class="content">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="box shipping-method">
+                                      <h4>Pick Up</h4>
+                                      <p>Get it right on next day - fastest option possible.</p>
+                                      <div class="box-footer text-center">
+                                          <input type="radio" name="delivery" value="delivery1" checked="True">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="box shipping-method">
+                                      <h4>Delivery</h4>
+                                      <p>Get it right on next day - fastest option possible.</p>
+                                      <div class="box-footer text-center">
+                                          <input type="radio" name="delivery" value="delivery2">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="box-footer">
+                            <div class="pull-left"><a  class="btn btn-outline-white-secondary" (click)="GotoPremethod('delivery')"><i class="fa fa-chevron-left"></i>Back to Addresses</a></div>
+                            <div class="pull-right">
+                              <button type="submit" class="btn btn-outline-white-primary" (click)="GotoNextmethod('delivery')">Continue to Payment Method<i class="fa fa-chevron-right"></i></button>
+                            </div>
+                          </div>
+                          <!-- /.row-->
+                          </div>
+
+                          <div *ngIf="Ispayment == true" class="content">
+                            <div class="row">
+                              <div class="col-md-6">
+                                  <div class="box payment-method">
+                                      <h4>Paypal</h4>
+                                      <p>We like it all.</p>
+                                      <div class="box-footer text-center">
+                                          <input type="radio" name="payment" value="payment1">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="box payment-method">
+                                      <h4>Payment gateway</h4>
+                                      <p>VISA and Mastercard only.</p>
+                                      <div class="box-footer text-center">
+                                          <input type="radio" name="payment" value="payment2" checked="true">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="box payment-method">
+                                      <h4>Cash on delivery</h4>
+                                      <p>You pay when you get it.</p>
+                                      <div class="box-footer text-center">
+                                          <input type="radio" name="payment" value="payment3">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="box-footer">
+                            <div class="pull-left"><a  class="btn btn-outline-white-secondary" (click)="GotoPremethod('payment')"><i class="fa fa-chevron-left"></i>Back to Shipping method</a></div>
+                            <div class="pull-right">
+                              <button type="submit" class="btn btn-outline-white-primary" (click)="GotoNextmethod('payment')">Continue to Order review<i class="fa fa-chevron-right"></i></button>
+                            </div>
+                          </div>
+                          </div>
+
+                          <div *ngIf="Isorderview == true" class="content">
+                            <div id="checkout" class="col-lg-12">
+                              <div class="">
+                                <div class="table-responsive">
+                                  <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th colspan="2">Product</th>
+                                        <th>Quantity</th>
+                                        <th>Unit price</th>
+                                        <th>Discount</th>
+                                        <th colspan="2">Total</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody *ngFor="let shppingcart1 of this.shopingcart_">
+                              <tr style="background: #e7e7e7;">
+                                <th colspan="7">{{shppingcart1.name}}</th>
+
+                              </tr>
+                              <ng-container *ngFor="let product of Item_Master_;" >
+                                <tr *ngIf="shppingcart1.name == product.CategoryName" [id]="product.Item_ID">
+                                        <td><a href="#"><img src="https://d19m59y37dris4.cloudfront.net/minimal/2-1-1/img/detailsquare.jpg" alt="White Blouse Armani"></a></td>
+                                        <td><a href="#">{{product.Item_Name}}</a></td>
+                                        <td>{{product.OrderQty}}
+                                        </td>
+                                        <td>${{product.Price}}</td>
+                                        <td>$0.00</td>
+                                        <td>  ${{product.TotalPrice}}</td>
+                                        <td></td>
+                                </tr>
+
+                              </ng-container>
+
+                                    </tbody>
+                                    <tfoot>
+                                      <tr>
+                                        <th colspan="5">Total</th>
+                                        <th colspan="2">${{Subtotal}}</th>
+                                      </tr>
+                                    </tfoot>
+                                  </table>
+                                </div>
+                            </div>
+                                <!-- /.box-->
+                            </div>
+
+                            <div class="box-footer">
+                              <div class="pull-left"><a  class="btn btn-outline-white-secondary" (click)="GotoPremethod('orderview')"><i class="fa fa-chevron-left"></i>Back to Payment method</a></div>
+                              <div class="pull-right">
+                                <button type="submit" class="btn btn-outline-white-primary">Place an order<i class="fa fa-chevron-right"></i></button>
+                              </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-content" id="myTabContent">
+                          <div class="tab-pane fade show active" id="Address" role="tabpanel" aria-labelledby="Address-tab"   >
+
                           </div>
                           <div class="tab-pane fade" id="Delivery" role="tabpanel" aria-labelledby="Delivery-tab"  >
                             <div class="row">

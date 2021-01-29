@@ -26,4 +26,8 @@ export class Item_Master extends BaseModel {
   showplusebtn:boolean =false;
   OrderQty: number= 1;
   Activewishlist:boolean =false;
+  image:string;
+  thumbImage: string;
+  title: string
+
 }
