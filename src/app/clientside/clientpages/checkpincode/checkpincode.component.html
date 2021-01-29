@@ -7,7 +7,7 @@
       <div class="col-md-offset-8 col-md-4 text-center">
         <!-- <h1 class='text-white'>Prototype Login Form</h1> -->
           <div class="form-login">
-            <h4>create an account</h4>
+            <h4>Create an account</h4>
             <p>Check if the address you need to have delivered to is in our delivery area:</p>
             <form  [formGroup]="CheckPincode" (ngSubmit)="CheckPincodevalid()" #formDir="ngForm" autocomplete="off" >
               <div class="form-group">
@@ -43,7 +43,7 @@
       <div class="col-md-offset-8 col-md-8 text-center">
         <!-- <h1 class='text-white'>Prototype Login Form</h1> -->
           <div class="form-login">
-            <h4>create an account</h4>
+            <h4>Create an account</h4>
             <form autocomplete="off">
               <div class="form-group">
                 <label for="Pincode">Customer type</label>
@@ -195,7 +195,21 @@
               <input type="password" class="form-control" id="ReapeatPassword" placeholder=" Repeat password" [(ngModel)]="CreateFromObj.ReapeatPassword" [ngModelOptions]="{standalone: true}">
             </div>
           </div>
-
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Captcha </label>
+              <input type="text" class="form-control" id="captcha" placeholder="captcha" [(ngModel)]="Captcha" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="form-group col-md-6">
+              <label style="display: block;">-</label>
+              <input type="text" class="form-control col-md-10 bg-w captcha" id="readCaptcha" [(ngModel)]="reCaptcha" [ngModelOptions]="{standalone: true}" readonly style="background-color: white !important;color: green !important;"><a type="submit" class="col-md-2 btn btn success fa fa-refresh cursor-pointer" data-toggle="tooltip" data-placement="top" title="Try Another Captcha"(click)="ReCaptcha()" ></a>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <div *ngIf="Captcha.length >= 4 && (Captcha != reCaptcha)" class='alert alert-danger'><span>InValid Captcha</span></div>
+            </div>
+          </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
@@ -204,7 +218,7 @@
 
           <div class="wrapper">
               <span class="group-btn">
-                 <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="createCustomer()" > <span class="font-d">
+                 <button type="submit" [disabled] ="Captcha =='' ||(Captcha != reCaptcha)" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="createCustomer()" > <span class="font-d">
                   Create Profile</span></button>
               </span>
           </div>

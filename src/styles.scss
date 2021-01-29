@@ -10,7 +10,13 @@ body {
   color: #353c4e;
   font-family: "Open Sans", sans-serif;
 }
-
+.bg-w{
+  background-color: white !important;
+  color: green !important;
+}
+.captcha{
+  float: left; letter-spacing: 5px;
+}
 * {
   &:focus {
     outline: none;

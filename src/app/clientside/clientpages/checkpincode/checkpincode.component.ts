@@ -46,7 +46,8 @@ export class CheckpincodeComponent implements OnInit {
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
   @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
   keyword = 'name';
-
+  Captcha : string ='';
+  reCaptcha : string = '';
   CreateFromObj :any ={};
 
   constructor(
@@ -57,6 +58,7 @@ export class CheckpincodeComponent implements OnInit {
     private _commonService : ProtoServicesService,
     private renderer: Renderer2
 )
+
 {
   this.CreateFrom = formBuilder.group
   ({
@@ -64,7 +66,7 @@ export class CheckpincodeComponent implements OnInit {
     'email': ['', [Validators.required, Validators.email]]
   })
 }
-
+commonHelper = new AdminCommonHelperComponent(this.router);
 
 selectEvent(item) {
 
@@ -106,7 +108,7 @@ this.CheckPincode = this.formBuilder.group({
 
 }
 
-commonHelper = new AdminCommonHelperComponent(this.router);
+
 get f() { return this.CreateFrom.controls; }
 
 get P() { return this.CheckPincode.controls; }
@@ -166,6 +168,7 @@ CheckPincodevalid() {
           this.Townname = splitData.length > 1 ? splitData[2] :'';
           this.CreateFromObj.Zipcode= this.pincode;
           this.CreateFromObj.Town= this.Townname;
+          this.ReCaptcha();
           this.errorMessage='';
          // Swal.fire('Your Pincode is valid!', this.message, 'success')
         }else {
@@ -179,6 +182,9 @@ CheckPincodevalid() {
     }, error => {this.errorMessage = error ; this.loading = false;})
 
 }
+  ReCaptcha(){
+    this.reCaptcha = this.commonHelper.GenerateCaptchaNumber(4);
+  }
 validateEmail(email) {
   const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regularExpression.test(String(email).toLowerCase());
