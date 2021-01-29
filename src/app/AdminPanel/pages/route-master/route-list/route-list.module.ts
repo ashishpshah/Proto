@@ -16,7 +16,9 @@ import {ToastModule} from 'primeng/toast';
 import {InputTextModule} from 'primeng/inputtext';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
-
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { NgSelect2Module } from 'ng-select2';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -35,6 +37,11 @@ import {DropdownModule} from 'primeng/dropdown';
     InputTextModule,
     ProgressBarModule,
     DropdownModule,
+
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule,
+    NgSelect2Module,
   ],
   declarations: [RouteListComponent]
 })

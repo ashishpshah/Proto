@@ -1,3 +1,47 @@
+<!-- *********************************************** Insert-Update **********************************************  -->
+<div *ngIf="IsAddEdit">
+  <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+  <form >
+    <div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Route From<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [ngClass] ="routeObj.Route_From == '' && errorMessage != '' ? 'alert-danger':''" [(ngModel)]="routeObj.Route_From" id="Route_From" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Route To<span class="warningclass">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [ngClass] ="routeObj.Route_To == '' && errorMessage != '' ? 'alert-danger':''"  [(ngModel)]="routeObj.Route_To" id="Route_To" [ngModelOptions]="{standalone: true}">
+        </div>
+
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="routeObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+    <br />
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveRoute()"> <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<!-- *********************************************** Data List **********************************************  -->
 <div class="row">
   <div class="col-sm-12">
     <app-card [title]="'Route Master'" [classHeader]="true" [blockClass]="'table-border-style'">
@@ -5,7 +49,7 @@
         <p>
           <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
           <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
-            (click)="openInsertPage()"><span class="font-d"> Add New</span></a>
+            (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
         </p>
         <br />
         <br />
@@ -79,7 +123,7 @@
                     Active</button> </span>
               </td>
               <td>
-                <a class="ti-pencil-alt edit" (click)="openEditPage(item.Route_ID)"></a>
+                <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Route_ID)"></a>
                 &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Route_ID)"></a>
                 <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
               </td>

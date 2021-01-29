@@ -7,6 +7,8 @@ import {SharedModule} from '../../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
 import { NgSelectModule } from '@ng-select/ng-select';
+// import { AgmCoreModule } from '@agm/core';
+// import { AgmDirectionModule } from 'agm-direction';
 
 @NgModule({
   imports: [
@@ -16,7 +18,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     NgSelectModule,
     NgSelect2Module,
-    AddEditRouteRoutingModule
+    AddEditRouteRoutingModule,
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyD-yJIdiq5H2FTsCKsjbyS46UGGdwHL9Fc'
+    // }),
+    // AgmDirectionModule
   ],
   declarations: [AddEditRouteComponent]
 })

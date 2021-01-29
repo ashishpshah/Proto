@@ -2,7 +2,20 @@
 **************************************************************** Package Changes *****************************************************************
 
 
-------------------------------------  20 Jan 2021 : RG ----------------------------------------
-npm install @agm/core --save
+------------------------------------  27 Jan 2021 : RG ----------------------------------------
+    Not Installed >  //npm install @agm/core --save
+    Not Installed >  //npm install @types/googlemaps@3.39.12 --save-dev
+    Not Installed >  //npm i agm-direction
+__________________________________________________________________________________________
 
+
+------------------------------------  28 Jan 2021 : RG ----------------------------------------
+    Installed :  npm i @angular/material@7.3.2
+    Installed :  npm i @angular/material-moment-adapter@7.3.2
+    Installed :  npm install moment
+
+    // -- https://www.npmjs.com/package/ng-pick-datetime
+    Not Installed :  npm i ng-pick-datetime
+    Not Installed :  npm install @angular/animations --save
+    Not Installed :  npm install ng-pick-datetime-moment moment --save;
 __________________________________________________________________________________________

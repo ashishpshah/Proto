@@ -1,5 +1,5 @@
 import { VehicleListRoutingModule } from './vehicle-list-routing.module';
-import { NgModule } from '@angular/core';
+import { NgModule , NO_ERRORS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VehicleListComponent } from './vehicle-list.component';
 
@@ -19,8 +19,27 @@ import {DropdownModule} from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
 import { NgSelectModule } from '@ng-select/ng-select';
+// import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepickerModule, MatInputModule, MatNativeDateModule, MatFormFieldModule ,MAT_DATE_LOCALE} from '@angular/material';
+
+// import { OwlDateTimeModule, OwlNativeDateTimeModule,OWL_DATE_TIME_LOCALE  } from 'ng-pick-datetime';
+// import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
+// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+// export const MY_MOMENT_FORMATS = {
+//   parseInput: 'l LT',
+//   fullPickerInput: 'l LT',
+//   datePickerInput: 'l',
+//   timePickerInput: 'LT',
+//   monthYearLabel: 'MMM YYYY',
+//   dateA11yLabel: 'LL',
+//   monthYearA11yLabel: 'MMMM YYYY',
+// };
 
 @NgModule({
+  // providers: [
+  //   {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+  // ],
   imports: [
     CommonModule,
     VehicleListRoutingModule
@@ -41,7 +60,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    NgSelect2Module,
+    NgSelect2Module
+
+    ,MatDatepickerModule, MatInputModule,MatNativeDateModule,MatFormFieldModule //Date Picker
+
+    //,OwlDateTimeModule,OwlNativeDateTimeModule,OwlMomentDateTimeModule,//BrowserAnimationsModule
   ],
   declarations: [VehicleListComponent]
 })

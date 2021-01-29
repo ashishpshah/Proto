@@ -23,10 +23,54 @@ import {
 } from 'primeng/table';
 import { Observable } from 'rxjs';
 
+// //------************ NG-PICK-DATE-TIME ************----------
+// import { Location, DatePipe } from '@angular/common';
+// import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+// import * as _moment from 'moment';
+// export const dateTimeCustomFormats = {
+//   parseInput: 'l LT',
+//   fullPickerInput: 'l LT',
+//   datePickerInput: 'l',
+//   timePickerInput: 'LT',
+//   monthYearLabel: 'MMM YYYY',
+//   dateA11yLabel: 'LL',
+//   monthYearA11yLabel: 'MMMM YYYY',
+// };
+
+// const moment = (_moment as any).default ? (_moment as any).default : _moment;
+// //------************ ----------------- ************----------
+
+//------************ DatePicker ************----------
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { Moment } from 'moment';
+import * as _moment from 'moment';
+//import {default as _rollupMoment} from 'moment';
+// const moment = _rollupMoment || _moment;
+export const MY_FORMATS = {
+  parse: {
+      dateInput: 'LL'
+  },
+  display: {
+      dateInput: 'DD/MM/YYYY',
+      monthYearLabel: 'MMM YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'MMMM YYYY'
+  }
+};
+
+//------************ --- ************----------
 @Component({
   selector: 'app-vehicle-list',
   templateUrl: './vehicle-list.component.html',
-  styleUrls: ['./vehicle-list.component.scss']
+  styleUrls: ['./vehicle-list.component.scss'],
+  // providers: [
+  //   {provide: OWL_DATE_TIME_FORMATS, useValue: dateTimeCustomFormats},
+  // ],
+  providers: [ //DatePicker
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+  ],
 })
 /************************************* Developed By RAJESH *******************************/
 export class VehicleListComponent implements OnInit {
@@ -49,6 +93,9 @@ export class VehicleListComponent implements OnInit {
   StatusList : Observable<DropdownList[]>;
   VehicleTypeList : Observable<DropdownList[]>;
   VehicleCategoryList : Observable<DropdownList[]>;
+  ManufactureByList : Observable<DropdownList[]>;
+  RegTypeList : Observable<DropdownList[]>;
+  MeasurementList : Observable<DropdownList[]>;
   SelectedStatus : string = 'A';
   isInserted : string = 'I';
   //-----------------
@@ -122,8 +169,12 @@ export class VehicleListComponent implements OnInit {
         this._commonService.getVehicleById(this.vehicleId)
           .subscribe((resp) =>
           {
-
+            debugger;
             this.vehicleObj = resp
+            let frDt = resp.Reg_Effectivefrom_date;
+            let todt = resp.Reg_Effectiveto_date;
+            this.vehicleObj.Reg_Effectivefrom_date = frDt.includes('1900') || frDt.includes('1970') ?"": resp.Reg_Effectivefrom_date
+            this.vehicleObj.Reg_Effectiveto_date = todt.includes('1900') || todt.includes('1970') ?"": resp.Reg_Effectiveto_date
             // this.vehicleObj.SelectedDepartment = resp.Department.split(',')
             , error => this.errorMessage = error
           });
@@ -147,6 +198,26 @@ export class VehicleListComponent implements OnInit {
             this.VehicleTypeList = data;
         }
       )
+
+      this._commonService.GetLovDetailByColumn("MANUFACTBY").subscribe(
+        (data) =>
+         {
+            this.ManufactureByList = data;
+        }
+      )
+      this._commonService.GetLovDetailByColumn("REGTYPE").subscribe(
+        (data) =>
+         {
+            this.RegTypeList = data;
+        }
+      )
+      this._commonService.GetLovDetailByColumn("MEASUREMETH").subscribe(
+        (data) =>
+         {
+            this.MeasurementList = data;
+        }
+      )
+
       this._commonService.GetVehicleCategoryList("0").subscribe(
         (data) =>
          {
@@ -173,16 +244,17 @@ export class VehicleListComponent implements OnInit {
     }
 
     saveVehicle() {
-
+      debugger;
       if(this.validate()){
         this.vehicleObj.Created_By = this.userId;
         // this.vehicleObj.Department = this.vehicleObj.SelectedDepartment.join(',');
+        this.vehicleObj.Reg_Effectivefrom_date = new Date(this.vehicleObj.Reg_Effectivefrom_date).toLocaleString();
+        this.vehicleObj.Reg_Effectiveto_date = new Date(this.vehicleObj.Reg_Effectiveto_date).toLocaleString();
         if (this.title == "Create") {
           this.vehicleObj.IsInserted = 'I';
           this._commonService.saveVehicle(this.vehicleObj)
             .subscribe((data) => {
               this.commonHelper.commonAlerts('Inserted', data,'/master/vehicle-master', '/master/add-edit-category')
-
             }, error => this.errorMessage = error)
         }
         else if (this.title == "Edit") {
@@ -198,12 +270,10 @@ export class VehicleListComponent implements OnInit {
     cancel() {
       this.errorMessage = '';
       this.IsAddEdit = false;
-      // this._router.navigate(['/master/vehicle-master']);
     }
 }
 
 function VehicleFun(isInserted) {
-
   let obj ={
     Vehicle_Id :'',
     Vehicle_Category : '',
@@ -220,6 +290,18 @@ function VehicleFun(isInserted) {
     Modified_Date :'',
     IsDeleted :'',
     IsInserted : isInserted,
+    Manufacture_By :'',
+    Model_Name :'',
+    Manufacture_Year :'',
+    Reg_No :'',
+    Reg_Type :'',
+    Measurement_Method :'',
+    RegTypeDesc :'',
+    ManufactureByDesc  :'',
+    MeasurementDesc :'',
+    Reg_Effectivefrom_date :'',
+    Reg_Effectiveto_date :'',
+
 };
   return obj;
 }
