@@ -1,3 +1,4 @@
+import { AdminCommonHelperComponent } from './../../../AdminPanel/pages/AdminCommonHelper/AdminCommonHelper.component';
 import { Catg_Master } from './../../../models/Catg_Master';
 import { StreetListComponent } from './../../../AdminPanel/pages/street-master/street-list/street-list.component';
 import { brandMasterModule } from './../../../AdminPanel/pages/brand-master/brand-master.module';
@@ -55,6 +56,9 @@ export class SubcategoryComponent implements OnInit {
   ){
 
   }
+  commonHelper = new AdminCommonHelperComponent(this.router);
+  currency : string  = this.commonHelper.currency;
+
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;

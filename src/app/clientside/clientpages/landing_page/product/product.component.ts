@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdminCommonHelperComponent } from 'src/app/AdminPanel/pages/AdminCommonHelper/AdminCommonHelper.component';
 
 @Component({
   selector: 'app-product',
@@ -27,7 +28,8 @@ export class ProductComponent implements OnInit {
   ){
 
   }
-
+  commonHelper = new AdminCommonHelperComponent(this.router);
+  currency : string  = this.commonHelper.currency;
   slideActivate(ngbSlideEvent: NgbSlideEvent) {
     console.log(ngbSlideEvent.source);
     console.log(ngbSlideEvent.paused);

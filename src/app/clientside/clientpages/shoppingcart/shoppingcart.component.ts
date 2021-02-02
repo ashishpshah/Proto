@@ -1,3 +1,4 @@
+import { AdminCommonHelperComponent } from './../../../AdminPanel/pages/AdminCommonHelper/AdminCommonHelper.component';
 import { shopingcart } from './../../../models/shopingcart';
 import { CategoryService } from './../../client_services/category.service';
 import { HeaderComponent } from './../landing_page/header/header.component';
@@ -33,7 +34,8 @@ export class ShoppingcartComponent implements OnInit {
   {
   }
 
-  //commonHelper = new HeaderComponent(this.Client_commonService_);
+  commonHelper = new AdminCommonHelperComponent(this.router);
+  currency : string  = this.commonHelper.currency;
 
   ngOnInit()
   {
@@ -65,11 +67,11 @@ export class ShoppingcartComponent implements OnInit {
 
   minuseQty(item)
   {
-
-    this.Client_commonService_.minuseQty(item);
-    this.Item_Master_ = this.Client_commonService_.getItems();
-    this.calculatecartvalue();
-
+    if(item.OrderQty >1){
+      this.Client_commonService_.minuseQty(item);
+      this.Item_Master_ = this.Client_commonService_.getItems();
+      this.calculatecartvalue();
+    }
   }
 
   PluseQty(item){

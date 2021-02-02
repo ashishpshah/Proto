@@ -11499,7 +11499,7 @@ body.menu-bottom #collapse-menu {
   border-radius: 2px;
   text-transform: capitalize;
   font-size: 15px;
-  padding: 10px 19px;
+  // padding: 10px 19px;
   cursor: pointer;
 }
 
@@ -14365,7 +14365,7 @@ div {
 }
 
 th, td {
-  white-space: nowrap;
+  // white-space: nowrap;
 }
 
 /*===== Fixed-header data-table ===== */
@@ -23002,7 +23002,35 @@ body.dark {
   content: "Choose file...";
 }
 
+.slide-m{
+  margin: 0% 8% 0% 8% !important;
+}
 
+.carousel-control-next-icon{
+  background-color: #fc6f01 !important;
+  border-radius: 10px !important;
+}
+.carousel-control-prev-icon{
+  background-color: #fc6f01 !important;
+  border-radius: 10px !important;
+}
 
+.carousel-indicators .active{
+  border: 3px solid #fc6f01 !important;
+}
 
-
+.carousel-indicators li {
+  position: relative !important;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 3px !important;
+  margin-left: 3px !important;
+  text-indent: -999px !important;
+  background-color: rgba(255,255,255);
+  border-radius: 10px;
+}
+.d-cursor{
+  cursor: not-allowed !important;
+}

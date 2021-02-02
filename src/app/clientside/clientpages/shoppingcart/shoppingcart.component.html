@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="row">
-        <div id="basket" class="col-lg-9">
+        <div id="basket" class="col-lg-8">
           <div class="box">
               <div class="table-responsive">
                 <table class="table">
@@ -35,16 +35,16 @@
             <ng-container *ngFor="let product of Item_Master_;" >
               <tr *ngIf="shppingcart1.name == product.CategoryName" [id]="product.Item_ID">
                       <td><a href="#"><img src="/assets/img/img/No-Image.jpg" alt="White Blouse Armani"></a></td>
-                      <td><a href="#">{{product.Item_Name}}</a></td>
-                      <td>
+                      <td style="max-width: 150px;">{{product.Item_Name}}</td>
+                      <td style="min-width: 169px;">
                         <!-- Change the `data-field` of buttons and `name` of input field's for multiple plus minus buttons-->
                         <div class="input-group">
                           <span class="input-group-btn">
-                              <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]" (click)="minuseQty(product)" >
+                              <button type="button" class="btn btn-danger btn-number" [ngClass]="product.OrderQty <= 1 ? 'd-cursor':''" [disabled]="product.OrderQty <= 1"   data-type="minus" data-field="quant[2]" (click)="minuseQty(product)" >
                                 <i class="icofont-minus-circle"></i>
                               </button>
                           </span>
-                          <input type="number" name="quant[2]" class="form-control input-number" [value]="product.OrderQty" min="1" max="100"  style="width: 10px;">
+                          <input type="number" name="quant[2]" class="form-control input-number text-center" [value]="product.OrderQty" min="1" max="100"  style="width: 10px;background-color: white;" readonly>
                           <span class="input-group-btn">
                               <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]" (click)="PluseQty(product)">
                                 <i class="icofont-plus-circle"></i>
@@ -53,9 +53,9 @@
                       </div>
                         <!-- <input type="number" [value]="product.Qty" class="form-control" style="width: 63px;"> -->
                       </td>
-                      <td>${{product.Price}}</td>
-                      <td>$0.00</td>
-                      <td>  ${{product.TotalPrice}}</td>
+                      <td>{{currency}}{{product.Price.toFixed(2)}}</td>
+                      <td>{{currency}}0.00</td>
+                      <td> {{currency}}{{product.TotalPrice.toFixed(2)}}</td>
                       <td><a (click)="deleteItem(product)"><i class="fa fa-trash-o"></i></a></td>
 
               </tr>
@@ -69,7 +69,7 @@
                   <tfoot>
                     <tr>
                       <th colspan="5">Total</th>
-                      <th colspan="2">${{Subtotal}}</th>
+                      <th colspan="2">{{currency}}{{Subtotal.toFixed(2)}}</th>
                     </tr>
                   </tfoot>
                 </table>
@@ -78,7 +78,7 @@
               <div class="box-footer">
                 <div class="pull-left"><a href="#" class="btn btn-outline-white-secondary"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
                 <div class="pull-right">
-                  <button class="btn btn-outline-white-secondary"><i class="fa fa-refresh"></i> Update cart</button>
+                  <!-- <button class="btn btn-outline-white-secondary"><i class="fa fa-refresh"></i> Update cart</button> -->
                   <button type="button" (click)="checkoutItem()" class="btn btn-outline-white-primary">Proceed to checkout<i class="fa fa-chevron-right"></i></button>
                 </div>
               </div>
@@ -95,7 +95,7 @@
                 <div class="image"><a href="detail.html"><img src="/assets/img/img/No-Image.jpg" alt="" class="img-fluid image1"></a></div>
                 <div class="text">
                   <h3><a href="detail.html">Fur coat</a></h3>
-                  <p class="price">$143</p>
+                  <p class="price">{{currency}}143</p>
                 </div>
               </div>
               <!-- /.product-->
@@ -105,7 +105,7 @@
                 <div class="image"><a href="detail.html"><img src="/assets/img/img/No-Image.jpg" alt="" class="img-fluid image1"></a></div>
                 <div class="text">
                   <h3><a href="detail.html">Fur coat</a></h3>
-                  <p class="price">$143</p>
+                  <p class="price">{{currency}}143</p>
                 </div>
               </div>
               <!-- /.product-->
@@ -115,7 +115,7 @@
                 <div class="image"><a href="detail.html"><img src="/assets/img/img/No-Image.jpg" alt="" class="img-fluid image1"></a></div>
                 <div class="text">
                   <h3><a href="detail.html">Fur coat</a></h3>
-                  <p class="price">$143</p>
+                  <p class="price">{{currency}}143</p>
                 </div>
               </div>
               <!-- /.product-->
@@ -123,7 +123,7 @@
           </div>
         </div>
         <!-- /.col-lg-9-->
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div id="order-summary" class="box">
             <div class="box-header">
               <h3>Order summary</h3>
@@ -134,25 +134,25 @@
                 <tbody>
                   <tr>
                     <td>Order subtotal</td>
-                    <th>${{Subtotal}}</th>
+                    <th>{{currency}}{{Subtotal.toFixed(2)}}</th>
                   </tr>
                   <tr>
                     <td>Shipping and handling</td>
-                    <th>${{shippingcharge}}</th>
+                    <th>{{currency}}{{shippingcharge.toFixed(2)}}</th>
                   </tr>
                   <tr>
                     <td>Tax</td>
-                    <th>$0.00</th>
+                    <th>{{currency}}0.00</th>
                   </tr>
                   <tr class="total">
                     <td>Total</td>
-                    <th>${{Grandtotal}}</th>
+                    <th>{{currency}}{{Grandtotal.toFixed(2)}}</th>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-          <div class="box">
+          <!-- <div class="box">
             <div class="box-header">
               <h4>Coupon code</h4>
             </div>
@@ -163,8 +163,7 @@
                   <button type="button" class="btn btn-outline-primary"> <i class="fa fa-gift"></i></button>
                 </div>
               </div>
-              <!-- /input-group-->
-          </div>
+          </div> -->
         </div>
         <!-- /.col-lg-3-->
       </div>

@@ -3,3 +3,14 @@
     margin: 40px auto;
 
   }
+/* Chrome, Safari, Edge, Opera : Remove arrow from input type number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox : Remove arrow from input type number */
+input[type=number] {
+  -moz-appearance: textfield;
+}

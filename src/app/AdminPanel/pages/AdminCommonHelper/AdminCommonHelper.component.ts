@@ -16,6 +16,7 @@ export class AdminCommonHelperComponent implements OnInit {
   deleteTooltip : string = "click here to delete";
   restoreTooltip : string = "click here to restore";
   required : string = "required";
+  currency : string = "kr. ";
   constructor(private _router: Router) { }
 
   ngOnInit() {

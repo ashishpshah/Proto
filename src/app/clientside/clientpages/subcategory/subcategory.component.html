@@ -91,7 +91,7 @@
               <!-- *** LEFT COLUMN END ***-->
               <!-- *** RIGHT COLUMN ***-->
               <div class="col-md-9">
-                  <div class="info-bar">
+                  <!-- <div class="info-bar">
                       <div class="row">
                           <div class="col-lg-4 products-showing">Showing <strong>12</strong> of <strong>25</strong> products</div>
                           <div class="col-lg-8 products-number-sort">
@@ -113,7 +113,7 @@
                               </div>
                           </div>
                       </div>
-                  </div>
+                  </div> -->
                   <!-- <div class="banner">
                     <div class="card">
                     <div  class="card-header mb-1">
@@ -131,7 +131,7 @@
                                 </div>
 
                                 <div class="card-footer">
-                                  <samp class="text-muted">${{item3.Price}}</samp>
+                                  <samp class="text-muted">{{currency}}{{item3.Price}}</samp>
                                   <i class="ti-shopping-cart cartalign"></i>
                                 </div>
                           </div>
@@ -159,7 +159,7 @@
                           <!-- /.image-->
                           <div class="text">
                               <h3><a>{{item4.Item_Name}}</a></h3>
-                              <p class="card-text text-left  mb-0">Price: <span class="font-weight-bold float-right text-success">${{item4.Price}}</span></p>
+                              <p class="card-text text-left  mb-0">Price: <span class="font-weight-bold float-right text-success">{{currency}}{{item4.Price}}</span></p>
 
                               <p class="card-text text-left">Stock left: <span class="font-weight-bold float-right text-danger">{{item4.Qty}}</span></p>
 
@@ -181,7 +181,7 @@
                                 <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-outline-secondary"><i class="fa fa-heart-o"></i></button>
                               </p> -->
                               <!-- <p class="price">
-                                 ${{item4.Price}}
+                                 {{currency}}{{item4.Price}}
                               </p>
 
                               <p class="price">
@@ -252,7 +252,7 @@
                                                               <input id="size_l" type="radio" name="size" value="l" class="size-input">
                                                           </label>
                                                       </div> -->
-                                                      <p class="price">$124.00</p>
+                                                      <p class="price">{{currency}}124.00</p>
                                                       <p class="text-center">
                                                           <button type="submit" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
                                                           <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-outline-secondary"><i class="fa fa-heart-o"></i></button>
@@ -275,7 +275,7 @@
                   </div>
                   <!-- /.products-->
 
-                  <div class="pages">
+                  <!-- <div class="pages">
                       <p class="loadMore"><a href="#" class="btn btn-outline-primary"><i class="fa fa-chevron-down"></i> Load more</a></p>
                       <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4">
                           <ul class="pagination">
@@ -286,7 +286,7 @@
                               <li class="page-item"><a href="#" class="page-link">»</a></li>
                           </ul>
                       </nav>
-                  </div>
+                  </div> -->
               </div>
               <!-- /.col-md-9-->
               <!-- *** RIGHT COLUMN END ***-->
