@@ -52,14 +52,14 @@
   <div class="col-sm-12">
       <app-card [classHeader]="true" [blockClass]="'table-border-style'">
         <div class="table-responsive">
-            <p>
-              <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-              <!-- <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a> -->
+            <!-- <p>
+              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
             </p>
               <br/>
-              <br/>
+              <br/> -->
 
-            <p-table class="" #dt [value]="typeMaster" [(selection)]="selectedtypeMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['type_Name','type_Name_D']">
+            <p-table class="" #dt [value]="typeMaster" [(selection)]="selectedtypeMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['type_Name','type_Name_D']">
               <ng-template pTemplate="caption">
                 <div class="table-header-p ">
                     <span class="p-input-icon-left">
@@ -80,10 +80,10 @@
               </tr>
               <tr>
                   <th>
-                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'Type_Name', 'startsWith')" placeholder="Search by type  name" class="form-control">
+                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'Type_Name', 'startsWith')" placeholder="Search by type name" class="form-control">
                   </th>
                   <th>
-                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'Type_NameD', 'contains')" placeholder="Search by type denish" class="form-control">
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'Type_NameD', 'contains')" placeholder="Search by type danish" class="form-control">
                   </th>
                   <th>
 

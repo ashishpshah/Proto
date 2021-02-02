@@ -8,8 +8,8 @@ const routes: Routes = [
     component: AddEditRootCategoryComponent,
     data: {
       breadcrumb: 'Add-Edit Root Category',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Add-Edit Root Category',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

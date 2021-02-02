@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: typeListComponent,
     data: {
-      breadcrumb: 'type List',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'type List',
+      breadcrumb: 'Type Master',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

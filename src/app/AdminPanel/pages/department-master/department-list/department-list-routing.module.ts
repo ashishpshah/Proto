@@ -8,7 +8,7 @@ const routes: Routes = [
     component: DepartmentListComponent,
     data: {
       breadcrumb: 'Department Master',
-      icon: 'icofont-layout bg-c-blue',
+      icon: 'icofont-layout  bg-c-orange',
       breadcrumb_caption: '',
       status: true
     }

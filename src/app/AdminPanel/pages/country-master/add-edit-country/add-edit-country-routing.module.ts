@@ -8,8 +8,8 @@ const routes: Routes = [
     component: AddEditCountryComponent,
     data: {
       breadcrumb: 'Add-Edit Country',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Add-Edit Country',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

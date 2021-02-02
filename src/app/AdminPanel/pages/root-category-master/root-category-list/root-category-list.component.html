@@ -74,19 +74,17 @@
   <div class="col-sm-12">
     <app-card [classHeader]="true" [blockClass]="'table-border-style'">
       <div class="table-responsive">
-        <p>
-          <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-          <!-- <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
-            (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a> -->
+        <!-- <p>
+          <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
         </p>
         <br />
-        <br />
+        <br /> -->
 
         <p-table class="" #dt [value]="rootCategoryMaster" [(selection)]="selectedRootCategoryMaster" dataKey="id"
           [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
           [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-          [globalFilterFields]="['RCatg_Name','Root_Name','RCatg_Name_D']">
+          [globalFilterFields]="['RCatg_Name','Root_Name','RCatg_Name_D','Display_Seq_No']">
 
           <ng-template pTemplate="caption">
             <div class="table-header-p ">

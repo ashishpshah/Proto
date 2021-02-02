@@ -58,7 +58,8 @@
               <!-- <br/>
               <br/> -->
 
-              <p-table class="" #dt [value]="rootHeaderMaster" [(selection)]="selectedRootHeaderMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['Root_Name','Root_Name_D']">
+              <p-table class="" #dt [value]="rootHeaderMaster" [(selection)]="selectedRootHeaderMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+              [globalFilterFields]="['Root_Name','Root_Name_D','Display_Seq_No']">
 
               <ng-template pTemplate="caption">
                 <div class="table-header-p ">

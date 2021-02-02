@@ -73,17 +73,17 @@
               <br/>
               <ng-template pTemplate="header">
               <tr>
-                  <th pSortableColumn="Brand_Name">brand Name <p-sortIcon field="Brand_Name"></p-sortIcon></th>
-                  <th pSortableColumn="Brand_Name_D">brand Name (Danish) <p-sortIcon field="Brand_Name_D"></p-sortIcon></th>
+                  <th pSortableColumn="Brand_Name">Brand Name <p-sortIcon field="Brand_Name"></p-sortIcon></th>
+                  <th pSortableColumn="Brand_Name_D">Brand Name (Danish) <p-sortIcon field="Brand_Name_D"></p-sortIcon></th>
                   <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
                   <th >Action </th>
               </tr>
               <tr>
                   <th>
-                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'Brand_Name', 'startsWith')" placeholder="Search by brand  name" class="form-control">
+                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'Brand_Name', 'startsWith')" placeholder="Search by brand name" class="form-control">
                   </th>
                   <th>
-                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'Brand_NameD', 'contains')" placeholder="Search by Brand denish" class="form-control">
+                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'Brand_NameD', 'contains')" placeholder="Search by Brand danish" class="form-control">
                   </th>
                   <th>
 

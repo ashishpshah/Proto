@@ -8,7 +8,7 @@ const routes: Routes = [
     component: VehicleRouteListComponent,
     data: {
       breadcrumb: 'Vehicle Route Master',
-      icon: 'icofont-layout bg-c-blue',
+      icon: 'icofont-layout  bg-c-orange',
       breadcrumb_caption: '',
       status: true
     }

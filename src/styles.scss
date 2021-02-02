@@ -118,8 +118,8 @@ ul {
     i {
       display: inline-flex;
       float: left;
-      width: 50px;
-      height: 50px;
+      width: 35px;
+      height: 35px;
       border-radius: 4px;
       justify-content: center;
       vertical-align: middle;
@@ -14644,7 +14644,12 @@ table {
 .text-amazon {
   color: #000;
 }
-
+.bg-c-orange {
+  background-color: #ff8e2d;
+}
+.text-c-orange {
+  color: #ff8e2d;
+}
 .bg-c-blue {
   background-color: #4680ff;
 }

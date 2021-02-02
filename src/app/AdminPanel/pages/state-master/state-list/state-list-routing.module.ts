@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: StateListComponent,
     data: {
-      breadcrumb: 'State List',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'State List',
+      breadcrumb: 'State Master',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

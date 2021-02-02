@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: StreetListComponent,
     data: {
-      breadcrumb: 'Street List',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Street List',
+      breadcrumb: 'Street Master',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

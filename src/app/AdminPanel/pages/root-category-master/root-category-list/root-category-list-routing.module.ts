@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: RootCategoryListComponent,
     data: {
-      breadcrumb: 'Root Category List',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Root Category List',
+      breadcrumb: 'Root Category Master',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

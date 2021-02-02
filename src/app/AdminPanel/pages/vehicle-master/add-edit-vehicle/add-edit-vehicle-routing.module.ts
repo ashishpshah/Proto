@@ -8,8 +8,8 @@ const routes: Routes = [
     component: AddEditVehicleComponent,
     data: {
       breadcrumb: 'Add-Edit Vehicle',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Add-Edit Vehicle',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

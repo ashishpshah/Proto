@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: CountryListComponent,
     data: {
-      breadcrumb: 'Country List',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Country List',
+      breadcrumb: 'Country Master',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

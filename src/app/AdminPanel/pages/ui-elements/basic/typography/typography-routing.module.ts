@@ -8,8 +8,8 @@ const routes: Routes = [
     component: TypographyComponent,
     data: {
       breadcrumb: 'Typography',
-      icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Typography',
+      icon: 'icofont-layout  bg-c-orange',
+      breadcrumb_caption: '',
       status: true
     }
   }

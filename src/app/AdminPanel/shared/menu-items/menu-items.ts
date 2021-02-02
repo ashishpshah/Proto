@@ -111,7 +111,7 @@ const MENUITEMS = [
           }
           ,{
             state: 'pincode-master',
-            name: 'Pincode Master'
+            name: 'Allowed Pincode Master'
           }
 
         ]
