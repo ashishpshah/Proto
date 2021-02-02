@@ -6,8 +6,6 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CategoryService } from '../../client_services/category.service';
 import { Observable } from "rxjs";
 
-// import '../../../../assets/LandingPage/js/Langingmain.js';
-
 declare var $: any;
 declare var require: any;
 @Component({
@@ -24,7 +22,6 @@ Root_Header_ID:number=1;
   constructor(private router: Router, private activatedRoute: ActivatedRoute,private categoryService: CategoryService) {}
 
   ngOnInit() {
-
     this.GetRootHeaderData();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

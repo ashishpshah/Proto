@@ -49,6 +49,9 @@ export class StateListComponent implements OnInit {
   constructor(private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) {}
   commonHelper = new AdminCommonHelperComponent(this._router);
   warningMessage : string  = this.commonHelper.commonWarningMessage;
+  deleteTooltip : string  = this.commonHelper.deleteTooltip;
+  restoreTooltip : string  = this.commonHelper.restoreTooltip;
+  required : string  = this.commonHelper.required;
   ngOnInit(): void {
     this.getStateList();
   }

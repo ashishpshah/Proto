@@ -28,19 +28,19 @@
   <div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Item Name<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Item Name<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="text" formControlName="Item_Name" id="Item_Name">
       </div>
 
-      <label class="col-sm-2 col-form-label">Item Name (Danish)<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Item Name (Danish)<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="text" formControlName="Item_Name_D" id="Item_Name_D">
       </div>
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Category<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <ng-select formControlName="Cat_SubCat_Id" bindLabel="name" placeholder="Select Item" appendTo="body"
           id="Cat_SubCat_Id">
@@ -48,7 +48,7 @@
         </ng-select>
       </div>
 
-      <label class="col-sm-2 col-form-label">Type<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Type<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <ng-select bindLabel="name" placeholder="Select Type" appendTo="body" formControlName="Type_ID" id="Type_ID">
           <ng-option *ngFor="let item of TypeList" [value]="item.id"> {{item.name}}</ng-option>
@@ -57,13 +57,13 @@
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Brand Name<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Brand Name<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <ng-select bindLabel="name" placeholder="Select Brand" appendTo="body" formControlName="Brand_ID" id="Brand_ID">
           <ng-option *ngFor="let item of BrandList" [value]="item.id"> {{item.name}}</ng-option>
         </ng-select>
       </div>
-      <label class="col-sm-2 col-form-label">UOM<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">UOM<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <ng-select bindLabel="name" placeholder="Select UOM" appendTo="body" formControlName="UOM" id="UOM">
           <ng-option *ngFor="let item of UOMList" [value]="item.id"> {{item.name}}</ng-option>
@@ -72,18 +72,18 @@
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Qty<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Qty<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="number" formControlName="Qty" id="Qty">
       </div>
-      <label class="col-sm-2 col-form-label">Price<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Price<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="number" formControlName="Price" id="Price">
       </div>
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="number" formControlName="Display_Seq_No" id="Display_Seq_No">
       </div>

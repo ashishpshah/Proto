@@ -8,16 +8,16 @@
 
 <div class="row">
   <div class="col-sm-12">
-      <app-card [title]="'Item Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+      <app-card [classHeader]="true" [blockClass]="'table-border-style'">
         <div class="table-responsive">
-            <p>
-              <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
+            <!-- <p>
               <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="openAddEdit()"><span class="font-d"> Add New</span></a>
-            </p>
-              <br/>
-              <br/>
+            </p> -->
+              <!-- <br/>
+              <br/> -->
 
-            <p-table class="" #dt [value]="itemMaster" [(selection)]="selecteditemMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['Item_Name','Type_Name','Brand_Name']">
+            <p-table class="" #dt [value]="itemMaster" [(selection)]="selecteditemMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['Item_Name','Type_Name','Brand_Name','CategoryName','UOM','Qty','Price']">
 
               <ng-template pTemplate="caption">
                 <div class="table-header-p ">
@@ -25,6 +25,7 @@
                         <i class="pi pi-search"></i>
                         <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
                     </span>
+                    <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="openAddEdit()"><span class="font-d"> Add New</span></a></span>
                 </div>
               </ng-template>
               <br/>
@@ -32,7 +33,7 @@
               <ng-template pTemplate="header">
               <tr>
                   <th pSortableColumn="Item_Name">Item Name <p-sortIcon field="Item_Name"></p-sortIcon></th>
-                     <th pSortableColumn="CategoryName">Category <p-sortIcon field="CategoryName"></p-sortIcon>
+                  <th pSortableColumn="CategoryName">Category <p-sortIcon field="CategoryName"></p-sortIcon>
               </th>
               <th pSortableColumn="SubCategoryName">Sub Category <p-sortIcon field="SubCategoryName"></p-sortIcon>
               </th>
@@ -42,7 +43,7 @@
                   <th pSortableColumn="Qty">Qty <p-sortIcon field="Qty"></p-sortIcon></th>
                   <th pSortableColumn="Price">Price <p-sortIcon field="Price"></p-sortIcon></th>
                   <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
-                  <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th>
+                  <!-- <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th> -->
                   <th >Action </th>
               </tr>
               <tr>
@@ -62,7 +63,7 @@
                   <th></th>
                   <th></th>
                   <th></th>
-                  <th></th>
+                  <!-- <th></th> -->
                   <th></th>
 
               </tr>
@@ -100,12 +101,14 @@
                   <td>
                         {{item.StatusDesc}}
                   </td>
-                  <td style = "width: 200px;">
+                  <!-- <td style = "width: 200px;">
                     {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.Item_ID)">Make Active</button> </span>
-                  </td>
+                  </td> -->
                   <td>
                           <a class="ti-pencil-alt edit" (click)="openEditItem(item.Item_ID)"></a>
-                          &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Item_ID)"></a>
+                          <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Item_ID)"></a> -->
+                          &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Item_ID)"></a>
+                          <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.Item_ID)"></a>
                              <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
                   </td>
               </tr>

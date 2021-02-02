@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-sm-12">
-    <app-card [title]="'Street Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+    <app-card [classHeader]="true" [blockClass]="'table-border-style'">
       <div class="table-responsive">
         <p>
           <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-          <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
-            (click)="openInsertPage()"><span class="font-d"> Add New</span></a>
+          <!-- <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
+            (click)="openInsertPage()"><span class="font-d"> Add New</span></a> -->
         </p>
         <br />
         <br />
@@ -22,6 +22,7 @@
                 <input class="p-l-30 form-control" pInputText type="text"
                   (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
               </span>
+              <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="openInsertPage()"><span class="font-d"> Add New</span></a></span>
             </div>
           </ng-template>
           <br />
@@ -80,7 +81,7 @@
 
               <td>
                 <a class="ti-pencil-alt edit" (click)="openEditPage(item.Street_Id)"></a>
-                &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Street_Id)"></a>
+                &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Street_Id)"></a>
                 <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
               </td>
             </tr>

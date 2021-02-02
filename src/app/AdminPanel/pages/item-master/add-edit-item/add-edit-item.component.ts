@@ -92,6 +92,9 @@ export class AddEditItemComponent implements OnInit {
     }
       commonHelper = new AdminCommonHelperComponent(this._router);
       warningMessage : string  = this.commonHelper.commonWarningMessage;
+      deleteTooltip : string  = this.commonHelper.deleteTooltip;
+  restoreTooltip : string  = this.commonHelper.restoreTooltip;
+  required : string  = this.commonHelper.required;
   public loadResult() {
     return true;
   }

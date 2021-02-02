@@ -1,10 +1,10 @@
 <!-- *********************************************** Insert-Update **********************************************  -->
 <div *ngIf="IsAddEdit">
-  <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+  <!-- <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div> -->
   <form >
     <div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Pincode<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Pincode<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <ng-select [ngClass] ="(pincodeObj.Pincode == 0 || pincodeObj.Pincode == null)  && errorMessage != '' ? 'border border-danger':''"
                 [items]="PincodeList"
@@ -29,6 +29,7 @@
       </div>
     </div>
     <br />
+    <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
     <hr />
     <div class="text-center">
       <div class="form-group align-center">
@@ -43,27 +44,28 @@
 </div>
 
 <!-- *********************************************** Data List **********************************************  -->
-<div *ngIf="IsRowEdit"><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+<div *ngIf="IsRowEdit"><div class='text-danger f-12'><span>{{warningMessage}}</span></div><br /></div>
 <div class="row">
   <div class="col-sm-12">
-      <app-card [title]="'Allowed Pincode List'" [classHeader]="true" [blockClass]="'table-border-style'">
+      <app-card [classHeader]="true" [blockClass]="'table-border-style'">
         <div class="table-responsive">
             <p>
               <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
+              <!-- <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a> -->
             </p>
               <br/>
               <br/>
 
             <p-table class="" #dt [value]="pincodeMaster" [(selection)]="selectedPincodeMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" [globalFilterFields]="['Pincode']">
-              <!-- <ng-template pTemplate="caption">
+              <ng-template pTemplate="caption">
                 <div class="table-header-p ">
-                    <span class="p-input-icon-left">
+                    <!-- <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
                         <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
-                    </span>
+                    </span> -->
+                    <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span>
                 </div>
-              </ng-template> -->
+              </ng-template>
               <br/>
               <br/>
               <ng-template pTemplate="header">
@@ -114,7 +116,7 @@
                   <td>
                     <div *ngIf="!item.isEditable">
                       <a class="ti-pencil-alt edit" (click)="openEditPage(item)"></a>
-                      &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Pin_Id)"></a>
+                      &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Pin_Id)"></a>
                     </div>
                     <div *ngIf="item.isEditable">
                       <button class="btn btn-sm btn-success" (click)="updatePincode(item)">Update</button>

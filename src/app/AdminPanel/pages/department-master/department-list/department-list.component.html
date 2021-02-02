@@ -1,16 +1,16 @@
 <!-- *********************************************** Insert-Update **********************************************  -->
 <div *ngIf="IsAddEdit">
-  <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+  <!-- <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div> -->
   <form >
     <div>
       <div class="form-group row">
 
-        <label class="col-sm-2 col-form-label">Department Code<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Department Code<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control text-uppercase" maxlength="5" [attr.readOnly]="isInserted != 'I' ? 'readOnly' : null" [ngClass] ="departmentObj.DEPT_Code == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="departmentObj.DEPT_Code" id="DEPT_Code" [ngModelOptions]="{standalone: true}">
         </div>
 
-        <label class="col-sm-2 col-form-label">Department Name<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Department Name<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control"  [ngClass] ="departmentObj.DEPT_Name == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="departmentObj.DEPT_Name" id="Catg_Name" [ngModelOptions]="{standalone: true}">
         </div>
@@ -18,7 +18,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Department Name (Danish)<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Department Name (Danish)<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="text" [ngClass] ="departmentObj.DEPT_Name_D == '' && errorMessage != '' ? 'alert-danger':''" [(ngModel)]="departmentObj.DEPT_Name_D" id="DEPT_Name_D" [ngModelOptions]="{standalone: true}" >
         </div>
@@ -43,6 +43,7 @@
       </div>
     </div>
     <br />
+    <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
     <hr />
     <div class="text-center">
       <div class="form-group align-center">
@@ -59,11 +60,11 @@
 <!-- *********************************************** Data List **********************************************  -->
 <div class="row">
   <div class="col-sm-12">
-      <app-card [title]="'Department Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+      <app-card [classHeader]="true" [blockClass]="'table-border-style'">
         <div class="table-responsive">
             <p>
               <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen('')"><span class="font-d"> Add New</span></a>
+              <!-- <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen('')"><span class="font-d"> Add New</span></a> -->
             </p>
               <br/>
               <br/>
@@ -74,6 +75,7 @@
                         <i class="pi pi-search"></i>
                         <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
                     </span>
+                    <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span>
                 </div>
               </ng-template>
               <br/>
@@ -84,7 +86,7 @@
                   <th pSortableColumn="DEPT_Name_D">Department Name (Danish) <p-sortIcon field="DEPT_Name_D"></p-sortIcon></th>
                   <th pSortableColumn="DEPT_Code">Department Code <p-sortIcon field="DEPT_Code"></p-sortIcon></th>
                   <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
-                  <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th>
+                  <!-- <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th> -->
                   <th >Action </th>
               </tr>
               <tr>
@@ -97,7 +99,7 @@
                   </th>
                   <th></th>
                   <th></th>
-                  <th></th>
+                  <!-- <th></th> -->
               </tr>
               </ng-template>
 
@@ -116,12 +118,14 @@
                   <td>
                         {{item.StatusDesc}}
                   </td>
-                  <td style = "width: 220px;">
+                  <!-- <td style = "width: 220px;">
                     {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.DEPT_Code)">Make Active</button> </span>
-                  </td>
+                  </td> -->
                   <td>
                           <a class="ti-pencil-alt edit" (click)="addEditOpen(item.DEPT_Code)"></a>
-                          &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.DEPT_Code)"></a>
+                          <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.DEPT_Code)"></a> -->
+                          &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.DEPT_Code)"></a>
+                          <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.DEPT_Code)"></a>
                   </td>
               </tr>
               </ng-template>

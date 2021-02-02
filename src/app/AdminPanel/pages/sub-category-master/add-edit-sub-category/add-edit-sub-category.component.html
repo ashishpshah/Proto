@@ -11,7 +11,7 @@
 <div *ngIf="!isFromEdit">
   <div>
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Category<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <ng-select [(ngModel)]="subCategoryObj.Catg_ID" placeholder="Select Root Category" id="Catg_ID"
           [ngModelOptions]="{standalone: true}" (change)="getCategoryListbyId(subCategoryObj.Catg_ID)">
@@ -73,8 +73,8 @@
                     </th>
                     <th pSortableColumn="Display_Seq_No">Display Seq No <p-sortIcon field="Display_Seq_No"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
-                    </th>
+                    <!-- <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
+                    </th> -->
                     <th>Action </th>
                   </tr>
                   <tr>
@@ -95,7 +95,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th></th>
+                    <!-- <th></th> -->
 
                   </tr>
                 </ng-template>
@@ -157,15 +157,17 @@
                       <input class="form-control" type="text" [(ngModel)]="item.Display_Seq_No"
                         id="Display_Seq_No_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
                     </td>
-                    <td style="width: 220px;">
+                    <!-- <td style="width: 220px;">
                       {{item.Deleted}}
                       <span *ngIf="item.Deleted =='Yes'"><button type="button"
                           class="float-right btn btn-success text-white " (click)="activateItem(item.Sub_Catg_ID)">Make
                           Active</button> </span>
-                    </td>
+                    </td> -->
                     <td>
                       <!-- <a class="ti-pencil-alt edit" (click)="openEditPage(item.Sub_Catg_ID)"></a> -->
-                      &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Sub_Catg_ID,rowIndex)"></a>
+                      <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Sub_Catg_ID,rowIndex)"></a> -->
+                      &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Sub_Catg_ID,rowIndex)"></a>
+                          <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.Sub_Catg_ID)"></a>
                       <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
                     </td>
                   </tr>
@@ -205,7 +207,7 @@
     <div>
 
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Category<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Category<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <ng-select [(ngModel)]="subCategoryObj.Catg_ID" placeholder="Select Root Category" id="Catg_ID"
           [ngModelOptions]="{standalone: true}">
@@ -232,12 +234,12 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Sub Category Name<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Sub Category Name<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name" id="Sub_Catg_Name"
             [ngModelOptions]="{standalone: true}">
         </div>
-        <label class="col-sm-2 col-form-label">Sub Category Name (Danish)<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Sub Category Name (Danish)<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="text" [(ngModel)]="subCategoryObj.Sub_Catg_Name_D" id="Sub_Catg_Name_D"
             [ngModelOptions]="{standalone: true}">
@@ -247,7 +249,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="number" [(ngModel)]="subCategoryObj.Display_Seq_No" id="Display_Seq_No"
             [ngModelOptions]="{standalone: true}" min="0">

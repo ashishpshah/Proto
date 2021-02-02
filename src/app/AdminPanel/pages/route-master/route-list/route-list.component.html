@@ -1,14 +1,14 @@
 <!-- *********************************************** Insert-Update **********************************************  -->
 <div *ngIf="IsAddEdit">
-  <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+  <!-- <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div> -->
   <form >
     <div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Route From<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Route From<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="text" [ngClass] ="routeObj.Route_From == '' && errorMessage != '' ? 'alert-danger':''" [(ngModel)]="routeObj.Route_From" id="Route_From" [ngModelOptions]="{standalone: true}">
         </div>
-        <label class="col-sm-2 col-form-label">Route To<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Route To<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="text" [ngClass] ="routeObj.Route_To == '' && errorMessage != '' ? 'alert-danger':''"  [(ngModel)]="routeObj.Route_To" id="Route_To" [ngModelOptions]="{standalone: true}">
         </div>
@@ -28,6 +28,7 @@
 
     </div>
     <br />
+    <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
     <hr />
     <div class="text-center">
       <div class="form-group align-center">
@@ -44,12 +45,12 @@
 <!-- *********************************************** Data List **********************************************  -->
 <div class="row">
   <div class="col-sm-12">
-    <app-card [title]="'Route Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+    <app-card [classHeader]="true" [blockClass]="'table-border-style'">
       <div class="table-responsive">
         <p>
           <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-          <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
-            (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
+          <!-- <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
+            (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a> -->
         </p>
         <br />
         <br />
@@ -66,6 +67,7 @@
                 <input class="p-l-30 form-control" pInputText type="text"
                   (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
               </span>
+              <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span>
             </div>
           </ng-template>
           <br />
@@ -79,8 +81,8 @@
               <th>View Route</th>
               <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon>
               </th>
-              <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
-              </th>
+              <!-- <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
+              </th> -->
               <th>Action </th>
             </tr>
             <tr>
@@ -95,7 +97,7 @@
               </th>
               <th></th>
               <th></th>
-              <th></th>
+              <!-- <th></th> -->
               <th></th>
 
             </tr>
@@ -117,14 +119,16 @@
               <td>
                 {{item.StatusDesc}}
               </td>
-              <td style="width: 220px;">
+              <!-- <td style="width: 220px;">
                 {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button"
                     class="float-right btn btn-success text-white " (click)="activateItem(item.Route_ID)">Make
                     Active</button> </span>
-              </td>
+              </td> -->
               <td>
                 <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Route_ID)"></a>
-                &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Route_ID)"></a>
+                <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Route_ID)"></a> -->
+                &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Route_ID)"></a>
+                          <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.Route_ID)"></a>
                 <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
               </td>
             </tr>

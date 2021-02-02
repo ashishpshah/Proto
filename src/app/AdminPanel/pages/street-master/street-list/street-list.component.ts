@@ -41,6 +41,9 @@ export class StreetListComponent implements OnInit {
   constructor(private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig) {}
   commonHelper = new AdminCommonHelperComponent(this._router);
   warningMessage : string  = this.commonHelper.commonWarningMessage;
+  deleteTooltip : string  = this.commonHelper.deleteTooltip;
+  restoreTooltip : string  = this.commonHelper.restoreTooltip;
+  required : string  = this.commonHelper.required;
   ngOnInit(): void {
     this.getStreetList();
   }

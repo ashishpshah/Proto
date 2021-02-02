@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: RootHeaderListComponent,
     data: {
-      breadcrumb: 'Root Header List',
+      breadcrumb: 'Root Header Master',
       icon: 'icofont-layout bg-c-blue',
-      breadcrumb_caption: 'Root Header List',
+      breadcrumb_caption: '',
       status: true
     }
   }

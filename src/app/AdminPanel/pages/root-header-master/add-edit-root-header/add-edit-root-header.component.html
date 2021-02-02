@@ -8,19 +8,19 @@
   <div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Root Name<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Root Name<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="text" [(ngModel)]="rootHeaderObj.Root_Name" id="Root_Name" [ngModelOptions]="{standalone: true}">
       </div>
 
-      <label class="col-sm-2 col-form-label">Root Name (Danish)<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Root Name (Danish)<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="text" [(ngModel)]="rootHeaderObj.Root_Name_D" id="Root_Name_D" [ngModelOptions]="{standalone: true}" >
       </div>
     </div>
 
     <div class="form-group row">
-      <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass">*</span></label>
+      <label class="col-sm-2 col-form-label">Display Seq No<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
       <div class="col-sm-4">
         <input class="form-control" type="number" [(ngModel)]="rootHeaderObj.Display_Seq_No" id="Display_Seq_No" [ngModelOptions]="{standalone: true}" min="0">
       </div>

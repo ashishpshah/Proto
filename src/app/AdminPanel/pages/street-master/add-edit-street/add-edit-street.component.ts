@@ -36,6 +36,9 @@ export class AddEditStreetComponent implements OnInit {
     }
     commonHelper = new AdminCommonHelperComponent(this._router);
     warningMessage : string  = this.commonHelper.commonWarningMessage;
+    deleteTooltip : string  = this.commonHelper.deleteTooltip;
+  restoreTooltip : string  = this.commonHelper.restoreTooltip;
+  required : string  = this.commonHelper.required;
     ngOnInit():void {
 
       this.getCommonList();

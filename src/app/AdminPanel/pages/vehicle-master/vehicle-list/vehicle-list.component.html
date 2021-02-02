@@ -1,15 +1,15 @@
 <!-- *********************************************** Insert-Update **********************************************  -->
 <div *ngIf="IsAddEdit">
-  <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div>
+  <!-- <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div> -->
   <div><div class='alert alert-danger' *ngIf="errorMessageDate != ''"><span>{{errorMessageDate}}</span></div></div>
   <form >
     <div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Vehicle No<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Vehicle No<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control"  [ngClass] ="vehicleObj.Vehicle_No == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="vehicleObj.Vehicle_No" id="Vehicle_No" [ngModelOptions]="{standalone: true}">
         </div>
-        <label class="col-sm-2 col-form-label">Vehicle Type<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Vehicle Type<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <select class="form-control" [(ngModel)]="vehicleObj.Vehicle_Type" id="Vehicle_Type"
             [ngModelOptions]="{standalone: true}">
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Vehicle Category<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Vehicle Category<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <ng-select [items]="VehicleCategoryList" [(ngModel)]="vehicleObj.Vehicle_Category" id="Vehicle_Category" name="licenseAuthorityId" bindValue="id" bindLabel="name" placeholder="Select Category"> </ng-select>
         </div>
@@ -40,17 +40,17 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Reg No<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Reg No<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control"  type="text" [(ngModel)]="vehicleObj.Reg_No" id="Reg_No" [ngModelOptions]="{standalone: true}">
         </div>
-        <label class="col-sm-2 col-form-label">Reg Type<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Reg Type<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <ng-select [items]="RegTypeList" [(ngModel)]="vehicleObj.Reg_Type" id="Reg_Type" name="Reg_Type" bindValue="id" bindLabel="name" placeholder="Select Reg Type"> </ng-select>
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Measurement Method<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Measurement Method<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <ng-select [items]="MeasurementList" [(ngModel)]="vehicleObj.Measurement_Method" id="Measurement_Method" name="Measurement_Method" bindValue="id" bindLabel="name" placeholder="Select Measurement Method"> </ng-select>
         </div>
@@ -62,7 +62,7 @@
 
       </div>
       <div class="form-group row">
-         <label class="col-sm-2 col-form-label">Reg Effective From<span class="warningclass">*</span></label>
+         <label class="col-sm-2 col-form-label">Reg Effective From<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <mat-form-field appearance="fill" >
             <mat-label>Choose a date</mat-label>
@@ -74,7 +74,7 @@
           </mat-form-field>
         </div>
 
-        <label class="col-sm-2 col-form-label">Reg Effective To<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Reg Effective To<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <mat-form-field appearance="fill" >
             <mat-label>Choose a date</mat-label>
@@ -89,6 +89,7 @@
 
     </div>
     <br />
+    <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
     <hr />
     <div class="text-center">
       <div class="form-group align-center">
@@ -105,11 +106,11 @@
 <!-- *********************************************** Data List **********************************************  -->
 <div class="row">
   <div class="col-sm-12">
-      <app-card [title]="'Vehicle Master'" [classHeader]="true" [blockClass]="'table-border-style'">
+      <app-card [classHeader]="true" [blockClass]="'table-border-style'">
         <div class="table-responsive">
             <p>
               <!-- <a class="btn btn-success float-right" [routerLink]="['/add-edit-item']">Add New</a>   -->
-              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
+              <!-- <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a> -->
             </p>
               <br/>
               <br/>
@@ -121,6 +122,7 @@
                         <i class="pi pi-search"></i>
                         <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
                     </span>
+                    <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span>
                 </div>
               </ng-template>
               <br/>
@@ -132,7 +134,7 @@
                   <th pSortableColumn="Vehicle_CategoryDesc">Vehicle Category<p-sortIcon field="Vehicle_CategoryDesc"></p-sortIcon></th>
                   <th pSortableColumn="MeasurementDesc">Measurement<p-sortIcon field="MeasurementDesc"></p-sortIcon></th>
                   <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
-                  <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th>
+                  <!-- <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon></th> -->
                   <th >Action </th>
               </tr>
               <tr>
@@ -146,7 +148,7 @@
                   <th></th>
                   <th></th>
                   <th></th>
-                  <th></th>
+                  <!-- <th></th> -->
 
               </tr>
               </ng-template>
@@ -168,12 +170,14 @@
                   <td>
                         {{item.StatusDesc}}
                   </td>
-                  <td style = "width: 220px;">
+                  <!-- <td style = "width: 220px;">
                     {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.Vehicle_Id)">Make Active</button> </span>
-                  </td>
+                  </td> -->
                   <td>
                           <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Vehicle_Id)"></a>
-                          &nbsp;<a class=" ti-trash delete" (click)="deleteItem(item.Vehicle_Id)"></a>
+                          <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Vehicle_Id)"></a> -->
+                          &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Vehicle_Id)"></a>
+                                <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.Vehicle_Id)"></a>
                   </td>
               </tr>
               </ng-template>

@@ -100,7 +100,7 @@ Logout()
 updatecartcount()
 {
   this.Item_Master_ = this.Client_commonService_.getItems();
-  this.Itemcount =  this.Item_Master_.length
+  this.Itemcount =  this.Item_Master_ != null? this.Item_Master_.length :0;
 }
 
 showcartevent()

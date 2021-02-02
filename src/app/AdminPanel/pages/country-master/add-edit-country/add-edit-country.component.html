@@ -7,11 +7,11 @@
 <form >
   <div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Country Code<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Country Code<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="text" [(ngModel)]="countryObj.Country_Code" id="Country_Code" [ngModelOptions]="{standalone: true}">
         </div>
-        <label class="col-sm-2 col-form-label">Country Name<span class="warningclass">*</span></label>
+        <label class="col-sm-2 col-form-label">Country Name<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <input class="form-control" type="text" [(ngModel)]="countryObj.Country_Name" id="Country_Name" [ngModelOptions]="{standalone: true}">
         </div>

@@ -38,7 +38,6 @@
               "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
-              // "node_modules/jquery/dist/jquery.min.js",
               "node_modules/select2/dist/js/select2.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
@@ -103,8 +102,6 @@
               "src/assets"
             ],
             "styles": [
-              // "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              // "node_modules/font-awesome-scss/scss/font-awesome.scss",
               "node_modules/ti-icons/css/themify-icons.css",
               "src/assets/icon/icofont/css/icofont.scss",
               "src/styles.scss",
@@ -115,7 +112,6 @@
               "node_modules/primeicons/primeicons.css"
             ],
             "scripts": [
-              // "node_modules/jquery/dist/jquery.min.js",
               "node_modules/froala-editor/js/froala_editor.pkgd.min.js",
               "src/assets/charts/flot/jquery.flot.js",
               "src/assets/charts/flot/jquery.flot.categories.js",
