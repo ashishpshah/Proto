@@ -43,6 +43,7 @@ export class SubcategoryComponent implements OnInit {
   FilterType:string='';
   ID : number;
   FilterID: string='';
+  pageOfItems: Array<any>;
   //productInfoCart : Observable<Item_Master[]>;
 
 
@@ -54,7 +55,10 @@ export class SubcategoryComponent implements OnInit {
   ){
 
   }
-
+  onChangePage(pageOfItems: Array<any>) {
+    // update current page of items
+    this.pageOfItems = pageOfItems;
+}
   ngOnInit()
   {
 
