@@ -52,7 +52,7 @@ export class ProductComponent implements OnInit {
 
   }
   imageClickHandler(e,Item_Masters) {
-    debugger;
+
     console.log('image click', e);
   }
   GetProductItem(){

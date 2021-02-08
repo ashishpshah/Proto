@@ -7,90 +7,122 @@
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">GROCERIES      </li>
           </ul>
-          <div class="box text-center">
+          <div class="col-md-3" style="float: left;">
+            <!--  *** MENUS AND FILTERS ***-->
+            <div class="card sidebar-menu">
+                <div class="card-header">
+                    <h5 class="mb-0 text-uppercase">Groceries</h5>
+                </div>
+
+                <div class="card-body">
+                  <div id="accordion" role="tablist" class="mb-5">
+                    <!-- <jw-pagination [items]="Catg_Master" (changePage)="onChangePage($event)"></jw-pagination> -->
+                    <div class="card" *ngFor="let notification of Catg_Master; let i=index;" >
+                      <div class="card-header sortable" id="headingOne" (click)="SubCategoryList(notification.Catg_ID,i)">
+                              {{ notification.Catg_Name }}
+                      </div>
+
+                      <!-- <div class="card-header sortable" id="headingOne" (click)="SubCategoryList(notification.Catg_ID,i)"  data-toggle="collapse"
+                      [attr.data-target]="'#collapse'+i"
+                      aria-expanded="true"
+                      aria-controls="collapseOne">
+                              {{ notification.Catg_Name }}
+                              <i style="float: right; font-size: 15px;" *ngIf="notification.Sub_Catg_MasterList?.length > 0" aria-hidden="true" class="fa fa-angle-down "></i>
+                      </div> -->
+                      <!-- <div *ngIf="notification.Sub_Catg_MasterList?.length > 0" [id]="'collapse'+i" class="collapse"
+                          aria-labelledby="headingOne"
+                          data-parent="#accordion" class="collapse">
+                          <div class="card-body" >
+                              <ul class="check-list">
+                                <div>
+                                  <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="getItemListBysubcategory(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
+                                </div>
+
+                              </ul>
+                          </div>
+                      </div> -->
+                  </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="card sidebar-menu" >
+              <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5 class="mb-0 text-uppercase">Filter </h5>
+
+              </div>
+              <!-- <hr/> -->
+              <div class="card-body" *ngIf="IsSubCategory">
+                  <form>
+                      <div class="form-group mb-1" *ngFor="let scat of Sub_Catg_Master;">
+                          <div class="custom-control custom-checkbox">
+                              <input [id]="'scat'+scat.Sub_Catg_ID"  [(ngModel)]="scat.IsChecked" style="cursor:pointer" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeSubCategoryList($event.target.checked, scat)">
+                              <label [for]="'scat'+scat.Sub_Catg_ID" class="custom-control-label">{{scat.Sub_Catg_Name}}</label>
+                          </div>
+                      </div>
+                      <!-- <button class="btn btn-outline-secondary btn-sm mt-3" (click)="GetGetitemByFilterType('Brand')" ><i class="fa fa-pencil"></i> Apply</button> -->
+                  </form>
+              </div>
+              <div *ngIf="!IsSubCategory" class="text-small text-left m-l-10">
+                <span style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Filter not available</span>
+              </div>
+          </div>
+
+            <div class="card sidebar-menu">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0 text-uppercase">Brands </h5><a  (click)="ClearbrandFilter(Sub_Catg_Master.length > 0 ? 'Y' : 'N')" class="btn btn-sm btn-danger pull-right" style="color: white;"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block" style="color: white;" >Clear</span></a>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mb-1" *ngFor="let Brand of BrandMaster_;">
+                            <div class="custom-control custom-checkbox">
+                                <input [id]="'brand'+Brand.Brand_ID"  [(ngModel)]="Brand.IsChecked" style="cursor:pointer" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeBrandCategory($event.target.checked, Brand)">
+                                <label [for]="'brand'+Brand.Brand_ID" class="custom-control-label">{{Brand.Brand_Name}} <small>({{Brand.BrandQty}})</small></label>
+                            </div>
+                        </div>
+                        <!-- <button class="btn btn-outline-secondary btn-sm mt-3" (click)="GetGetitemByFilterType('Brand')" ><i class="fa fa-pencil"></i> Apply</button> -->
+                    </form>
+                </div>
+            </div>
+
+            <div class="card sidebar-menu m-b-70">
+              <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5 class="mb-0 text-uppercase">Type </h5><a (click)="ClearTypeFilter(Sub_Catg_Master.length > 0 ? 'Y' : 'N')" class="btn btn-sm btn-danger pull-right" style="color: white;"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block" style="color: white;">Clear</span></a>
+              </div>
+              <div class="card-body">
+                  <form>
+                      <div class="form-group mb-1" *ngFor="let Type_ of TypeMaster_;">
+                          <div class="custom-control custom-checkbox">
+                              <input [id]="'Type'+Type_.Type_ID" [(ngModel)]="Type_.IsChecked" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeTypeCategory($event.target.checked, Type_)">
+                              <label [for]="'Type'+Type_.Type_ID" class="custom-control-label">{{Type_.Type_Name}} <small>({{Type_.TypeQty}})</small></label>
+                          </div>
+                      </div>
+                      <!-- <button class="btn btn-outline-secondary btn-sm mt-3"(click)="GetGetitemByFilterType('Type')" ><i class="fa fa-pencil"></i> Apply</button> -->
+                  </form>
+              </div>
+          </div>
+        </div>
+          <div class="box text-center col-md-9 offset-md-3">
               <div class="row">
-                  <div class="col-md-10 offset-md-1">
-                      <h1>GROCERIES</h1>
-                      <p class="text-muted">
+                  <div class="col-md-12 ">  <!-- offset-md-1 -->
+                      <!-- <h1>GROCERIES</h1> -->
+                      <!-- <img src="assets/img/category/001.jpg" style="width: 100%; height: 25vh"> -->
+                      <img src="{{CatCoverImage}}" style="width: 100%; height: 25vh">
+
+                      <!-- <img src="assets/img/slider/grosary1.png" alt="Angular Carousel 1" style="width: 100%; height: 50vh"> -->
+                      <!-- <p class="text-muted">
                         groceries  food and household supplies sold at a store that sells food and household supplies.
-                      </p>
+                      </p> -->
                   </div>
               </div>
           </div>
           <div class="row">
               <!-- *** LEFT COLUMN ***-->
-              <div class="col-md-3">
-                  <!--  *** MENUS AND FILTERS ***-->
-                  <div class="card sidebar-menu">
-                      <div class="card-header">
-                          <h5 class="mb-0 text-uppercase">Groceries</h5>
-                      </div>
-                      <div class="card-body">
 
-                        <div id="accordion" role="tablist" class="mb-5">
-                          <!-- <jw-pagination [items]="Catg_Master" (changePage)="onChangePage($event)"></jw-pagination> -->
-                          <div class="card" *ngFor="let notification of Catg_Master; let i=index;" >
-                            <div class="card-header sortable" id="headingOne" (click)="SubCategoryList(notification.Catg_ID)"  data-toggle="collapse"
-                            [attr.data-target]="'#collapse'+i"
-                            aria-expanded="true"
-                            aria-controls="collapseOne">
-                                    {{ notification.Catg_Name }}
-                                    <i *ngIf="notification.Sub_Catg_MasterList?.length > 0" aria-hidden="true" class="fa fa-angle-down ">&nbsp;</i>
-                            </div>
-                            <div *ngIf="notification.Sub_Catg_MasterList?.length > 0" [id]="'collapse'+i" class="collapse"
-                                aria-labelledby="headingOne"
-                                data-parent="#accordion" class="collapse">
-                                <div class="card-body" >
-                                    <ul class="check-list">
-                                      <div>
-                                        <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="getItemListBysubcategory(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
-                                      </div>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="card sidebar-menu">
-                      <div class="card-header d-flex align-items-center justify-content-between">
-                          <h5 class="mb-0 text-uppercase">Brands </h5><a  (click)="ClearbrandFilter()" class="btn btn-sm btn-danger pull-right" style="color: white;"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block" style="color: white;" >Clear</span></a>
-                      </div>
-                      <div class="card-body">
-                          <form>
-                              <div class="form-group mb-1" *ngFor="let Brand of BrandMaster_;">
-                                  <div class="custom-control custom-checkbox">
-                                      <input [id]="'brand'+Brand.Brand_ID"  [(ngModel)]="Brand.checked" style="cursor:pointer" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeBrandCategory($event.target.checked, Brand)">
-                                      <label [for]="'brand'+Brand.Brand_ID" class="custom-control-label">{{Brand.Brand_Name}} <small>({{Brand.BrandQty}})</small></label>
-                                  </div>
-                              </div>
-                              <!-- <button class="btn btn-outline-secondary btn-sm mt-3" (click)="GetGetitemByFilterType('Brand')" ><i class="fa fa-pencil"></i> Apply</button> -->
-                          </form>
-                      </div>
-                  </div>
-
-                  <div class="card sidebar-menu">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0 text-uppercase">Type </h5><a (click)="ClearTypeFilter()" class="btn btn-sm btn-danger pull-right" style="color: white;"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block" style="color: white;">Clear</span></a>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group mb-1" *ngFor="let Type_ of TypeMaster_;">
-                                <div class="custom-control custom-checkbox">
-                                    <input [id]="'Type'+Type_.Type_ID" [(ngModel)]="Type_.checked" type="checkbox" name="clothes-brand"  class="custom-control-input" (change)="onChangeTypeCategory($event.target.checked, Type_)">
-                                    <label [for]="'Type'+Type_.Type_ID" class="custom-control-label">{{Type_.Type_Name}} <small>({{Type_.TypeQty}})</small></label>
-                                </div>
-                            </div>
-                            <!-- <button class="btn btn-outline-secondary btn-sm mt-3"(click)="GetGetitemByFilterType('Type')" ><i class="fa fa-pencil"></i> Apply</button> -->
-                        </form>
-                    </div>
-                </div>
-              </div>
               <!-- /.col-md-3-->
               <!-- *** LEFT COLUMN END ***-->
               <!-- *** RIGHT COLUMN ***-->
-              <div class="col-md-9">
+              <div class="col-md-12">
                   <!-- <div class="info-bar">
                       <div class="row">
                           <div class="col-lg-4 products-showing">Showing <strong>12</strong> of <strong>25</strong> products</div>

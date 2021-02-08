@@ -174,7 +174,7 @@ export class VehicleListComponent implements OnInit {
         this._commonService.getVehicleById(this.vehicleId)
           .subscribe((resp) =>
           {
-            debugger;
+
             this.vehicleObj = resp
             let frDt = resp.Reg_Effectivefrom_date;
             let todt = resp.Reg_Effectiveto_date;
@@ -284,7 +284,7 @@ export class VehicleListComponent implements OnInit {
     }
 
     saveVehicle() {
-      debugger;
+
       if(this.validate()){
         this.vehicleObj.Created_By = this.userId;
         // this.vehicleObj.Department = this.vehicleObj.SelectedDepartment.join(',');

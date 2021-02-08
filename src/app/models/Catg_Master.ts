@@ -10,4 +10,5 @@ export class Catg_Master extends BaseModel {
   Status : string;
   Has_SubCatg : boolean=true;
   Sub_Catg_MasterList:Sub_Catg_Master[];
+  Image_Url : string;
 }

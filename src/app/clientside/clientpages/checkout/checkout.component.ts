@@ -35,6 +35,8 @@ export class CheckoutComponent implements OnInit {
     public Client_commonService_: Client_commonService,
     private renderer: Renderer2) { }
 
+    commonHelper = new AdminCommonHelperComponent(this.router);
+    currency : string  = this.commonHelper.currency;
   ngOnInit()
   {
     this.GetAddressList()
@@ -234,7 +236,7 @@ export class CheckoutComponent implements OnInit {
       return true;
     }
   }
-  commonHelper = new AdminCommonHelperComponent(this.router);
+
   createAddress()
   {
     if(this.validate()){

@@ -26,12 +26,12 @@ export class SubcategoryComponent implements OnInit {
   categoryName: string;
   subcategoryName: string;
   _listFilter: string;
-  cat_id: number =0;
-  RCatg_ID: number =0;
+  cat_id: any =0;
+  RCatg_ID: any =0;
   Root_Header_ID: number=0;
   Item_Masters : Observable<Item_Master[]>;
-  Catg_Master : Observable<Catg_Master[]>;
-  Sub_Catg_Master : Observable<Sub_Catg_Master[]>;
+  Catg_Master : any[] =[];
+  Sub_Catg_Master  : any[] =[];
   public isCollapsed = true;
   HeaderName:string='';
   shoppingcartlist : Observable<Item_Master[]>;
@@ -40,11 +40,18 @@ export class SubcategoryComponent implements OnInit {
   typeObj :any ={};
   tempArrType: any = { "FilterType": [] };
   tempArrBrand: any = { "FilterBrand": [] };
+  SubCatFilterArray: any = { "FilterSubCat": [] };
   Type:string='';
   FilterType:string='';
-  ID : number;
+  ID : any;
   FilterID: string='';
   pageOfItems: Array<any>;
+  FilterBrandID :string ='';
+  FilterTypeID :string = '';
+  FilterSubCatID :string = '';
+  CatCoverImage : string = '';
+  IsSubCategory : boolean = false;
+
   //productInfoCart : Observable<Item_Master[]>;
 
 
@@ -67,7 +74,7 @@ export class SubcategoryComponent implements OnInit {
   {
 
 
-
+    localStorage.removeItem('CategoryId');
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
       this.subcategoryName = this.route.snapshot.paramMap.get('string');
@@ -78,8 +85,11 @@ export class SubcategoryComponent implements OnInit {
       this.RCatg_ID=parseInt(this.subcategoryName);
       this.GetitemByCategoryType(this.RCatg_ID,'RootHeader');
       this.GetCatg_MasterList(this.Root_Header_ID);
-      this.GetBrandByType(this.RCatg_ID,'RootHeader','','');
-      this.GetTypeByType(this.RCatg_ID,'RootHeader','','');
+      this.GetBrandByType(this.RCatg_ID,'RootHeader','','','N');
+      this.GetTypeByType(this.RCatg_ID,'RootHeader','','','N');
+
+      // this.ClearbrandFilter();
+      // this.ClearTypeFilter();
 
   }
   onChangeTypeCategory(isChecked: boolean, type_: any)
@@ -90,74 +100,365 @@ export class SubcategoryComponent implements OnInit {
       let index = this.tempArrType.FilterType.indexOf(type_.Type_ID);
       this.tempArrType.FilterType.splice(index,1);
     }
+    if(this.BrandMaster_.length > 0){
+      let tempArray:any = { "FilterBrand": [] };
+      // this.tempArrBrand= { "FilterBrand": [] };
+      this.BrandMaster_.forEach(function (dtVal) {
+        if(dtVal.IsChecked){
+          tempArray.FilterBrand.push(dtVal.Brand_ID);
+        }
+    });
+    this.tempArrBrand = tempArray;
+    }
 
-    this.GetGetitemByFilterType('Type');
+    if(this.Sub_Catg_Master.length > 0){
+      let tempArrays:any = { "FilterSubCat": [] };
+      this.Sub_Catg_Master.forEach(function (dtVal) {
+        if(dtVal.IsChecked){
+          tempArrays.FilterSubCat.push(dtVal.Sub_Catg_ID);
+        }
+    });
+      this.SubCatFilterArray = tempArrays;
+    }
 
+    this.FilterBrandID = this.tempArrBrand.FilterBrand.join(",");
+    this.FilterTypeID = this.tempArrType.FilterType.join(",");
+    if(this.FilterTypeID == '')
+    {
+      this.ClearbrandFilter(this.Sub_Catg_Master.length > 0 ? 'Y' :'N' );
+      // this.ClearTypeFilter();
+    }else{
+      this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
+    }
   }
 
   onChangeBrandCategory(isChecked: boolean, Brand_: any){
-
-
-
     if(isChecked) {
       this.tempArrBrand.FilterBrand.push(Brand_.Brand_ID);
     } else {
       let index = this.tempArrBrand.FilterBrand.indexOf(Brand_.Brand_ID);
       this.tempArrBrand.FilterBrand.splice(index,1);
     }
+    if(this.TypeMaster_.length > 0){
+      let tempArray:any = { "FilterType": [] };
+      this.TypeMaster_.forEach(function (dtVal) {
+        if(dtVal.IsChecked){
+          tempArray.FilterType.push(dtVal.Type_ID);
+        }
+    });
+      this.tempArrType = tempArray;
+    }
 
-    this.GetGetitemByFilterType('Brand');
+    if(this.Sub_Catg_Master.length > 0){
+      let tempArrays:any = { "FilterSubCat": [] };
+      this.Sub_Catg_Master.forEach(function (dtVal) {
+        if(dtVal.IsChecked){
+          tempArrays.FilterSubCat.push(dtVal.Sub_Catg_ID);
+        }
+    });
+      this.SubCatFilterArray = tempArrays;
+    }
+
+    this.FilterBrandID = this.tempArrBrand.FilterBrand.join(",");
+    this.FilterTypeID = this.tempArrType.FilterType.join(",");
+    if(this.FilterBrandID == '')
+    {
+      this.ClearTypeFilter(this.Sub_Catg_Master.length > 0 ? 'Y' :'N');
+      // this.ClearbrandFilter();
+    }else{
+      this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
+    }
+
 
   }
 
-  ClearbrandFilter(){
+  onChangeSubCategoryList(isChecked: boolean, SubCat: any){
+    if(isChecked) {
+
+      this.SubCatFilterArray.FilterSubCat.push(SubCat.Sub_Catg_ID);
+    } else {
+      let index = this.SubCatFilterArray.FilterSubCat.indexOf(SubCat.Brand_ID);
+      this.SubCatFilterArray.FilterSubCat.splice(index,1);
+    }
+
+     if(this.TypeMaster_.length > 0){
+      let tempArray:any = { "FilterType": [] };
+      this.TypeMaster_.forEach(function (dtVal) {
+        if(dtVal.IsChecked){
+          tempArray.FilterType.push(dtVal.Type_ID);
+        }
+    });
+      this.tempArrType = tempArray;
+    }
+
+    if(this.BrandMaster_.length > 0){
+      let tempArray:any = { "FilterBrand": [] };
+      this.BrandMaster_.forEach(function (dtVal) {
+        if(dtVal.IsChecked){
+          tempArray.FilterBrand.push(dtVal.Brand_ID);
+        }
+    });
+    this.tempArrBrand = tempArray;
+    }
+    this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
+  }
+
+  ClearbrandFilter(IsHasSubCategory : any){
     this.tempArrBrand.FilterBrand = [];
+    let IsSubCatClearBrand= IsHasSubCategory == 'Y' ?'Y': 'N';
+
     this.BrandMaster_.map(row => {
-      row.checked = false;
+      row.IsChecked = false;
     });
 
-    this.GetGetitemByFilterType('Brand');
-
+      this.GetGetitemByFilterType('Brand','','SubCategory','Y',IsSubCatClearBrand,'N');
   }
-  ClearTypeFilter()
+  ClearTypeFilter(IsHasSubCategory : any)
   {
+    let IsSubCatClearType= IsHasSubCategory == 'Y' ?'Y': 'N';
     this.tempArrType.FilterType = [];
     this.TypeMaster_.map(row => {
-      row.checked = false;
+      row.IsChecked = false;
     });
 
-    this.GetGetitemByFilterType('Type');
+      this.GetGetitemByFilterType('','Type','SubCategory','Y','N',IsSubCatClearType);
 
+
+    //GetAllFilterList(catId:any,type :any, filterSubCatId : any, filterBrandId :any, filterTypeId:any,IsBrandClear :any,IsTypeClear :any)
   }
-  GetGetitemByFilterType(FilterType)
+
+  GetGetitemByFilterType(FilterBrand,FilterType,FilterSubCat,IsClear,IsSubCatClearBrand,IsSubCatClearType)
   {
-
-
-    this.Type = this.TypeMaster_[0].Type;
-    this.ID = this.TypeMaster_[0].ID;
-    var FilterID ='';
-    if(FilterType =='Type')
-    {
-      FilterID = this.tempArrType.FilterType.join(", ");
-      this.GetBrandByType(this.ID,this.Type,FilterType,FilterID);
+    if(this.TypeMaster_.length >0){
+      this.Type = this.TypeMaster_[0].Type;
+      this.ID = this.TypeMaster_[0].ID;
     }
-    else  if(FilterType =='Brand')
-    {
-      FilterID = this.tempArrBrand.FilterBrand.join(", ");
-      this.GetTypeByType(this.ID,this.Type,FilterType,FilterID);
+    // this.GetSubCategoryByCatId(0,'N');
+    this.FilterSubCatID = this.SubCatFilterArray.FilterSubCat.join(",");
+    this.FilterBrandID = this.tempArrBrand.FilterBrand.join(",");
+    this.FilterTypeID = this.tempArrType.FilterType.join(",");
+    this.Type = FilterSubCat =='SubCategory' ? this.FilterSubCatID != "" ? 'SubCategory' : 'Category' :this.Type;
+    // if(FilterSubCat =='SubCategory')
+    // {
+    //
+    //   if(this.FilterSubCatID != ""){
+    //     this.GetBrandByType(this.ID,this.Type,FilterSubCat,this.FilterSubCatID,IsClear);
+    //     this.GetTypeByType(this.ID,this.Type,FilterSubCat,this.FilterSubCatID,IsClear);
+    //   }
+    // }
+    this.ID = this.ID == undefined || this.ID == null ? localStorage.getItem('CategoryId') : this.ID;
+    if(this.Sub_Catg_Master.length > 0){
+        this.GetAllFilterList(this.ID,this.Type,this.FilterSubCatID,this.FilterBrandID,this.FilterTypeID,IsSubCatClearBrand,IsSubCatClearType);
+    }else{
+      if(FilterBrand =='Brand')
+      {
+          this.GetTypeByType(this.ID,this.Type,FilterBrand,this.FilterBrandID,IsClear);
+      }
+
+      if(FilterType =='Type')
+      {
+
+          this.GetBrandByType(this.ID,this.Type,FilterType,this.FilterTypeID,IsClear);
+      }
     }
-
-
-    this.Client_commonService_.GetGetitemByFilterType(this.ID,this.Type,FilterType,FilterID).subscribe(
+    debugger;
+    this.Client_commonService_.GetGetitemByFilterType(this.ID,this.Type,this.FilterBrandID,FilterBrand,this.FilterTypeID,FilterType,this.FilterSubCatID,FilterSubCat,'0','10000','0','100').subscribe(
       (data) =>
        {
          this.Item_Masters = data;
          this.CheckshopingcartQty()
       }
     )
-
   }
 
+  GetAllFilterList(catId:any,type :any, filterSubCatId : any, filterBrandId :any, filterTypeId:any,IsBrandClear :any,IsTypeClear :any){
+
+    this.Client_commonService_.GetFilter_Brand_Type_SubCategory(catId,type, filterSubCatId, filterBrandId, filterTypeId).subscribe(
+      (data) =>{
+        let dataSubCatMaster   : any[] = [];
+        let ArraySubCat  : any[] = [];
+        let dataBrandMaster   : any[] = [];
+        let ArrayBrand  : any[] = [];
+        let dataTypeMaster   : any[] = [];
+        let ArrayType  : any[] = [];
+        debugger;
+        if(data != null){
+        /********* Start : Sub Category Filter *********/
+          dataSubCatMaster = this.Sub_Catg_Master;
+          if(dataSubCatMaster.length > 0 ){
+            if(data.Sub_Catg_MasterList != null){
+              data.Sub_Catg_MasterList.filter(function (dtVal, index) {
+                    dataSubCatMaster.forEach(function (value) {
+                      if(value.Sub_Catg_ID == dtVal.Sub_Catg_ID){
+                        if(value.IsChecked){
+                          dtVal = value;
+                        }
+                      }
+                    });
+                    ArraySubCat.push(dtVal);
+                 });
+            }
+          this.Sub_Catg_Master = ArraySubCat;
+         }else{
+          this.Sub_Catg_Master = data.Sub_Catg_MasterList;
+         }
+        this.IsSubCategory = this.Sub_Catg_Master != null && this.Sub_Catg_Master.length > 0 ? true:false;
+        /********** End : Sub Category Filter **********/
+
+        /********* Start : Brand Filter *********/
+        dataBrandMaster = this.BrandMaster_;
+         if(dataBrandMaster.length > 0  && IsBrandClear != 'Y'){
+            if(data.Brand_MasterList != null){
+              data.Brand_MasterList.filter(function (dtVal, index) {
+                    dataBrandMaster.forEach(function (value) {
+                      if(value.Brand_ID == dtVal.Brand_ID){
+                        if(value.IsChecked){
+                          dtVal = value;
+                        }
+                      }
+                    });
+                    ArrayBrand.push(dtVal);
+                 });
+            }
+          this.BrandMaster_ = ArrayBrand;
+         }else{
+          this.BrandMaster_ = data.Brand_MasterList;
+         }
+        /********* End : Brand Filter **********/
+
+         /********* Start : Type Filter *********/
+
+         dataTypeMaster = this.TypeMaster_;
+
+         if(dataTypeMaster.length > 0 && IsTypeClear != 'Y'){
+            if(data.Type_MasterList != null){
+              data.Type_MasterList.filter(function (dtVal, index) {
+                  dataTypeMaster.forEach(function (value) {
+                    if(value.Type_ID == dtVal.Type_ID){
+                      if(value.IsChecked){
+                        dtVal = value;
+                      }
+                    }
+                  });
+                  ArrayType.push(dtVal);
+              });
+            }
+          this.TypeMaster_ = ArrayType;
+         }else{
+          this.TypeMaster_ = data.Type_MasterList;
+         }
+        /********* End : Type Filter **********/
+        }
+      }
+      )
+
+  }
+  GetSubCategoryByCatId(categoryId : any, IsClear){
+     let catID :any= localStorage.getItem('CategoryId');
+
+     categoryId = categoryId == '' || categoryId == 0 || categoryId == '0' ? catID == null ?"0":catID:categoryId
+
+     this.Client_commonService_.SubCategoryList(categoryId).subscribe(
+      (data) =>
+       {
+        let dataMaster   : any[] = [];
+        let ArrayBrand  : any[] = [];
+        dataMaster = this.Sub_Catg_Master;
+         if(dataMaster.length > 0  && IsClear != 'Y'){
+            if(data != null){
+                  data.filter(function (dtVal, index) {
+                    dataMaster.forEach(function (value) {
+                      if(value.Sub_Catg_ID == dtVal.Sub_Catg_ID){
+                        if(value.IsChecked){
+                          dtVal = value;
+                        }
+                      }
+                    });
+                    ArrayBrand.push(dtVal);
+                 });
+            }
+          this.Sub_Catg_Master = ArrayBrand;
+         }else{
+          this.Sub_Catg_Master = data;
+         }
+        this.IsSubCategory = this.Sub_Catg_Master != null && this.Sub_Catg_Master.length > 0 ? true:false;
+      }
+    )
+  }
+
+  GetBrandByType(ID :string,Type: string,FilterType :string,FilterID :string, IsClear :string){
+    this.Client_commonService_.GetBrandByType(ID,Type,FilterType,FilterID).subscribe(
+      (data) =>
+       {
+        let dataMaster   : any[] = [];
+        let ArrayBrand  : any[] = [];
+
+        dataMaster = this.BrandMaster_;
+         if(dataMaster.length > 0  && IsClear != 'Y'){
+            if(data != null){
+                  data.filter(function (dtVal, index) {
+                    dataMaster.forEach(function (value) {
+                      if(value.Brand_ID == dtVal.Brand_ID){
+                        if(value.IsChecked){
+                          dtVal = value;
+                        }
+                      }
+                    });
+                    ArrayBrand.push(dtVal);
+                 });
+            }
+          this.BrandMaster_ = ArrayBrand;
+         }else{
+          this.BrandMaster_ = data;
+         }
+      }
+    )
+  }
+
+  GetTypeByType(ID :string,Type: string,FilterType :string,FilterID :string, IsClear :string){
+    this.Client_commonService_.GetTypeByType(ID,Type,FilterType,FilterID).subscribe(
+      (data) =>
+       {
+        let dataMaster   : any[] = [];
+        let ArrayType : any[] = [];
+        dataMaster = this.TypeMaster_;
+
+         if(dataMaster.length > 0 && IsClear != 'Y'){
+          // this.TypeMaster_.forEach(function (value) {
+
+            if(data != null){
+              // data.forEach(function (dtVal) {
+                data.filter(function (dtVal, index) {
+                  dataMaster.forEach(function (value) {
+                    if(value.Type_ID == dtVal.Type_ID){
+                      if(value.IsChecked){
+                        dtVal = value;
+                        // dtVal.IsChecked = true;
+                      }
+                      // else{dtVal.IsChecked = false;}
+                      // dtVal = value;
+                      // ArrayType.push(dtVal);
+                    }
+                    // else{
+                    //   ArrayType.push(dtVal);
+                    // }
+                  });
+                  ArrayType.push(dtVal);
+                  // return dtVal;
+              });
+            }
+          // });
+          // ArrayType = data;
+          this.TypeMaster_ = ArrayType;
+         }else{
+          this.TypeMaster_ = data;
+         }
+        //  this.TypeMaster_.map(row => {
+        //   row.IsChecked =row.IsChecked == true? true: false;
+        // });
+      }
+    )
+  }
   toggleShow(Item_Masters)
   {
 
@@ -201,38 +502,25 @@ export class SubcategoryComponent implements OnInit {
       }
     )
   }
+  GetitemByCategoryTypeMulti(ID :string,Type: string){
+    let ids : string = '';
+    ids = this.SubCatFilterArray.FilterSubCat.length > 0? this.SubCatFilterArray.FilterSubCat.join(",") : ID;
 
-  GetBrandByType(ID :number,Type: string,FilterType :string,FilterID :string){
-
-    this.Client_commonService_.GetBrandByType(ID,Type,FilterType,FilterID).subscribe(
+    this.Client_commonService_.GetitemByCategoryTypeMulti(ids,Type).subscribe(
       (data) =>
        {
-         this.BrandMaster_ = data;
-         this.BrandMaster_.map(row => {
-          row.checked = false;
-        });
+         this.Item_Masters = data;
+         this.CheckshopingcartQty()
       }
     )
   }
 
-  GetTypeByType(ID :number,Type: string,FilterType :string,FilterID :string){
 
-    this.Client_commonService_.GetTypeByType(ID,Type,FilterType,FilterID).subscribe(
-      (data) =>
-       {
-         this.TypeMaster_ = data;
-         this.TypeMaster_.map(row => {
-          row.checked = false;
-        });
-      }
-    )
-  }
+  getItemList(cat_ids :string){
 
-  getItemList(cat_ids :number){
-
-    this.GetitemByCategoryType(cat_ids,'Category')
-    this.GetBrandByType(cat_ids,'Category','','');
-    this.GetTypeByType(cat_ids,'Category','','');
+    this.GetitemByCategoryTypeMulti(cat_ids,'Category')
+    this.GetBrandByType(cat_ids,'Category','','','N');
+    this.GetTypeByType(cat_ids,'Category','','','N');
   }
 
   CheckshopingcartQty()
@@ -261,7 +549,7 @@ export class SubcategoryComponent implements OnInit {
       (data) =>
        {
          this.Catg_Master = data;
-
+         this.CatCoverImage = this.Catg_Master.length > 0 ? this.Catg_Master[0].Image_Url:'';
       }
     )
   }
@@ -269,45 +557,40 @@ export class SubcategoryComponent implements OnInit {
   filterByCategory(cat_ids)
   {
     this.GetitemByCategoryType(cat_ids,'Category')
-    this.GetBrandByType(cat_ids,'Category','','');
-    this.GetTypeByType(cat_ids,'Category','','');
+    this.GetBrandByType(cat_ids,'Category','','','N');
+    this.GetTypeByType(cat_ids,'Category','','','N');
   }
   getItemListBysubcategory(Sub_Catg_ID)
   {
-    debugger;
+
     this.GetitemByCategoryType(Sub_Catg_ID,'SubCategory')
-    this.GetBrandByType(Sub_Catg_ID,'SubCategory','','');
-    this.GetTypeByType(Sub_Catg_ID,'SubCategory','','');
+    this.GetBrandByType(Sub_Catg_ID,'SubCategory','','','N');
+    this.GetTypeByType(Sub_Catg_ID,'SubCategory','','','N');
   }
+
+
 
   onClickwhishlist(Item_Masters)
   {
-
-
     Item_Masters.Activewishlist = !Item_Masters.Activewishlist;
-
     if(Item_Masters.Activewishlist)
     {
       this.Client_commonService_.addwishlist(Item_Masters);
     }else{
       this.Client_commonService_.removewhishlist(Item_Masters);
     }
-
   }
 
   ngAfterViewInit() {
-
     $('#carouselExample').on('slide.bs.carousel', function (e) {
-
       var $e = $(e.relatedTarget);
       var idx = $e.index();
       var itemsPerSlide = 7;
       var totalItems = $('.carousel-item').length;
-
       if (idx >= totalItems-(itemsPerSlide-1)) {
           var it = itemsPerSlide - (totalItems - idx);
           for (var i=0; i<it; i++) {
-              // append slides to end
+              //append slides to end
               if (e.direction=="left") {
                   $('.carousel-item').eq(i).appendTo('.carousel-inner');
               }
@@ -317,11 +600,25 @@ export class SubcategoryComponent implements OnInit {
           }
       }
   });
-
   }
-  SubCategoryList(cat_ids)
+
+  SubCategoryList(cat_ids,index)
   {
+
+    let img = '';
+    this.IsSubCategory = false;
+    if(this.Catg_Master != null){
+      this.Catg_Master.forEach(function (value) {
+        if(value.Catg_ID == cat_ids)
+         img = value.Image_Url;
+      });
+      this.Sub_Catg_Master = this.Catg_Master[index].Sub_Catg_MasterList;
+      this.IsSubCategory = this.Sub_Catg_Master != null && this.Sub_Catg_Master.length > 0 ? true:false;
+    }
+    this.CatCoverImage = img;
     this.filterByCategory(cat_ids);
+
+    localStorage.setItem('CategoryId',cat_ids);
   }
 
   GetItemListBysubcategory_List(Sub_Catg_ID)
@@ -344,7 +641,28 @@ function typeFun() {
   IsDeleted :'',
   IsInserted : '',
   StatusDesc:'',
-  editable: false
+  editable: false,
+  IsChecked : false
+};
+  return obj;
+}
+
+function BrandFun() {
+
+  let obj ={
+    Brand_ID :'',
+    Brand_Name : '',
+    Brand_NameD : '',
+  Status : 'A',
+  Created_By :'',
+  Created_Date :'',
+  Modified_By :'',
+  Modified_Date :'',
+  IsDeleted :'',
+  IsInserted : '',
+  StatusDesc:'',
+  editable: false,
+  IsChecked : false
 };
   return obj;
 }

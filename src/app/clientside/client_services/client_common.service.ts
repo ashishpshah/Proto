@@ -339,6 +339,12 @@ GetitemByCategoryType(ID:number,Type:string): Observable<any> {
 
    }
 
+GetitemByCategoryTypeMulti(ID:string,Type:string): Observable<any> {
+
+    return this.http.get(this.baseUrl +'SubCategory/GetitemByCategoryTypeMulti?ID='+ID+'&Type='+Type);
+
+  }
+
 getItemListBysubcategory(Sub_Catg_ID:number): Observable<any> {
      return this.http.get(this.baseUrl +'SubCategory/GetItemListBysubcategory?Sub_Catg_ID='+Sub_Catg_ID);
    }
@@ -363,21 +369,24 @@ GetRootHeaderDataList(): Observable<any> {
     return this.http.get(this.baseUrl +'SubCategory/GetProductItemList');
   }
 
-GetBrandByType(ID:number,Type: string ,FilterType :string,FilterID :string): Observable<any>
+GetBrandByType(ID:string,Type: string ,FilterType :string,FilterID :string): Observable<any>
 {
       return this.http.get(this.baseUrl +'BrandMaster/GetBrandByType?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
 }
 
-GetTypeByType(ID:number,Type: string,FilterType :string,FilterID :string): Observable<any>
+GetTypeByType(ID:string,Type: string,FilterType :string,FilterID :string): Observable<any>
 {
       return this.http.get(this.baseUrl +'Type_Master/GetTypeByType?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
 }
 
-GetGetitemByFilterType(ID:number,Type: string,FilterType :string,FilterID :string ): Observable<any>
+// GetGetitemByFilterType(ID:number,Type: string,FilterType :string,FilterID :string ): Observable<any>
+// {
+//       return this.http.get(this.baseUrl +'SubCategory/GetGetitemByFilter?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
+// }
+GetGetitemByFilterType(ID:number,Type: string,FilterBrandID :string,FilterBrand :string,FilterTypeID :string,FilterType :string ,FilterSubCatId: string,FilterSubCat :string,FilterMinPrice :string,FilterMaxPrice :string,FilterMinDiscount :string,FilterMaxDiscount:string): Observable<any>
 {
-      return this.http.get(this.baseUrl +'SubCategory/GetGetitemByFilter?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
+      return this.http.get(this.baseUrl +'SubCategory/GetGetitemByFilter?ID='+ID+'&Type='+Type+'&FilterBrandID='+FilterBrandID+'&FilterBrand='+FilterBrand+'&FilterTypeID='+FilterTypeID+'&FilterType='+FilterType+'&FilterSubCatId='+FilterSubCatId+'&FilterSubCat='+FilterSubCat+'&FilterMinPrice='+FilterMinPrice+'&FilterMaxPrice='+FilterMaxPrice+'&FilterMinDiscount='+FilterMinDiscount+'&FilterMaxDiscount='+FilterMaxDiscount);
 }
-
   groupBy<T, K>(list: T[], getKey: (item: T) => K) {
     const map = new Map<K, T[]>();
     list.forEach((item) => {
@@ -390,6 +399,12 @@ GetGetitemByFilterType(ID:number,Type: string,FilterType :string,FilterID :strin
         }
     });
     return Array.from(map.values());
+}
+
+
+GetFilter_Brand_Type_SubCategory(CatId:string,MainType: string ,FilterSubCatId :string,FilterBrandId :string,FilterTypeId:string): Observable<any>
+{
+      return this.http.get(this.baseUrl +'Common/GetAllFilter_Brand_Type_SubCategory?CatId='+CatId+'&MainType='+MainType+'&FilterSubCatId='+FilterSubCatId+'&FilterBrandId='+FilterBrandId+'&FilterTypeId='+FilterTypeId);
 }
 
 }

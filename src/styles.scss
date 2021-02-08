@@ -15,7 +15,13 @@
   }
 };
 .m-b-60{
-  margin-bottom:60px;
+  margin-bottom:60px !important;
+}
+.m-b-65{
+  margin-bottom:65px !important;
+}
+.m-b-70{
+  margin-bottom:70px !important;
 }
 body {
   background-color: #f3f3f3;
@@ -210,9 +216,12 @@ ul {
 
 .card {
   border-radius: 5px;
-  box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+  // box-shadow: 0 1px 11px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 5px 0 rgb(0 0 0 / 19%);
   border: none;
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
+  margin-bottom: 15px;
+
   .card-footer {
     background-color: #fff;
     border-top: none;

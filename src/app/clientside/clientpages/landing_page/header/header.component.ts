@@ -117,7 +117,7 @@ showcartevent()
 }
   GetRootHeaderData(){
 
-debugger;
+
     //this.Root_Header_Masters = this.categoryService.GetRootHeaderDataList();
 
     this.Client_commonService_.GetRootHeaderDataList().subscribe(
