@@ -1,6 +1,6 @@
 
 
-<div id="all" class="m-b-60">
+<div id="all" class="">
   <div id="content">
       <div class="container">
           <ul class="breadcrumb justify-content-md-end justify-content-center">
@@ -21,26 +21,6 @@
                       <div class="card-header sortable" id="headingOne" (click)="SubCategoryList(notification.Catg_ID,i)">
                               {{ notification.Catg_Name }}
                       </div>
-
-                      <!-- <div class="card-header sortable" id="headingOne" (click)="SubCategoryList(notification.Catg_ID,i)"  data-toggle="collapse"
-                      [attr.data-target]="'#collapse'+i"
-                      aria-expanded="true"
-                      aria-controls="collapseOne">
-                              {{ notification.Catg_Name }}
-                              <i style="float: right; font-size: 15px;" *ngIf="notification.Sub_Catg_MasterList?.length > 0" aria-hidden="true" class="fa fa-angle-down "></i>
-                      </div> -->
-                      <!-- <div *ngIf="notification.Sub_Catg_MasterList?.length > 0" [id]="'collapse'+i" class="collapse"
-                          aria-labelledby="headingOne"
-                          data-parent="#accordion" class="collapse">
-                          <div class="card-body" >
-                              <ul class="check-list">
-                                <div>
-                                  <li class="" *ngFor='let item7  of notification.Sub_Catg_MasterList' (click)="getItemListBysubcategory(item7.Sub_Catg_ID)">{{ item7.Sub_Catg_Name }}</li>
-                                </div>
-
-                              </ul>
-                          </div>
-                      </div> -->
                   </div>
                   </div>
                 </div>
@@ -85,7 +65,7 @@
                 </div>
             </div>
 
-            <div class="card sidebar-menu m-b-70">
+            <div class="card sidebar-menu">
               <div class="card-header d-flex align-items-center justify-content-between">
                   <h5 class="mb-0 text-uppercase">Type </h5><a (click)="ClearTypeFilter(Sub_Catg_Master.length > 0 ? 'Y' : 'N')" class="btn btn-sm btn-danger pull-right" style="color: white;"><i class="fa fa-times-circle"></i><span class="d-none d-lg-inline-block" style="color: white;">Clear</span></a>
               </div>
@@ -101,18 +81,29 @@
                   </form>
               </div>
           </div>
+
+          <!-- <div class="card sidebar-menu m-b-70">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0 text-uppercase">Price </h5>
+            </div>
+            <div class="card-body">
+                <form class="priceRangeForm">
+
+                  <ion-range-slider #sliderElement  type="" [min]="0"  max="100" from_min="0" from_shadow="true" to_max="100" to_shadow="true" grid="true" grid_num="10"
+                      prefix=""
+                      postfix=""
+                      decorate_both="true"
+                  >
+                  </ion-range-slider>
+
+                </form>
+            </div>
+        </div> -->
         </div>
           <div class="box text-center col-md-9 offset-md-3">
               <div class="row">
                   <div class="col-md-12 ">  <!-- offset-md-1 -->
-                      <!-- <h1>GROCERIES</h1> -->
-                      <!-- <img src="assets/img/category/001.jpg" style="width: 100%; height: 25vh"> -->
                       <img src="{{CatCoverImage}}" style="width: 100%; height: 25vh">
-
-                      <!-- <img src="assets/img/slider/grosary1.png" alt="Angular Carousel 1" style="width: 100%; height: 50vh"> -->
-                      <!-- <p class="text-muted">
-                        groceries  food and household supplies sold at a store that sells food and household supplies.
-                      </p> -->
                   </div>
               </div>
           </div>
@@ -123,29 +114,35 @@
               <!-- *** LEFT COLUMN END ***-->
               <!-- *** RIGHT COLUMN ***-->
               <div class="col-md-12">
-                  <!-- <div class="info-bar">
+                  <div class="info-bar">
                       <div class="row">
-                          <div class="col-lg-4 products-showing">Showing <strong>12</strong> of <strong>25</strong> products</div>
+                          <div class="col-lg-4 products-showing">Showing <strong>{{showingItems}}</strong> of <strong>{{totalItems}}</strong> products</div>
                           <div class="col-lg-8 products-number-sort">
                               <form class="form-inline"></form>
                               <div class="row">
-                                  <div class="col-6 col-lg-7">
-                                      <div class="products-number"><strong>Show</strong><a href="#" class="btn btn-sm btn-outline-primary mr-1">12</a> <a href="#" class="btn btn-outline-secondary btn-sm mr-1">24</a> <a href="#" class="btn btn-outline-secondary btn-sm mr-1">All</a> products</div>
+                                  <div class="col-6 col-lg-6">
+                                    <ul class="products-sort-by d-flex  pagination justify-content-center">
+                                      <strong>Show </strong>
+                                      <select class="goto-page" #mySelect (change)='GetItemByPageSize(mySelect.value)'>
+                                        <!-- <option value="0">All</option> -->
+                                        <option *ngFor='let item  of ShowItemList' value="{{item}}" [attr.selected]="item == pageSize ? true : null">{{item}}</option>
+                                        <option value="0">All</option>
+                                      </select>
+                                  </ul>
+                                      <!-- <div class="products-number"><strong>Show</strong><a href="#" class="btn btn-sm btn-outline-primary mr-1">12</a> <a href="#" class="btn btn-outline-secondary btn-sm mr-1">24</a> <a href="#" class="btn btn-outline-secondary btn-sm mr-1">All</a> products</div> -->
                                   </div>
-                                  <div class="col-6 col-lg-5">
-                                      <div class="products-sort-by d-flex justify-content-end">
+                                  <div class="col-6 col-lg-6">
+                                      <div class="d-flex justify-content-end">
                                           <strong>Sort by</strong>
-                                          <select name="sort-by" class="form-control form-control-sm">
-                                              <option>Price</option>
-                                              <option>Name</option>
-                                              <option>Sales first</option>
+                                          <select name="sort-by" #sortby class=" m-l-10 goto-page wd-155"  (change)='GetItemSortBy(sortby.value)'>
+                                            <option *ngFor='let item  of SortByList' value="{{item.id}}" [attr.selected]="item.id == sortBy ? true : null">{{item.name}}</option>
                                           </select>
                                       </div>
                                   </div>
                               </div>
                           </div>
                       </div>
-                  </div> -->
+                  </div>
                   <!-- <div class="banner">
                     <div class="card">
                     <div  class="card-header mb-1">
@@ -307,25 +304,46 @@
                   </div>
                   <!-- /.products-->
 
-                  <!-- <div class="pages">
-                      <p class="loadMore"><a href="#" class="btn btn-outline-primary"><i class="fa fa-chevron-down"></i> Load more</a></p>
-                      <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4">
-                          <ul class="pagination">
-                              <li class="page-item"><a href="#" class="page-link">«</a></li>
-                              <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                              <li class="page-item"><a href="#" class="page-link">2</a></li>
-                              <li class="page-item"><a href="#" class="page-link">3</a></li>
-                              <li class="page-item"><a href="#" class="page-link">»</a></li>
-                          </ul>
-                      </nav>
-                  </div> -->
+                  <nav aria-label="Page navigation example m-b-40" style="margin-bottom: 120px !important;">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item disabled">
+                        <a class="page-link" tabindex="-1">Go to page</a>
+                      </li>
+                      <li class="page-item" >
+                        <select class="goto-page" #myPageNo (change)='GetItemByPageNo(myPageNo.value)'>
+                          <!-- <option value="0">All</option> -->
+                          <option *ngFor='let item  of PaginationList' value="{{item}}" [attr.selected]="item == pageNo ? true : null">{{item}}</option>
+                        </select>
+                      </li> &nbsp;
+
+                        <li class="page-item" [ngClass] = "isFirstPageDisabled ? 'disabled' :''">
+                            <a class="page-link" (click) = "GetItemByPageNo(firstPageNo)" tabindex="-1">First</a>
+                          </li>
+                      <li class="page-item" [ngClass] = "isFirstPageDisabled ? 'disabled' :''">
+                        <a class="page-link" (click) = "GetItemByPageNo(pageNo ==firstPageNo ? firstPageNo : pageNo - 1)" tabindex="-1">Previous</a>
+                      </li>
+                      <li class="page-item" *ngFor='let item  of PaginationList' [ngClass]="item == pageNo ? 'active' :''"><a class="page-link" (click) = "GetItemByPageNo(item)">{{item}}</a></li>
+                      <li class="page-item" [ngClass] = "isLastPageDisabled ? 'disabled' :''">
+                        <a class="page-link" (click) = "GetItemByPageNo(pageNo ==lastPageNo ? lastPageNo : pageNo +1)">Next</a>
+                      </li>
+                      <li class="page-item" [ngClass] = "isLastPageDisabled ? 'disabled' :''">
+                        <a class="page-link" (click) = "GetItemByPageNo(lastPageNo)">Last</a>
+                      </li>
+                    </ul>
+                  </nav>
+
               </div>
               <!-- /.col-md-9-->
               <!-- *** RIGHT COLUMN END ***-->
           </div>
       </div>
   </div>
+
 </div>
+<script type="text/javascript">
+  $('input').popup();
+  </script>
+
 
 
 

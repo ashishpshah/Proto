@@ -1,3 +1,4 @@
+import { ClientCommonHelperComponent, Pagination } from './../../clientCommonHelper/clientCommonHelper.component';
 import { AdminCommonHelperComponent } from './../../../AdminPanel/pages/AdminCommonHelper/AdminCommonHelper.component';
 import { Catg_Master } from './../../../models/Catg_Master';
 import { StreetListComponent } from './../../../AdminPanel/pages/street-master/street-list/street-list.component';
@@ -29,7 +30,7 @@ export class SubcategoryComponent implements OnInit {
   cat_id: any =0;
   RCatg_ID: any =0;
   Root_Header_ID: number=0;
-  Item_Masters : Observable<Item_Master[]>;
+  Item_Masters : any[]=[];
   Catg_Master : any[] =[];
   Sub_Catg_Master  : any[] =[];
   public isCollapsed = true;
@@ -54,7 +55,6 @@ export class SubcategoryComponent implements OnInit {
 
   //productInfoCart : Observable<Item_Master[]>;
 
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -63,8 +63,28 @@ export class SubcategoryComponent implements OnInit {
   ){
 
   }
-  commonHelper = new AdminCommonHelperComponent(this.router);
+
+  commonHelper = new ClientCommonHelperComponent(this.router,this.Client_commonService_);
   currency : string  = this.commonHelper.currency;
+
+  /*------Start: Pagination Global variable -------*/
+  PaginationList : any[] = [];
+  pageSize : number = this.commonHelper.pageSize;
+  pageNo  : number = this.commonHelper.pageNo;
+  sortBy : string = this.commonHelper.sortBy;
+  totalItems : any = 0;
+  MainId : any = 0; // It's use when need to getitem by page no in pagination
+  MainType : any = ''; // It's use when need to getitem by page no in pagination
+  IsMultiCategory : boolean = false;
+  showingItems : number = 0;
+  isFirstPageDisabled : boolean ;
+  isLastPageDisabled : boolean;
+  firstPageNo : number;
+  lastPageNo : number;
+  ShowItemList : any[];
+  SortByList : any[] =[];
+  IsFilterItem : boolean = false;
+  /*------End: Pagination Global variable -------*/
 
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
@@ -76,24 +96,19 @@ export class SubcategoryComponent implements OnInit {
 
     localStorage.removeItem('CategoryId');
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-
       this.subcategoryName = this.route.snapshot.paramMap.get('string');
       this.typeObj = typeFun();
-      // this.categoryName = this.route.snapshot.data['name'];
-      // this.category = this.route.snapshot.data['category'];
       this.Root_Header_ID=parseInt(this.subcategoryName);
       this.RCatg_ID=parseInt(this.subcategoryName);
       this.GetitemByCategoryType(this.RCatg_ID,'RootHeader');
       this.GetCatg_MasterList(this.Root_Header_ID);
       this.GetBrandByType(this.RCatg_ID,'RootHeader','','','N');
       this.GetTypeByType(this.RCatg_ID,'RootHeader','','','N');
-
-      // this.ClearbrandFilter();
-      // this.ClearTypeFilter();
-
   }
   onChangeTypeCategory(isChecked: boolean, type_: any)
   {
+    this.pageNo = this.firstPageNo;
+    this.MainId = type_.ID;
     if(isChecked) {
       this.tempArrType.FilterType.push(type_.Type_ID);
     } else {
@@ -102,7 +117,6 @@ export class SubcategoryComponent implements OnInit {
     }
     if(this.BrandMaster_.length > 0){
       let tempArray:any = { "FilterBrand": [] };
-      // this.tempArrBrand= { "FilterBrand": [] };
       this.BrandMaster_.forEach(function (dtVal) {
         if(dtVal.IsChecked){
           tempArray.FilterBrand.push(dtVal.Brand_ID);
@@ -126,13 +140,14 @@ export class SubcategoryComponent implements OnInit {
     if(this.FilterTypeID == '')
     {
       this.ClearbrandFilter(this.Sub_Catg_Master.length > 0 ? 'Y' :'N' );
-      // this.ClearTypeFilter();
     }else{
       this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
     }
   }
 
   onChangeBrandCategory(isChecked: boolean, Brand_: any){
+    this.pageNo = this.firstPageNo;
+    this.MainId = Brand_.ID;
     if(isChecked) {
       this.tempArrBrand.FilterBrand.push(Brand_.Brand_ID);
     } else {
@@ -164,20 +179,19 @@ export class SubcategoryComponent implements OnInit {
     if(this.FilterBrandID == '')
     {
       this.ClearTypeFilter(this.Sub_Catg_Master.length > 0 ? 'Y' :'N');
-      // this.ClearbrandFilter();
     }else{
       this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
     }
-
-
   }
 
   onChangeSubCategoryList(isChecked: boolean, SubCat: any){
+    this.pageNo = this.firstPageNo;
+    this.MainId = SubCat.Catg_ID;
+    debugger;
     if(isChecked) {
-
-      this.SubCatFilterArray.FilterSubCat.push(SubCat.Sub_Catg_ID);
+       this.SubCatFilterArray.FilterSubCat.push(SubCat.Sub_Catg_ID);
     } else {
-      let index = this.SubCatFilterArray.FilterSubCat.indexOf(SubCat.Brand_ID);
+      let index = this.SubCatFilterArray.FilterSubCat.indexOf(SubCat.Sub_Catg_ID);
       this.SubCatFilterArray.FilterSubCat.splice(index,1);
     }
 
@@ -211,7 +225,7 @@ export class SubcategoryComponent implements OnInit {
       row.IsChecked = false;
     });
 
-      this.GetGetitemByFilterType('Brand','','SubCategory','Y',IsSubCatClearBrand,'N');
+      this.GetGetitemByFilterType('Brand','Type','SubCategory','Y',IsSubCatClearBrand,'N');
   }
   ClearTypeFilter(IsHasSubCategory : any)
   {
@@ -221,31 +235,23 @@ export class SubcategoryComponent implements OnInit {
       row.IsChecked = false;
     });
 
-      this.GetGetitemByFilterType('','Type','SubCategory','Y','N',IsSubCatClearType);
-
-
+      this.GetGetitemByFilterType('Brand','Type','SubCategory','Y','N',IsSubCatClearType);
     //GetAllFilterList(catId:any,type :any, filterSubCatId : any, filterBrandId :any, filterTypeId:any,IsBrandClear :any,IsTypeClear :any)
   }
 
   GetGetitemByFilterType(FilterBrand,FilterType,FilterSubCat,IsClear,IsSubCatClearBrand,IsSubCatClearType)
   {
+    debugger;
     if(this.TypeMaster_.length >0){
       this.Type = this.TypeMaster_[0].Type;
       this.ID = this.TypeMaster_[0].ID;
     }
-    // this.GetSubCategoryByCatId(0,'N');
+    this.ID = this.MainId;
     this.FilterSubCatID = this.SubCatFilterArray.FilterSubCat.join(",");
     this.FilterBrandID = this.tempArrBrand.FilterBrand.join(",");
     this.FilterTypeID = this.tempArrType.FilterType.join(",");
     this.Type = FilterSubCat =='SubCategory' ? this.FilterSubCatID != "" ? 'SubCategory' : 'Category' :this.Type;
-    // if(FilterSubCat =='SubCategory')
-    // {
-    //
-    //   if(this.FilterSubCatID != ""){
-    //     this.GetBrandByType(this.ID,this.Type,FilterSubCat,this.FilterSubCatID,IsClear);
-    //     this.GetTypeByType(this.ID,this.Type,FilterSubCat,this.FilterSubCatID,IsClear);
-    //   }
-    // }
+
     this.ID = this.ID == undefined || this.ID == null ? localStorage.getItem('CategoryId') : this.ID;
     if(this.Sub_Catg_Master.length > 0){
         this.GetAllFilterList(this.ID,this.Type,this.FilterSubCatID,this.FilterBrandID,this.FilterTypeID,IsSubCatClearBrand,IsSubCatClearType);
@@ -257,15 +263,20 @@ export class SubcategoryComponent implements OnInit {
 
       if(FilterType =='Type')
       {
-
           this.GetBrandByType(this.ID,this.Type,FilterType,this.FilterTypeID,IsClear);
       }
     }
-    debugger;
-    this.Client_commonService_.GetGetitemByFilterType(this.ID,this.Type,this.FilterBrandID,FilterBrand,this.FilterTypeID,FilterType,this.FilterSubCatID,FilterSubCat,'0','10000','0','100').subscribe(
+
+    this.Client_commonService_.GetGetitemByFilterType(this.ID,this.Type,this.FilterBrandID,FilterBrand,this.FilterTypeID,FilterType,this.FilterSubCatID,FilterSubCat,'0','10000','0','100',this.pageSize,this.pageNo,this.sortBy).subscribe(
       (data) =>
        {
+         this.IsFilterItem =true;
          this.Item_Masters = data;
+         this.totalItems = data != null && this.Item_Masters.length > 0 ? this.Item_Masters[0].TotalCount : 0;
+         this.GeneratePaginationNo(this.totalItems,this.pageSize,this.pageNo);
+         this.IsMultiCategory = false;
+         this.MainId = this.ID;
+         this.MainType = this.Type;
          this.CheckshopingcartQty()
       }
     )
@@ -281,7 +292,7 @@ export class SubcategoryComponent implements OnInit {
         let ArrayBrand  : any[] = [];
         let dataTypeMaster   : any[] = [];
         let ArrayType  : any[] = [];
-        debugger;
+
         if(data != null){
         /********* Start : Sub Category Filter *********/
           dataSubCatMaster = this.Sub_Catg_Master;
@@ -353,6 +364,7 @@ export class SubcategoryComponent implements OnInit {
       )
 
   }
+
   GetSubCategoryByCatId(categoryId : any, IsClear){
      let catID :any= localStorage.getItem('CategoryId');
 
@@ -492,12 +504,19 @@ export class SubcategoryComponent implements OnInit {
     this.Client_commonService_.addToCart1(Item_Mastercart);
   }
 
-  GetitemByCategoryType(ID :number,Type: string){
 
-    this.Client_commonService_.GetitemByCategoryType(ID,Type).subscribe(
+  GetitemByCategoryType(ID :number,Type: string){
+    this.Client_commonService_.GetitemByCategoryType(ID,Type,this.pageSize,this.pageNo,this.sortBy).subscribe(
       (data) =>
        {
+
+         this.IsFilterItem =false;
          this.Item_Masters = data;
+         this.totalItems = data != null && this.Item_Masters.length > 0 ? this.Item_Masters[0].TotalCount : 0;
+         this.GeneratePaginationNo(this.totalItems,this.pageSize,this.pageNo);
+         this.IsMultiCategory = false;
+         this.MainId = ID;
+         this.MainType = Type;
          this.CheckshopingcartQty()
       }
     )
@@ -506,15 +525,83 @@ export class SubcategoryComponent implements OnInit {
     let ids : string = '';
     ids = this.SubCatFilterArray.FilterSubCat.length > 0? this.SubCatFilterArray.FilterSubCat.join(",") : ID;
 
-    this.Client_commonService_.GetitemByCategoryTypeMulti(ids,Type).subscribe(
+    this.Client_commonService_.GetitemByCategoryTypeMulti(ids,Type,this.pageSize,this.pageNo,this.sortBy).subscribe(
       (data) =>
        {
+         this.IsFilterItem =false;
          this.Item_Masters = data;
+         this.totalItems = data != null && this.Item_Masters.length > 0 ? this.Item_Masters[0].TotalCount : 0;
+         this.GeneratePaginationNo(this.totalItems,this.pageSize,this.pageNo);
+         this.IsMultiCategory = true;
+         this.MainId = ID;
+         this.MainType = Type;
          this.CheckshopingcartQty()
       }
     )
   }
 
+  /****--- Get Pagination no from common helper ----***/
+  GeneratePaginationNo(totalItems,pageSize,pageNo){
+    this.PaginationList =  this.commonHelper.GeneratePaginationNo(totalItems,pageSize,pageNo);
+    this.showingItems = this.commonHelper.showingItems;
+    this.isFirstPageDisabled = this.commonHelper.isFirstPageDisabled;
+    this.isLastPageDisabled = this.commonHelper.isLastPageDisabled;
+    this.firstPageNo = this.commonHelper.firstPageNo;
+    this.lastPageNo = this.commonHelper.lastPageNo;
+    this.ShowItemList = this.commonHelper.displayItems;
+    //this.SortByList = this.commonHelper.GetSortByList();
+    this.GetSortByList();
+
+  }
+  GetSortByList(){
+    this.Client_commonService_.GetLovDetailByColumn("SORTBY").subscribe(
+      (data) =>
+       {
+
+          this.SortByList = data;
+      }
+    )
+  }
+  GetItemByPageNo(pageNo : any){
+    this.pageNo = pageNo;
+    if(this.IsFilterItem ){
+      this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
+    }else{
+      if (this.IsMultiCategory) {
+        this.GetitemByCategoryTypeMulti(this.MainId,this.MainType);
+      }else{
+        this.GetitemByCategoryType(this.MainId,this.MainType);
+      }
+    }
+  }
+  GetItemByPageSize(pageSize : any){
+    debugger;
+    this.pageSize = pageSize;
+    this.pageNo = this.firstPageNo;
+    if(this.IsFilterItem ){
+      this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
+    }else{
+      if (this.IsMultiCategory) {
+        this.GetitemByCategoryTypeMulti(this.MainId,this.MainType);
+      }else{
+        this.GetitemByCategoryType(this.MainId,this.MainType);
+      }
+    }
+
+  }
+  GetItemSortBy(sortBy : any){
+    this.sortBy = sortBy;
+    this.pageNo = this.firstPageNo;
+    if(this.IsFilterItem ){
+      this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
+    }else{
+      if (this.IsMultiCategory) {
+        this.GetitemByCategoryTypeMulti(this.MainId,this.MainType);
+      }else{
+        this.GetitemByCategoryType(this.MainId,this.MainType);
+      }
+    }
+  }
 
   getItemList(cat_ids :string){
 
@@ -616,6 +703,7 @@ export class SubcategoryComponent implements OnInit {
       this.IsSubCategory = this.Sub_Catg_Master != null && this.Sub_Catg_Master.length > 0 ? true:false;
     }
     this.CatCoverImage = img;
+    this.MainId = cat_ids;
     this.filterByCategory(cat_ids);
 
     localStorage.setItem('CategoryId',cat_ids);
@@ -646,7 +734,12 @@ function typeFun() {
 };
   return obj;
 }
-
+function PaginationFun(){
+  let obj ={
+    Value : '',
+    IsActive: false,
+  };
+}
 function BrandFun() {
 
   let obj ={

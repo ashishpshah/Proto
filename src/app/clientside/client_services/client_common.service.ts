@@ -333,15 +333,15 @@ getItemList(Catg_ID:number): Observable<any> {
 
 }
 
-GetitemByCategoryType(ID:number,Type:string): Observable<any> {
+GetitemByCategoryType(ID:number,Type:string,PageSize :number ,PageNo : number,SortBy : string): Observable<any> {
 
-     return this.http.get(this.baseUrl +'SubCategory/GetitemByCategoryType?ID='+ID+'&Type='+Type);
+     return this.http.get(this.baseUrl +'SubCategory/GetitemByCategoryType?ID='+ID+'&Type='+Type+'&PageSize='+PageSize+'&PageNo='+PageNo+'&SortBy='+SortBy);
 
    }
 
-GetitemByCategoryTypeMulti(ID:string,Type:string): Observable<any> {
+GetitemByCategoryTypeMulti(ID:string,Type:string,PageSize :number ,PageNo : number,SortBy : string): Observable<any> {
 
-    return this.http.get(this.baseUrl +'SubCategory/GetitemByCategoryTypeMulti?ID='+ID+'&Type='+Type);
+    return this.http.get(this.baseUrl +'SubCategory/GetitemByCategoryTypeMulti?ID='+ID+'&Type='+Type+'&PageSize='+PageSize+'&PageNo='+PageNo+'&SortBy='+SortBy);
 
   }
 
@@ -383,9 +383,9 @@ GetTypeByType(ID:string,Type: string,FilterType :string,FilterID :string): Obser
 // {
 //       return this.http.get(this.baseUrl +'SubCategory/GetGetitemByFilter?ID='+ID+'&Type='+Type+'&FilterID='+FilterID+'&FilterType='+FilterType);
 // }
-GetGetitemByFilterType(ID:number,Type: string,FilterBrandID :string,FilterBrand :string,FilterTypeID :string,FilterType :string ,FilterSubCatId: string,FilterSubCat :string,FilterMinPrice :string,FilterMaxPrice :string,FilterMinDiscount :string,FilterMaxDiscount:string): Observable<any>
+GetGetitemByFilterType(ID:number,Type: string,FilterBrandID :string,FilterBrand :string,FilterTypeID :string,FilterType :string ,FilterSubCatId: string,FilterSubCat :string,FilterMinPrice :string,FilterMaxPrice :string,FilterMinDiscount :string,FilterMaxDiscount:string,PageSize :number ,PageNo : number,SortBy : string): Observable<any>
 {
-      return this.http.get(this.baseUrl +'SubCategory/GetGetitemByFilter?ID='+ID+'&Type='+Type+'&FilterBrandID='+FilterBrandID+'&FilterBrand='+FilterBrand+'&FilterTypeID='+FilterTypeID+'&FilterType='+FilterType+'&FilterSubCatId='+FilterSubCatId+'&FilterSubCat='+FilterSubCat+'&FilterMinPrice='+FilterMinPrice+'&FilterMaxPrice='+FilterMaxPrice+'&FilterMinDiscount='+FilterMinDiscount+'&FilterMaxDiscount='+FilterMaxDiscount);
+      return this.http.get(this.baseUrl +'SubCategory/GetGetitemByFilter?ID='+ID+'&Type='+Type+'&FilterBrandID='+FilterBrandID+'&FilterBrand='+FilterBrand+'&FilterTypeID='+FilterTypeID+'&FilterType='+FilterType+'&FilterSubCatId='+FilterSubCatId+'&FilterSubCat='+FilterSubCat+'&FilterMinPrice='+FilterMinPrice+'&FilterMaxPrice='+FilterMaxPrice+'&FilterMinDiscount='+FilterMinDiscount+'&FilterMaxDiscount='+FilterMaxDiscount+'&PageSize='+PageSize+'&PageNo='+PageNo+'&SortBy='+SortBy);
 }
   groupBy<T, K>(list: T[], getKey: (item: T) => K) {
     const map = new Map<K, T[]>();
@@ -405,6 +405,10 @@ GetGetitemByFilterType(ID:number,Type: string,FilterBrandID :string,FilterBrand 
 GetFilter_Brand_Type_SubCategory(CatId:string,MainType: string ,FilterSubCatId :string,FilterBrandId :string,FilterTypeId:string): Observable<any>
 {
       return this.http.get(this.baseUrl +'Common/GetAllFilter_Brand_Type_SubCategory?CatId='+CatId+'&MainType='+MainType+'&FilterSubCatId='+FilterSubCatId+'&FilterBrandId='+FilterBrandId+'&FilterTypeId='+FilterTypeId);
+}
+
+GetLovDetailByColumn(Lov_Column:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Lovmaster/GetLovDetailByColumnAJ?Lov_Column='+Lov_Column);
 }
 
 }
