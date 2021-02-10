@@ -1,6 +1,9 @@
+import { ClientCommonHelperComponent } from './../../../clientCommonHelper/clientCommonHelper.component';
+import { AdminCommonHelperComponent } from 'src/app/AdminPanel/pages/AdminCommonHelper/AdminCommonHelper.component';
 import { Client_commonService } from './../../../client_services/client_common.service';
 import { Component, OnInit,ElementRef,ViewChild,Input } from '@angular/core';
 import { Login_clientComponent } from '../../login_client/login_client.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -26,17 +29,19 @@ export class HeaderComponent implements OnInit {
   Showcreate:boolean=true;
   Showlogin:boolean=true;
   Showlogout:boolean=false;
+  Subtotal:number =0;
+  Grandtotal:number =0;
 
-
-
-
-
-  constructor(
+  constructor(private router: Router,
     private Client_commonService_: Client_commonService) {
       this.sidebarVisible = false;
 
-
   }
+  clientCommonHelper = new ClientCommonHelperComponent(this.router,this.Client_commonService_);
+  currency : string  = this.clientCommonHelper.currency;
+  shippingcharge:number =this.clientCommonHelper.shippingcharge;
+  emptyCartMsg:string =this.clientCommonHelper.emptyCartMsg;
+
   updateloginvalue()
   {
     this.Client_commonService_.currentUserName$
@@ -73,7 +78,6 @@ export class HeaderComponent implements OnInit {
       this.updatecartcount();
      // this.GetRoot_Catg_MasterList(this.Root_Header_ID);
   }
-
   items$ = this.Client_commonService_.items$;
   Root_Catg_Master :[] //Observable<Root_Catg_Master[]>;
   Root_Header_Masters : []//Observable<Root_Header_Master[]>;
@@ -97,10 +101,35 @@ Logout()
          this.Showlogout= false
             // localStorage.removeItem('userId');
 }
+currentUrl : any = window.location.pathname;
+isShoppingCart : boolean = true;
 updatecartcount()
 {
+
   this.Item_Master_ = this.Client_commonService_.getItems();
+  this.Subtotal=0;
+  this.Grandtotal=0;
   this.Itemcount =  this.Item_Master_ != null? this.Item_Master_.length :0;
+  for (var index in this.Item_Master_) {
+
+    this.Subtotal +=  this.Item_Master_[index].TotalPrice
+  }
+
+ this.Grandtotal= this.Subtotal+ this.shippingcharge
+ return this.Item_Master_;
+}
+GetSubTotal(){
+  return this.Subtotal;
+
+}
+GetGrandTotal(){
+  return this.Grandtotal;
+
+}
+IsShowShoppingCart(){
+  this.currentUrl = window.location.pathname;
+  this.isShoppingCart = this.currentUrl.includes('/shoppingcart')? false : true;
+  return this.isShoppingCart;
 }
 
 showcartevent()

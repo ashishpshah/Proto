@@ -14,7 +14,7 @@
           <div class="navbar-buttons d-lg-none">
 
               <!-- <button type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-outline-secondary mr-1"><a href="login"><i class="icofont-ui-user"></i></a><i class="fa fa-users"></i></button> -->
-              <a href="/shoppingcart" class="btn btn-outline-primary mr-1"><i class="fa fa-shopping-cart"></i><span class="d-none d-sm-inline">{{(items$ | async).length}} items in cart                </span></a>
+              <a href="/shoppingcart" class="btn btn-outline-primary mr-1"><i class="fa fa-shopping-cart"></i><span class="d-sm-inline">{{(items$ | async).length}}</span></a>
               <button type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation" class="btn btn-outline-primary"><i class="fa fa-align-justify"></i><span class="sr-only">Toggle navigation</span></button>
           </div>
           <div id="navigation" class="navbar-collapse collapse">
@@ -37,10 +37,66 @@
                     </div>
                   </div>
               </div>
-              <div class="d-none d-lg-block">
+              <div class="d-none d-lg-block cart-display">
                 <!-- <a href="/custlogin"  class="mr-3"><i class="icofont-lock ml-1"></i>{{username}}</a>
                 <a class="mr-3" href="/create-user"><i class="icofont-ui-user"></i>Create</a> -->
-                <a href="/shoppingcart" class="btn btn-outline-primary"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">  {{(items$ | async).length}} items <span class="hidden-md">in cart   </span></span></a>
+                <a href="/shoppingcart" class="btn btn-outline-primary "><i class="fa fa-shopping-cart"></i> <span>{{(items$ | async).length}} </span> </a>
+
+                <div class="d-none d-sm-block">
+                    <div class="minicart-wrapmain" id="minicart">
+                      <!-- <div [style.display]="cart.cartTotal==0 ? 'block' : 'none'">Your order empty</div> -->
+                      <!-- <div class="card text-center" [style.display]="cart.cartTotal!=0 ? 'block' : 'none'"> -->
+                      <!-- <div class="card-header">
+                        Your Cart Items
+                        <button type="button" class="btn btn-sm btn-warning float-right">
+                            Total items <span class="badge badge-light">3</span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger mr-2 float-right">
+                           Empty Cart
+                        </button>
+                      </div> -->
+
+                      <div class="card-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Product</th>
+                              <th scope="col">Qty</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Discount</th>
+                              <th scope="col">Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+
+                            </tr>
+                            <tr *ngFor="let product of updatecartcount()" >
+                              <td class="text-left">{{product.Item_Name}}</td>
+                              <td>{{product.OrderQty}}</td>
+                              <td>{{currency}}{{product.Price.toFixed(2)}}</td>
+                              <td>{{currency}}0.00</td>
+                              <td>{{currency}}{{product.TotalPrice.toFixed(2)}}</td>
+                            </tr>
+                            <tr *ngIf="(items$ | async).length <= 0">
+                              <td colspan="5" class="text-theme text-center f-18">{{emptyCartMsg}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <span *ngIf="(items$ | async).length > 0">
+                          <hr/>
+                          <span class="float-left text-muted font-weight-bold">Shipping Charge : {{currency}}{{shippingcharge.toFixed(2)}}</span> <span class="float-right text-muted font-weight-bold">Sub Total : {{currency}}{{GetSubTotal().toFixed(2)}}</span>
+                        </span>
+                      </div>
+                        <a class="btn btn-sm btn-success float-right cursor-pointer" style="margin:5px;" href="/shoppingcart" *ngIf="IsShowShoppingCart() && (items$ | async).length > 0">Proceed To Cart</a>
+                      <div class="card-footer text-muted font-weight-bold">
+                        <span *ngIf="(items$ | async).length > 0">Total : {{currency}}{{GetGrandTotal().toFixed(2)}}</span>
+
+                      </div>
+                    </div>
+
+                  </div>
               </div>
           </div>
           <!-- /.nav-collapse-->

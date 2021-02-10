@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
   styleUrls: ['./clientCommonHelper.component.scss']
 })
 export class ClientCommonHelperComponent implements OnInit {
-  pageSize : any = 3;
+  pageSize : any = 6;
   pageNo : any = 1;
   currency : string = "kr. ";
   paginationList : any[] = [];
@@ -19,8 +19,13 @@ export class ClientCommonHelperComponent implements OnInit {
   isLastPageDisabled : boolean = false;
   firstPageNo : number = 1
   lastPageNo : number = 0;
-  displayItems : any[] = [this.pageSize,"5","10","100"];
+  displayItems : any[] = [this.pageSize,"10","25","50","100"];
   sortBy : string = "";
+  minPrice: number = 1;
+  maxPrice: number = 2000;
+  noRecordFound :string = 'Products not found';
+  emptyCartMsg :string = 'Your cart is empty';
+  shippingcharge:number =15;
   constructor(private _router: Router, private Client_commonService_ : Client_commonService,) { }
 
   ngOnInit() {

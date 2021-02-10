@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ClientCommonHelperComponent, Pagination } from './../../clientCommonHelper/clientCommonHelper.component';
 import { AdminCommonHelperComponent } from './../../../AdminPanel/pages/AdminCommonHelper/AdminCommonHelper.component';
 import { Catg_Master } from './../../../models/Catg_Master';
@@ -12,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from "rxjs";
 import { BrandMaster } from 'src/app/models/BrandMaster';
 import { TypeMaster } from 'src/app/models/TypeMaster';
+import { Options, LabelType } from 'ng5-slider';
 
 declare var $: any;
 declare var require: any;
@@ -52,8 +54,10 @@ export class SubcategoryComponent implements OnInit {
   FilterSubCatID :string = '';
   CatCoverImage : string = '';
   IsSubCategory : boolean = false;
-
   //productInfoCart : Observable<Item_Master[]>;
+
+
+
 
   constructor(
     private route: ActivatedRoute,
@@ -64,8 +68,12 @@ export class SubcategoryComponent implements OnInit {
 
   }
 
+
   commonHelper = new ClientCommonHelperComponent(this.router,this.Client_commonService_);
   currency : string  = this.commonHelper.currency;
+  noRecordFound : string = this.commonHelper.noRecordFound;
+
+
 
   /*------Start: Pagination Global variable -------*/
   PaginationList : any[] = [];
@@ -86,6 +94,31 @@ export class SubcategoryComponent implements OnInit {
   IsFilterItem : boolean = false;
   /*------End: Pagination Global variable -------*/
 
+
+  /*----------Start Price Slider Filter---------*/
+  minPrice: number = this.commonHelper.minPrice;
+  maxPrice: number = this.commonHelper.maxPrice;
+  FloorValue : number =this.commonHelper.minPrice;
+  Ceilvalue : number = this.commonHelper.maxPrice;
+  val : any = 0;
+  options: Options = {
+    floor: this.FloorValue,
+    ceil: this.Ceilvalue,
+    translate: (value: number, label: LabelType): string => {
+      this.val = value;
+      switch (label) {
+        case LabelType.Low:
+          return this.currency + value;
+        case LabelType.High:
+          return this.currency + value;
+        default:
+          return this.currency + value;
+      }
+    }
+  };
+  /*----------End Price Slider Filter---------*/
+
+
   onChangePage(pageOfItems: Array<any>) {
     // update current page of items
     this.pageOfItems = pageOfItems;
@@ -100,10 +133,13 @@ export class SubcategoryComponent implements OnInit {
       this.typeObj = typeFun();
       this.Root_Header_ID=parseInt(this.subcategoryName);
       this.RCatg_ID=parseInt(this.subcategoryName);
-      this.GetitemByCategoryType(this.RCatg_ID,'RootHeader');
+      this.MainType = 'RootHeader';
+      this.MainId = parseInt(this.subcategoryName);
+
+      this.GetitemByCategoryType(this.MainId,this.MainType);
       this.GetCatg_MasterList(this.Root_Header_ID);
-      this.GetBrandByType(this.RCatg_ID,'RootHeader','','','N');
-      this.GetTypeByType(this.RCatg_ID,'RootHeader','','','N');
+      this.GetBrandByType(this.MainId,this.MainType,'','','N');
+      this.GetTypeByType(this.MainId,this.MainType,'','','N');
   }
   onChangeTypeCategory(isChecked: boolean, type_: any)
   {
@@ -187,7 +223,7 @@ export class SubcategoryComponent implements OnInit {
   onChangeSubCategoryList(isChecked: boolean, SubCat: any){
     this.pageNo = this.firstPageNo;
     this.MainId = SubCat.Catg_ID;
-    debugger;
+
     if(isChecked) {
        this.SubCatFilterArray.FilterSubCat.push(SubCat.Sub_Catg_ID);
     } else {
@@ -238,19 +274,23 @@ export class SubcategoryComponent implements OnInit {
       this.GetGetitemByFilterType('Brand','Type','SubCategory','Y','N',IsSubCatClearType);
     //GetAllFilterList(catId:any,type :any, filterSubCatId : any, filterBrandId :any, filterTypeId:any,IsBrandClear :any,IsTypeClear :any)
   }
+  GetItemsByPriceFilter(){
+
+    this.GetGetitemByFilterType('Brand','Type','SubCategory','N','N','N');
+  }
 
   GetGetitemByFilterType(FilterBrand,FilterType,FilterSubCat,IsClear,IsSubCatClearBrand,IsSubCatClearType)
   {
-    debugger;
     if(this.TypeMaster_.length >0){
       this.Type = this.TypeMaster_[0].Type;
       this.ID = this.TypeMaster_[0].ID;
     }
     this.ID = this.MainId;
+    // this.MainType = this.MainType == 'RootHeader' ? this.MainType;
     this.FilterSubCatID = this.SubCatFilterArray.FilterSubCat.join(",");
     this.FilterBrandID = this.tempArrBrand.FilterBrand.join(",");
     this.FilterTypeID = this.tempArrType.FilterType.join(",");
-    this.Type = FilterSubCat =='SubCategory' ? this.FilterSubCatID != "" ? 'SubCategory' : 'Category' :this.Type;
+    this.Type = FilterSubCat =='SubCategory' ? this.FilterSubCatID != "" ? 'SubCategory' : this.MainType :this.MainType;
 
     this.ID = this.ID == undefined || this.ID == null ? localStorage.getItem('CategoryId') : this.ID;
     if(this.Sub_Catg_Master.length > 0){
@@ -266,12 +306,14 @@ export class SubcategoryComponent implements OnInit {
           this.GetBrandByType(this.ID,this.Type,FilterType,this.FilterTypeID,IsClear);
       }
     }
-
-    this.Client_commonService_.GetGetitemByFilterType(this.ID,this.Type,this.FilterBrandID,FilterBrand,this.FilterTypeID,FilterType,this.FilterSubCatID,FilterSubCat,'0','10000','0','100',this.pageSize,this.pageNo,this.sortBy).subscribe(
+    this.Client_commonService_.GetGetitemByFilterType(this.ID,this.Type,this.FilterBrandID,FilterBrand,this.FilterTypeID,FilterType,this.FilterSubCatID,FilterSubCat,this.minPrice.toString(),this.maxPrice.toString(),'0','100',this.pageSize,this.pageNo,this.sortBy).subscribe(
       (data) =>
        {
          this.IsFilterItem =true;
          this.Item_Masters = data;
+
+
+
          this.totalItems = data != null && this.Item_Masters.length > 0 ? this.Item_Masters[0].TotalCount : 0;
          this.GeneratePaginationNo(this.totalItems,this.pageSize,this.pageNo);
          this.IsMultiCategory = false;
@@ -512,6 +554,12 @@ export class SubcategoryComponent implements OnInit {
 
          this.IsFilterItem =false;
          this.Item_Masters = data;
+
+        //  this.Ceilvalue = this.Item_Masters.reduce((a, b) => a = a > b.Price ? a : b.Price, 0);
+        //  this.FloorValue = this.Item_Masters.reduce((a, b) => a = a >  a ? b.Price: b.Price, 0);
+        //  this.minPrice = this.FloorValue;
+        //  this.maxPrice = this.Ceilvalue;
+
          this.totalItems = data != null && this.Item_Masters.length > 0 ? this.Item_Masters[0].TotalCount : 0;
          this.GeneratePaginationNo(this.totalItems,this.pageSize,this.pageNo);
          this.IsMultiCategory = false;
@@ -575,7 +623,7 @@ export class SubcategoryComponent implements OnInit {
     }
   }
   GetItemByPageSize(pageSize : any){
-    debugger;
+
     this.pageSize = pageSize;
     this.pageNo = this.firstPageNo;
     if(this.IsFilterItem ){

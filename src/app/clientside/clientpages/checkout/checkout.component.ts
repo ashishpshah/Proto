@@ -3,6 +3,7 @@ import { AdminCommonHelperComponent } from './../../../AdminPanel/pages/AdminCom
 import { Client_commonService } from './../../client_services/client_common.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Renderer2 } from '@angular/core';
+import { ClientCommonHelperComponent } from '../../clientCommonHelper/clientCommonHelper.component';
 
 @Component({
   selector: 'app-checkout',
@@ -17,7 +18,6 @@ export class CheckoutComponent implements OnInit {
   errorMessage: any ='';
   shopingcart_ : any [];
   Item_Master_ : any;
-  shippingcharge:number =15;
   Subtotal:number =0;
   Grandtotal:number =0;
   Itemcount:number;
@@ -36,7 +36,11 @@ export class CheckoutComponent implements OnInit {
     private renderer: Renderer2) { }
 
     commonHelper = new AdminCommonHelperComponent(this.router);
-    currency : string  = this.commonHelper.currency;
+
+    clientCommonHelper = new ClientCommonHelperComponent(this.router,this.Client_commonService_);
+    currency : string  = this.clientCommonHelper.currency;
+    shippingcharge:number =this.clientCommonHelper.shippingcharge;
+
   ngOnInit()
   {
     this.GetAddressList()
@@ -117,7 +121,7 @@ export class CheckoutComponent implements OnInit {
     this.Item_Master_ = this.Client_commonService_.getItems();
     this.Subtotal=0;
     this.Grandtotal=0;
-    this.Itemcount =  this.Item_Master_.length
+    this.Itemcount =  this.Item_Master_ != null?  this.Item_Master_.length : 0;
 
     for (var index in this.Item_Master_) {
 
