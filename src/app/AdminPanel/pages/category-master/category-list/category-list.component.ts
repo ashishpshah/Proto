@@ -72,13 +72,13 @@ export class CategoryListComponent implements OnInit {
     );
   }
 
-  openInsertPage() {
-    this._router.navigate(['/master/add-edit-category']);
-  }
+  // openInsertPage() {
+  //   this._router.navigate(['/master/add-edit-category']);
+  // }
 
-  openEditPage(id) {
-    this._router.navigate(['/master/add-edit-category', id]);
-  }
+  // openEditPage(id) {
+  //   this._router.navigate(['/master/add-edit-category', id]);
+  // }
 
   deleteItem(categoryId) {
     Swal.fire({

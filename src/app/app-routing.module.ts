@@ -193,6 +193,12 @@ const routes: Routes = [
          loadChildren: () => import('./AdminPanel/pages/vehicle-route-master/vehicle-route-master.module').then(m => m.VehicleRouteMasterModule)
 
       },
+       {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/driver-master/driver-master.module').then(m => m.DriverMasterModule)
+
+
+      },
     ]
   },
   {

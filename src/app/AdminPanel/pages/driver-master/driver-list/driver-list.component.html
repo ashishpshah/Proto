@@ -1,0 +1,199 @@
+<!-- *********************************************** Insert-Update **********************************************  -->
+<div *ngIf="IsAddEdit">
+  <div><div class='alert alert-danger' *ngIf="errorMessageDate != ''"><span>{{errorMessageDate}}</span></div></div>
+  <div><div class='alert alert-danger' *ngIf="errorMsgContact != ''"><span>{{errorMsgContact}}</span></div></div>
+  <div><div class='alert alert-danger' *ngIf="validEmailMsg != ''"><span>{{validEmailMsg}}</span></div></div>
+  <form >
+    <div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Driver Name<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control"  [ngClass] ="driverObj.Driver_Name == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="driverObj.Driver_Name" id="Driver_Name" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <label class="col-sm-2 col-form-label">License No<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" [ngClass] ="driverObj.License_NO == '' && errorMessage != '' ? 'alert-danger':''" [(ngModel)]="driverObj.License_NO" id="License_NO" [ngModelOptions]="{standalone: true}" >
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">License Start Date<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+       <div class="col-sm-4">
+         <mat-form-field appearance="fill" >
+           <mat-label>Choose a date</mat-label>
+           <input class=""  matInput [matDatepicker]="fromDate"  [max]="driverObj.Lic_End_Date" (focus)="fromDate.open()" [(ngModel)]="driverObj.Lic_Start_Date" id="Reg_Effectivefrom_date" [ngModelOptions]="{standalone: true}">
+           <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+           <mat-datepicker #fromDate ></mat-datepicker>
+         </mat-form-field>
+       </div>
+       <label class="col-sm-2 col-form-label">License End Date<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+       <div class="col-sm-4">
+         <mat-form-field appearance="fill" >
+           <mat-label>Choose a date</mat-label>
+           <input class="" matInput [matDatepicker]="toDate" id="Lic_End_Date" [min]="driverObj.Lic_Start_Date" (focus)="toDate.open()" [(ngModel)]="driverObj.Lic_End_Date"  [ngModelOptions]="{standalone: true}">
+           <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+           <mat-datepicker #toDate></mat-datepicker>
+         </mat-form-field>
+       </div>
+     </div>
+
+     <div class="form-group row">
+      <label class="col-sm-2 col-form-label">License Type<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+      <div class="col-sm-4">
+        <ng-select [items]="LicenseTypeList" [ngClass] ="(driverObj.License_Type == 0 || driverObj.License_Type == null)  && errorMessage != '' ? 'border border-danger':''"  [(ngModel)]="driverObj.License_Type" id="License_Type" name="License_Type" bindValue="id" bindLabel="name" placeholder="Select License Type"> </ng-select>
+      </div>
+      <label class="col-sm-2 col-form-label">Mobile No</label>
+      <div class="col-sm-4">
+        <input class="form-control"  type="text" maxlength="10" [ngClass] ="driverObj.Mobile_NO == '' && errorMsgContact != '' ? 'alert-warning':''" [(ngModel)]="driverObj.Mobile_NO" id="Mobile_NO" [ngModelOptions]="{standalone: true}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">ALT Mobile No</label>
+      <div class="col-sm-4">
+        <input class="form-control"  type="text" maxlength="10" [ngClass] ="driverObj.ALT_Mobile_NO == '' && errorMsgContact != '' ? 'alert-warning':''" [(ngModel)]="driverObj.ALT_Mobile_NO" id="ALT_Mobile_NO" [ngModelOptions]="{standalone: true}">
+      </div>
+      <label class="col-sm-2 col-form-label">Contact No</label>
+      <div class="col-sm-4">
+        <input class="form-control"  type="text" maxlength="15" [ngClass] ="driverObj.Contact_NO == '' && errorMsgContact != '' ? 'alert-warning':''" [(ngModel)]="driverObj.Contact_NO" id="Contact_NO" [ngModelOptions]="{standalone: true}">
+      </div>
+    </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-4">
+          <input class="form-control"  type="text" [(ngModel)]="driverObj.Email_ID" id="Email_ID" [ngModelOptions]="{standalone: true}">
+        </div>
+        <label class="col-sm-2 col-form-label">Status</label>
+        <div class="col-sm-4">
+          <select class="form-control" [(ngModel)]="driverObj.Status" id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
+              {{st.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Driver Image</label>
+        <div class="col-sm-4">
+          <input class="form-control"  type="file" accept="image/*"  id="Driver_Image_URL" (change)="SetDriverImage($event.target.files)">
+        </div>
+        <label class="col-sm-2 col-form-label">Remark</label>
+        <div class="col-sm-4">
+          <textarea class="form-control" [(ngModel)]="driverObj.Remark" id="Remark" maxlength="190"  [ngModelOptions]="{standalone: true}"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-3">
+          <span *ngIf="driverObj.IsImage == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
+          <span *ngIf="driverObj.IsImage == 'Y'"> <img src="{{driverObj.ImgBase64WithCntType}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20" (click) = "DownloadImage(driverObj.ImgBase64Str,driverObj.Driver_Id,contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button> </span>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveDriver()"> <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<!-- *********************************************** Data List **********************************************  -->
+<div class="row">
+  <div class="col-sm-12">
+      <app-card  [classHeader]="true" [blockClass]="'table-border-style'">
+        <div class="table-responsive">
+            <!-- <p>
+              <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a>
+            </p>
+              <br/>
+              <br/> -->
+
+            <p-table class="" #dt [value]="driverMaster" [(selection)]="selectedDriverMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['Driver_Name','License_NO','License_Start_Date','License_End_Date','License_Type','Mobile_NO','ALT_Mobile_NO','Contact_NO','Email_ID']">
+              <ng-template pTemplate="caption">
+                <div class="table-header-p ">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                    </span>
+                    <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span>
+                </div>
+              </ng-template>
+              <br/>
+              <br/>
+              <ng-template pTemplate="header">
+              <tr>
+                  <th pSortableColumn="Driver_Name">Driver Name <p-sortIcon field="Driver_Name"></p-sortIcon></th>
+                  <th pSortableColumn="License_NO">License No <p-sortIcon field="License_NO"></p-sortIcon></th>
+                  <th pSortableColumn="License_TypeDesc">License_Type<p-sortIcon field="License_TypeDesc"></p-sortIcon></th>
+                  <th pSortableColumn="Valid_License">License Valid <p-sortIcon field="Valid_License"></p-sortIcon></th>
+                  <th pSortableColumn="Contact">Contact No<p-sortIcon field="Contact"></p-sortIcon></th>
+                  <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon></th>
+                  <th >Action </th>
+              </tr>
+              <tr>
+                  <th>
+                  <input pInputText type="text" (input)="dt.filter($event.target.value, 'Driver_Name', 'contains')" placeholder="Search by Driver" class="form-control">
+                  </th>
+                  <th> <input pInputText type="text" (input)="dt.filter($event.target.value, 'License_NO', 'contains')" placeholder="Search by License No" class="form-control"> </th>
+                  <th>  </th>
+                  <th></th>
+                  <th><input pInputText type="text" (input)="dt.filter($event.target.value, 'Contact', 'contains')" placeholder="Search by Contact No" class="form-control"> </th>
+                  <th></th>
+                  <th></th>
+
+              </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-item>
+              <tr class="">  <!-- p-selyectable-row  -->
+
+                  <td>
+                        {{item.Driver_Name}}
+                  </td>
+                  <td>
+                    {{item.License_NO}}
+                  </td>
+                  <td>
+                    {{item.License_TypeDesc}}
+                  </td>
+                  <td>
+                    {{item.Valid_License}}
+                  </td>
+                  <td>
+                    {{item.Contact}}
+                  </td>
+                  <td>
+                        {{item.StatusDesc}}
+                  </td>
+                  <td>
+                          <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Driver_Id)"></a>
+                          &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Driver_Id)"></a>
+                          <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.Driver_Id)"></a>
+                  </td>
+              </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+              <tr>
+              <td colspan="7">{{noItemsFoundMsg}}</td>
+              </tr>
+              </ng-template>
+          </p-table>
+        </div>
+     </app-card>
+  </div>
+</div>
+

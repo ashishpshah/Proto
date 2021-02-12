@@ -186,6 +186,11 @@ export class VehicleListComponent implements OnInit {
             let todt = resp.Reg_Effectiveto_date;
             this.vehicleObj.Reg_Effectivefrom_date = frDt.includes('1900') || frDt.includes('1970') ?"": resp.Reg_Effectivefrom_date
             this.vehicleObj.Reg_Effectiveto_date = todt.includes('1900') || todt.includes('1970') ?"": resp.Reg_Effectiveto_date
+
+            let insFrDt = resp.Insurance_Start_Date;
+            let insToDt = resp.Insurance_End_Date;
+            this.vehicleObj.Insurance_Start_Date = insFrDt.includes('1900') || insFrDt.includes('1970') ?"": resp.Insurance_Start_Date
+            this.vehicleObj.Insurance_End_Date = insToDt.includes('1900') || insToDt.includes('1970') ?"": resp.Insurance_End_Date
             // this.vehicleObj.SelectedDepartment = resp.Department.split(',')
             , error => this.errorMessage = error
           });

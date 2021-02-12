@@ -365,6 +365,33 @@ activebrand(brandId :number, userId :string) {
 }
 //#endregion
 
+//#region Driver Master Service
+
+getDriverList(driverId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Driver/GetDriverList?driverId='+driverId);
+}
+
+getDriverById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'Driver/GetDriverById?driverId='+id);
+}
+
+saveDriver(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'Driver/InsertUpdateDriver', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteDriver(driverId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "Driver/DeleteDriverRecord?driverId=" + driverId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeDriver(driverId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "Driver/ActiveDriver?driverId=" + driverId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+//#endregion
+
+
 //#region Vehicle Master Service
 
 getVehicleList(vehicleId:string): Observable<any> {
@@ -517,6 +544,11 @@ activeVehicleRoute(mapId :number, userId :string) {
 
   GetActiveRouteDropDownList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Route/GetActiveRouteListAJ?routeId='+'0');
+  }
+
+  GetActiveDriverList(): Observable<any>  {
+    return this.http.get(`${this.baseUrl}/` + "Driver/GetActiveDriverList")
+      .catch(this.errorHandler);
   }
 //#endregion
 

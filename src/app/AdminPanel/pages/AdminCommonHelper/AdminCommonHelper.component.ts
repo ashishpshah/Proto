@@ -21,6 +21,10 @@ export class AdminCommonHelperComponent implements OnInit {
   contentTypeImage : string = 'image/png';
   imageNotAvail : string = "Image not available";
   downloadImageTooltip : string = 'Download Image';
+  deleteTitle : string = "Do you want to delete?";
+  deleteText : string = "You won't be able to revert this!";
+  noItemsFoundMsg : string = "No items found";
+  validEmailMsg :string = 'Enter valid email';
   constructor(private _router: Router) { }
 
   ngOnInit() {
@@ -63,6 +67,11 @@ export class AdminCommonHelperComponent implements OnInit {
     link.click();
   }
 }
+
+validateEmail(email) {
+  const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regularExpression.test(String(email).toLowerCase());
+ }
 
   GenerateCaptchaNumber(length) {
     let result           = '';
