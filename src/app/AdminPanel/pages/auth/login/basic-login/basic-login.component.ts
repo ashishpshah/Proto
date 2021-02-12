@@ -14,7 +14,7 @@ export class BasicLoginComponent implements OnInit {
   title: string = "Login";
   errorMessage: any;
   loading = false;
-
+  currentYear : any = (new Date()).getFullYear();
   constructor(private _fb: FormBuilder, private _avRoute: ActivatedRoute,
     private _commonService : ProtoServicesService, private _router: Router) {
 

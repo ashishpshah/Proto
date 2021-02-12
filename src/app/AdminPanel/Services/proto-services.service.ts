@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -12,7 +12,12 @@ export class ProtoServicesService {
   private url = window.location.origin;
   private baseUrl : string = this.url.includes('localhost') ? 'https://localhost:44311/Api' :'https://protoapi.padhyasoft.com/Api' ;
   //private baseUrl = 'https://protoapi.padhyasoft.com/Api';
-
+  headers={
+    headers: new HttpHeaders({
+      'enctype': 'multipart/form-data',
+      'Accept': 'application/json'
+    })
+};
   constructor(private http: HttpClient) { }
 
 /******************************************** Developed by RAJESH GAMI *************************************************/
@@ -368,8 +373,8 @@ getVehicleList(vehicleId:string): Observable<any> {
 getVehicleById(id: number): Observable<any> {
   return this.http.get(`${this.baseUrl}/`+'Vehicle/GetVehicleById?vehicleId='+id);
 }
-saveVehicle(dtl) {
-  return this.http.post(`${this.baseUrl}/`+ 'Vehicle/InsertUpdateVehicle', dtl)
+saveVehicle(dtl :any,data) {
+  return this.http.post(`${this.baseUrl}/`+ 'Vehicle/InsertUpdateVehicle', data)
     .catch(this.errorHandler)
 }
 deleteVehicle(vehicleId :number, userId :string) {
@@ -503,6 +508,12 @@ activeVehicleRoute(mapId :number, userId :string) {
     return this.http.get(`${this.baseUrl}/` + "Vehicle/GetActiveVehicleListAJ?vehicleId=" + vehicleId)
       .catch(this.errorHandler);
   }
+
+  GetActiveLicenseType(): Observable<any>  {
+    return this.http.get(`${this.baseUrl}/` + "Vehicle/GetActiveLicenseType")
+      .catch(this.errorHandler);
+  }
+
 
   GetActiveRouteDropDownList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Route/GetActiveRouteListAJ?routeId='+'0');

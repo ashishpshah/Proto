@@ -58,15 +58,13 @@
         <div class="col-sm-4">
           <input class="form-control"  type="text" [(ngModel)]="vehicleObj.Remark" id="Remark" [ngModelOptions]="{standalone: true}">
         </div>
-
-
       </div>
       <div class="form-group row">
          <label class="col-sm-2 col-form-label">Reg Effective From<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
           <mat-form-field appearance="fill" >
             <mat-label>Choose a date</mat-label>
-            <input class=""  matInput [matDatepicker]="fromDate" id="Reg_Effectivefrom_date" [max]="vehicleObj.Reg_Effectiveto_date" (focus)="fromDate.open()" [(ngModel)]="vehicleObj.Reg_Effectivefrom_date" id="Reg_Effectivefrom_date" [ngModelOptions]="{standalone: true}">
+            <input class=""  matInput [matDatepicker]="fromDate"  [max]="vehicleObj.Reg_Effectiveto_date" (focus)="fromDate.open()" [(ngModel)]="vehicleObj.Reg_Effectivefrom_date" id="Reg_Effectivefrom_date" [ngModelOptions]="{standalone: true}">
             <!-- <mat-icon matDatepickerToggleIcon (click)="clearDate($event)">clear</mat-icon> -->
             <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
             <mat-datepicker #fromDate ></mat-datepicker>
@@ -78,7 +76,7 @@
         <div class="col-sm-4">
           <mat-form-field appearance="fill" >
             <mat-label>Choose a date</mat-label>
-            <input class="" matInput [matDatepicker]="toDate" id="Reg_Effectiveto_date" [min]="vehicleObj.Reg_Effectivefrom_date" (focus)="toDate.open()" [(ngModel)]="vehicleObj.Reg_Effectiveto_date" id="Reg_Effectiveto_date" [ngModelOptions]="{standalone: true}">
+            <input class="" matInput [matDatepicker]="toDate" id="Reg_Effectiveto_date" [min]="vehicleObj.Reg_Effectivefrom_date" (focus)="toDate.open()" [(ngModel)]="vehicleObj.Reg_Effectiveto_date"  [ngModelOptions]="{standalone: true}">
             <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
             <mat-datepicker #toDate></mat-datepicker>
           </mat-form-field>
@@ -86,6 +84,80 @@
         </div>
 
       </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">License Require For Drive<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+        <div class="col-sm-4">
+          <!-- <input class="form-control"  type="text" [(ngModel)]="vehicleObj.Lic_Req_For_Drive" id="Lic_Req_For_Drive" [ngModelOptions]="{standalone: true}"> -->
+          <ng-select [items]="LicenseTypeList" [(ngModel)]="vehicleObj.Lic_Req_For_Drive" id="Lic_Req_For_Drive" name="Lic_Req_For_Drive" bindValue="id" bindLabel="name" placeholder="Select"> </ng-select>
+        </div>
+        <label class="col-sm-2 col-form-label">Insurance No<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+        <div class="col-sm-4">
+          <input class="form-control"  type="text" [(ngModel)]="vehicleObj.Insurance_NO" id="Insurance_NO" [ngModelOptions]="{standalone: true}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Insurance Start Date<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+       <div class="col-sm-4">
+         <mat-form-field appearance="fill" >
+           <mat-label>Choose a date</mat-label>
+           <input class=""  matInput [matDatepicker]="Start_Date" id="Insurance_Start_Date" [max]="vehicleObj.Insurance_End_Date" (focus)="Start_Date.open()" [(ngModel)]="vehicleObj.Insurance_Start_Date"  [ngModelOptions]="{standalone: true}">
+           <!-- <mat-icon matDatepickerToggleIcon (click)="clearDate($event)">clear</mat-icon> -->
+           <mat-datepicker-toggle matSuffix [for]="Start_Date"></mat-datepicker-toggle>
+           <mat-datepicker #Start_Date ></mat-datepicker>
+           <!-- (closed)="input.blur()" -->
+         </mat-form-field>
+       </div>
+
+       <label class="col-sm-2 col-form-label">Insurance End Date<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+       <div class="col-sm-4">
+         <mat-form-field appearance="fill" >
+           <mat-label>Choose a date</mat-label>
+           <input class="" matInput [matDatepicker]="End_Date" id="Insurance_End_Date" [min]="vehicleObj.Insurance_Start_Date" (focus)="End_Date.open()" [(ngModel)]="vehicleObj.Insurance_End_Date" [ngModelOptions]="{standalone: true}">
+           <mat-datepicker-toggle matSuffix [for]="End_Date"></mat-datepicker-toggle>
+           <mat-datepicker #End_Date></mat-datepicker>
+         </mat-form-field>
+         <!-- <input class="form-control"  type="text" [(ngModel)]="vehicleObj.Reg_Effectiveto_date" id="Reg_Effectiveto_date" [ngModelOptions]="{standalone: true}"> -->
+       </div>
+
+     </div>
+
+     <div class="form-group row">
+      <label class="col-sm-1 col-form-label">Vehicle Image1</label>
+      <div class="col-sm-3">
+        <input class="form-control"  type="file" accept="image/*"  id="Veh_Image1_URL" (change)="SetVehicleImage1($event.target.files)">
+      </div>
+      <label class="col-sm-1 col-form-label">Vehicle Image2</label>
+      <div class="col-sm-3">
+        <input class="form-control"  type="file" accept="image/*" (change)="SetVehicleImage2($event.target.files)">
+      </div>
+      <label class="col-sm-1 col-form-label">Vehicle Image3</label>
+      <div class="col-sm-3">
+        <input class="form-control"  type="file" accept="image/*" (change)="SetVehicleImage3($event.target.files)">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-1 col-form-label"></label>
+      <div class="col-sm-3">
+        <span *ngIf="vehicleObj.IsImage1 == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
+        <span *ngIf="vehicleObj.IsImage1 == 'Y'"> <img src="{{vehicleObj.Image1Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20" (click) = "DownloadImage(vehicleObj.Veh_Image1,vehicleObj.Vehicle_Id +'Image1',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button> </span>
+
+      </div>
+      <label class="col-sm-1 col-form-label"></label>
+      <div class="col-sm-3">
+        <span *ngIf="vehicleObj.IsImage2 == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
+        <span *ngIf="vehicleObj.IsImage2 == 'Y'"><img src="{{vehicleObj.Image2Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20"  (click) = "DownloadImage(vehicleObj.Veh_Image2,vehicleObj.Vehicle_Id +'Image2',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button></span>
+
+      </div>
+      <label class="col-sm-1 col-form-label"></label>
+      <div class="col-sm-3">
+        <span *ngIf="vehicleObj.IsImage3 == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
+        <span *ngIf="vehicleObj.IsImage3 == 'Y'">  <img src="{{vehicleObj.Image3Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20"  (click) = "DownloadImage(vehicleObj.Veh_Image3,vehicleObj.Vehicle_Id +'Image3',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button></span>
+
+      </div>
+    </div>
+
 
     </div>
     <br />

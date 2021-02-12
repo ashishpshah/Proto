@@ -9,6 +9,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 export class AdminCommonHelperComponent implements OnInit {
 
   userId : string = localStorage.getItem('userId');
+  currentYear : any = (new Date()).getFullYear();
   msgType : string = '';
   message : string = '';
   value : any;
@@ -17,11 +18,52 @@ export class AdminCommonHelperComponent implements OnInit {
   restoreTooltip : string = "click here to restore";
   required : string = "required";
   currency : string = "kr. ";
+  contentTypeImage : string = 'image/png';
+  imageNotAvail : string = "Image not available";
+  downloadImageTooltip : string = 'Download Image';
   constructor(private _router: Router) { }
 
   ngOnInit() {
 
   }
+
+  convertBase64ToBlobData(base64Data: string, contentType: string, sliceSize=512) {
+
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
+  DownloadImage(base64content :any,filename:any,contentType:any){
+  const blobData = this.convertBase64ToBlobData(base64content,contentType);
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+    window.navigator.msSaveOrOpenBlob(blobData, filename);
+  } else { // chrome
+    const blob = new Blob([blobData], { type: contentType });
+    const url = window.URL.createObjectURL(blob);
+    // window.open(url);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+  }
+}
+
   GenerateCaptchaNumber(length) {
     let result           = '';
     let characters       = '0123456789';

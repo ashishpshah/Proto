@@ -1,3 +1,4 @@
+import { DropdownListInt } from './../../../../models/DropdownListInt';
 import { DropdownList } from 'src/app/models/DropdownList';
 import {
   AdminCommonHelperComponent
@@ -94,6 +95,7 @@ export class VehicleListComponent implements OnInit {
   StatusList : Observable<DropdownList[]>;
   VehicleTypeList : Observable<DropdownList[]>;
   VehicleCategoryList : Observable<DropdownList[]>;
+  LicenseTypeList : Observable<DropdownListInt[]>;
   ManufactureByList : Observable<DropdownList[]>;
   RegTypeList : Observable<DropdownList[]>;
   MeasurementList : Observable<DropdownList[]>;
@@ -106,7 +108,10 @@ export class VehicleListComponent implements OnInit {
   warningMessage : string  = this.commonHelper.commonWarningMessage;
   deleteTooltip : string  = this.commonHelper.deleteTooltip;
   restoreTooltip : string  = this.commonHelper.restoreTooltip;
+  contentTypeImage :  string = this.commonHelper.contentTypeImage;
   required : string  = this.commonHelper.required;
+  imageNotAvail : string = this.commonHelper.imageNotAvail;
+  downloadImageTooltip :string = this.commonHelper.downloadImageTooltip;
   ngOnInit(): void {
     this.getVehicleList();
   }
@@ -114,6 +119,7 @@ export class VehicleListComponent implements OnInit {
   getVehicleList() {
     this._commonService.getVehicleList('0').subscribe(
       (data) => {
+
         this.vehicleMaster = data;
         this.loading = false;
       }
@@ -189,6 +195,10 @@ export class VehicleListComponent implements OnInit {
       }
     }
 
+    DownloadImage(base64content :any,filename:any,contentType:any){
+      this.commonHelper.DownloadImage(base64content,filename,contentType);
+    }
+
     getCommonList(){
        this._commonService.GetLovDetailByColumn("ACTIVEINACTIVE").subscribe(
         (data) =>
@@ -230,9 +240,17 @@ export class VehicleListComponent implements OnInit {
         }
       )
 
+      this._commonService.GetActiveLicenseType().subscribe(
+        (data) =>
+         {
+            this.LicenseTypeList = data;
+        }
+      )
+
     }
 
     validate(){
+
       if(this.vehicleObj.Vehicle_No == ''){
         this.errorMessage = "Please Enter Vehicle No";
         this.renderer.selectRootElement('#Vehicle_No').focus();
@@ -271,12 +289,40 @@ export class VehicleListComponent implements OnInit {
         this.errorMessage = "Please Select Reg Effectiveto Date";
         return false;
       }
+      else if(this.vehicleObj.Lic_Req_For_Drive == null || this.vehicleObj.Lic_Req_For_Drive == '' || this.vehicleObj.Lic_Req_For_Drive == '0' || this.vehicleObj.Lic_Req_For_Drive == 0 )
+      {
+        this.errorMessage = "Please Select License Require For Drive";
+        return false;
+      }else if(this.vehicleObj.Insurance_NO == ''){
+        this.errorMessage = "Please Enter Insurance No";
+        this.renderer.selectRootElement('#Insurance_NO').focus();
+        return false;
+      }
+      else if(this.vehicleObj.Insurance_Start_Date == null || this.vehicleObj.Insurance_Start_Date == '' || this.vehicleObj.Insurance_Start_Date == '0' || this.vehicleObj.Insurance_Start_Date == 0 )
+      {
+        this.errorMessage = "Please Select Insurance Start Date";
+        return false;
+      }
+      else if(this.vehicleObj.Insurance_End_Date == null || this.vehicleObj.Insurance_End_Date == '' || this.vehicleObj.Insurance_End_Date == '0' || this.vehicleObj.Insurance_End_Date == 0 )
+      {
+        this.errorMessage = "Please Select Insurance End Date";
+        return false;
+      }
       else{
         let frdate = _moment(this.vehicleObj.Reg_Effectivefrom_date, 'DD-MM-YYYY')
         let toDate = _moment(this.vehicleObj.Reg_Effectiveto_date, 'DD-MM-YYYY')
-        if(((new Date(this.vehicleObj.Reg_Effectiveto_date).toLocaleString()) < (new Date(this.vehicleObj.Reg_Effectivefrom_date).toLocaleString())) || (toDate < frdate)  ){
-          this.errorMessageDate = "Reg Effectiveto Date must be greater then Reg Effectivefrom Date";
-        }else{
+
+        let insSDate = _moment(this.vehicleObj.Insurance_Start_Date, 'DD-MM-YYYY')
+        let insEDate = _moment(this.vehicleObj.Insurance_End_Date, 'DD-MM-YYYY')
+
+        // if(((new Date(this.vehicleObj.Reg_Effectiveto_date).toLocaleString()) < (new Date(this.vehicleObj.Reg_Effectivefrom_date).toLocaleString())) || (toDate < frdate)  ){
+        if((toDate < frdate) ){
+        this.errorMessageDate = "Reg Effectiveto Date must be greater then Reg Effectivefrom Date";
+        }
+        else if((insEDate < insSDate)){
+          this.errorMessageDate = "Insurance End Date must be greater then Insurance Start Date";
+        }
+        else{
           this.errorMessageDate = '';
           return true;
         }
@@ -286,25 +332,55 @@ export class VehicleListComponent implements OnInit {
     saveVehicle() {
 
       if(this.validate()){
+
         this.vehicleObj.Created_By = this.userId;
         // this.vehicleObj.Department = this.vehicleObj.SelectedDepartment.join(',');
+        this.vehicleObj.IsInserted = this.title == "Create" ? 'I' :'U';
         this.vehicleObj.Reg_Effectivefrom_date = new Date(this.vehicleObj.Reg_Effectivefrom_date).toLocaleString();
         this.vehicleObj.Reg_Effectiveto_date = new Date(this.vehicleObj.Reg_Effectiveto_date).toLocaleString();
+        this.vehicleObj.Insurance_Start_Date = new Date(this.vehicleObj.Insurance_Start_Date).toLocaleString();
+        this.vehicleObj.Insurance_End_Date = new Date(this.vehicleObj.Insurance_End_Date).toLocaleString();
+        //let image1FormData: FormData = new FormData();
+        var image1FormData = new FormData();
+          for ( var key in this.vehicleObj ) {
+             image1FormData.append(key, this.vehicleObj[key]);
+          }
+
+        if(this.vehicleObj.Veh_Image1_URL != null && this.vehicleObj.Veh_Image1_URL.name != 'File'  ){
+          image1FormData.append('Veh_Image1_URL',  this.vehicleObj.Veh_Image1_URL,  this.vehicleObj.Veh_Image1_URL.name);
+        }
+        if( this.vehicleObj.Veh_Image2_URL != null && this.vehicleObj.Veh_Image2_URL.name != 'File' ){
+          image1FormData.append('Veh_Image2_URL',  this.vehicleObj.Veh_Image2_URL,  this.vehicleObj.Veh_Image2_URL.name);
+        }
+        if(  this.vehicleObj.Veh_Image3_URL != null && this.vehicleObj.Veh_Image3_URL.name != 'File'){
+          image1FormData.append('Veh_Image3_URL',  this.vehicleObj.Veh_Image3_URL,  this.vehicleObj.Veh_Image3_URL.name);
+        }
+
         if (this.title == "Create") {
-          this.vehicleObj.IsInserted = 'I';
-          this._commonService.saveVehicle(this.vehicleObj)
+          // this.vehicleObj.IsInserted = 'I';
+          this._commonService.saveVehicle(this.vehicleObj,image1FormData)
             .subscribe((data) => {
               this.commonHelper.commonAlerts('Inserted', data,'/master/vehicle-master', '/master/add-edit-category')
             }, error => this.errorMessage = error)
         }
         else if (this.title == "Edit") {
-          this.vehicleObj.IsInserted = 'U';
-          this._commonService.saveVehicle(this.vehicleObj)
+          // this.vehicleObj.IsInserted = 'U';
+          this._commonService.saveVehicle(this.vehicleObj,image1FormData)
             .subscribe((data) => {
               this.commonHelper.commonAlerts('Updated', data,'/master/vehicle-master', '/master/add-edit-category')
             }, error => this.errorMessage = error)
         }
       }
+    }
+
+    SetVehicleImage1(file : FileList){
+      this.vehicleObj.Veh_Image1_URL = file.item(0);
+    }
+    SetVehicleImage2(file : FileList){
+      this.vehicleObj.Veh_Image2_URL = file.item(0);
+    }
+    SetVehicleImage3(file : FileList){
+      this.vehicleObj.Veh_Image3_URL = file.item(0);
     }
 
     cancel() {
@@ -341,6 +417,14 @@ function VehicleFun(isInserted) {
     MeasurementDesc :'',
     Reg_Effectivefrom_date :'',
     Reg_Effectiveto_date :'',
+    Insurance_NO :'',
+    Insurance_Start_Date :'',
+    Insurance_End_Date :'',
+    Veh_Image1_URL :File,
+    Veh_Image2_URL :File,
+    Veh_Image3_URL :File,
+    Lic_Req_For_Drive :'',
+    Veh_Image1 : File,
 
 };
   return obj;
