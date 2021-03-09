@@ -35,6 +35,8 @@
               </th>
               <th pSortableColumn="Country_Name">Country <p-sortIcon field="Country_Name"></p-sortIcon>
               </th>
+              <th pSortableColumn="Post_Code">Post Code <p-sortIcon field="Post_Code"></p-sortIcon>
+              </th>
               <th pSortableColumn="StatusDesc">Status<p-sortIcon field="StatusDesc"></p-sortIcon>
               </th>
               <th>Action </th>
@@ -51,6 +53,8 @@
               <th><input pInputText type="text" (input)="dt.filter($event.target.value, 'State_Name', 'contains')"
                   placeholder="Search by State" class="form-control"></th>
               <th></th>
+              <th><input pInputText type="text" (input)="dt.filter($event.target.value, 'Post_Code', 'contains')"
+                placeholder="Search by Post Code" class="form-control"></th>
               <th></th>
               <th></th>
 
@@ -72,6 +76,9 @@
               </td>
               <td>
                 {{item.Country_Name}}
+              </td>
+              <td>
+                {{item.Post_Code}}
               </td>
               <td>
                 {{item.StatusDesc}}

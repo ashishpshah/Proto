@@ -183,7 +183,9 @@ export class DriverListComponent implements OnInit {
     }
 
     validate(){
-      debugger;
+      this.errorMsgContact = '';
+      this.errorMessageDate ='';
+      this.validEmailMsg = '';
       if(this.driverObj.Driver_Name == null || this.driverObj.Driver_Name == '' )
       {
         this.errorMessage = "Please Enter Driver Name";

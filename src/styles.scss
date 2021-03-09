@@ -11,6 +11,12 @@
   font-size:20px !important;
 }
 
+.img-zoom:hover{
+  -ms-transform: scale(1.7); /* IE 9 */
+  -webkit-transform: scale(1.7); /* Safari 3-8 */
+  transform: scale(1.7);
+  transition: 0.5s;
+}
 @media only screen and (max-width: 450px) {
 
    /* ------------------------Avtar Start ----------------- */

@@ -91,7 +91,7 @@
         <label class="col-sm-2 col-form-label"></label>
         <div class="col-sm-3">
           <span *ngIf="driverObj.IsImage == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
-          <span *ngIf="driverObj.IsImage == 'Y'"> <img src="{{driverObj.ImgBase64WithCntType}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20" (click) = "DownloadImage(driverObj.ImgBase64Str,driverObj.Driver_Id,contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button> </span>
+          <span *ngIf="driverObj.IsImage == 'Y'"> <img class="img-zoom" src="{{driverObj.ImgBase64WithCntType}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20" (click) = "DownloadImage(driverObj.ImgBase64Str,driverObj.Driver_Id,contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button> </span>
         </div>
       </div>
     </div>

@@ -186,6 +186,7 @@ deleteCountry(countryId :number, userId :string) {
 //#region State Master Service
 
 getStateList(State_Id:string): Observable<any> {
+
   return this.http.get(`${this.baseUrl}/`+'State/GetStateinfo?State_Id='+State_Id);
 }
 

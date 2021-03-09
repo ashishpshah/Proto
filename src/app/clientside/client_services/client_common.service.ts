@@ -33,7 +33,7 @@ constructor(private http: HttpClient)
 {
 
   //localStorage.clear();
-  let existingCartItems = JSON.parse(localStorage.getItem('shopcart'));
+  let existingCartItems = JSON.parse(localStorage.getItem('protoCart'));
   if (!existingCartItems) {
     existingCartItems = [];
   }
@@ -48,7 +48,7 @@ constructor(private http: HttpClient)
   //this.username = localStorage.getItem('Cust_userName');
   this.username = this.getWithExpiryLocalStorage('Cust_userName')
   this.currentUserNameStore.next(this.username);
-debugger;
+
 
  }
 
@@ -62,7 +62,7 @@ debugger;
     take(1),
     map((products) => {
       products.push(product);
-      localStorage.setItem('shopcart', JSON.stringify(products));
+      localStorage.setItem('protoCart', JSON.stringify(products));
     }),
   ).subscribe();
 }
@@ -77,37 +77,37 @@ addToCart1(product: Item_Master) {
   let local_storage;
 
   product.TotalPrice=product.Price;
-  if(localStorage.getItem('shopcart')  == null)
+  if(localStorage.getItem('protoCart')  == null)
   {
     this.items$.pipe(
       take(1),
       map((products) => {
         products.push(product);
-        localStorage.setItem('shopcart', JSON.stringify(products));
+        localStorage.setItem('protoCart', JSON.stringify(products));
       }),
     ).subscribe();
   }
   else
   {
 
-    var shopcart = JSON.parse(localStorage.getItem('shopcart'));
+    var protoCart = JSON.parse(localStorage.getItem('protoCart'));
 
-    if(shopcart.length  == null || shopcart.length  == undefined || shopcart.length == 0)
+    if(protoCart.length  == null || protoCart.length  == undefined || protoCart.length == 0)
     {
       this.items$.pipe(
         take(1),
         map((products) => {
           products.push(product);
-          localStorage.setItem('shopcart', JSON.stringify(products));
+          localStorage.setItem('protoCart', JSON.stringify(products));
         }),
       ).subscribe();
     }else
     {
       var isadd= true;
-      for (var i = 0; i < shopcart.length; i++) {
-        if(product.Item_ID === shopcart[i].Item_ID){  //look for match with name
-         shopcart[i].OrderQty += 1;
-         shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].Qty;
+      for (var i = 0; i < protoCart.length; i++) {
+        if(product.Item_ID === protoCart[i].Item_ID){  //look for match with name
+         protoCart[i].OrderQty += 1;
+         protoCart[i].TotalPrice = protoCart[i].Price * protoCart[i].Qty;
          isadd= false;
             break;  //exit loop since you found the person
         }
@@ -119,12 +119,12 @@ addToCart1(product: Item_Master) {
         take(1),
         map((products) => {
           products.push(product);
-          localStorage.setItem('shopcart', JSON.stringify(products));
+          localStorage.setItem('protoCart', JSON.stringify(products));
         }),
       ).subscribe();
      }
      else{
-      localStorage.setItem("shopcart", JSON.stringify(shopcart));
+      localStorage.setItem("protoCart", JSON.stringify(protoCart));
      }
 
     }
@@ -136,42 +136,42 @@ addToCart1(product: Item_Master) {
 
 minuseQty(product: Item_Master)
 {
-      var shopcart = JSON.parse(localStorage.getItem('shopcart'));
+      var protoCart = JSON.parse(localStorage.getItem('protoCart'));
       var isadd= true;
-      for (var i = 0; i < shopcart.length; i++)
+      for (var i = 0; i < protoCart.length; i++)
       {
-        if(product.Item_ID === shopcart[i].Item_ID){
-        shopcart[i].OrderQty -= 1;
-        shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].OrderQty;
+        if(product.Item_ID === protoCart[i].Item_ID){
+        protoCart[i].OrderQty -= 1;
+        protoCart[i].TotalPrice = protoCart[i].Price * protoCart[i].OrderQty;
         isadd= false;
             break;
         }
      }
-      localStorage.setItem("shopcart", JSON.stringify(shopcart));
+      localStorage.setItem("protoCart", JSON.stringify(protoCart));
 
 }
 
 addQty(product: Item_Master)
 {
 
-  var shopcart = JSON.parse(localStorage.getItem('shopcart'));
+  var protoCart = JSON.parse(localStorage.getItem('protoCart'));
   var isadd= true;
-  for (var i = 0; i < shopcart.length; i++)
+  for (var i = 0; i < protoCart.length; i++)
   {
-    if(product.Item_ID === shopcart[i].Item_ID){
-     shopcart[i].OrderQty += 1;
-     shopcart[i].TotalPrice = shopcart[i].Price * shopcart[i].OrderQty;
+    if(product.Item_ID === protoCart[i].Item_ID){
+     protoCart[i].OrderQty += 1;
+     protoCart[i].TotalPrice = protoCart[i].Price * protoCart[i].OrderQty;
      isadd= false;
         break;
     }
   }
-  localStorage.setItem("shopcart", JSON.stringify(shopcart));
+  localStorage.setItem("protoCart", JSON.stringify(protoCart));
 
 }
 
 getItems(){
-  console.log("Cart: ", JSON.parse(localStorage.getItem('shopcart')));
-  return this.Item_MasterList = JSON.parse(localStorage.getItem('shopcart'));
+  // console.log("Cart: ", JSON.parse(localStorage.getItem('protoCart')));
+  return this.Item_MasterList = JSON.parse(localStorage.getItem('protoCart'));
 
   //return this.items =
  }
@@ -182,7 +182,7 @@ deleteItem(item)
   console.log("Deleting : ",item);
   let shopping_cart;
   let index;
-  shopping_cart = JSON.parse(localStorage.getItem('shopcart'));
+  shopping_cart = JSON.parse(localStorage.getItem('protoCart'));
   for(let i in shopping_cart){
     if (item.Item_ID == shopping_cart[i].Item_ID)
     {
@@ -192,9 +192,9 @@ deleteItem(item)
   }
   shopping_cart.splice(index, 1);
   console.log("shopping_cart ", shopping_cart);
-  localStorage.setItem('shopcart', JSON.stringify(shopping_cart));
+  localStorage.setItem('protoCart', JSON.stringify(shopping_cart));
 
-  let existingCartItems = JSON.parse(localStorage.getItem('shopcart'));
+  let existingCartItems = JSON.parse(localStorage.getItem('protoCart'));
   if (!existingCartItems) {
     existingCartItems = [];
   }
@@ -202,7 +202,7 @@ deleteItem(item)
 
 }
 getwhislistItems(){
- // console.log("Cart: ", JSON.parse(localStorage.getItem('shopcart')));
+ // console.log("Cart: ", JSON.parse(localStorage.getItem('protoCart')));
   return this.whislistItem_Master = JSON.parse(localStorage.getItem('whishlist'));
 
   //return this.items =

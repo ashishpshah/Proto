@@ -105,17 +105,22 @@ export class StateListComponent implements OnInit {
   }
 
 
-  openCityModal(stateId){
+  openCityModal(stateId,stateName){
     this.loading = false;
-    this.getCityList(stateId);
+    this.getCityList(stateId,stateName);
   }
-  getCityList(stateId) {
+  getCityList(stateId,stateName) {
     this._commonService.getCityList(stateId).subscribe(
       (data) => {
         this.cityMaster = data;
-        this.stateName = data[0].State_Name;
-        this.stateId = data[0].State_ID;
-        localStorage.setItem('stateId', this.stateId);
+        if (data != null && data.length > 0) {
+          this.stateName = data[0].State_Name;
+          this.stateId = data[0].State_ID;
+        }else{
+          this.stateName = stateName;
+          this.stateId = stateId;
+        }
+        localStorage.setItem('stateId', stateId);
         $("#myModal").modal('show');
         this.loading = false;
       }
@@ -189,7 +194,7 @@ export class StateListComponent implements OnInit {
             this._commonService.deleteCity(stateId,cityId).subscribe((data) => {
               let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
               if (ret == 'S') {
-                this.openCityModal(localStorage.getItem('stateId'));
+                this.openCityModal(localStorage.getItem('stateId'),'');
               }
             }, error => console.error(error))
           }

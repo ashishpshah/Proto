@@ -68,7 +68,7 @@
                 {{item.State_Code}}
               </td>
 
-              <td><a class="btn btn-primary text-white" (click)="openCityModal(item.State_ID)">View | Add City</a></td>
+              <td><a class="btn btn-primary text-white" (click)="openCityModal(item.State_ID,item.State_Name)">View | Add City</a></td>
               <td>
                 <a class="ti-pencil-alt edit" (click)="openEditPage(item.State_ID)"></a>
                 &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.State_ID)"></a>
@@ -86,8 +86,6 @@
     </app-card>
   </div>
 </div>
-
-
 
 <!-- City List Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true">
@@ -136,8 +134,8 @@
                         </th>
                         <th pSortableColumn="City_Name">City Name <p-sortIcon field="City_Name"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="Post_Code">Post Code<p-sortIcon field="Post_Code"></p-sortIcon>
-                        </th>
+                        <!-- <th pSortableColumn="Post_Code">Post Code<p-sortIcon field="Post_Code"></p-sortIcon>
+                        </th> -->
                         <th>Action </th>
                       </tr>
                       <tr>
@@ -166,10 +164,10 @@
                           id="City_Name_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
 
                         </td>
-                        <td>
+                        <!-- <td>
                           <input class="form-control" type="text" [(ngModel)]="item.Post_Code"
                           id="Post_Code_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
-                        </td>
+                        </td> -->
                         <td>
                           <!-- <a class="ti-pencil-alt edit" (click)="openEditPage(item.City_ID,item.State_ID)"></a>
                           &nbsp; -->
@@ -189,12 +187,10 @@
             </div>
           </div>
         </form>
-
       </div>
       <div class="modal-footer align-center">
       <button type="button" class="btn btn-primary" (click)="saveCity()">Save</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
       </div>
     </div>
   </div>

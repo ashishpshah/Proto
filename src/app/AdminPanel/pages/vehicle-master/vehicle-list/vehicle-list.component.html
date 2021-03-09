@@ -141,19 +141,19 @@
       <label class="col-sm-1 col-form-label"></label>
       <div class="col-sm-3">
         <span *ngIf="vehicleObj.IsImage1 == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
-        <span *ngIf="vehicleObj.IsImage1 == 'Y'"> <img src="{{vehicleObj.Image1Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20" (click) = "DownloadImage(vehicleObj.Veh_Image1,vehicleObj.Vehicle_Id +'Image1',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button> </span>
+        <span *ngIf="vehicleObj.IsImage1 == 'Y'"> <img class="img-zoom" src="{{vehicleObj.Image1Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20" (click) = "DownloadImage(vehicleObj.Veh_Image1,vehicleObj.Vehicle_Id +'Image1',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button> </span>
 
       </div>
       <label class="col-sm-1 col-form-label"></label>
       <div class="col-sm-3">
         <span *ngIf="vehicleObj.IsImage2 == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
-        <span *ngIf="vehicleObj.IsImage2 == 'Y'"><img src="{{vehicleObj.Image2Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20"  (click) = "DownloadImage(vehicleObj.Veh_Image2,vehicleObj.Vehicle_Id +'Image2',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button></span>
+        <span *ngIf="vehicleObj.IsImage2 == 'Y'"><img class="img-zoom" src="{{vehicleObj.Image2Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20"  (click) = "DownloadImage(vehicleObj.Veh_Image2,vehicleObj.Vehicle_Id +'Image2',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button></span>
 
       </div>
       <label class="col-sm-1 col-form-label"></label>
       <div class="col-sm-3">
         <span *ngIf="vehicleObj.IsImage3 == 'N'" class="color-d-salmon">{{imageNotAvail}}</span>
-        <span *ngIf="vehicleObj.IsImage3 == 'Y'">  <img src="{{vehicleObj.Image3Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20"  (click) = "DownloadImage(vehicleObj.Veh_Image3,vehicleObj.Vehicle_Id +'Image3',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button></span>
+        <span *ngIf="vehicleObj.IsImage3 == 'Y'">  <img class="img-zoom" src="{{vehicleObj.Image3Base64}}" width="150" height="100"> <button class="btn btn-sm btn-success m-l-20 f20"  (click) = "DownloadImage(vehicleObj.Veh_Image3,vehicleObj.Vehicle_Id +'Image3',contentTypeImage)" data-toggle="tooltip" data-placement="right" title="{{downloadImageTooltip}}"><i class="fa fa-download" aria-hidden="true"></i></button></span>
 
       </div>
     </div>

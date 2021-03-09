@@ -75,7 +75,7 @@ selectEvent(item) {
 }
 
 onChangeSearch(search: string) {
-if(search.length >2)
+if(search.length >0)
 {
 
   this.pincode  =this.CreateFromObj.Zipcode;
@@ -326,11 +326,7 @@ validate(){
 
 
 createCustomer() {
-
-
-
   if(this.validate()){
-
     this.CreateFromObj.Created_By = 0;
     if (this.title == "Create Customer") {
       //this.itemForm.value.IsInserted = 'I';
@@ -342,7 +338,6 @@ createCustomer() {
         }, error => this.errorMessage = error)
     }
   }
-
 }
 
 validateipcode() {
@@ -355,7 +350,6 @@ validateipcode() {
     }else{
       return true;
     }
-
   }
 
 CheckPincodevalidet() {
