@@ -7,7 +7,7 @@
 
         <label class="col-sm-2 col-form-label">Vehicle<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-4">
-          <ng-select [ngClass] ="(vehicleRouteObj.Vehicle_Id == 0 || vehicleRouteObj.Vehicle_Id == null)  && errorMessage != '' ? 'border border-danger':''"  [(ngModel)]="vehicleRouteObj.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id"  [ngModelOptions]="{standalone: true}">
+          <ng-select [ngClass] ="(vehicleRouteObj.Vehicle_Id == 0 || vehicleRouteObj.Vehicle_Id == null)  && errorMessage != '' ? 'border border-danger':''"  [(ngModel)]="vehicleRouteObj.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id" (ngModelChange)="onVehicleSelect(vehicleRouteObj.Vehicle_Id)"  [ngModelOptions]="{standalone: true}">
             <ng-option *ngFor="let scat of VehicleList" [value]="scat.id"> {{scat.name}}</ng-option>
           </ng-select>
         </div>
@@ -97,8 +97,9 @@
                       name="Vehicle_Id"
                       bindValue="id"
                       bindLabel="name"
-                      placeholder="Select Vehicle" id="Vehicle_Id_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                      placeholder="Select Vehicle" id="Vehicle_Id_{{rowIndex}}" [ngModelOptions]="{standalone: true}" disabled>
                       </ng-select>
+                      <input type="hidden" [(ngModel)]="item.Vehicle_Id"[ngModelOptions]="{standalone: true}">
                     </div>
                   </td>
                   <td>
@@ -113,6 +114,7 @@
                       bindLabel="name"
                       placeholder="Select Routes" id="SelectedRoute_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
                       </ng-select>
+
                     </div>
                   </td>
                   <!-- <td style = "width: 220px;">

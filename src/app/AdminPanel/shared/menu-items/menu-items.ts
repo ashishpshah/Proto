@@ -106,6 +106,10 @@ const MENUITEMS = [
             name: 'Vehicle Route Mapping'
           }
           ,{
+            state: 'route-time-mgmt',
+            name: 'Route Time Management'
+          }
+          ,{
             state: 'brand-master',
             name: 'Brand Master'
           }

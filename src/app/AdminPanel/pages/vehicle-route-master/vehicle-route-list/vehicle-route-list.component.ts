@@ -116,6 +116,7 @@ export class VehicleRouteListComponent implements OnInit {
       this.vehicleRouteMaster.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
 
       row.SelectedRoute = row.Route_Ids.split(',').map(item => parseInt(item) ? parseInt(item) : item);
+
       row.isEditable = true;
      }
      cancelUpdate(row) {
@@ -143,7 +144,7 @@ export class VehicleRouteListComponent implements OnInit {
       }
     }
     validateInline(item) : any{
-      if(item.Vehicle_No == null || item.Vehicle_No == '' || item.Vehicle_No == '0' || item.Vehicle_No == 0 )
+      if(item.Vehicle_Id == null || item.Vehicle_Id == '' || item.Vehicle_Id == '0' || item.Vehicle_Id == 0 )
       {
         this.errorMessage = "Please Select Vehicle";
         // this.renderer.selectRootElement('#Root_Header_ID').focus();
@@ -173,7 +174,6 @@ export class VehicleRouteListComponent implements OnInit {
         this._commonService.getVehicleRouteById(this.mapId)
           .subscribe((resp) =>
           {
-
             this.vehicleRouteObj = resp
 
             this.vehicleRouteObj.SelectedRoute = resp.Route_Ids.split(',')
@@ -183,6 +183,19 @@ export class VehicleRouteListComponent implements OnInit {
         this.title = "Create";
         this.vehicleRouteObj = VehicleRouteFun(this.isInserted);
       }
+    }
+    onVehicleSelect(id){
+      this.vehicleRouteObj.SelectedRoute ='';
+      this._commonService.getRouteByVehicleId(id)
+      .subscribe((resp) =>
+      {
+        if(resp != null && resp != '' && resp !='e' && resp != 'o'){
+          this.vehicleRouteObj = resp
+          this.vehicleRouteObj.SelectedRoute = resp.Route_Ids.split(',').map(item => parseInt(item) ? parseInt(item) : item)
+        }
+
+        error => this.errorMessage = error
+      });
     }
 
     getCommonList(){

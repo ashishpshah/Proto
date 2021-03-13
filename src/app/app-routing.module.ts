@@ -1,3 +1,4 @@
+import { RouteTimeModule } from './AdminPanel/pages/route-time-mgmt/route-time-mgmt.module';
 import { typeMasterModule } from './AdminPanel/pages/type-master/type-master.module';
 import { CheckoutComponent } from './clientside/clientpages/checkout/checkout.component';
 import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist.component';
@@ -196,6 +197,10 @@ const routes: Routes = [
        {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/driver-master/driver-master.module').then(m => m.DriverMasterModule)
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/route-time-mgmt/route-time-mgmt.module').then(m => m.RouteTimeModule)
 
 
       },
