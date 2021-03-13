@@ -15,14 +15,14 @@
           </mat-form-field>
         </div>
 
-        <label class="col-sm-1 col-form-label">Route<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+        <label class="col-sm-1 col-form-label">Vehicle<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-3">
           <ng-select [ngClass] ="(routeTimeObj.Route_Id == 0 || routeTimeObj.Route_Id == null)  && errorMessage != '' ? 'border border-danger':''"  [(ngModel)]="routeTimeObj.Route_Id"  placeholder="Select Route"  id="Route_Id"  [ngModelOptions]="{standalone: true}" >
             <ng-option *ngFor="let scat of RouteList" [value]="scat.id"> {{scat.name}}</ng-option>
           </ng-select>
         </div>
         <div class="col-sm-2">
-          <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="viewRouteTime()"> <span class="font-d">
+          <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="viewVehicleRouteTimeDetail()"> <span class="font-d">
             View</span></button>
         </div>
 
@@ -37,7 +37,7 @@
 
 <!-- *********************************************** Data List **********************************************  -->
 
-<div *ngIf="isViewRouteTime">
+<div *ngIf="isViewVehicleRouteTimeDetail">
 
   <form>
     <div class="row">
@@ -49,11 +49,11 @@
             </p>
             <br />
             <br /> -->
-            <p-table class="" #dts [value]="routeTimeMasterList" [(selection)]="selectedRouteTimeList" dataKey="id"
+            <p-table class="" #dts [value]="routeTimeMasterList" [(selection)]="selectedVehicleRouteTimeDetailList" dataKey="id"
               [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="5"
               [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20]" [loading]="loading"
               [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-              [filterDelay]="0" [globalFilterFields]="['Vehicle_No','Route_Start_Time','Route_End_Time','Vehicle_CategoryDesc']">
+              [filterDelay]="0" [globalFilterFields]="['Route_Name','Route_Start_Time','Route_End_Time']">
               <ng-template pTemplate="caption">
                 <div class="table-header-p ">
                   <span class="p-input-icon-left">
@@ -68,22 +68,14 @@
               <br />
               <ng-template pTemplate="header">
                 <tr>
-                  <th pSortableColumn="Vehicle_No">Vehicle No<p-sortIcon field="Vehicle_No"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="Vehicle_CategoryDesc">Category<p-sortIcon field="Vehicle_CategoryDesc"></p-sortIcon>
+                  <th pSortableColumn="Route_Name">Route<p-sortIcon field="Route_Name"></p-sortIcon>
                   </th>
                   <th pSortableColumn="Route_Start_Time">Start Time<p-sortIcon field="Route_Start_Time"></p-sortIcon>
                   </th>
                   <th pSortableColumn="Route_End_Time">End Time<p-sortIcon field="Route_End_Time"></p-sortIcon>
                   </th>
-                  <th>Action </th>
                 </tr>
                 <tr>
-                  <th>
-                    <!-- <input pInputText type="text" (input)="dts.filter($event.target.value, 'Vehicle_No', 'contains')"
-                      placeholder="Search by Root" class="form-control"> -->
-                    </th>
-                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -93,14 +85,9 @@
 
               <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                 <tr class="">
-
                   <td>
-                    <input class="form-control" type="text" [(ngModel)]="item.Vehicle_No"
+                    <input class="form-control" type="text" [(ngModel)]="item.Route_Name"
                     id="Vehicle_No_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
-                  </td>
-                  <td>
-                    <input class="form-control" type="text" [(ngModel)]="item.Vehicle_CategoryDesc"
-                    id="Vehicle_CategoryDesc_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
                   </td>
                   <td>
                     <input class="form-control" type="time" [(ngModel)]="item.Route_Start_Time"
@@ -110,11 +97,6 @@
                     <input class="form-control" type="time" [(ngModel)]="item.Route_End_Time"
                     id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
                   </td>
-                  <td>
-                    <a *ngIf="item.RT_ID >0" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{clearTooltip}}" (click)="clearRoutTime(item.RT_ID,item.Route_Id,rowIndex)"></a>
-                    <a *ngIf="item.RT_ID <1" class=" ti-trash disabled" data-toggle="tooltip" data-placement="top"></a>
-                  </td>
-
                 </tr>
               </ng-template>
               <ng-template pTemplate="emptymessage">
@@ -125,20 +107,6 @@
             </p-table>
           </div>
         </app-card>
-
-        <hr />
-        <div class="text-center">
-          <div>
-            <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
-          </div>
-          <div class="form-group align-center">
-            <button *ngIf="routeTimeMasterList.length >0" type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveRouteTimeList()"> <span class="font-d">
-                Save</span></button> &nbsp;
-            <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
-                Cancel</span></button>
-          </div>
-        </div>
-
       </div>
     </div>
   </form>

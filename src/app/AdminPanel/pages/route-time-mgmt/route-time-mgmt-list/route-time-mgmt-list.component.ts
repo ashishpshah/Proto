@@ -84,6 +84,7 @@ isViewRouteTime : boolean =false;
   commonHelper = new AdminCommonHelperComponent(this._router);
   warningMessage : string  = this.commonHelper.commonWarningMessage;
   deleteTooltip : string  = this.commonHelper.deleteTooltip;
+  clearTooltip : string  = this.commonHelper.clearTooltip;
   restoreTooltip : string  = this.commonHelper.restoreTooltip;
   required : string  = this.commonHelper.required;
   ngOnInit(): void {
@@ -100,64 +101,7 @@ isViewRouteTime : boolean =false;
     );
   }
 
-  deleteItem(categoryId) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Do you want to delete?',
-      text: "You won't be able to revert this!",
-      showCancelButton: true,
-      confirmButtonColor: 'green',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Delete',
-    }).then((result) => {
-
-      if (result.isConfirmed) {
-        this._commonService.deleteRouteTime(categoryId, this.userId).subscribe((data) => {
-          let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
-          if (ret == 'S') {
-            this.getRouteTimeList();
-          }
-        }, error => console.error(error))
-      }
-    })
-  }
-
-  activateItem(categoryId) {
-    this._commonService.activeRouteTime(categoryId, this.userId).subscribe((data) => {
-      let ret = this.commonHelper.activeInactiveAlert('Activated', data);
-      if (ret == 'S') {
-        this.getRouteTimeList();
-      }
-    }, error => console.error(error))
-  }
-
     //============== CRUD functionality
-
-    addEditOpen(id : any):void {
-      this.errorMessage = '';
-      this.IsAddEdit = true;
-      this.categoryId = id;
-
-      this.getCommonList();
-
-      if (this.categoryId > 0) {
-        this.title = "Edit";
-        this._commonService.getRouteTimeById(this.categoryId)
-          .subscribe((resp) =>
-          {
-
-            this.routeTimeObj = resp
-
-            let frDt = resp.Route_Date;
-            this.routeTimeObj.Route_Date = frDt.includes('1900') || frDt.includes('1970') ?"": resp.Route_Date
-
-            , error => this.errorMessage = error
-          });
-      }else {
-        this.title = "Create";
-        this.routeTimeObj = RouteTimeFun(this.isInserted);
-      }
-    }
 
     getCommonList(){
        this._commonService.GetActiveRouteDropDownList().subscribe(
@@ -296,7 +240,8 @@ isViewRouteTime : boolean =false;
       if(returnMsg == "true"){
         this._commonService.saveRouteTimeList( this.userId,this.routeTimeObj.Route_Date,this.routeTimeMasterList)
         .subscribe((data) => {
-          this.errorMessage = this.commonHelper.commonAlertReturnError('Updated', data,'/master/route-time-mgmt', '/master/add-edit-category')
+          this.errorMessage = this.commonHelper.commonAlertWithoutRedirect('Updated', data,'/master/route-time-mgmt', '/master/add-edit-category')
+          this.viewRouteTime();
         }, error => this.errorMessage = error)
       }
       else{
@@ -305,9 +250,30 @@ isViewRouteTime : boolean =false;
         this.renderer.selectRootElement('#'+this.msgArray[2]+this.msgArray[1]).focus();
       }
     }
+    clearRoutTime(rtId :number,  routeId:string, index:number){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Do you want to delete?',
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: 'green',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete',
+      }).then((result) => {
 
+        if (result.isConfirmed) {
+          this._commonService.deleteRouteTime(rtId, this.userId).subscribe((data) => {
+            let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
+            if (ret == 'S') {
+              this.viewRouteTime()
+            }
+          }, error => console.error(error))
+        }
+      })
+    }
     cancel() {
       this.errorMessage = '';
+      this.isViewRouteTime = false;
       this.IsAddEdit = false;
     }
 }

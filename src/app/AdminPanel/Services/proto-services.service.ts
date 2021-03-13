@@ -501,7 +501,11 @@ activeRouteTime(rtId :number, userId :string) {
 }
 
 //#endregion
-
+//#region Vehicle Route Time Detail
+viewVehicleRouteTimeInfo(vehicleId:string,date:Date): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RouteTime/ViewVehicleRouteTimeInfo?vehicleId='+vehicleId+'&routeDate='+date);
+}
+//#endregion
 
 //#region Common List Services
 

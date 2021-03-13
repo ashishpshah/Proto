@@ -16,6 +16,7 @@ export class AdminCommonHelperComponent implements OnInit {
   commonWarningMessage : string = "* indicates a required field";
   deleteTooltip : string = "click here to delete";
   restoreTooltip : string = "click here to restore";
+  clearTooltip : string = "click here to clear";
   required : string = "required";
   currency : string = "kr. ";
   contentTypeImage : string = 'image/png';
@@ -182,6 +183,28 @@ validateEmail(email) {
       }else {
         return this.message;
         //this.autoCloseAlert('Error', this.message, 'error')
+      }
+
+    }else{
+      this.autoCloseAlert('Error', 'Something went wrong!', 'error')
+    }
+  }
+
+  commonAlertWithoutRedirect(title : string ,data: any, url : string,currentUrl : string): any{
+    if (data != null && data != "e" && data != "r" && data != "o") {
+      let splitData = data.toString().split("|");
+      this.msgType = splitData.length > 0 ? splitData[0] :'E';
+      this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
+
+      if (this.msgType == 'S') {
+        this.autoCloseAlert(title, this.message, 'success')
+        return '';
+      }
+      else if (this.msgType == 'A') {
+        this.autoCloseAlert(title, this.message, 'error')
+
+      }else {
+        return this.message;
       }
 
     }else{
