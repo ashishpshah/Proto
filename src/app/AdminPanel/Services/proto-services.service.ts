@@ -467,8 +467,60 @@ activeVehicleRoute(mapId :number, userId :string) {
 }
 //#endregion
 
+//#region Route Time Management Service
+
+getRouteTimeList(rtId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RouteTime/GetRouteTimeList?rtId='+rtId);
+}
+viewRouteTimeList(routeId:string,date:Date): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RouteTime/ViewRouteTimeList?routeId='+routeId+'&routeDate='+date);
+}
+
+getRouteTimeById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RouteTime/GetRouteTimeById?rtId='+id);
+}
+
+saveRouteTime(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'RouteTime/InsertUpdateRouteTime', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+saveRouteTimeList(userId :string,routeDate:Date,dtl:any[]) {
+
+  return this.http.post(`${this.baseUrl}/`+ 'RouteTime/InsertUpdateRouteTimeList?userId='+userId+'&routeDate=' +routeDate, dtl)
+    .catch(this.errorHandler)
+}
+
+deleteRouteTime(rtId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "RouteTime/DeleteRouteTimeRecord?rtId=" + rtId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeRouteTime(rtId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "RouteTime/ActiveRouteTime?rtId=" + rtId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+
+//#endregion
+//#region Vehicle Route Time Detail
+viewVehicleRouteTimeInfo(vehicleId:string,date:Date): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RouteTime/ViewVehicleRouteTimeInfo?vehicleId='+vehicleId+'&routeDate='+date);
+}
+//#endregion
 
 //#region Common List Services
+
+
+getVehicleByRouteId(routeId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'RouteTime/GetVehicleByRouteId?routeId='+routeId);
+}
+GetVehicleCategoryByVehicleId(vehicleId :string): Observable<any>  {
+ return this.http.get(`${this.baseUrl}/`+'RouteTime/GetVehicleCategoryByVehicleId?vehicleId='+vehicleId);
+}
+
+getRouteByVehicleId(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteMapping/GetRouteByVehicleId?vehicleId='+id);
+}
+
   GetLovDetailByColumn(Lov_Column:string): Observable<any> {
     return this.http.get(`${this.baseUrl}/`+'Lovmaster/GetLovDetailByColumnAJ?Lov_Column='+Lov_Column);
   }

@@ -147,7 +147,11 @@
 .ui-slider .ui-btn-inner {
   padding: 4px 0 0 0 !important;
 }
-
+.disabled{
+  color: #b9b9b9 !important;
+    font-size: large;
+    cursor: not-allowed;
+}
 .cart-display .minicart-wrapmain{
   position: absolute;
     top: 63px;
