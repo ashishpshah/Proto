@@ -13,7 +13,7 @@
             <form  [formGroup]="CheckPincode" (ngSubmit)="CheckPincodevalid()" #formDir="ngForm" autocomplete="off" >
               <div class="form-group">
                 <label for="Pincode">Zip code</label>
-                <input type="text" formControlName="Pincode" id="Pincode" class="form-control" placeholder=" for exmaple 382006" />
+                <input type="text" formControlName="Pincode" id="Pincode" class="form-control" placeholder=" for exmaple 2800" />
                 <div *ngIf="submitted && P.Pincode.errors" class="invalid-feedback">
                     <div *ngIf="P.Pincode.errors.required">Pincode is required</div>
                 </div>
@@ -62,7 +62,7 @@
 
           <div class="form-group">
             <label>Company / Institution  </label>
-            <input type="text"  [(ngModel)]="CreateFromObj.Compuny_Name"  id="Email" class="form-control" placeholder="Company / Institution"  [ngModelOptions]="{standalone: true}"/>
+            <input type="text"  [(ngModel)]="CreateFromObj.Compuny_Name"  id="Compuny_Name" class="form-control" placeholder="Company / Institution"  [ngModelOptions]="{standalone: true}"/>
           </div>
 
           <div class="form-row">
