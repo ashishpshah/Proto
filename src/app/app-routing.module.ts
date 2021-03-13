@@ -201,8 +201,10 @@ const routes: Routes = [
       {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/route-time-mgmt/route-time-mgmt.module').then(m => m.RouteTimeModule)
-
-
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/vehicle-route-time-detail/vehicle-route-time-detail.module').then(m => m.VehicleRouteTimeDetailModule)
       },
     ]
   },

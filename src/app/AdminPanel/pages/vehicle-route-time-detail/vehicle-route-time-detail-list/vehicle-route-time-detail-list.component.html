@@ -87,15 +87,15 @@
                 <tr class="">
                   <td>
                     <input class="form-control" type="text" [(ngModel)]="item.Route_Name"
-                    id="Vehicle_No_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
+                    id="RT_ID_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
                   </td>
                   <td>
                     <input class="form-control" type="time" [(ngModel)]="item.Route_Start_Time"
-                    id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                    id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
                   </td>
                   <td>
                     <input class="form-control" type="time" [(ngModel)]="item.Route_End_Time"
-                    id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                    id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
                   </td>
                 </tr>
               </ng-template>
