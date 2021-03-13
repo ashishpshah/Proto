@@ -46,6 +46,7 @@ import { CheckpincodeComponent } from './clientside/clientpages/checkpincode/che
 import { ShoppingcartComponent } from './clientside/clientpages/shoppingcart/shoppingcart.component';
 import { WhishlistComponent } from './clientside/clientpages/whishlist/whishlist.component';
 import { NgImageSliderModule } from 'ng-image-slider';
+// import { AutocompleteComponent } from './AdminPanel/pages/route-master/route-list/google-places.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
     ShoppingcartComponent,
     ProductDirective,
     WhishlistComponent,
-    CheckoutComponent,
+    CheckoutComponent
+    // AutocompleteComponent
     // ItemListComponent,
     // AddEditItemComponent
   ],

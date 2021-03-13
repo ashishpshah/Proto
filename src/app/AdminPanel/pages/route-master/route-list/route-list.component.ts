@@ -14,7 +14,7 @@ import {
 import {
   Component,
   OnInit,
-  ViewChild,ElementRef, Renderer2,
+  ViewChild,ElementRef, Renderer2, NgZone
 } from '@angular/core';
 
 import Swal from 'sweetalert2/dist/sweetalert2.js';
@@ -22,6 +22,7 @@ import {
   Table
 } from 'primeng/table';
 import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-route-list',
   templateUrl: './route-list.component.html',
@@ -50,7 +51,14 @@ export class RouteListComponent implements OnInit {
   SelectedStatus : string = 'A';
   isInserted : string = 'I';
   //--------------------------
-  constructor(private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private el : ElementRef, private renderer: Renderer2) {}
+
+  address: Object;
+  fromAddress_PlaceId: string;
+  toAddress_PlaceId: string;
+
+  formattedAddress: string;
+
+  constructor(public zone: NgZone, private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private el : ElementRef, private renderer: Renderer2) {}
   commonHelper = new AdminCommonHelperComponent(this._router);
   warningMessage : string  = this.commonHelper.commonWarningMessage;
   deleteTooltip : string  = this.commonHelper.deleteTooltip;
@@ -59,7 +67,56 @@ export class RouteListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRouteList();
+    //this.loadGoogleMapsAPIsScript();
   }
+
+//   public loadGoogleMapsAPIsScript() {
+//     let body = <HTMLDivElement> document.body;
+//     let script = document.createElement('script');
+//     script.innerHTML = '';
+//     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDfdBj6szrfhvikKoLJ13hFToXt7nxHiXw&libraries=places';
+//     script.async = true;
+//     script.defer = true;
+//     body.appendChild(script);
+// }
+
+
+getFromAddress(place: object) {
+  debugger;
+  this.address = place['formatted_address'];
+  // console.log(place['formatted_address'])
+  // console.log(place['geometry'].location.lat())
+  // console.log(place['geometry'].location.lng())
+
+  this.fromAddress_PlaceId = place['place_id'];
+
+  this.formattedAddress = place['formatted_address'];
+  this.zone.run(() => this.formattedAddress = place['formatted_address']);
+}
+
+getToAddress(place: object) {
+  debugger;
+  this.address = place['formatted_address'];
+  // console.log(place['formatted_address'])
+  // console.log(place['geometry'].location.lat())
+  // console.log(place['geometry'].location.lng())
+
+  this.toAddress_PlaceId = place['place_id'];
+
+  this.formattedAddress = place['formatted_address'];
+  this.zone.run(() => this.formattedAddress = place['formatted_address']);
+}
+
+getAddress(place: object) {
+  debugger;
+  this.address = place['formatted_address'];
+  console.log(place['formatted_address'])
+  console.log(place['geometry'].location.lat())
+  console.log(place['geometry'].location.lng())
+
+  this.formattedAddress = place['formatted_address'];
+  this.zone.run(() => this.formattedAddress = place['formatted_address']);
+}
 
   getRouteList() {
     this._commonService.getRouteList().subscribe(
@@ -143,23 +200,39 @@ getCommonList(){
 }
 
 validate(){
+  debugger;
   if(this.routeObj.Route_From == ''){
     this.errorMessage = "Please Enter Route From";
     this.renderer.selectRootElement('#Route_From').focus();
+    (<HTMLInputElement>document.getElementById('Route_From')).classList.add('alert-danger');
     return false;
   }else if(this.routeObj.Route_To == ''){
     this.errorMessage = "Please Enter Route To";
     this.renderer.selectRootElement('#Route_To').focus();
+    (<HTMLInputElement>document.getElementById('Route_To')).classList.add('alert-danger');
     return false;
   }
   else{
+    (<HTMLInputElement>document.getElementById('Route_From')).classList.remove('alert-danger');
+    (<HTMLInputElement>document.getElementById('Route_To')).classList.remove('alert-danger');
     return true;
   }
 }
 
 saveRoute() {
+
+  debugger;
+
+  this.routeObj.Route_From = (<HTMLInputElement>document.getElementById('Route_From')).value;
+
+  this.routeObj.Route_To = (<HTMLInputElement>document.getElementById('Route_To')).value;
+
   if(this.validate()){
     this.routeObj.Created_By = this.userId;
+
+    this.routeObj.Route_From_PlaceId = this.fromAddress_PlaceId;
+    this.routeObj.Route_To_PlaceId = this.toAddress_PlaceId;
+
     if (this.title == "Create") {
       this.routeObj.IsInserted = 'I';
       this._commonService.saveRoute(this.routeObj)

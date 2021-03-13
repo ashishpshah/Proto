@@ -1,44 +1,132 @@
 <!-- *********************************************** Insert-Update **********************************************  -->
+<!-- <div class="container">
+  <h1>
+    Google Places Autocomplete
+  </h1>
+  <div>
+    <h2>Home Address:</h2>
+
+    <p>
+      <google-places-autocomplete (setAddress)="getAddress($event)" adressType="address"></google-places-autocomplete>
+    </p>
+
+    <b>Address: </b> {{formattedAddress}}
+    <br><br>
+    <h2>Office Address:</h2>
+
+    <p>
+      <google-places-autocomplete (setAddress)="getEstablishmentAddress($event)" adressType="establishment"></google-places-autocomplete>
+    </p>
+    <b>Address:</b> {{formattedEstablishmentAddress}}
+    <br>
+    <b>Phone:</b> {{phone}}
+
+  </div>
+</div> -->
+
 <div *ngIf="IsAddEdit">
   <!-- <div><div class='alert alert-danger'><span>{{warningMessage}}</span></div></div> -->
-  <form >
+
+  <form>
     <div>
       <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Route From<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
+        <label class="col-sm-2 col-form-label"
+          >Route From<span
+            class="warningclass"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="{{ required }}"
+            >*</span
+          ></label
+        >
         <div class="col-sm-4">
-          <input class="form-control" type="text" [ngClass] ="routeObj.Route_From == '' && errorMessage != '' ? 'alert-danger':''" [(ngModel)]="routeObj.Route_From" id="Route_From" [ngModelOptions]="{standalone: true}">
-        </div>
-        <label class="col-sm-2 col-form-label">Route To<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
-        <div class="col-sm-4">
-          <input class="form-control" type="text" [ngClass] ="routeObj.Route_To == '' && errorMessage != '' ? 'alert-danger':''"  [(ngModel)]="routeObj.Route_To" id="Route_To" [ngModelOptions]="{standalone: true}">
-        </div>
+          <!-- <input
+            class="form-control"
+            type="text"
+            [ngClass]="
+              routeObj.Route_From == '' && errorMessage != ''
+                ? 'alert-danger'
+                : ''
+            "
+            [(ngModel)]="routeObj.Route_From"
+            id="Route_From"
+            [ngModelOptions]="{ standalone: true }"
+          /> -->
 
+          <!-- <google-places-autocomplete attrId="Route_From" attrErrorClass="{routeObj.Route_From == '' && errorMessage != '' ? 'alert-danger' : ''}" (setAddress)="getFromAddress($event)" adressType="address" ></google-places-autocomplete> -->
+          <google-places-autocomplete attrId="Route_From" (setAddress)="getFromAddress($event)" adressType="address" ></google-places-autocomplete>
+        </div>
+        <label class="col-sm-2 col-form-label"
+          >Route To<span
+            class="warningclass"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="{{ required }}"
+            >*</span
+          ></label
+        >
+        <div class="col-sm-4">
+          <!-- <input
+            class="form-control"
+            type="text"
+            [ngClass]="
+              routeObj.Route_To == '' && errorMessage != ''
+                ? 'alert-danger'
+                : ''
+            "
+            [(ngModel)]="routeObj.Route_To"
+            id="Route_To"
+            [ngModelOptions]="{ standalone: true }"
+          /> -->
+          <!-- <google-places-autocomplete attrId="Route_To" attrErrorClass="{routeObj.Route_To == '' && errorMessage != '' ? 'alert-danger' : ''}" (setAddress)="getToAddress($event)" adressType="address" ></google-places-autocomplete> -->
+          <google-places-autocomplete attrId="Route_To" (setAddress)="getToAddress($event)" adressType="address" ></google-places-autocomplete>
+        </div>
       </div>
       <div class="form-group row">
         <label class="col-sm-2 col-form-label">Status</label>
         <div class="col-sm-4">
-          <select class="form-control" [(ngModel)]="routeObj.Status" id="Status"
-            [attr.disabled]="isInserted == 'I' ? 'disabled' : null" [ngModelOptions]="{standalone: true}">
-            <option *ngFor="let st of StatusList; let i = index" [value]="st.id" >
-              {{st.name}}
+          <select
+            class="form-control"
+            [(ngModel)]="routeObj.Status"
+            id="Status"
+            [attr.disabled]="isInserted == 'I' ? 'disabled' : null"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <option
+              *ngFor="let st of StatusList; let i = index"
+              [value]="st.id"
+            >
+              {{ st.name }}
             </option>
           </select>
         </div>
       </div>
-
     </div>
     <br />
-    <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
+    <div>
+      <div class="text-danger f-12">
+        <span>{{ warningMessage }}</span>
+      </div>
+    </div>
     <hr />
     <div class="text-center">
       <div class="form-group align-center">
-        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveRoute()"> <span class="font-d">
-            Save</span></button> &nbsp;
-        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
-            Cancel</span></button>
+        <button
+          type="submit"
+          class="btn btn-success fa fa-check-square-o cursor-pointer"
+          (click)="saveRoute()"
+        >
+          <span class="font-d"> Save</span>
+        </button>
+        &nbsp;
+        <button
+          class="btn btn-danger fa fa-remove cursor-pointer"
+          (click)="cancel()"
+        >
+          <span class="font-d"> Cancel</span>
+        </button>
       </div>
     </div>
-
   </form>
 </div>
 
@@ -53,51 +141,91 @@
         <br />
         <br /> -->
 
-        <p-table class="" #dt [value]="routeMaster" [(selection)]="selectedRouteMaster" dataKey="id" [autoLayout]="true"
-          styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-          [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-          [globalFilterFields]="['Route_Name','RouteInfo']">
+        <p-table
+          class=""
+          #dt
+          [value]="routeMaster"
+          [(selection)]="selectedRouteMaster"
+          dataKey="id"
+          [autoLayout]="true"
+          styleClass="p-datatable-d"
+          [rowHover]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10, 25, 50]"
+          [loading]="loading"
+          [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [filterDelay]="0"
+          [globalFilterFields]="['Route_Name', 'RouteInfo']"
+        >
           <ng-template pTemplate="caption">
-            <div class="table-header-p ">
+            <div class="table-header-p">
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
-                <input class="p-l-30 form-control" pInputText type="text"
-                  (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                <input
+                  class="p-l-30 form-control"
+                  pInputText
+                  type="text"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')"
+                  placeholder="Global Search"
+                />
               </span>
-              <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span>
+              <span
+                ><a
+                  class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer"
+                  (click)="addEditOpen(0)"
+                  ><span class="font-d"> Add New</span></a
+                ></span
+              >
             </div>
           </ng-template>
           <br />
           <br />
           <ng-template pTemplate="header">
             <tr>
-              <th pSortableColumn="Route_Name">Route Name <p-sortIcon field="Route_Name"></p-sortIcon>
+              <th pSortableColumn="Route_Name">
+                Route Name <p-sortIcon field="Route_Name"></p-sortIcon>
               </th>
-              <th pSortableColumn="RouteInfo">Route Info <p-sortIcon field="RouteInfo"></p-sortIcon>
+              <th pSortableColumn="RouteInfo">
+                Route Info <p-sortIcon field="RouteInfo"></p-sortIcon>
               </th>
               <th>View Route</th>
-              <th pSortableColumn="StatusDesc">Status <p-sortIcon field="StatusDesc"></p-sortIcon>
+              <th pSortableColumn="StatusDesc">
+                Status <p-sortIcon field="StatusDesc"></p-sortIcon>
               </th>
               <!-- <th pSortableColumn="Deleted">IsDeleted <p-sortIcon field="Deleted"></p-sortIcon>
               </th> -->
-              <th>Action </th>
+              <th>Action</th>
             </tr>
             <tr>
               <th>
-                <input pInputText type="text" (input)="dt.filter($event.target.value, 'Route_Name', 'startsWith')"
-                  placeholder="Search by Route" class="form-control">
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    dt.filter($event.target.value, 'Route_Name', 'startsWith')
+                  "
+                  placeholder="Search by Route"
+                  class="form-control"
+                />
               </th>
 
               <th>
-                <input pInputText type="text" (input)="dt.filter($event.target.value, 'RouteInfo', 'contains')"
-                  placeholder="Search by Route Info" class="form-control">
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    dt.filter($event.target.value, 'RouteInfo', 'contains')
+                  "
+                  placeholder="Search by Route Info"
+                  class="form-control"
+                />
               </th>
               <th></th>
               <th></th>
               <!-- <th></th> -->
               <th></th>
-
             </tr>
           </ng-template>
 
@@ -106,16 +234,20 @@
               <!-- p-selectable-row  -->
 
               <td>
-                {{item.Route_Name}}
+                {{ item.Route_Name }}
               </td>
               <td>
-                {{item.RouteInfo}}
+                {{ item.RouteInfo }}
               </td>
               <td>
-                <a class="btn btn-primary text-white" (click)="openRouteInfo(item.Route_ID)">View Route Detail</a>
+                <a
+                  class="btn btn-primary text-white"
+                  (click)="openRouteInfo(item.Route_ID)"
+                  >View Route Detail</a
+                >
               </td>
               <td>
-                {{item.StatusDesc}}
+                {{ item.StatusDesc }}
               </td>
               <!-- <td style="width: 220px;">
                 {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button"
@@ -123,10 +255,27 @@
                     Active</button> </span>
               </td> -->
               <td>
-                <a class="ti-pencil-alt edit" (click)="addEditOpen(item.Route_ID)"></a>
+                <a
+                  class="ti-pencil-alt edit"
+                  (click)="addEditOpen(item.Route_ID)"
+                ></a>
                 <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Route_ID)"></a> -->
-                &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Route_ID)"></a>
-                          <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.Route_ID)"></a>
+                &nbsp;<a
+                  *ngIf="item.Deleted != 'Yes'"
+                  class="ti-trash delete"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="{{ deleteTooltip }}"
+                  (click)="deleteItem(item.Route_ID)"
+                ></a>
+                <a
+                  *ngIf="item.Deleted == 'Yes'"
+                  class="ti-share delete"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="{{ restoreTooltip }}"
+                  (click)="activateItem(item.Route_ID)"
+                ></a>
                 <!-- &nbsp;<a class=" ti-eye view" (click)="deleteItem(item.Item_ID)"></a> -->
               </td>
             </tr>

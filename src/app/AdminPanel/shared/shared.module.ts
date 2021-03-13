@@ -14,6 +14,7 @@ import {MenuItems} from './menu-items/menu-items';
 import {ParentRemoveDirective} from './element/parent-remove.directive';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {ClickOutsideModule} from 'ng-click-outside';
+// import { AutocompleteComponent } from 'src/app/AdminPanel/shared/googlemap/google-places/google-places.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -38,7 +39,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalAnimationComponent,
     ModalBasicComponent,
     DataFilterPipe,
-    ParentRemoveDirective
+    ParentRemoveDirective,
+    // AutocompleteComponent
   ],
   exports: [
     AccordionAnchorDirective,

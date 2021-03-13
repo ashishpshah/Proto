@@ -2,6 +2,7 @@ import { RouteListRoutingModule } from './route-list-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouteListComponent } from './route-list.component';
+import { AutocompleteComponent } from './google-places.component';
 
 import {SharedModule} from '../../../shared/shared.module';
 import {NgxDataTableModule} from "angular-9-datatable";
@@ -43,6 +44,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgSelectModule,
     NgSelect2Module,
   ],
-  declarations: [RouteListComponent]
+  declarations: [RouteListComponent, AutocompleteComponent]
 })
 export class RouteListModule { }
