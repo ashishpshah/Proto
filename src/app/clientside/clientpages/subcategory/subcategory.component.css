@@ -345,5 +345,66 @@ input[type="checkbox"] {
     transform: rotate(45deg);
 }
 
+.card-header .block-title {
+  position: relative;
+  font-size: 16px;
+  color: #222;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  line-height: 100%;
+  border-bottom: 1px solid #dddddd;
+  width: 100%;
+}
+
+.card-header .block-title:before {
+  content: "";
+  display: inline-block;
+  height: 1px;
+  width: 100px;
+  position: absolute;
+  left: 0px;
+  bottom: -1px;
+  background: #ff5500;
+}
 
 
+.ng5-slider .ng5-slider-pointer {
+  cursor: pointer !important;
+  width: 20px !important;
+  height: 20px !important;
+  top: -8px !important;
+  background-color: #0db9f0 !important;
+  z-index: 3 !important;
+  border-radius: 16px !important;
+}
+
+.ng5-slider .ng5-slider-span {
+  white-space: nowrap !important;
+  position: absolute !important;
+  display: inline-block !important;
+}
+
+.ng5-slider .ng5-slider-pointer:after {
+  content: '' !important;
+  width: 5px !important;
+  height: 5px !important;
+  position: absolute !important;
+  top: 8px !important;
+  left: 8px !important;
+  border-radius: 5px !important;
+  background: #fff !important;
+}
+
+.catname:hover {
+  color: #ff5500 !important; }
+
+  .info-bar {
+    /* border: 1px solid #ddd !important; */
+    line-height: 32px !important;
+    vertical-align: middle !important;
+    padding: 1rem !important;
+    background: rgb(255, 255, 255) !important;
+    margin-bottom: 2rem !important;
+}

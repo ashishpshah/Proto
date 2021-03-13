@@ -8,12 +8,13 @@ import 'rxjs/add/observable/throw';
   providedIn: 'root'
 })
 export class ItemMasterService {
-
-  private baseUrl = 'https://localhost:44311/APi/Item';
+  private url = window.location.origin;
+  private baseUrl = this.url.includes('localhost') ? 'https://localhost:44311/Api/' :'https://protoapi.padhyasoft.com/Api/' ;
+  // private baseUrl = 'https://protoapi.padhyasoft.com/Api/Item';
   constructor(private http: HttpClient) { }
-  
+
   getItemList(itemId:string): Observable<any> {
- 
+
     return this.http.get(`${this.baseUrl}/`+'GetItemList?itemId='+itemId);
   }
 
