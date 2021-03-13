@@ -28,7 +28,7 @@
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "@ng-select/ng-select": "^5.0.14",
     "@nicky-lenaers/ngx-scroll-to": "^9.0.0",
-    "@types/googlemaps": "^3.39.12",
+    "@types/googlemaps": "^3.43.3",
     "angular-9-datatable": "^0.1.1",
     "angular-ng-autocomplete": "^2.0.4",
     "angular2-chartjs": "^0.5.1",

@@ -17,8 +17,8 @@
 
         <label class="col-sm-1 col-form-label">Vehicle<span class="warningclass" data-toggle="tooltip" data-placement="top" title="{{required}}">*</span></label>
         <div class="col-sm-3">
-          <ng-select [ngClass] ="(routeTimeObj.Route_Id == 0 || routeTimeObj.Route_Id == null)  && errorMessage != '' ? 'border border-danger':''"  [(ngModel)]="routeTimeObj.Route_Id"  placeholder="Select Route"  id="Route_Id"  [ngModelOptions]="{standalone: true}" >
-            <ng-option *ngFor="let scat of RouteList" [value]="scat.id"> {{scat.name}}</ng-option>
+          <ng-select [ngClass] ="(routeTimeObj.Vehicle_Id == 0 || routeTimeObj.Vehicle_Id == null)  && errorMessage != '' ? 'border border-danger':''"  [(ngModel)]="routeTimeObj.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id"  [ngModelOptions]="{standalone: true}" >
+            <ng-option *ngFor="let scat of VehicleList" [value]="scat.id"> {{scat.name}}</ng-option>
           </ng-select>
         </div>
         <div class="col-sm-2">
@@ -38,11 +38,10 @@
 <!-- *********************************************** Data List **********************************************  -->
 
 <div *ngIf="isViewVehicleRouteTimeDetail">
-
   <form>
     <div class="row">
       <div class="col-sm-12">
-        <app-card [title]="'Route Time Management'" [classHeader]="true" [blockClass]="'table-border-style'">
+        <app-card [title]="'Route Detail'" [classHeader]="true" [blockClass]="'table-border-style'">
           <div class="table-responsive">
             <!-- <p>
               <a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addNewRow()"><span class="font-d"> Add New</span></a>
@@ -86,16 +85,16 @@
               <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                 <tr class="">
                   <td>
-                    <input class="form-control" type="text" [(ngModel)]="item.Route_Name"
-                    id="RT_ID_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
+                    {{item.Route_Name}}
+
                   </td>
                   <td>
-                    <input class="form-control" type="time" [(ngModel)]="item.Route_Start_Time"
-                    id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
+                    {{item.Route_Start_Time}}
+
                   </td>
                   <td>
-                    <input class="form-control" type="time" [(ngModel)]="item.Route_End_Time"
-                    id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}" readonly>
+                    {{item.Route_End_Time}}
+
                   </td>
                 </tr>
               </ng-template>
