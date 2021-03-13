@@ -1,4 +1,4 @@
-  <nav id="navbar" role="navigation" class="navbar navbar-light fixed-top navbar-expand-lg yamm justify-content-between">
+  <nav id="navbar" role="navigation" class="navbar navbar-light fixed-top navbar-expand-lg yamm justify-content-between" style="background-color: #17a2b8!important;">
       <div class="search-area">
           <div class="search-area-inner d-flex align-items-center justify-content-center">
               <div class="close-btn"><i class="fa fa-close"></i></div>
@@ -10,38 +10,38 @@
           </div>
       </div>
       <div class="container">
-          <a href="index.html" class="navbar-brand home"><img src="assets/img/logo/logo.png" alt="Minimal logo" style="height: 44px;" class="d-none d-md-inline-block">
+          <a [routerLink]="['/']" class="navbar-brand home"><img src="assets/img/logo/logo.png" alt="Minimal logo" style="height: 44px;" class="d-none d-md-inline-block">
             <img src="assets/img/logo/logo.png" alt="Minimal logo" class="d-md-none" style="width:120px;"><span class="sr-only">Prototype - go to homepage</span></a>
           <div class="navbar-buttons d-lg-none">
 
               <!-- <button type="button" data-toggle="modal" data-target="#login-modal" class="btn btn-outline-secondary mr-1"><a href="login"><i class="icofont-ui-user"></i></a><i class="fa fa-users"></i></button> -->
-              <a href="/shoppingcart" class="btn btn-outline-primary mr-1"><i class="fa fa-shopping-cart"></i><span class="d-sm-inline">{{(items$ | async).length}}</span></a>
+              <a [routerLink]="['/shoppingcart']" class="btn btn-outline-primary mr-1"><i class="fa fa-shopping-cart"></i><span class="d-sm-inline">{{(items$ | async).length}}</span></a>
               <button type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation" class="btn btn-outline-primary"><i class="fa fa-align-justify"></i><span class="sr-only">Toggle navigation</span></button>
           </div>
           <div id="navigation" class="navbar-collapse collapse">
               <div class="navbar-nav mr-auto">
 
                   <div class="nav-item" *ngFor='let item  of Root_Header_Masters' [ngClass]="item.rootcat.length > 0 ? 'dropdown normal-dropdown' : ''">
-                      <a id="homeDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link " [ngClass]="item.rootcat.length > 0 ? 'dropdown-toggle' : ''">{{item.Root_Name}}</a>
+                      <a id="homeDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link text-white " [ngClass]="item.rootcat.length > 0 ? 'dropdown-toggle' : ''">{{item.Root_Name}}</a>
                       <div aria-labelledby="homeDropdown" class="dropdown-menu" *ngIf="item.rootcat.length > 0">
-                        <a href="/subcategory/{{item1.RCatg_ID}}" *ngFor='let item1  of item.rootcat' class="dropdown-item">{{item1.RCatg_Name}}<span class="badge badge-success">New</span></a>
+                        <a [routerLink]="['/subcategory/', item1.RCatg_ID]" *ngFor='let item1  of item.rootcat' class="dropdown-item">{{item1.RCatg_Name}}<span class="badge badge-success">New</span></a>
                       </div>
                   </div>
-                  <div class="nav-item"><a href="contact.html" class="nav-link">Contact</a></div>
+                  <div class="nav-item"><a href="contact.html" class="nav-link text-white">Contact</a></div>
                   <div class="nav-item dropdown normal-dropdown">
-                    <a href="/custlogin" class="nav-link dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true"><i class="icofont-lock ml-1"></i>{{username}}</a>
+                    <a [routerLink]="['/custlogin']" class="nav-link text-white dropdown-toggle" aria-expanded="false" data-toggle="dropdown" aria-haspopup="true"><i class="icofont-lock ml-1"></i>{{username}}</a>
                     <div aria-labelledby="homeDropdown" class="dropdown-menu">
-                        <a *ngIf="Showlogin" href="/custlogin" class="dropdown-item">LOG IN</a>
+                        <a *ngIf="Showlogin" [routerLink]="['/custlogin']" class="dropdown-item">LOG IN</a>
                         <a *ngIf="Showlogout" (click)="Logout()" class="dropdown-item">LOG OUT</a>
-                        <a *ngIf="Showcreate" href="/create-user" class="dropdown-item">Create</a>
-                        <a  href="/whishlist" class="dropdown-item">Whishlist</a>
+                        <a *ngIf="Showcreate" [routerLink]="['/create-user']" class="dropdown-item">Create</a>
+                        <a [routerLink]="['/whishlist']" class="dropdown-item">Whishlist</a>
                     </div>
                   </div>
               </div>
               <div class="d-none d-lg-block cart-display">
                 <!-- <a href="/custlogin"  class="mr-3"><i class="icofont-lock ml-1"></i>{{username}}</a>
                 <a class="mr-3" href="/create-user"><i class="icofont-ui-user"></i>Create</a> -->
-                <a href="/shoppingcart" class="btn btn-outline-primary "><i class="fa fa-shopping-cart"></i> <span>{{(items$ | async).length}} </span> </a>
+                <a [routerLink]="['/shoppingcart']" class="btn btn-outline-info text-white border-white"><i class="fa fa-shopping-cart"></i> <span>{{(items$ | async).length}} </span> </a>
 
                 <div class="d-none d-sm-block">
                     <div class="minicart-wrapmain" id="minicart">
@@ -90,7 +90,7 @@
                           <span class="float-left text-muted font-weight-bold">Shipping Charge : {{currency}}{{shippingcharge.toFixed(2)}}</span> <span class="float-right text-muted font-weight-bold">Sub Total : {{currency}}{{GetSubTotal().toFixed(2)}}</span>
                         </span>
                       </div>
-                        <a class="btn btn-sm btn-success float-right cursor-pointer" style="margin:5px;" href="/shoppingcart" *ngIf="IsShowShoppingCart() && (items$ | async).length > 0">Proceed To Cart</a>
+                        <a class="btn btn-sm btn-success float-right cursor-pointer" style="margin:5px;" [routerLink]="['/shoppingcart']" *ngIf="IsShowShoppingCart() && (items$ | async).length > 0">Proceed To Cart</a>
                       <div class="card-footer text-muted font-weight-bold">
                         <span *ngIf="(items$ | async).length > 0">Total : {{currency}}{{GetGrandTotal().toFixed(2)}}</span>
 
