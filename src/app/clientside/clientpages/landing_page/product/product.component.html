@@ -50,9 +50,9 @@
                           <!-- /.image-->
                           <div class="text">
                               <h3><a>{{prod.Item_Name}}</a></h3>
-                              <p class="card-text text-left  mb-0">Price: <span class="font-weight-bold float-right text-success">{{currency}}{{prod.Price}}</span></p>
+                              <p class="card-text text-left">Price: <span class="font-weight-bold float-right text-success">{{currency}}{{prod.Price}}</span></p>
 
-                              <p class="card-text text-left">Stock left: <span class="font-weight-bold float-right text-danger">{{prod.Qty}}</span></p>
+                              <!-- <p class="card-text text-left">Stock left: <span class="font-weight-bold float-right text-danger">{{prod.Qty}}</span></p> -->
 
 
                               <div class="F8dpS _3L1X9" *ngIf="prod.showaddbtn" (click)="toggleShow(prod)">
