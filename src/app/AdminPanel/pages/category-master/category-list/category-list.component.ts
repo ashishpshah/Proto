@@ -161,7 +161,8 @@ export class CategoryListComponent implements OnInit {
     }
 
     validate(){
-      if(this.categoryObj.Department == null || this.categoryObj.Department == '' || this.categoryObj.Department == '0' || this.categoryObj.Department == 0 )
+      let Department = this.categoryObj.SelectedDepartment != null? this.categoryObj.SelectedDepartment.length :0;
+      if(Department == null || Department == '' || Department == '0' || Department == 0 )
       {
         this.errorMessage = "Please Select Department";
         return false;
@@ -195,8 +196,9 @@ export class CategoryListComponent implements OnInit {
     }
 
     saveCategory() {
-
+debugger;
       if(this.validate()){
+        debugger;
         this.categoryObj.Created_By = this.userId;
         this.categoryObj.Department = this.categoryObj.SelectedDepartment.join(',');
         if (this.title == "Create") {
