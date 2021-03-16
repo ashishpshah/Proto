@@ -55,6 +55,9 @@ export class SubcategoryComponent implements OnInit {
   CatCoverImage : string = '';
   IsSubCategory : boolean = false;
   //productInfoCart : Observable<Item_Master[]>;
+  RootHeaderName : string ='';
+  RootCategoryName : string ='';
+  CategoryName : string ='';
 
 
 
@@ -126,10 +129,16 @@ export class SubcategoryComponent implements OnInit {
   ngOnInit()
   {
 
-
+debugger;
     localStorage.removeItem('CategoryId');
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.subcategoryName = this.route.snapshot.paramMap.get('string');
+      let param = this.route.snapshot.paramMap.get('string');
+      let splitData: any[] = [];
+      splitData = param != null ?param.split('#'):splitData;
+      this.subcategoryName = splitData != null && splitData.length > 0 ?splitData[0]:0;
+      this.RootCategoryName = splitData != null && splitData.length > 2 ?splitData[2]:'';
+      this.RootHeaderName = splitData != null && splitData.length > 1 ?splitData[1]:'';
+      // this.subcategoryName = this.route.snapshot.paramMap.get('string');
       this.typeObj = typeFun();
       this.Root_Header_ID=parseInt(this.subcategoryName);
       this.RCatg_ID=parseInt(this.subcategoryName);
@@ -683,7 +692,11 @@ export class SubcategoryComponent implements OnInit {
     this.Client_commonService_.GetCatg_MasterList(Root_Header_ID).subscribe(
       (data) =>
        {
+       if(data != null && data != '' && data != 'e' && data!= 'o'){
+
+       }
          this.Catg_Master = data;
+         this.CategoryName = this.CategoryName ==''? data.length > 0? data[0].Catg_Name : this.CategoryName :this.CategoryName;
          this.CatCoverImage = this.Catg_Master.length > 0 ? this.Catg_Master[0].Image_Url:'';
       }
     )
@@ -737,9 +750,9 @@ export class SubcategoryComponent implements OnInit {
   });
   }
 
-  SubCategoryList(cat_ids,index)
+  SubCategoryList(cat_ids,index,catName)
   {
-
+    this.CategoryName = catName;
     let img = '';
     this.IsSubCategory = false;
     if(this.Catg_Master != null){
