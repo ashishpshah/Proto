@@ -24,7 +24,8 @@
                   <div class="nav-item" *ngFor='let item  of Root_Header_Masters' [ngClass]="item.rootcat.length > 0 ? 'dropdown normal-dropdown' : ''">
                       <a id="homeDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link text-white " [ngClass]="item.rootcat.length > 0 ? 'dropdown-toggle' : ''">{{item.Root_Name}}</a>
                       <div aria-labelledby="homeDropdown" class="dropdown-menu" *ngIf="item.rootcat.length > 0">
-                        <a [routerLink]="['/subcategory/', item1.RCatg_ID]" *ngFor='let item1  of item.rootcat' class="dropdown-item">{{item1.RCatg_Name}}<span class="badge badge-success">New</span></a>
+                        <a [routerLink]="['/subcategory/', item1.RCatg_ID+'#'+item.Root_Name+'#'+item1.RCatg_Name]" *ngFor='let item1  of item.rootcat' class="dropdown-item">{{item1.RCatg_Name}}</a>
+                        <!-- <span class="badge badge-success">New</span> -->
                       </div>
                   </div>
                   <!-- <div class="nav-item"><a href="contact.html" class="nav-link text-white">Contact</a></div> -->

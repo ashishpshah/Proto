@@ -4,21 +4,23 @@
   <div id="content">
       <div class="container">
           <ul class="breadcrumb justify-content-md-end justify-content-center">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">GROCERIES      </li>
+              <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+              <li class="breadcrumb-item " [ngClass]="RootCategoryName ==''&& CategoryName =='' ?'active':''" >{{RootHeaderName}} </li>
+              <li class="breadcrumb-item " [ngClass]="CategoryName =='' ?'active':''" ><a [routerLink]="['/subcategory/', RCatg_ID+'#'+RootHeaderName+'#'+RootCategoryName]"></a>{{RootCategoryName}} </li>
+              <li class="breadcrumb-item active" *ngIf="CategoryName != ''">{{CategoryName}} </li>
           </ul>
           <div class="col-md-3" style="float: left;">
             <!--  *** MENUS AND FILTERS ***-->
             <div class="card sidebar-menu" style="box-shadow:none !important">
                 <div class="card-header p-3">
-                    <h5 class="mb-0 text-uppercase block-title">Groceries</h5>
+                    <h5 class="mb-0 text-uppercase block-title">{{RootHeaderName}} </h5>
                 </div>
 
                 <div class="card-body py-0">
                   <div id="accordion" role="tablist" class="mb-3">
                     <!-- <jw-pagination [items]="Catg_Master" (changePage)="onChangePage($event)"></jw-pagination> -->
                     <div class="card" *ngFor="let notification of Catg_Master; let i=index;" style="box-shadow:none !important">
-                      <div class="card-header py-1 px-0 sortable catname" id="headingOne" (click)="SubCategoryList(notification.Catg_ID,i)">
+                      <div class="card-header py-1 px-0 sortable catname" id="headingOne" (click)="SubCategoryList(notification.Catg_ID,i,notification.Catg_Name)">
                               {{ notification.Catg_Name }}
                       </div>
                   </div>

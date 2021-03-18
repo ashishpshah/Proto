@@ -1,3 +1,4 @@
+import { VehicleRouteTimeMapModule } from './AdminPanel/pages/vehicle-route-time-map/vehicle-route-time-map.module';
 import { RouteTimeModule } from './AdminPanel/pages/route-time-mgmt/route-time-mgmt.module';
 import { typeMasterModule } from './AdminPanel/pages/type-master/type-master.module';
 import { CheckoutComponent } from './clientside/clientpages/checkout/checkout.component';
@@ -205,6 +206,10 @@ const routes: Routes = [
       {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/vehicle-route-time-detail/vehicle-route-time-detail.module').then(m => m.VehicleRouteTimeDetailModule)
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/vehicle-route-time-map/vehicle-route-time-map.module').then(m => m.VehicleRouteTimeMapModule)
       },
     ]
   },

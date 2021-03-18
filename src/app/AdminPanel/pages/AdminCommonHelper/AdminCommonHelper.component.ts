@@ -69,6 +69,24 @@ export class AdminCommonHelperComponent implements OnInit {
   }
 }
 
+getPreNextYearList(){
+  let startyr = new Date().getFullYear() -1;
+  let range :any[]= [];
+  for (var i = 0; i < 3; i++) {
+    range.push({
+      label: startyr + i,
+      value: parseInt(String(startyr + i))
+    });
+  }
+  return range;
+}
+getMonthList(){
+  var  months = [{id:1,name:"January"}, {id:2,name:"February"},{id:3,name:"March"},{id:4,name:"April"},{id:5,name:"May"},{id:6,name:"June"},
+                 {id:7,name:"July"},{id:8,name:"August"},{id:9,name:"September"},{id:10,name:"October"},{id:11,name:"November"},{id:12,name:"December"},];
+
+  return months;
+}
+
 validateEmail(email) {
   const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regularExpression.test(String(email).toLowerCase());

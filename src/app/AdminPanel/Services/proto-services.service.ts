@@ -525,10 +525,45 @@ activeRouteTime(rtId :number, userId :string) {
 }
 
 //#endregion
+
 //#region Vehicle Route Time Detail
 viewVehicleRouteTimeInfo(vehicleId:string,date:Date): Observable<any> {
   return this.http.get(`${this.baseUrl}/`+'RouteTime/ViewVehicleRouteTimeInfo?vehicleId='+vehicleId+'&routeDate='+date);
 }
+//#endregion
+
+//#region Route Time Management Service
+getWeekListByYearMonth(year:string,month:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteTime/GetWeekListByYearMonth?year='+year+'&month='+month);
+}
+
+getVehicleRouteTimeMapList(rtId:string): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteTime/GetVehicleRouteTimeMapList?rtId='+rtId);
+}
+viewVehicleRouteTimeMapList(routeId:string,date:Date): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteTime/ViewVehicleRouteTimeMapList?routeId='+routeId+'&routeDate='+date);
+}
+getVehicleRouteTimeMapById(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteTime/GetVehicleRouteTimeMapById?rtId='+id);
+}
+saveVehicleRouteTimeMap(dtl) {
+  return this.http.post(`${this.baseUrl}/`+ 'VehicleRouteTime/InsertUpdateVehicleRouteTimeMap', dtl)
+    .catch(this.errorHandler)
+}
+saveVehicleRouteTimeMapList(userId :string,routeDate:Date,dtl:any[]) {
+  return this.http.post(`${this.baseUrl}/`+ 'VehicleRouteTime/InsertUpdateVehicleRouteTimeMapList?userId='+userId+'&routeDate=' +routeDate, dtl)
+    .catch(this.errorHandler)
+}
+
+deleteVehicleRouteTimeMap(rtId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "VehicleRouteTime/DeleteVehicleRouteTimeMapRecord?rtId=" + rtId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+activeVehicleRouteTimeMap(rtId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "VehicleRouteTime/ActiveVehicleRouteTimeMap?rtId=" + rtId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+
 //#endregion
 
 //#region Common List Services
