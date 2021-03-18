@@ -48,7 +48,7 @@
               <div class="card-body">
                 <h5 class="card-title">Week: {{item.Week}} - Day: {{item.Day}} - ( {{item.Route_Date_Dt}} )</h5>
                 <p class="card-text"></p>
-                <a (click) ="DisplayVehicleRoute(i)" class="btn btn-success text-white">Add Vehicle Route</a>
+                <a (click) ="DisplayVehicleRoute(i,item.Route_Date_Dt)" class="btn btn-success text-white">Add Vehicle Route</a>
                 <div *ngIf="item.IsTableOpen">
                     <div class="table-responsive table-bordered table-hover">
                       <table class="table-resposive" id="{{item.Day}}_{{item.Week}}_{{i}}" style="margin-bottom: 100px;">
@@ -63,28 +63,34 @@
 
                         <tr *ngFor="let vehicle of item.VehicleRouteList; index as rowIndex; ">
                           <td style="min-width: 220px;">
-                            <!-- <ng-select [(ngModel)]="vehicle.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id_{{in}}"  [ngModelOptions]="{standalone: true}">
+                            <!-- <ng-select [(ngModel)]="vehicle.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
                             <ng-option *ngFor="let scat of VehicleList" [value]="scat.id"> {{scat.name}}</ng-option>
                           </ng-select> -->
 
                           <ng-select [ngClass] ="(vehicle.Vehicle_Id == 0 || vehicle.Vehicle_Id == null)  && errorMessage != '' ? 'border border-danger':''"
-                            [items]="VehicleList" [(ngModel)]="vehicle.Vehicle_Id" name="licenseAuthorityId" bindValue="id" bindLabel="name" id="Vehicle_Id_{{rowIndex}}"
+                            [items]="VehicleList" [(ngModel)]="vehicle.Vehicle_Id" name="Vehicle_Id" bindValue="id" bindLabel="name" id="Vehicle_Id_{{rowIndex}}"
                             (ngModelChange)="GetVehicleCategoryByVehicleId(vehicle.Vehicle_Id,i,rowIndex)" placeholder="Select Vehicle">
                             </ng-select>
+
                         </td>
                         <!-- <td> <input class="form-control" type="text" [(ngModel)]="item.Vehicle_CategoryDesc" id="Vehicle_CategoryDesc_{{in}}" [ngModelOptions]="{standalone: true}"></td> -->
 
                           <td style="min-width: 400px;">
+                            <!-- <ng-select [(ngModel)]="vehicle.Route_Id"  placeholder="Select Route"  id="Route_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                              <ng-option *ngFor="let scat of RouteList" [value]="scat.id"> {{scat.name}}</ng-option>
+                            </ng-select> -->
+
                             <ng-select [ngClass] ="(vehicle.Route_Id == 0 || vehicle.Route_Id == null)  && errorMessage != '' ? 'border border-danger':''" [multiple]="false"
-                            [items]="RouteList" [(ngModel)]="vehicle.Route_Id" name="licenseAuthorityId" bindValue="id" bindLabel="name" id="Route_Id_{{rowIndex}}" placeholder="Select Route">
+                            [items]="RouteList" [(ngModel)]="vehicle.Route_Id" name="Route_Id" bindValue="id" bindLabel="name" id="Route_Id_{{rowIndex}}" placeholder="Select Route">
                             </ng-select>
+
                           </td>
                             <td> <input class="form-control" type="time" [(ngModel)]="vehicle.Route_Start_Time" id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}"></td>
                             <td><input class="form-control" type="time" [(ngModel)]="vehicle.Route_End_Time" id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}"></td>
                             <td style="min-width: 60px;"><a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="clearRecordItem(i,rowIndex)"></a></td>
                         </tr>
                         <tr>
-                          <td *ngIf="item.VehicleRouteList.length == 0" colspan="3">No items found</td>
+                          <td *ngIf="item.VehicleRouteList.length == 0" colspan="5">No items found</td>
                         </tr>
 
                       </table>

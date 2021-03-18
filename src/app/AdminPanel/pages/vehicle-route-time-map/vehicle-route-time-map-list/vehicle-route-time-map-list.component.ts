@@ -300,14 +300,25 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
     }
 
     lastIndex: any = 0;
-    DisplayVehicleRoute(index){
-      debugger;
+    DisplayVehicleRoute(index,routeDate){
+      let isFirstTime : boolean = this.routeTimeMasterList[index].IsTableOpen == true ?false:true;
       this.routeTimeMasterList[index].IsTableOpen = true;
 
-      this.lastIndex = this.routeTimeMasterList[index].VehicleRouteList.length;
+      if(isFirstTime){
+        let route_Date:any = new Date(routeDate).toLocaleString();
+        this._commonService.viewVehicleRouteScheduleByDate(route_Date).subscribe(
+          (data) =>
+           {
+             debugger;
+            this.routeTimeMasterList[index].VehicleRouteList = data;
+          }
+        )
+      }else{
+        this.lastIndex = this.routeTimeMasterList[index].VehicleRouteList.length;
 
-      var currentElement = this.routeTimeMasterList[index].VehicleRouteList[parseInt(this.lastIndex)-1];
-      this.routeTimeMasterList[index].VehicleRouteList.splice(0, 0, new VehicleRouteList());
+        var currentElement = this.routeTimeMasterList[index].VehicleRouteList[parseInt(this.lastIndex)-1];
+        this.routeTimeMasterList[index].VehicleRouteList.splice(0, 0, new VehicleRouteList());
+      }
     }
 
     clearRecordItem(routeIndex,index){
