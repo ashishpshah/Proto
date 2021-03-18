@@ -129,6 +129,7 @@ export class StateListComponent implements OnInit {
 
   lastIndex: any = 0;
     addNewRow(){
+      debugger;
        this.lastIndex = this.cityMaster.length;
       var currentElement = this.cityMaster[parseInt(this.lastIndex)-1];
       this.cityMaster.splice(0, 0, CityFunction('I'));
