@@ -22,6 +22,7 @@ import {
   Table
 } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-category-list',
@@ -53,14 +54,25 @@ export class CategoryListComponent implements OnInit {
   isInserted : string = 'I';
   //-----------------
 
-  constructor(private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) {}
+  Image_File: File;
+  Image_Path: string = "assets/images/no-image-available.jpg";
+  Old_Image_Path: string = "";
+
+  constructor(private _commonService: ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) {
+
+
+    this.Image_Path = null;
+
+  }
   commonHelper = new AdminCommonHelperComponent(this._router);
   warningMessage : string  = this.commonHelper.commonWarningMessage;
   deleteTooltip : string  = this.commonHelper.deleteTooltip;
   restoreTooltip : string  = this.commonHelper.restoreTooltip;
   required : string  = this.commonHelper.required;
   ngOnInit(): void {
+    debugger;
     this.getCategoryList();
+    this.previewImage();
   }
 
   getCategoryList() {
@@ -127,13 +139,14 @@ export class CategoryListComponent implements OnInit {
           {
 
             this.categoryObj = resp
-
+            this.previewImage();
             this.categoryObj.SelectedDepartment = resp.Department.split(',')
             , error => this.errorMessage = error
           });
       }else {
         this.title = "Create";
         this.categoryObj = CategoryFun(this.isInserted);
+        this.previewImage();
       }
     }
 
@@ -199,11 +212,22 @@ export class CategoryListComponent implements OnInit {
 debugger;
       if(this.validate()){
         debugger;
+
+    const formData = new FormData();
+
+    if(this.Image_File != null){
+      formData.append('file', this.Image_File, this.Image_File.name);
+    }
+
         this.categoryObj.Created_By = this.userId;
         this.categoryObj.Department = this.categoryObj.SelectedDepartment.join(',');
         if (this.title == "Create") {
           this.categoryObj.IsInserted = 'I';
-          this._commonService.saveCategory(this.categoryObj)
+
+          formData.append('jsonObj', JSON.stringify(this.categoryObj));
+
+          // this._commonService.saveCategory(this.categoryObj)
+          this._commonService.saveCategoryWithImage(formData)
             .subscribe((data) => {
               this.commonHelper.commonAlerts('Inserted', data,'/master/category-master', '/master/add-edit-category')
 
@@ -211,13 +235,67 @@ debugger;
         }
         else if (this.title == "Edit") {
           this.categoryObj.IsInserted = 'U';
-          this._commonService.saveCategory(this.categoryObj)
+
+          formData.append('jsonObj', JSON.stringify(this.categoryObj));
+
+          // this._commonService.saveCategory(this.categoryObj)
+          this._commonService.saveCategoryWithImage(formData)
             .subscribe((data) => {
               this.commonHelper.commonAlerts('Updated', data,'/master/category-master', '/master/add-edit-category')
             }, error => this.errorMessage = error)
         }
       }
     }
+
+
+previewImage(){
+
+  debugger;
+
+  this.Image_Path = null;
+
+  if(this.categoryObj.Image_Path == "" || this.categoryObj.Catg_ID == 0){
+    this.Image_Path = environment.Default_Image_Path;
+  }
+  else{
+    this.Image_Path = environment.Api_Host + this.categoryObj.Image_Path;
+  }
+}
+
+
+ChangeImage(event) {
+
+  if (event.target.files.length > 0) {
+    const file = event.target.files[0];
+    this.Image_File = file;
+
+    var reader = new FileReader();
+          reader.onload = (event: any) => {
+            this.Image_Path = event.target.result;
+          }
+          reader.readAsDataURL(event.target.files[0]);
+
+    if (!this.validateFile(this.Image_File.name)) {
+      alert('Selected file format is not supported');
+      this.Image_File = null;
+      return false;
+    }
+  }
+}
+
+validateFile(name: String) {
+
+  let allImages: Array<string> = ['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bpg'];
+
+  var ext = name.substring(name.lastIndexOf('.') + 1);
+  if (allImages.indexOf(ext.toLowerCase()) === -1) {
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
 
     cancel() {
       this.errorMessage = '';
@@ -242,7 +320,8 @@ function CategoryFun(isInserted) {
   IsDeleted :'',
   IsInserted : isInserted,
   Department :'',
-  SelectedDepartment:''
+  SelectedDepartment:'',
+  Image_Path : environment.Default_Image_Path
 };
   return obj;
 }

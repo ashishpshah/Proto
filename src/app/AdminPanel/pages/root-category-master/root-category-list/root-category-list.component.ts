@@ -8,6 +8,8 @@ import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { env } from 'process';
 
 @Component({
   selector: 'app-root-category-list',
@@ -27,7 +29,7 @@ export class RootCategoryListComponent implements OnInit {
   @ViewChild('dt') table: Table;
   IsRowEdit : boolean =false; // Inline edit
   //------------ Add Edit----------------
-  rootCategoryObj :any ={};
+  rootCategoryObj :any = null;
 
     title: string = "Create";
     rootCategoryId: number;
@@ -38,7 +40,21 @@ export class RootCategoryListComponent implements OnInit {
     isInserted : string = 'I';
   //-------------------------------------
 
-  constructor( private _commonService : ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) { }
+  Image_File: File;
+  Image_Path: string = environment.Default_Image_Path;
+
+  constructor( private _commonService : ProtoServicesService, private _router: Router, private primengConfig: PrimeNGConfig, private renderer: Renderer2) {
+
+    if(this.rootCategoryObj == null){
+
+      this.title = "Create";
+      this.rootCategoryObj = RootCategoryFun(this.isInserted);
+
+    }
+
+    this.previewImage();
+
+   }
   commonHelper = new AdminCommonHelperComponent(this._router);
   warningMessage : string  = this.commonHelper.commonWarningMessage;
   deleteTooltip : string  = this.commonHelper.deleteTooltip;
@@ -47,6 +63,7 @@ export class RootCategoryListComponent implements OnInit {
   ngOnInit(): void  {
     this.IsAddEdit = false;
     this.getRootCategoryList();
+    this.previewImage();
 }
 
 getRootCategoryList(){
@@ -160,6 +177,7 @@ validateInline(item) : any{
   }
 
 addEditOpen(id : any):void {
+  debugger;
   this.errorMessage = '';
   this.IsAddEdit = true;
   this.IsRowEdit = false;
@@ -167,16 +185,20 @@ addEditOpen(id : any):void {
 
   this.rootCategoryId = id;
   if (this.rootCategoryId > 0) {
+    debugger;
     this.title = "Edit";
     this._commonService.getRootCategoryById(this.rootCategoryId)
       .subscribe((resp) =>
       {
+        debugger;
         this.rootCategoryObj = resp
+        this.previewImage()
         , error => this.errorMessage = error
       });
   }else {
     this.title = "Create";
     this.rootCategoryObj = RootCategoryFun(this.isInserted);
+    this.previewImage()
   }
 }
 
@@ -228,24 +250,95 @@ validate(){
 
 saveRootCategory() {
   if(this.validate()){
+
+    debugger;
+
+    const formData = new FormData();
+
+    if(this.Image_File != null){
+      formData.append('file', this.Image_File, this.Image_File.name);
+    }
+
     this.rootCategoryObj.Created_By = this.userId;
     if (this.title == "Create") {
       this.rootCategoryObj.IsInserted = 'I';
-      this._commonService.saveRootCategory(this.rootCategoryObj)
+
+      debugger;
+
+      formData.append('jsonObj', JSON.stringify(this.rootCategoryObj));
+
+      // this._commonService.saveRootCategory(this.rootCategoryObj)
+      this._commonService.saveRootCategoryWithImage(formData)
         .subscribe((data) => {
+          debugger;
+
           this.commonHelper.commonAlerts('Inserted', data, '/master/root-category-master','/master/add-edit-root-category')
 
         }, error => this.errorMessage = error)
     }
     else if (this.title == "Edit") {
       this.rootCategoryObj.IsInserted = 'U';
-      this._commonService.saveRootCategory(this.rootCategoryObj)
+
+      debugger;
+
+      formData.append('jsonObj', JSON.stringify(this.rootCategoryObj));
+
+      // this._commonService.saveRootCategory(this.rootCategoryObj)
+      this._commonService.saveRootCategoryWithImage(formData)
         .subscribe((data) => {
           this.commonHelper.commonAlerts('Updated', data, '/master/root-category-master','/master/add-edit-root-category')
         }, error => this.errorMessage = error)
     }
   }
 
+}
+
+previewImage(){
+
+  debugger;
+
+  this.Image_Path = null;
+
+  if(this.rootCategoryObj.Image_Path == "" || this.rootCategoryObj.RCatg_ID == 0){
+    this.Image_Path = "assets/images/no-image-available.jpg";
+  }
+  else{
+    this.Image_Path = environment.Api_Host + this.rootCategoryObj.Image_Path;
+  }
+}
+
+
+ChangeImage(event) {
+
+  if (event.target.files.length > 0) {
+    const file = event.target.files[0];
+    this.Image_File = file;
+
+    var reader = new FileReader();
+          reader.onload = (event: any) => {
+            this.Image_Path = event.target.result;
+          }
+          reader.readAsDataURL(event.target.files[0]);
+
+    if (!this.validateFile(this.Image_File.name)) {
+      alert('Selected file format is not supported');
+      this.Image_File = null;
+      return false;
+    }
+  }
+}
+
+validateFile(name: String) {
+
+  let allImages: Array<string> = ['png', 'jpg', 'jpeg', 'gif', 'tiff', 'bpg'];
+
+  var ext = name.substring(name.lastIndexOf('.') + 1);
+  if (allImages.indexOf(ext.toLowerCase()) === -1) {
+    return false;
+  }
+  else {
+    return true;
+  }
 }
 
 cancel() {
@@ -270,7 +363,8 @@ function RootCategoryFun(isInserted) {
   Modified_By :'',
   Modified_Date :'',
   IsDeleted :'',
-  IsInserted : isInserted
+  IsInserted : isInserted,
+  Image_Path : environment.Default_Image_Path
 };
   return obj;
 }
