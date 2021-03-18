@@ -51,6 +51,18 @@
           </select>
         </div>
       </div>
+
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Category Image</label>
+      <div class="col-sm-4">
+        <input class="form-control"  type="file" accept="image/*" id="Image_URL" (change)="ChangeImage($event)">
+      </div>
+      <div class="col-sm-4">
+        <img id="imagePreview" [src]="Image_Path" alt="Item image" width="150" height="130">
+      </div>
+    </div>
+
     </div>
     <br />
     <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
@@ -178,7 +190,8 @@
               </td> -->
               <td>
                 <div *ngIf="!item.isEditable">
-                  <a class="ti-pencil-alt edit" (click)="openEditPage(item)"></a>
+                  <!-- <a class="ti-pencil-alt edit" (click)="openEditPage(item)"></a> -->
+                  <a class="ti-pencil-alt edit" role="button" (click)="addEditOpen(item.RCatg_ID)"></a>
                   <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.RCatg_ID)"></a> -->
                   &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.RCatg_ID)"></a>
                           <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.RCatg_ID)"></a>

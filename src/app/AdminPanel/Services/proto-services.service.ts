@@ -40,6 +40,18 @@ export class ProtoServicesService {
       .catch(this.errorHandler)
   }
 
+
+  saveItemWithImage(formData) {
+
+    // const headers= new HttpHeaders()
+    //   .set('Content-Type', "application/json");
+    // return this.http.post(this.baseUrl + '/Item/InsertUpdateItem', formData, { 'headers': headers })
+    return this.http.post(this.baseUrl + '/Item/InsertUpdateItem', formData)
+      // .map((response: Response) => response.json())
+      .catch(this.errorHandler)
+  }
+
+
   deleteItem(itemId :number, userId :string) {
     return this.http.get(this.baseUrl + "/Item/DeleteItemRecord?itemId=" + itemId+'&userId='+userId)
       .catch(this.errorHandler);
@@ -93,6 +105,12 @@ saveRootCategory(dtl) {
     .catch(this.errorHandler)
 }
 
+saveRootCategoryWithImage(formData) {
+  return this.http.post(`${this.baseUrl}/`+ 'RootCategory/InsertUpdateRootCategory', formData)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
 deleteRootCategory(rootCategoryId :number, userId :string) {
   return this.http.get(`${this.baseUrl}/`+ "RootCategory/DeleteRootCategoryRecord?rootCategoryId=" + rootCategoryId+'&userId='+userId)
     .catch(this.errorHandler);
@@ -115,6 +133,12 @@ getCategoryById(id: number): Observable<any> {
 
 saveCategory(dtl) {
   return this.http.post(`${this.baseUrl}/`+ 'CategoryLevel/InsertUpdateCategory', dtl)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+saveCategoryWithImage(formData) {
+  return this.http.post(`${this.baseUrl}/`+ 'CategoryLevel/InsertUpdateCategory', formData)
     // .map((response: Response) => response.json())
     .catch(this.errorHandler)
 }

@@ -105,7 +105,8 @@
                     {{item.Deleted}} <span *ngIf="item.Deleted =='Yes'"><button type="button" class="float-right btn btn-success text-white " (click) = "activateItem(item.Item_ID)">Make Active</button> </span>
                   </td> -->
                   <td>
-                          <a class="ti-pencil-alt edit" (click)="openEditItem(item.Item_ID)"></a>
+                          <a class="ti-pencil-alt edit" href="/master/add-edit-item/{{item.Item_ID}}"></a>
+                          <!-- <a class="ti-pencil-alt edit" href="/master/add-edit-item/{{item.Item_ID}}" (click)="openEditItem(item.Item_ID)"></a> -->
                           <!-- &nbsp;<a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Item_ID)"></a> -->
                           &nbsp;<a *ngIf="item.Deleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.Item_ID)"></a>
                           <a *ngIf="item.Deleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.Item_ID)"></a>
