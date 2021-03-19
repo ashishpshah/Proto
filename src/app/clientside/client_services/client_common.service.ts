@@ -19,7 +19,9 @@ let cart = [];
 export class Client_commonService {
 
   private url = window.location.origin;
+
   private baseUrl : string = this.url.includes('localhost') ? 'https://localhost:44311/Api/' :'https://protoapi.padhyasoft.com/Api/' ;
+  public originUrl : string = this.baseUrl.replace('/Api/','');
   Item_MasterList  = new BehaviorSubject<Item_Master[]>([]);
   whislistItem_Master  = new BehaviorSubject<Item_Master[]>([]);
   username:any ={};

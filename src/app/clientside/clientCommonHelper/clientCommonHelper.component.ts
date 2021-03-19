@@ -26,8 +26,11 @@ export class ClientCommonHelperComponent implements OnInit {
   noRecordFound :string = 'Products not found';
   emptyCartMsg :string = 'Your cart is empty';
   shippingcharge:number =15;
-  constructor(private _router: Router, private Client_commonService_ : Client_commonService,) { }
 
+
+  constructor(private _router: Router, private Client_commonService_ : Client_commonService,) { }
+  originUrl : string = this.Client_commonService_.originUrl;
+  noImageUrl : string = this.originUrl+'/Uploads/no-image-available.jpg'
   ngOnInit() {
   }
 

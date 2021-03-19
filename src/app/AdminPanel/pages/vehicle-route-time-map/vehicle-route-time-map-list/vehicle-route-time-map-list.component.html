@@ -30,12 +30,16 @@
         </div>
 
       </div>
+
+
     </div>
     <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
     <hr />
 
   </form>
-
+<!--
+  <ngx-mat-timepicker [(ngModel)]="date" [disabled]="disabled" >
+</ngx-mat-timepicker> -->
 <!-- </div> -->
 
 <!-- *********************************************** Data List **********************************************  -->
@@ -127,8 +131,8 @@
                       <tr>
                           <th pSortableColumn="Vehicle_Id">Vehicle<p-sortIcon field="Vehicle_Id"></p-sortIcon></th>
                           <th pSortableColumn="Route_Id">Route<p-sortIcon field="Route_Id"></p-sortIcon></th>
-                          <th pSortableColumn="Route_Start_Time">Route Start Time<p-sortIcon field="Route_Start_Time"></p-sortIcon></th>
-                          <th pSortableColumn="Route_End_Time">Route End Time <p-sortIcon field="Route_End_Time"></p-sortIcon></th>
+                          <th pSortableColumn="Route_Start_Time" style="min-width: 220px;">Route Start Time<p-sortIcon field="Route_Start_Time"></p-sortIcon></th>
+                          <th pSortableColumn="Route_End_Time" style="min-width: 220px;">Route End Time <p-sortIcon field="Route_End_Time"></p-sortIcon></th>
                           <th >Action </th>
                       </tr>
                       <tr>
@@ -150,15 +154,27 @@
                             </ng-select>
                           </td>
                           <td>
-                            <ng-select [(ngModel)]="items.Route_Id"  placeholder="Select Route"  id="Route_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                            <ng-select  [(ngModel)]="items.Route_Id"  placeholder="Select Route"  id="Route_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
                               <ng-option *ngFor="let scat of RouteList" [value]="scat.id"> {{scat.name}}</ng-option>
                             </ng-select>
                           </td>
                           <td>
-                            <input class="form-control" type="time" [(ngModel)]="items.Route_Start_Time" id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                            <ng-select class="Hour" [(ngModel)]="items.StartHour"  placeholder="Hour"  id="StartHour_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                              <ng-option *ngFor="let hh of hoursList" [value]="hh"> {{hh}}</ng-option>
+                            </ng-select>
+                            <ng-select class="Minute" [(ngModel)]="items.StartMinute"  placeholder="Minute"  id="StartMinute_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                              <ng-option *ngFor="let mm of minuteList" [value]="mm"> {{mm}}</ng-option>
+                            </ng-select>
+                            <!-- <input class="form-control" type="time" [(ngModel)]="items.Route_Start_Time" id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}" > -->
                           </td>
                           <td>
-                            <input class="form-control" type="time" [(ngModel)]="items.Route_End_Time" id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                            <ng-select  class="Hour" [(ngModel)]="items.EndHour"  placeholder="Hour"  id="EndHour_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                              <ng-option *ngFor="let hh of hoursList" [value]="hh"> {{hh}}</ng-option>
+                            </ng-select>
+                            <ng-select  class="Minute"[(ngModel)]="items.EndMinute"  placeholder="Minute"  id="EndMinute_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                              <ng-option *ngFor="let mm of minuteList" [value]="mm"> {{mm}}</ng-option>
+                            </ng-select>
+                            <!-- <input class="form-control" type="time" [(ngModel)]="items.Route_End_Time" id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}"> -->
                           </td>
                           <td>
                             <a class=" ti-trash delete" *ngIf="items.RT_ID == ''|| items.RT_ID == null" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="clearRecordItem(i,rowIndex)"></a>
@@ -175,7 +191,7 @@
 
                     <div>
                       <div *ngIf="errorMessage != '' && item.IsError == 'Y'" class='alert alert-danger'>{{errorMessage}}</div>
-                      <div *ngIf="successMessage != '' && item.IsError == 'N'" class='alert alert-success'>{{successMessage}}</div>
+                      <div *ngIf="successMessage != '' && item.IsSuccess == 'Y'" class='alert alert-success'>{{successMessage}}</div>
                     </div>
                   </div>
                   <div class="modal-footer align-center" *ngIf="item.VehicleRouteList.length > 0">

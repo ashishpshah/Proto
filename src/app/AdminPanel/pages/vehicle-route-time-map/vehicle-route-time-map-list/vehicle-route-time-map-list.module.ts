@@ -19,7 +19,12 @@ import {DropdownModule} from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { NgSelect2Module } from 'ng-select2';
 import { NgSelectModule } from '@ng-select/ng-select';
+
+// import { MatTimepickerModule } from 'mat-timepicker';
+// import { MatIconModule } from '@angular/material/icon';
+
 import {MatDatepickerModule, MatInputModule, MatNativeDateModule, MatFormFieldModule ,MAT_DATE_LOCALE} from '@angular/material';
+
 
 @NgModule({
   imports: [
@@ -44,6 +49,8 @@ import {MatDatepickerModule, MatInputModule, MatNativeDateModule, MatFormFieldMo
     NgSelectModule,
     NgSelect2Module,
     MatDatepickerModule, MatInputModule,MatNativeDateModule,MatFormFieldModule //Date Picker
+
+
   ],
   declarations: [VehicleRouteTimeMapListComponent]
 })

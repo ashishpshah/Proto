@@ -83,14 +83,6 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
   YearList : any[]=[];
   MonthList:any[]=[];
   WeekList:any[]=[];
-  // DaysScheduleDtlList : any[] = [];
-  // Day1ScheduleDtlList : any[] = [];
-  // Day2ScheduleDtlList : any[] = [];
-  // Day3ScheduleDtlList : any[] = [];
-  // Day4ScheduleDtlList : any[] = [];
-  // Day5ScheduleDtlList : any[] = [];
-  // Day6ScheduleDtlList : any[] = [];
-  // Day7ScheduleDtlList : any[] = [];
 
   routeTimeMasterList: any[] =[];
   selectedVehicleRouteTimeMapList: [];
@@ -105,6 +97,8 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
   restoreTooltip : string  = this.commonHelper.restoreTooltip;
   required : string  = this.commonHelper.required;
   noItemsFoundMsg : string = this.commonHelper.noItemsFoundMsg;
+  hoursList : any[] =this.commonHelper.hoursList;
+  minuteList : any[] =this.commonHelper.minuteList;
 
   ngOnInit(): void {
     this.routeTimeObj = VehicleRouteTimeMapFun('');
@@ -418,7 +412,20 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
           message = message == "" ? "Please Enter Route#"+index+"#Route_Id_" :message;
           invalidCount = invalidCount + 1;
         }
-        else if((element.Route_End_Time != null && element.Route_End_Time != '')&&(element.Route_Start_Time != null && element.Route_Start_Time != '')){
+        else if((element.StartHour != null && element.StartHour != '') && (element.EndHour == '' || element.EndHour == null)){
+          message = "End Hour must be enter If you have entered Start Hour"
+        }
+        else if((element.StartHour == null || element.StartHour == '') && (element.EndHour != '' && element.EndHour != null)){
+          message = "Start Hour must be enter If you have entered End Hour"
+        }
+        // else if((element.Route_End_Time != null && element.Route_End_Time != '')&&(element.Route_Start_Time != null && element.Route_Start_Time != '')){
+          else if(element.StartHour != null && element.StartHour != '' && element.EndHour != '' && element.EndHour != null){
+            element.StartMinute = element.StartMinute == '' || element.StartMinute == null ?"00":element.StartMinute;
+            element.EndMinute = element.EndMinute == '' || element.EndMinute == null ?"00":element.EndMinute;
+
+            element.Route_Start_Time = element.StartHour +':'+element.StartMinute;
+            element.Route_End_Time = element.EndHour +':'+element.EndMinute;
+
             var startTime = element.Route_Start_Time.replace(':','.');
             var endTime = element.Route_End_Time.replace(':','.');
 
@@ -427,6 +434,13 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
               invalidCount = invalidCount + 1;
             }
         }
+
+            element.StartMinute = element.StartMinute == '' || element.StartMinute == null ?"00" : element.StartMinute;
+            element.EndMinute = element.EndMinute == '' || element.EndMinute == null ?"00" : element.EndMinute;
+
+            element.Route_Start_Time =element.StartHour == '' || element.StartHour == null ?"" : element.StartHour +':'+element.StartMinute;
+            element.Route_End_Time = element.EndHour == '' || element.EndHour == null ?"" : element.EndHour +':'+element.EndMinute;
+
       });
       message = message == "" ? "true" : message;
      return message;
@@ -435,11 +449,12 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
     saveVehicleRouteTimeMapList(index) {
 
       // this.routeTimeMasterList.map(row => {
-      //   row.IsError = 'N';
+      //   row.IsSuccess = 'N';
       // });
       this.successMessage ="";
       this.errorMessage = "";
       var returnMsg = this.validateList(index);
+
       if(returnMsg == "true"){
 
         this.routeTimeMasterList[index].Route_Date = new Date(this.routeTimeMasterList[index].Route_Date_Dt).toLocaleString();
@@ -447,18 +462,21 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
         .subscribe((data) => {
           let obj :any ={};
           obj = this.commonHelper.commonAlertForSamePageRtnObj(data)
-          debugger;
+
           this.errorMessage =obj.msgType =='S'?'':obj.message;
           this.successMessage = obj.msgType =='S'?obj.message:'';
           this.routeTimeMasterList[index].IsError =  obj.msgType == 'S'? 'N':'Y';
+
           if(obj.msgType =='S'){
             this.viewWeekData();
+            this.routeTimeMasterList[index].IsSuccess ='Y';
           }
 
         }, error => this.errorMessage = error)
       }
       else{
         this.routeTimeMasterList[index].IsError = 'Y';
+        this.routeTimeMasterList[index].IsSuccess ='N';
         this.msgArray = returnMsg.split("#");
         this.errorMessage = this.msgArray[0];
         // this.renderer.selectRootElement('#'+this.msgArray[2]+this.msgArray[1]).focus();
@@ -516,8 +534,13 @@ function VehicleRouteTimeMapFun(isInserted) {
     Day:'',
     IsTableOpen:false,
     IsError:'N',
+    IsSuccess :'N',
     VehicleRouteList:[],
-    TotalCount:0
+    TotalCount:0,
+    StartHour:'',
+    StartMinute:'',
+    EndHour:'',
+    EndMinute:'',
 };
   return obj;
 }
@@ -545,7 +568,12 @@ function VehicleRouteDtl(){
     Day:'',
     IsTableOpen:false,
     IsError :'N',
-    TotalCount:0
+    IsSuccess :'N',
+    TotalCount:0,
+    StartHour:'',
+    StartMinute:'',
+    EndHour:'',
+    EndMinute:'',
 }
 return obj;
 }
@@ -572,5 +600,10 @@ export class VehicleRouteList {
   Day:'';
   IsTableOpen:false;
   IsError :'N';
+  IsSuccess :'N';
   TotalCount:0;
+  StartHour:'';
+  StartMinute:'';
+  EndHour:'';
+  EndMinute:'';
 }
