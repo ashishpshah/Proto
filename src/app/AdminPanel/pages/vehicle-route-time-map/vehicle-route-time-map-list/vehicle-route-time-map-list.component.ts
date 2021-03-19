@@ -72,6 +72,7 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
   title: string = "Create";
   categoryId: number;
   errorMessage: any ='';
+  successMessage: any ='';
   RouteList : Observable<DropdownListInt[]>;
   VehicleList : Observable<DropdownListInt[]>;
   SelectedStatus : string = 'A';
@@ -103,6 +104,7 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
   clearTooltip : string  = this.commonHelper.clearTooltip;
   restoreTooltip : string  = this.commonHelper.restoreTooltip;
   required : string  = this.commonHelper.required;
+  noItemsFoundMsg : string = this.commonHelper.noItemsFoundMsg;
 
   ngOnInit(): void {
     this.routeTimeObj = VehicleRouteTimeMapFun('');
@@ -203,11 +205,11 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
 
     GetVehicleCategoryByVehicleId(vehicleId:string,routeIndex,index){
       this.routeTimeMasterList[routeIndex].VehicleRouteList[index].Vehicle_CategoryDesc = '';
-      debugger;
+
       this._commonService.GetVehicleCategoryByVehicleId(vehicleId).subscribe(
         (data) =>
          {
-           debugger;
+
           this.routeTimeMasterList[routeIndex].VehicleRouteList[index].Vehicle_CategoryDesc = data.Vehicle_CategoryDesc;
           // this.routeTimeObj.Vehicle_CategoryDesc = data.Vehicle_CategoryDesc;
         }
@@ -260,6 +262,7 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
     }
 
     viewWeekData(){
+
       const moment = extendMoment(_moment);
 
       const calendar = [];
@@ -281,7 +284,10 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
                 dt.Route_Date_Dt = Date._d.toString().slice(4,16);
                 dt.Day = index;
                 dt.Week = this.routeTimeObj.Week;
+                dt.IsError = 'N';
                 calendar.push(dt);
+                // let route_Date:any = new Date(dt.Route_Date_Dt).toLocaleString();
+
               }
             //firstWeekDay._d.toString().slice(4,16)
           }
@@ -289,6 +295,28 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
         })
 
         this.routeTimeMasterList =calendar;
+        if(this.routeTimeMasterList != null  && this.routeTimeMasterList.length > 0){
+          for (let index = 0; index < this.routeTimeMasterList.length; index++) {
+            let ele :any = this.routeTimeMasterList[index];
+            let route_Date:any = new Date(ele.Route_Date_Dt).toLocaleString();
+            this._commonService.viewVehicleRouteScheduleByDate(route_Date).subscribe(
+              (data) =>
+              {
+
+                if(data != null && data != "e" && data != "r" && data != "o" && data.length > 0){
+                  ele.TotalCount = data[0].TotalCount;
+                  ele.IsTableOpen = true;
+                  ele.VehicleRouteList = data;
+                }else{
+                  ele.TotalCount = 0;
+                }
+                // this.routeTimeMasterList.push(ele);
+              }
+            )
+
+          }
+        }
+
         // if(this.routeTimeMasterList != null){
         //   this.routeTimeMasterList.map(row => {
         //     row.VehicleRouteList:any[] = VehicleRouteList
@@ -300,17 +328,63 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
     }
 
     lastIndex: any = 0;
-    DisplayVehicleRoute(index,routeDate){
+    AddVehicleRouteByDate(index,routeDate){
+      this.successMessage ="";
+      this.errorMessage = "";
       let isFirstTime : boolean = this.routeTimeMasterList[index].IsTableOpen == true ?false:true;
       this.routeTimeMasterList[index].IsTableOpen = true;
-
+      // this.routeTimeMasterList.map(row => {
+      //       row.IsError = 'N';
+      //     });
       if(isFirstTime){
         let route_Date:any = new Date(routeDate).toLocaleString();
         this._commonService.viewVehicleRouteScheduleByDate(route_Date).subscribe(
           (data) =>
            {
-             debugger;
             this.routeTimeMasterList[index].VehicleRouteList = data;
+              this.lastIndex = this.routeTimeMasterList[index].VehicleRouteList.length;
+              var currentElement = this.routeTimeMasterList[index].VehicleRouteList[parseInt(this.lastIndex)-1];
+              this.routeTimeMasterList[index].VehicleRouteList.splice(0, 0, new VehicleRouteList());
+          }
+        )
+      }else{
+        this.lastIndex = this.routeTimeMasterList[index].VehicleRouteList.length;
+
+        var currentElement = this.routeTimeMasterList[index].VehicleRouteList[parseInt(this.lastIndex)-1];
+        this.routeTimeMasterList[index].VehicleRouteList.splice(0, 0, new VehicleRouteList());
+      }
+    }
+    ViewVehicleRouteByDate(index,routeDate){
+      this.successMessage ="";
+      this.errorMessage = "";
+      this.routeTimeMasterList[index].IsTableOpen = true;
+      let route_Date:any = new Date(routeDate).toLocaleString();
+      this._commonService.viewVehicleRouteScheduleByDate(route_Date).subscribe(
+        (data) =>
+         {
+          this.routeTimeMasterList[index].VehicleRouteList = data;
+        }
+      )
+    }
+    //Old Code : Don't remove : RG
+    DisplayVehicleRoute(index,routeDate){
+      let isFirstTime : boolean = this.routeTimeMasterList[index].IsTableOpen == true ?false:true;
+      this.routeTimeMasterList[index].IsTableOpen = true;
+      this.routeTimeMasterList.map(row => {
+            row.IsError = 'N';
+          });
+      if(isFirstTime){
+        let route_Date:any = new Date(routeDate).toLocaleString();
+        this._commonService.viewVehicleRouteScheduleByDate(route_Date).subscribe(
+          (data) =>
+           {
+            this.routeTimeMasterList[index].VehicleRouteList = data;
+            if(data == null || data =='' || data == 'e' || data == '0' || this.routeTimeMasterList[index].VehicleRouteList.length == 0){
+              this.lastIndex = this.routeTimeMasterList[index].VehicleRouteList.length;
+
+              var currentElement = this.routeTimeMasterList[index].VehicleRouteList[parseInt(this.lastIndex)-1];
+              this.routeTimeMasterList[index].VehicleRouteList.splice(0, 0, new VehicleRouteList());
+            }
           }
         )
       }else{
@@ -328,18 +402,18 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
       }
     }
 
-    validateList() : any{
+    validateList(index) : any{
       let invalidCount = 0;
       let message = "";
 
-      this.routeTimeMasterList.filter(function (element,index) {
+      this.routeTimeMasterList[index].VehicleRouteList.filter(function (element,index) {
 
-        if((element.Vehicle_Id == null || element.Vehicle_Id == '')&&(element.Vehicle_Id != null && element.Vehicle_Id != ''))
+        if((element.Vehicle_Id == null || element.Vehicle_Id == '' ||element.Vehicle_Id == 0))
         {
           message = message == "" ? "Please Select Vehicle#"+index+"#Vehicle_Id_" :message;
           invalidCount = invalidCount + 1;
         }
-        else if((element.Route_Id == null || element.Route_Id == '')&&(element.Route_Id != null && element.Route_Id != ''))
+        else if((element.Route_Id == null || element.Route_Id == '' ||element.Route_Id == 0))
         {
           message = message == "" ? "Please Enter Route#"+index+"#Route_Id_" :message;
           invalidCount = invalidCount + 1;
@@ -359,25 +433,38 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
     }
 
     saveVehicleRouteTimeMapList(index) {
-      debugger;
+
+      // this.routeTimeMasterList.map(row => {
+      //   row.IsError = 'N';
+      // });
+      this.successMessage ="";
       this.errorMessage = "";
-      var returnMsg = this.validateList();
+      var returnMsg = this.validateList(index);
       if(returnMsg == "true"){
-        debugger;
+
         this.routeTimeMasterList[index].Route_Date = new Date(this.routeTimeMasterList[index].Route_Date_Dt).toLocaleString();
         this._commonService.saveVehicleRouteTimeMapList( this.userId,this.routeTimeMasterList[index].Route_Date,this.routeTimeMasterList[index].VehicleRouteList)
         .subscribe((data) => {
-          this.errorMessage = this.commonHelper.commonAlertWithoutRedirect('Updated', data,'/master/vehicle-route-time-map', '/master/add-edit-category')
-          this.viewWeekData();
+          let obj :any ={};
+          obj = this.commonHelper.commonAlertForSamePageRtnObj(data)
+          debugger;
+          this.errorMessage =obj.msgType =='S'?'':obj.message;
+          this.successMessage = obj.msgType =='S'?obj.message:'';
+          this.routeTimeMasterList[index].IsError =  obj.msgType == 'S'? 'N':'Y';
+          if(obj.msgType =='S'){
+            this.viewWeekData();
+          }
+
         }, error => this.errorMessage = error)
       }
       else{
+        this.routeTimeMasterList[index].IsError = 'Y';
         this.msgArray = returnMsg.split("#");
         this.errorMessage = this.msgArray[0];
-        this.renderer.selectRootElement('#'+this.msgArray[2]+this.msgArray[1]).focus();
+        // this.renderer.selectRootElement('#'+this.msgArray[2]+this.msgArray[1]).focus();
       }
     }
-    clearRoutTime(rtId :number,  routeId:string, index:number){
+    clearRoutTime(rtId :number,  routeId:string,routeDate,routeIndex:number){
       Swal.fire({
         icon: 'warning',
         title: 'Do you want to delete?',
@@ -392,7 +479,7 @@ export class VehicleRouteTimeMapListComponent implements OnInit {
           this._commonService.deleteVehicleRouteTimeMap(rtId, this.userId).subscribe((data) => {
             let ret = this.commonHelper.activeInactiveAlert('Deleted', data);
             if (ret == 'S') {
-              this.viewWeekData()
+              this.ViewVehicleRouteByDate(routeIndex,routeDate)
             }
           }, error => console.error(error))
         }
@@ -428,7 +515,9 @@ function VehicleRouteTimeMapFun(isInserted) {
     Week:'',
     Day:'',
     IsTableOpen:false,
-    VehicleRouteList:[]
+    IsError:'N',
+    VehicleRouteList:[],
+    TotalCount:0
 };
   return obj;
 }
@@ -455,6 +544,8 @@ function VehicleRouteDtl(){
     Week:'',
     Day:'',
     IsTableOpen:false,
+    IsError :'N',
+    TotalCount:0
 }
 return obj;
 }
@@ -480,4 +571,6 @@ export class VehicleRouteList {
   Week:'';
   Day:'';
   IsTableOpen:false;
+  IsError :'N';
+  TotalCount:0;
 }

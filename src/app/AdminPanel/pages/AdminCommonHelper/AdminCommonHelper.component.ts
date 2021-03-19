@@ -208,9 +208,27 @@ validateEmail(email) {
     }
   }
 
+  commonAlertForSamePageRtnObj(data: any): any{
+    if (data != null && data != "e" && data != "r" && data != "o") {
+      debugger;
+      let splitData = data.toString().split("|");
+      this.msgType = splitData.length > 0 ? splitData[0] :'E';
+      this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
+      let obj :any = {};
+      obj.msgType=this.msgType;
+      obj.message=this.message;
+      return obj;
+
+    }else{
+      this.autoCloseAlert('Error', 'Something went wrong!', 'error')
+    }
+  }
+
+
   commonAlertWithoutRedirect(title : string ,data: any, url : string,currentUrl : string): any{
     if (data != null && data != "e" && data != "r" && data != "o") {
       let splitData = data.toString().split("|");
+
       this.msgType = splitData.length > 0 ? splitData[0] :'E';
       this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
 

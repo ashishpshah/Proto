@@ -43,80 +43,149 @@
 <div *ngIf="isViewVehicleRouteTimeMap">
 
   <form>
-    <div class="row">
+    <!-- <div class="row">
             <div class="card col-sm-12" *ngFor="let item of routeTimeMasterList; index as i;">
               <div class="card-body">
-                <h5 class="card-title">Week: {{item.Week}} - Day: {{item.Day}} - ( {{item.Route_Date_Dt}} )</h5>
+                <h5 class="card-title">Week: {{item.Week}} - Day: {{item.Day}} - <span class="text-theme">( {{item.Route_Date_Dt}} )</span> </h5><h5  class="float-right"><span class="text-theme">Total Schedules : {{item.TotalCount}}</span></h5>
                 <p class="card-text"></p>
-                <a (click) ="DisplayVehicleRoute(i,item.Route_Date_Dt)" class="btn btn-success text-white">Add Vehicle Route</a>
-                <div *ngIf="item.IsTableOpen">
+                <a (click) ="AddVehicleRouteByDate(i,item.Route_Date_Dt)" class="btn btn-success text-white m-r-20 fa fa-plus-circle cursor-pointer"><span class="d-font m-l-5">Add Schedule</span></a><a (click) ="ViewVehicleRouteByDate(i,item.Route_Date_Dt)" class="btn btn-success m-r-20 fa fa-check-square-o text-white m-l-10 cursor-pointer"><span  class="d-font m-l-5">View Schedule</span></a>
+
+                <div *ngIf="item.IsTableOpen" class="m-t-10">
                     <div class="table-responsive table-bordered table-hover">
                       <table class="table-resposive" id="{{item.Day}}_{{item.Week}}_{{i}}" style="margin-bottom: 100px;">
                         <tr>
                           <th style="min-width: 220px;">Vehicle</th>
-                          <!-- <th style="min-width: 150px;">Category</th> -->
                           <th style="min-width: 300px;">Route</th>
                           <th style="min-width: 100px;">Start Time</th>
-                          <th style="min-width: 100px;">Start Time</th>
+                          <th style="min-width: 100px;">End Time</th>
                           <th style="min-width: 60px;">Action</th>
                         </tr>
-
                         <tr *ngFor="let vehicle of item.VehicleRouteList; index as rowIndex; ">
                           <td style="min-width: 220px;">
-                            <!-- <ng-select [(ngModel)]="vehicle.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                            <ng-select [(ngModel)]="vehicle.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
                             <ng-option *ngFor="let scat of VehicleList" [value]="scat.id"> {{scat.name}}</ng-option>
-                          </ng-select> -->
-
-                          <ng-select [ngClass] ="(vehicle.Vehicle_Id == 0 || vehicle.Vehicle_Id == null)  && errorMessage != '' ? 'border border-danger':''"
-                            [items]="VehicleList" [(ngModel)]="vehicle.Vehicle_Id" name="Vehicle_Id" bindValue="id" bindLabel="name" id="Vehicle_Id_{{rowIndex}}"
-                            (ngModelChange)="GetVehicleCategoryByVehicleId(vehicle.Vehicle_Id,i,rowIndex)" placeholder="Select Vehicle">
-                            </ng-select>
-
+                          </ng-select>
                         </td>
-                        <!-- <td> <input class="form-control" type="text" [(ngModel)]="item.Vehicle_CategoryDesc" id="Vehicle_CategoryDesc_{{in}}" [ngModelOptions]="{standalone: true}"></td> -->
-
                           <td style="min-width: 400px;">
-                            <!-- <ng-select [(ngModel)]="vehicle.Route_Id"  placeholder="Select Route"  id="Route_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                            <ng-select [(ngModel)]="vehicle.Route_Id"  placeholder="Select Route"  id="Route_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
                               <ng-option *ngFor="let scat of RouteList" [value]="scat.id"> {{scat.name}}</ng-option>
-                            </ng-select> -->
-
-                            <ng-select [ngClass] ="(vehicle.Route_Id == 0 || vehicle.Route_Id == null)  && errorMessage != '' ? 'border border-danger':''" [multiple]="false"
-                            [items]="RouteList" [(ngModel)]="vehicle.Route_Id" name="Route_Id" bindValue="id" bindLabel="name" id="Route_Id_{{rowIndex}}" placeholder="Select Route">
                             </ng-select>
-
                           </td>
                             <td> <input class="form-control" type="time" [(ngModel)]="vehicle.Route_Start_Time" id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}"></td>
                             <td><input class="form-control" type="time" [(ngModel)]="vehicle.Route_End_Time" id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}"></td>
-                            <td style="min-width: 60px;"><a class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="clearRecordItem(i,rowIndex)"></a></td>
+                            <td style="min-width: 60px;">
+                              <a class=" ti-trash delete" *ngIf="vehicle.RT_ID == ''|| vehicle.RT_ID == null" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="clearRecordItem(i,rowIndex)"></a>
+                              <a class=" ti-trash delete" *ngIf="vehicle.RT_ID >0 " data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="clearRoutTime(vehicle.RT_ID,vehicle.Route_Id,item.Route_Date_Dt,i)"></a>
+                            </td>
                         </tr>
                         <tr>
                           <td *ngIf="item.VehicleRouteList.length == 0" colspan="5">No items found</td>
                         </tr>
 
                       </table>
-
+                      <div>
+                        <div *ngIf="errorMessage != '' && item.IsError == 'Y'" class='alert alert-danger'>{{errorMessage}}</div>
+                      </div>
                     </div>
                     <div class="modal-footer align-center" *ngIf="item.VehicleRouteList.length > 0">
                       <button type="button" class="btn btn-success" (click)="saveVehicleRouteTimeMapList(i)">Save</button>
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                      </div>
-
+                    </div>
                 </div>
               </div>
             </div>
     </div>
-    <hr />
-        <!-- <div class="text-center">
-          <div>
-            <div *ngIf="errorMessage != '' " class='alert alert-danger'>{{errorMessage}}</div>
+    <hr /> -->
+
+
+
+
+
+      <div class="row">
+          <div class="card col-sm-12" *ngFor="let item of routeTimeMasterList; index as i;">
+            <div class="card-body">
+              <h5 class="card-title">Week: {{item.Week}} - Day: {{item.Day}} - <span class="text-theme">( {{item.Route_Date_Dt}} )</span> </h5><h5  class="float-right"><span class="text-theme">Total Schedules : {{item.TotalCount}}</span></h5>
+              <p class="card-text"></p>
+              <a (click) ="AddVehicleRouteByDate(i,item.Route_Date_Dt)" class="btn btn-success text-white m-r-20 fa fa-plus-circle cursor-pointer"><span class="d-font m-l-5">Add Schedule</span></a>
+              <!-- <a (click) ="ViewVehicleRouteByDate(i,item.Route_Date_Dt)" class="btn btn-success m-r-20 fa fa-check-square-o text-white m-l-10 cursor-pointer"><span  class="d-font m-l-5">View Schedule</span></a> -->
+
+              <div *ngIf="item.IsTableOpen" class="m-t-10">
+                  <div class="table-responsive table-bordered table-hover">
+                    <p-table class="" #dt [value]="item.VehicleRouteList"  dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+                    [globalFilterFields]="['Vehicle_No','Route_Name','Route_Start_Time','Route_End_Time']">
+                      <ng-template pTemplate="caption">
+                        <div class="table-header-p ">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                            </span>
+                            <!-- <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span> -->
+                        </div>
+                      </ng-template>
+                      <br/>
+                      <br/>
+                      <ng-template pTemplate="header">
+                      <tr>
+                          <th pSortableColumn="Vehicle_Id">Vehicle<p-sortIcon field="Vehicle_Id"></p-sortIcon></th>
+                          <th pSortableColumn="Route_Id">Route<p-sortIcon field="Route_Id"></p-sortIcon></th>
+                          <th pSortableColumn="Route_Start_Time">Route Start Time<p-sortIcon field="Route_Start_Time"></p-sortIcon></th>
+                          <th pSortableColumn="Route_End_Time">Route End Time <p-sortIcon field="Route_End_Time"></p-sortIcon></th>
+                          <th >Action </th>
+                      </tr>
+                      <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+
+                      </tr>
+                      </ng-template>
+
+                      <ng-template pTemplate="body" let-items let-rowIndex="rowIndex" >
+                      <tr class="">  <!-- p-selyectable-row  -->
+
+                          <td>
+                            <ng-select [(ngModel)]="items.Vehicle_Id"  placeholder="Select Vehicle"  id="Vehicle_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                              <ng-option *ngFor="let scat of VehicleList" [value]="scat.id" > {{scat.name}}</ng-option>
+                            </ng-select>
+                          </td>
+                          <td>
+                            <ng-select [(ngModel)]="items.Route_Id"  placeholder="Select Route"  id="Route_Id_{{rowIndex}}"  [ngModelOptions]="{standalone: true}">
+                              <ng-option *ngFor="let scat of RouteList" [value]="scat.id"> {{scat.name}}</ng-option>
+                            </ng-select>
+                          </td>
+                          <td>
+                            <input class="form-control" type="time" [(ngModel)]="items.Route_Start_Time" id="Route_Start_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                          </td>
+                          <td>
+                            <input class="form-control" type="time" [(ngModel)]="items.Route_End_Time" id="Route_End_Time_{{rowIndex}}" [ngModelOptions]="{standalone: true}">
+                          </td>
+                          <td>
+                            <a class=" ti-trash delete" *ngIf="items.RT_ID == ''|| items.RT_ID == null" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="clearRecordItem(i,rowIndex)"></a>
+                            <a class=" ti-trash delete" *ngIf="items.RT_ID >0 " data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="clearRoutTime(items.RT_ID,items.Route_Id,item.Route_Date_Dt,i)"></a>
+                          </td>
+                      </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                      <tr>
+                      <td colspan="7">{{noItemsFoundMsg}}</td>
+                      </tr>
+                      </ng-template>
+                  </p-table>
+
+                    <div>
+                      <div *ngIf="errorMessage != '' && item.IsError == 'Y'" class='alert alert-danger'>{{errorMessage}}</div>
+                      <div *ngIf="successMessage != '' && item.IsError == 'N'" class='alert alert-success'>{{successMessage}}</div>
+                    </div>
+                  </div>
+                  <div class="modal-footer align-center" *ngIf="item.VehicleRouteList.length > 0">
+                    <button type="button" class="btn btn-success" (click)="saveVehicleRouteTimeMapList(i)">Save</button>
+                  </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group align-center">
-            <button *ngIf="routeTimeMasterList.length >0" type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveVehicleRouteTimeMapList()"> <span class="font-d">
-                Save</span></button> &nbsp;
-            <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
-                Cancel</span></button>
-          </div>
-        </div> -->
+        </div>
+
   </form>
 </div>
 
