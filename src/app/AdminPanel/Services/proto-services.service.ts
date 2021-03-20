@@ -552,7 +552,7 @@ viewVehicleRouteTimeInfo(vehicleId:string,date:Date): Observable<any> {
 }
 //#endregion
 
-//#region Route Time Management Service
+//#region Vehicle Route Time Mapping Service
 getWeekListByYearMonth(year:string,month:string): Observable<any> {
   return this.http.get(`${this.baseUrl}/`+'VehicleRouteTime/GetWeekListByYearMonth?year='+year+'&month='+month);
 }
@@ -583,7 +583,9 @@ activeVehicleRouteTimeMap(rtId :number, userId :string) {
   return this.http.get(`${this.baseUrl}/` + "VehicleRouteTime/ActiveVehicleRouteTimeMap?rtId=" + rtId+'&userId='+userId)
     .catch(this.errorHandler);
 }
-
+viewVehicleRouteScheduleByDate(date:Date): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'VehicleRouteTime/ViewVehicleRouteScheduleByDate?routeDate='+date);
+}
 //#endregion
 
 //#region Common List Services

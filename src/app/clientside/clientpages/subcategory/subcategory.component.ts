@@ -58,7 +58,7 @@ export class SubcategoryComponent implements OnInit {
   RootHeaderName : string ='';
   RootCategoryName : string ='';
   CategoryName : string ='';
-
+  // originUrl : string = '';
 
 
 
@@ -75,6 +75,8 @@ export class SubcategoryComponent implements OnInit {
   commonHelper = new ClientCommonHelperComponent(this.router,this.Client_commonService_);
   currency : string  = this.commonHelper.currency;
   noRecordFound : string = this.commonHelper.noRecordFound;
+  noImageUrl : string = this.commonHelper.noImageUrl;
+  originUrl : string = this.Client_commonService_.originUrl;
 
 
 
@@ -126,10 +128,12 @@ export class SubcategoryComponent implements OnInit {
     // update current page of items
     this.pageOfItems = pageOfItems;
 }
+
+
   ngOnInit()
   {
 
-debugger;
+
     localStorage.removeItem('CategoryId');
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       let param = this.route.snapshot.paramMap.get('string');
@@ -696,8 +700,9 @@ debugger;
 
        }
          this.Catg_Master = data;
+         debugger
          this.CategoryName = this.CategoryName ==''? data.length > 0? data[0].Catg_Name : this.CategoryName :this.CategoryName;
-         this.CatCoverImage = this.Catg_Master.length > 0 ? this.Catg_Master[0].Image_Url:'';
+         this.CatCoverImage = this.Catg_Master.length > 0 ? this.originUrl + this.Catg_Master[0].Image_Url:'';
       }
     )
   }
@@ -763,7 +768,8 @@ debugger;
       this.Sub_Catg_Master = this.Catg_Master[index].Sub_Catg_MasterList;
       this.IsSubCategory = this.Sub_Catg_Master != null && this.Sub_Catg_Master.length > 0 ? true:false;
     }
-    this.CatCoverImage = img;
+
+    this.CatCoverImage = this.originUrl +img;
     this.MainId = cat_ids;
     this.filterByCategory(cat_ids);
 

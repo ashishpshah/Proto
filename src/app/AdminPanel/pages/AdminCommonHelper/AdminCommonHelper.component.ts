@@ -26,6 +26,8 @@ export class AdminCommonHelperComponent implements OnInit {
   deleteText : string = "You won't be able to revert this!";
   noItemsFoundMsg : string = "No items found";
   validEmailMsg :string = 'Enter valid email';
+  hoursList : any[] =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"];
+  minuteList : any[] =["00","05","10","15","20","25","30","35","40","45","50","55"];
   constructor(private _router: Router) { }
 
   ngOnInit() {
@@ -208,9 +210,27 @@ validateEmail(email) {
     }
   }
 
+  commonAlertForSamePageRtnObj(data: any): any{
+    if (data != null && data != "e" && data != "r" && data != "o") {
+      debugger;
+      let splitData = data.toString().split("|");
+      this.msgType = splitData.length > 0 ? splitData[0] :'E';
+      this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
+      let obj :any = {};
+      obj.msgType=this.msgType;
+      obj.message=this.message;
+      return obj;
+
+    }else{
+      this.autoCloseAlert('Error', 'Something went wrong!', 'error')
+    }
+  }
+
+
   commonAlertWithoutRedirect(title : string ,data: any, url : string,currentUrl : string): any{
     if (data != null && data != "e" && data != "r" && data != "o") {
       let splitData = data.toString().split("|");
+
       this.msgType = splitData.length > 0 ? splitData[0] :'E';
       this.message = splitData.length > 1 ? splitData[1] :'Something went wrong!';
 

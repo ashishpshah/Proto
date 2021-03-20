@@ -4,7 +4,19 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-
+// input[type=time]::-webkit-datetime-edit-ampm-field {
+//   display: none;
+// }
+.Hour{
+  display:block;
+  width:43%;
+  float :left;
+}
+.Minute{
+  display:block;
+  width:54%;
+  float :right;
+}
 .breadcrumb-item+.breadcrumb-item::before {
     display: inline-block;
     padding-right: .5rem;
@@ -13,7 +25,9 @@
     content: ">" !important;
 }
 
-
+.d-font{
+  font-family:sans-serif;
+}
 .color-d-salmon{
   color: darksalmon !important;
 }
