@@ -129,6 +129,10 @@ const MENUITEMS = [
             state: 'pincode-master',
             name: 'Allowed Pincode Master'
           }
+          ,{
+            state: 'home-slider',
+            name: 'Slider Master'
+          }
 
         ]
       },

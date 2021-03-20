@@ -1,3 +1,4 @@
+import { HomeSliderRoutingModule } from './AdminPanel/pages/home-slider/home-slider-routing.module';
 import { VehicleRouteTimeMapModule } from './AdminPanel/pages/vehicle-route-time-map/vehicle-route-time-map.module';
 import { RouteTimeModule } from './AdminPanel/pages/route-time-mgmt/route-time-mgmt.module';
 import { typeMasterModule } from './AdminPanel/pages/type-master/type-master.module';
@@ -101,6 +102,10 @@ const routes: Routes = [
       {
         path: 'master',
          loadChildren: () => import('./AdminPanel/pages/root-category-master/root-category-master.module').then(m => m.RootCategoryMasterModule)
+      },
+      {
+        path: 'master',
+         loadChildren: () => import('./AdminPanel/pages/home-slider/home-slider.module').then(m => m.HomeSliderModule)
       },
       {
         path: 'master',

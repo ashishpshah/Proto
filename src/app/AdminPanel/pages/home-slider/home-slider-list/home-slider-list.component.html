@@ -1,0 +1,98 @@
+<!-- <div *ngIf="IsAddEdit"> -->
+
+  <form >
+    <div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Upload Image</label>
+      <div class="col-sm-4">
+        <input class="form-control"  type="file" accept="image/*" id="Image_URL" (change)="ChangeImage($event)">
+      </div>
+      <div class="col-sm-4">
+        <img id="imagePreview" [src]="Image_Path" alt="Item image" width="150" height="130">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Sequence</label>
+      <div class="col-sm-4">
+        <input class="form-control" [ngClass] ="sliderImageObj.Sequence == '' && errorMessage != '' ? 'alert-danger':''" type="text" [(ngModel)]="sliderImageObj.Sequence" id="Sequence" [ngModelOptions]="{standalone: true}">
+      </div>
+
+    </div>
+
+    </div>
+    <br />
+    <div><div class='text-danger f-12'><span>{{warningMessage}}</span></div></div>
+    <hr />
+    <div class="text-center">
+      <div class="form-group align-center">
+        <button type="submit" class="btn btn-success fa fa-check-square-o cursor-pointer" (click)="saveSliderImage()"> <span class="font-d">
+            Save</span></button> &nbsp;
+        <button class="btn btn-danger fa fa-remove cursor-pointer" (click)="cancel()"><span class="font-d">
+            Cancel</span></button>
+      </div>
+    </div>
+
+  </form>
+<!-- </div> -->
+
+<div class="row">
+  <div class="col-sm-12">
+    <!-- <app-card [classHeader]="true" [blockClass]="'table-border-style'"> -->
+      <div class="table-responsive">
+
+          <p-table class="" #dt [value]="sliderImageMaster" dataKey="id" [autoLayout]="true" styleClass="p-datatable-d" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+          [globalFilterFields]="['Image_Path','Header','Discription']">
+            <ng-template pTemplate="caption">
+              <div class="table-header-p ">
+                  <span class="p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input class="p-l-30 form-control" pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                  </span>
+                  <span><a class="btn btn-success float-right text-white m-b-10 m-r-20 fa fa-plus-circle cursor-pointer" (click)="addEditOpen(0)"><span class="font-d"> Add New</span></a></span>
+              </div>
+            </ng-template>
+            <br/>
+            <br/>
+            <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="Image_Path">Path <p-sortIcon field="Image_Path"></p-sortIcon></th>
+                <th>Sequence</th>
+                <th>Image</th>
+                <th>Action </th>
+            </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+            <tr class="">
+
+          <td>
+                {{Image_Path}}
+          </td>
+          <td>
+            {{item.Secuence}}
+      </td>
+                <td>
+
+                </td>
+                <td>
+                        <a class="ti-pencil-alt edit" (click)="addEditOpen(item.SliderImageId)"></a>
+                        &nbsp;<a *ngIf="item.IsDeleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.SliderImageId)"></a>
+                        <a *ngIf="item.IsDeleted =='Yes'" class=" ti-share delete" data-toggle="tooltip" data-placement="top" title="{{restoreTooltip}}" (click)="activateItem(item.SliderImageId)"></a>
+                </td>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+            <tr>
+            <td colspan="6">No items found</td>
+            </tr>
+            </ng-template>
+        </p-table>
+      </div>
+   <!-- </app-card> -->
+
+
+  </div>
+</div>
+

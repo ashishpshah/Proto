@@ -64,6 +64,26 @@ export class ProtoServicesService {
 
 //#region  Root Header Master Service
 
+getSliderImage(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'DashBoard/GetSliderImage?sliderImageId='+id);
+}
+
+saveSliderImage(formData) {
+  return this.http.post(`${this.baseUrl}/`+ 'DashBoard/InsertUpdateSliderImage', formData)
+    // .map((response: Response) => response.json())
+    .catch(this.errorHandler)
+}
+
+deleteSliderImage(rootHeaderId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/`+ "DashBoard/DeleteSliderImage?rootHeaderId=" + rootHeaderId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+
+activeSliderImage(rootHeaderId :number, userId :string) {
+  return this.http.get(`${this.baseUrl}/` + "DashBoard/ActiveSliderImage?rootHeaderId=" + rootHeaderId+'&userId='+userId)
+    .catch(this.errorHandler);
+}
+
 getRootHeaderList(rootHeaderId:string): Observable<any> {
   return this.http.get(`${this.baseUrl}/`+'RootHeader/GetRootHeaderList?rootHeaderId='+rootHeaderId);
 }

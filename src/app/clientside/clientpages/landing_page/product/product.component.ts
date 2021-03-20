@@ -21,6 +21,8 @@ export class ProductComponent implements OnInit {
   public isActive:boolean = false;
   ItemObj :any ={};
 
+  listSliderUrl = []
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -127,6 +129,8 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.ItemObj =ItemFun();
     this.GetProductItem();
+    debugger;
+    this.listSliderUrl = ['http://proto.a2hosted.com/assets/img/slider/grosary1.png','http://proto.a2hosted.com/assets/img/slider/grosary2.png','http://proto.a2hosted.com/assets/img/slider/grosary3.png']
   }
 
 
