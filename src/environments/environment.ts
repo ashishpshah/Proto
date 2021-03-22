@@ -6,8 +6,8 @@ export const environment = {
 
   production: false,
   domain : 'http://localhost:5000/',
-  Api_Host: 'https://localhost:44311/',
-  // Api_Host: 'https://protoapi.padhyasoft.com/',
+  // Api_Host: 'https://localhost:44311/',
+  Api_Host: 'https://protoapi.padhyasoft.com/',
   Default_Image_Path: "assets/images/no-image-available.jpg"
 };
 

@@ -5,6 +5,7 @@ import { NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminCommonHelperComponent } from 'src/app/AdminPanel/pages/AdminCommonHelper/AdminCommonHelper.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product',
@@ -129,8 +130,27 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.ItemObj =ItemFun();
     this.GetProductItem();
+    this.getSliderImageList();
     debugger;
-    this.listSliderUrl = ['http://proto.a2hosted.com/assets/img/slider/grosary1.png','http://proto.a2hosted.com/assets/img/slider/grosary2.png','http://proto.a2hosted.com/assets/img/slider/grosary3.png']
+    // this.listSliderUrl = ['http://proto.a2hosted.com/assets/img/slider/grosary1.png','http://proto.a2hosted.com/assets/img/slider/grosary2.png','http://proto.a2hosted.com/assets/img/slider/grosary3.png']
+  }
+
+
+  getSliderImageList() {
+    debugger;
+    this.listSliderUrl = [];
+
+    this.Client_commonService_.getSliderImage(0).subscribe(
+      (data) => {
+        debugger;
+        if(data != null && data.length > 0){
+          debugger;
+          for(var i=0; i<data.length;i++){
+            this.listSliderUrl.push(environment.Api_Host + data[i].Image_Path);
+          }
+        }
+      }
+    );
   }
 
 

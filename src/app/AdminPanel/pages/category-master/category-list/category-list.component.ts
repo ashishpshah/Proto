@@ -147,6 +147,8 @@ export class CategoryListComponent implements OnInit {
       this.categoryObj = CategoryFun(this.isInserted);
       this.previewImage();
     }
+
+    window.scroll(0,0);
   }
 
   getCommonList() {

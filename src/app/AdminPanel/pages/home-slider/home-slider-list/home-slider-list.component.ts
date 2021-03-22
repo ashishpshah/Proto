@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Swal } from 'sweetalert2/dist/sweetalert2.js';
 import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -47,6 +48,9 @@ export class HomeSliderListComponent implements OnInit {
   required: string = this.commonHelper.required;
   ngOnInit(): void {
     debugger;
+
+    this.Image_File = null;
+
     this.getList();
     this.previewImage();
   }
@@ -59,6 +63,13 @@ export class HomeSliderListComponent implements OnInit {
     this._commonService.getSliderImage(0).subscribe(
       (data) => {
         this.sliderImageMaster = data;
+
+        if(this.sliderImageMaster != null && this.sliderImageMaster.length > 0){
+          for(var i=0; i<this.sliderImageMaster.length;i++){
+            this.sliderImageMaster[i].Image_Path = environment.Api_Host + this.sliderImageMaster[i].Image_Path;
+          }
+        }
+
         this.loading = false;
       }
     );
@@ -71,29 +82,34 @@ export class HomeSliderListComponent implements OnInit {
     this.IsAddEdit = true;
     this.sliderImageId = id;
 
+    this.Image_File = null;
+
     if (this.sliderImageId > 0) {
       this.title = "Edit";
       this._commonService.getSliderImage(this.sliderImageId)
         .subscribe((resp) => {
 
-          this.sliderImageObj = resp
+          this.sliderImageObj = resp[0]
           this.previewImage()
             , error => this.errorMessage = error
         });
     } else {
       this.title = "Create";
       this.sliderImageObj = SliderImageOBJ(this.isInserted);
+      this.sliderImageId = 0;
       this.previewImage();
     }
+    window.scroll(0,0);
   }
 
   saveSliderImage() {
     debugger;
-    if (this.Image_File != null) {
+    if (this.Image_File != null || this.sliderImageObj.Sequence > 0) {
 
       const formData = new FormData();
 
-      formData.append('file', this.Image_File, this.Image_File.name);
+      if(this.Image_File != null)
+        formData.append('file', this.Image_File, this.Image_File.name);
 
       this.sliderImageObj.Created_By = this.userId;
 
@@ -102,16 +118,25 @@ export class HomeSliderListComponent implements OnInit {
       this._commonService.saveSliderImage(formData)
         .subscribe((data) => {
 
-          if(this.sliderImageObj.sliderImageId == 0){
-            this.commonHelper.commonAlerts('Inserted', data, '/master/category-master', '/master/add-edit-category')
+          if(this.sliderImageId == 0){
+            this.commonHelper.commonAlerts('Inserted', data, '/master/home-slider', '/master/home-slider')
           }
           else{
-            this.commonHelper.commonAlerts('Updated', data, '/master/category-master', '/master/add-edit-category')
+            this.commonHelper.commonAlerts('Updated', data, '/master/home-slider', '/master/home-slider')
           }
+
+          window.location.href = '/master/home-slider';
+
+          this.IsAddEdit = false;
+
+          this.getList();
 
         }, error => this.errorMessage = error)
 
     }
+
+    this.Image_File = null;
+    this.getList();
   }
 
   previewImage() {
@@ -120,7 +145,7 @@ export class HomeSliderListComponent implements OnInit {
 
     this.Image_Path = null;
 
-    if (this.sliderImageObj.Image_Path == "" || this.sliderImageObj.Catg_ID == 0) {
+    if (this.sliderImageObj.Image_Path == "" || this.sliderImageObj.SliderImageId == 0) {
       this.Image_Path = environment.Default_Image_Path;
     }
     else {
@@ -212,17 +237,17 @@ export class HomeSliderListComponent implements OnInit {
 function SliderImageOBJ(isInserted) {
 
   let obj = {
-    SliderImageId: '',
-    AttachmentId: '',
-    Sequence: '',
+    SliderImageId: 0,
+    AttachmentId: 0,
+    Sequence: 0,
     Header: '',
     Discription: '',
     Created_By: '',
     Created_Date: '',
     Modified_By: '',
     Modified_Date: '',
-    IsDeleted: '',
-    Image_Path: environment.Default_Image_Path
+    IsDeleted: false,
+    Image_Path: ''
   };
   return obj;
 }

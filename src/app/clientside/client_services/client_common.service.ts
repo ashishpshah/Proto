@@ -326,6 +326,14 @@ SaveCustmerdata(dtl) {
     .catch(this.errorHandler)
 }
 
+
+
+getSliderImage(id: number): Observable<any> {
+  return this.http.get(`${this.baseUrl}/`+'DashBoard/GetSliderImage?sliderImageId='+id);
+}
+
+
+
 GetAddressList(CustId:string): Observable<any> {
   return this.http.get(this.baseUrl +'Customer/GetAddressListByCustomer?Cust_Id='+CustId);
 

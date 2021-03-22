@@ -1,4 +1,4 @@
-<!-- <div *ngIf="IsAddEdit"> -->
+<div *ngIf="IsAddEdit">
 
   <form >
     <div>
@@ -35,7 +35,7 @@
     </div>
 
   </form>
-<!-- </div> -->
+</div>
 
 <div class="row">
   <div class="col-sm-12">
@@ -57,9 +57,9 @@
             <br/>
             <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="Image_Path">Path <p-sortIcon field="Image_Path"></p-sortIcon></th>
-                <th>Sequence</th>
+                <th pSortableColumn="item.Image_Path">Path <p-sortIcon field="item.Image_Path"></p-sortIcon></th>
                 <th>Image</th>
+                <th>Sequence</th>
                 <th>Action </th>
             </tr>
             </ng-template>
@@ -68,14 +68,14 @@
             <tr class="">
 
           <td>
-                {{Image_Path}}
+                {{item.Image_Path}}
           </td>
-          <td>
-            {{item.Secuence}}
-      </td>
                 <td>
-
+                  <img id="imagePreview_{{item.SliderImageId}}" [src]="item.Image_Path" alt="Item image" width="150" height="130">
                 </td>
+                <td>
+                  {{item.Sequence}}
+            </td>
                 <td>
                         <a class="ti-pencil-alt edit" (click)="addEditOpen(item.SliderImageId)"></a>
                         &nbsp;<a *ngIf="item.IsDeleted !='Yes'" class=" ti-trash delete" data-toggle="tooltip" data-placement="top" title="{{deleteTooltip}}" (click)="deleteItem(item.SliderImageId)"></a>
